@@ -1,0 +1,266 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <title>Hello World</title>
+    <style type="text/css">
+    body,
+    html {
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        font-family: "微软雅黑";
+    }
+    
+    #allmap {
+        width: 80%;
+        height: 100%;
+    }
+    
+    </style>
+    <script type="text/javascript" src="../../Map/test/js/dis.js"></script>
+    <!-- 引入核心js文件 -->
+    <script type="text/javascript" src="../../Map/test/js/DistanceTool_min.js"></script>
+    <script type="text/javascript" src="../../Map/test/Pub/js/jquery-1.8.0.min.js"></script>
+    <script type="text/javascript" src="../../Map/test/Pub/js/jquery.uploadify.min.js"></script>
+    <script type="text/javascript" src="../../Map/test/js/apiv.2.0.js"></script>
+    <script type="text/javascript" src="../../Map/test/js/getmodules.js"></script>
+    <script type="text/javascript" src="../../Map/test/Pub/layer/layer.js"></script>
+    <script type="text/javascript" src="../../Map/test/Pub/js/console.js"></script>
+    <!--画线js-->
+    <script type="text/javascript" src="../../Map/test/js/DrawingManager_min.js"></script>
+    <link rel="stylesheet" href="../../Map/test/js/DrawingManager_min.css" />
+    <!-- 工具栏设置 -->
+    <script src="../../Map/test/Pub/js/jquery.minicolors.js"></script>
+    <link rel="stylesheet" href="../../Map/test/Pub/css/jquery.minicolors.css">
+    <script type="text/javascript" src="../../Map/test/Pub/js/jquery.reveal.js"></script>
+    <!--画线js结束-->
+    <!-- <link rel="stylesheet" type="text/css" href="bmap.css"/> -->
+    <link rel="stylesheet" type="text/css" href="../../Map/test/Pub/css/uploadify.css" />
+    <link rel="stylesheet" type="text/css" href="../../Map/test/Pub/css/console.css" />
+    <script type="text/javascript" src="../../Map/test/js/TextIconOverlay.js"></script>
+    <script type="text/javascript" src="../../Map/test/js/MarkerClusterer.js"></script>
+    <script type="text/javascript" src="../../Map/test/js/searchInRectangle.js"></script>
+    <script type="text/javascript" src="../../Map/test/js/GeoUtils.js"></script>
+</head>
+
+<body>
+    <!-- <label for="input">半径:</label>
+    <input id="input" type="text">
+    <button id="button">确定</button>
+    <button id="test">选择</button>
+    <button id="cancle">取消</button>
+    经度:
+    <input type="text" value="" id="lng"> 纬度:
+    <input type="text" value="" id="lat">
+    <br>结果:
+    <span id="result" style="color:red"></span> -->
+    <div id="allmap"></div>
+</body>
+
+</html>
+<script type="text/javascript">
+// $('#input').focus();
+var distance = 0.2;
+$('#button').click(function() {
+    distance = Number($("#input").val());
+});
+// 创建Map实例
+var map = new BMap.Map("allmap", {
+    enableMapClick: false
+});
+
+// 设置地图背景色为白色
+map.getContainer().style.background = '#1e1f2d';
+// 初始化地图,设置中心点坐标和地图级别
+var point = new BMap.Point(110.1, 22);
+map.centerAndZoom(point, 10);
+map.enableScrollWheelZoom(); // 启用滚轮放大缩小。 
+
+// map.addEventListener("dragend", function(){    
+//  var center = map.getCenter();  
+//  let zoom = map.getZoom();  
+//  alert("地图中心点变更为：" + center.lng + ", " + center.lat+";级数:"+zoom);    
+// });
+map.addControl(new BMap.NavigationControl({
+    anchor: BMAP_ANCHOR_BOTTOM_LEFT
+}));
+// 定义一个控件类，即function    
+function myControl() {
+    // 设置默认停靠位置和偏移量  
+    this.defaultAnchor = BMAP_ANCHOR_TOP_LEFT;
+    this.defaultOffset = new BMap.Size(10, 10);
+}
+// 通过JavaScript的prototype属性继承于BMap.Control   
+myControl.prototype = new BMap.Control();
+// 自定义控件必须实现initialize方法，并且将控件的DOM元素返回   
+// 在本方法中创建个div元素作为控件的容器，并将其添加到地图容器中   
+myControl.prototype.initialize = function(map) {
+        // 创建一个DOM元素   
+        var div = document.createElement("div");
+        // 添加文字说明    
+        div.appendChild(document.createTextNode("搜索:"));
+        var input =document.createElement("input");
+        div.appendChild(input)
+        // 设置样式    
+        div.style.backgroundColor = "white";
+        // 绑定事件，点击一次放大两级    
+        div.onclick = function(e) {
+                console.log(e);
+            }
+            // 添加DOM元素到地图中   
+        map.getContainer().appendChild(div);
+        // 将DOM元素返回  
+        return div;
+    }
+    // 创建控件实例    
+var myZoomCtrl = new myControl();
+// 添加到地图当中 
+map.addControl(myZoomCtrl);
+var polygons = [];
+var mkr = new BMap.Marker(point);
+$('#test').click(function() {
+    test();
+});
+$('#cancle').click(function() {
+    map.removeEventListener("click", function() {
+        alert(1);
+    });
+});
+
+function test() {
+    map.addEventListener("click", function(e) {
+        map.removeEventListener("click", test);
+        mkr.setPosition(e.point);
+        map.addOverlay(mkr);
+        //将点击的点的坐标显示在页面上
+        document.getElementById("lng").value = e.point.lng;
+        document.getElementById("lat").value = e.point.lat;
+        InOrOutPolygon(e.point.lng, e.point.lat);
+    });
+
+    function InOrOutPolygon(lng, lat) {
+        var pt = new BMap.Point(lng, lat);
+        var result = BMapLib.GeoUtils.isPointInPolygon(pt, new BMap.Polygon(polygons));
+        if (result == true) {
+            document.getElementById("result").innerHTML = "点在多边形内";
+        } else {
+            document.getElementById("result").innerHTML = "点在多边形外";
+        }
+    }
+}
+var overlays = [];
+var overlaycomplete = function(e) {
+    overlays.push(e.overlay);
+};
+var styleOptions = {
+        strokeColor: "red", //边线颜色。
+        fillColor: "red", //填充颜色。当参数为空时，圆形将没有填充效果。
+        strokeWeight: 3, //边线的宽度，以像素为单位。
+        strokeOpacity: 0.8, //边线透明度，取值范围0 - 1。
+        fillOpacity: 0.2, //填充的透明度，取值范围0 - 1。
+        strokeStyle: 'solid' //边线的样式，solid或dashed。
+    }
+    //实例化鼠标绘制工具
+var drawingManager = new BMapLib.DrawingManager(map, {
+    isOpen: false, //是否开启绘制模式
+    enableDrawingTool: true, //是否显示工具栏
+    drawingToolOptions: {
+        anchor: BMAP_ANCHOR_TOP_RIGHT, //位置
+        offset: new BMap.Size(5, 5), //偏离值
+    },
+    circleOptions: styleOptions, //圆的样式
+    polylineOptions: styleOptions, //线的样式
+    polygonOptions: styleOptions, //多边形的样式
+    rectangleOptions: styleOptions //矩形的样式
+});
+//添加鼠标绘制工具监听事件，用于获取绘制结果
+drawingManager.addEventListener('overlaycomplete', overlaycomplete);
+
+
+// 定义自定义覆盖物的构造函数  
+function SquareOverlay(center, length, color, id) {
+    this._center = center;
+    this._length = length;
+    this._color = color;
+    this._id = id;
+}
+// 继承API的BMap.Overlay    
+SquareOverlay.prototype = new BMap.Overlay();
+// 实现初始化方法  
+SquareOverlay.prototype.initialize = function(map) {
+    // 保存map对象实例   
+    this._map = map;
+    // 创建div元素，作为自定义覆盖物的容器   
+    var div = document.createElement("div");
+    div.style.position = "absolute";
+    // 可以根据参数设置元素外观   
+    div.style.width = this._length + "px";
+    div.style.height = this._length + "px";
+    div.style.background = this._color;
+    // 将div添加到覆盖物容器中   
+    map.getPanes().markerPane.appendChild(div);
+    // 保存div实例   
+    this._div = div;
+    // 需要将div元素作为方法的返回值，当调用该覆盖物的show、   
+    // hide方法，或者对覆盖物进行移除时，API都将操作此元素。   
+    return div;
+}
+
+// 实现绘制方法   
+SquareOverlay.prototype.draw = function() {
+    // 根据地理坐标转换为像素坐标，并设置给容器    
+    var position = this._map.pointToOverlayPixel(this._center);
+    this._div.style.left = position.x - this._length / 2 + "px";
+    this._div.style.top = position.y - this._length / 2 + "px";
+}
+
+// 实现显示方法    
+SquareOverlay.prototype.show = function() {
+        if (this._div) {
+            this._div.style.display = "";
+        }
+    }
+    // 实现隐藏方法  
+SquareOverlay.prototype.hide = function() {
+    if (this._div) {
+        this._div.style.display = "none";
+    }
+}
+
+// 添加自定义方法   
+SquareOverlay.prototype.toggle = function() {
+        if (this._div) {
+            if (this._div.style.display == "") {
+                this.hide();
+            } else {
+                this.show();
+            }
+        }
+    }
+    // 点聚合示例
+var MAX = 10000;
+var markers = [];
+var ptpt = null;
+var pts = [];
+for (var i = 0; i < MAX; i++) {
+    ptpt = new BMap.Point(Math.random() * 10 + 100, Math.random() * 10 + 30);
+    pts.push(ptpt);
+    let marker = new BMap.Marker(ptpt, {
+        title: i
+    });
+    markers.push(marker);
+    // marker.hide(); //隐藏标注
+}
+// 最简单的用法，生成一个marker数组，然后调用markerClusterer类即可。
+var markerClusterer = new BMapLib.MarkerClusterer(map, {
+    markers: markers
+});
+// markerClusterer.clearMarkers(); //清除标记
+// var myDis = new BMapLib.DistanceTool(map);
+// myDis.open(); //开启鼠标测距
+//myDis.close();  //关闭鼠标测距
+</script>

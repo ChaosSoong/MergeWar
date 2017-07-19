@@ -1,0 +1,47 @@
+﻿@{
+    ViewBag.Title = "安全厂商详细信息";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using HCZZ.ModeDB;
+<table>
+    <tr>
+        <th colspan="4"><h1>安全厂商</h1></th>
+    </tr>
+</table>
+<div>
+    <table>
+        @{
+            SecurityOrg log = (SecurityOrg)ViewBag.sec;
+            if (log != null)
+            {
+                <tr>
+                    <td width="15%" align="right">厂商名称：</td>
+                    <td>@log.SECURITY_SOFTWARE_ORGNAME</td>
+                    <td width="15%" align="right">机构代码：</td>
+                    <td>@log.SECURITY_SOFTWARE_ORGCODE</td>
+                </tr>
+
+                <tr>
+                    <td width="15%" align="right">联系人：</td>
+                    <td>@log.CONTACTOR</td>
+                    <td width="15%" align="right">联系电话：</td>
+                    <td>@log.CONTACTOR_TEL</td>
+                </tr>
+                <tr>
+                    <td width="15%" align="right">邮箱：</td>
+                    <td>@log.CONTACTOR_MAIL</td>
+                    <td width="15%" align="right">厂商地址：</td>
+                    <td>@log.SECURITY_SOFTWARE_ORG_ADDRESS</td>
+                </tr>
+                <tr>
+                    <td width="15%" align="right">创建时间：</td>
+                    <td>@log.CreateTime.ToString("yyyy-MM-dd HH:mm:ss")</td>
+
+                </tr>
+
+            }
+        }
+    </table>
+</div>
+
+

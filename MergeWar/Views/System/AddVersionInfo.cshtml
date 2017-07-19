@@ -1,0 +1,334 @@
+﻿@{
+    ViewBag.Title = "添加终端版本信息";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using HCZZ.DAL;
+@using HCZZ.ModeDB;
+@using HCZZ.Models;
+@using Common;
+@using Webdiyer.WebControls.Mvc;
+@using (Html.BeginForm("AddVersionInfo", "System", FormMethod.Post))
+{
+<div id="Cx" style="display: none"></div> 
+	<div class="Tjxx" id="TJ" style="display: none"></div>
+	<table>	
+			<tr>
+				<th colspan="4"><h1>添加终端版本信息</h1></th>
+			</tr>
+	</table>
+	<div>
+	<table>
+			<tr>
+				<td width="15%" align="right">更新程序类型：</td>
+				<td colspan="3">
+                <select  id="selType" name="selType" onchange="select(this.value);">
+                <option value="0">==请选择==</option>
+                <option value="1">验证程序</option> 
+                <option value="2">审计程序</option> 
+                <option value="3">APP监管版</option> 
+                <option value="4">APP商户版</option> 
+                <option value="5">WEB网站</option> 
+                </select>
+                <span id="spType" class="color_ccc">*</span></td>  
+			</tr>
+            <tr id="trVerify" style="display:none">
+                <td align="right">验证类型：</td>
+                <td>
+                <label><input type="checkbox" name="ckVerify" value="00" />关闭审计</label>&nbsp;<label><input type="checkbox" name="ckVerify" value="01" />开启审计</label>&nbsp;<label><input type="checkbox" name="ckVerify" value="02" />第三方验证</label>&nbsp;<label><input type="checkbox" name="ckVerify" value="03" />微信验证</label>&nbsp;<label><input type="checkbox" name="ckVerify" value="04" />WIFIDOG验证</label><span id="spVerify" class="color_ccc">*</span>
+                </td>
+            </tr>
+			<tr id="trCasesType" style="display:none">
+				<td align="right">程序类型：</td>
+				<td colspan="3">
+                    <select  id="selCasesType" name="selCasesType">
+                        <option value="0">==请选择==</option>
+                        <option value="1">Atheros</option> 
+                        <option value="2">MTK</option> 
+                        <option value="3">X86</option> 
+                    </select>
+                <span id="spCasesType" class="color_ccc">*</span></td>  
+			</tr>
+			<tr class="CType" style="display:none">
+				<td align="right">升级类型：</td>
+				<td colspan="3">
+                    <select  id="selUpdateType" name="selUpdateType" onchange="SelectType(this.value)">
+                        <option value="0">==请选择==</option>
+                        <option value="1" selected="selected">全部升级</option> 
+                        <option value="2">指定省升级</option> 
+                        <option value="3">指定市升级</option> 
+                        <option value="4">指定区升级</option> 
+                    </select>
+                <span id="spUpdateType" class="color_ccc">*</span></td>  
+			</tr>
+			<tr class="CType" style="display:none">
+            <td align="right">区域：</td>
+				<td colspan="3">
+                    <p style="padding-left: 5px">
+                        省：
+                        <select id="selProvince" name="selProvince" onchange="changeValue('selProvince','selCity','City')">
+                            <option value="0">==请选择==</option>
+                        </select>
+                        市：
+                        <select id="selCity" name="selCity" onchange="changeValue('selCity','SelArea','Area')">
+                            <option value="0">==请选择==</option>
+                        </select>
+                        区：
+                        <select id="SelArea" name="SelArea"
+                            style="width: 160px">
+                            <option value="0">==请选择==</option>
+                        </select>
+                        <span id="sparea" class="color_ccc">*</span></p></td>  
+			</tr>
+			<tr class="CType" style="display:none">
+				<td align="right">升级范围：</td>
+				<td colspan="3">
+                    <select  id="selotherType" name="selotherType">
+                        <option value="0">==请选择==</option>
+                        <option value="1" selected="selected">全部</option> 
+                        <option value="2">除城中村升级</option> 
+                        <option value="3">除旁路升级</option> 
+                        <option value="4">除城中村和旁路升级</option> 
+                    </select>
+                <span id="spotherType" class="color_ccc">*</span></td>  
+			</tr>
+			<tr id="trFocusUpdate">
+				<td width="15%" align="right">是否强制升级：</td>
+				<td colspan="3">
+                <select  id="selFocusUpdate" name="selFocusUpdate">
+                <option value="0">==请选择==</option>
+                <option value="1">是</option> 
+                <option value="2">否</option> 
+                </select>
+                <span id="spFocusUpdate" class="color_ccc">*</span></td>  
+			</tr>
+            <tr>
+				<td width="15%" align="right">外部版本：</td>
+				<td colspan="3"><input type="text" id="txtOutVersion" name="txtOutVersion" class="_text"  maxlength="30"/><span id="spOutVersion" class="color_ccc">*</span></td>  
+			</tr>
+			<tr>
+				<td width="15%" align="right">内部版本：</td>
+				<td colspan="3"><input type="text" id="txtVersion" name="txtVersion" class="_text"  maxlength="30"/><span id="spVersion" class="color_ccc">*</span></td>  
+			</tr>
+			<tr id="trDownloadUrl">
+				<td width="15%" align="right">更新包下载地址：</td>
+				<td colspan="3"><input type="text" id="txtDownloadUrl" name="txtDownloadUrl" style="width:400px" class="_text"  maxlength="100"/><span id="spDownloadUrl" class="color_ccc">*</span></td>  
+			</tr>
+			<tr>
+				<td width="15%" align="right">更新说明：</td>
+				<td colspan="3">
+                <textarea id="txtChangeLog" name="txtChangeLog" class="_textarea"></textarea>
+                <span id="spChangeLog" class="color_ccc"></span></td>  
+			</tr>
+			<tr>
+				<td align="center" colspan="4">
+				<input class="btn_SS" type="submit" name="button" value="保存"/>
+			    </td> 
+			</tr> 
+	</table>
+	</div>
+}
+    <script type="text/javascript">
+        $(function () {
+            SelectType(1);
+            $("form").submit(function () {
+                if (subVal()) {
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+        });
+        function changeValue(fname, sname, key) {
+            var id = parseInt($("#" + fname).val());
+            if (id != 0 || key == "Province") {
+                $.ajax
+			    ({
+			        type: "Get",
+			        url: "/Public/AreaValue?Id=" + id + "&key= " + key,
+			        dataType: "json",
+			        async: false,
+			        success: function (data, status) {
+			            if (typeof (data.err) != 'undefined' && data.err != "") {
+			                alert(data.err);
+			            } else {
+			                SelClear(key);
+			                for (var i = 0; i < data.length; i++) {
+			                    $("#" + sname).append("<option value='" + data[i].ID + "'>" + data[i].Name + "</option>");
+			                }
+			            }
+			        },
+			        error: function (data, status, e) {
+			            alert(e);
+			        }
+			    });
+            } else {
+                SelClear(key);
+            }
+        }
+        changeValue('selProvince', 'selProvince', 'Province');
+        function SelClear(key) {
+            if (key == "City") {
+                $("#selCity").html("<option value='0'>==请选择==</option>");
+                $("#SelArea").html("<option value='0'>==请选择==</option>");
+            } else if (key == "Area") {
+                $("#SelArea").html("<option value='0'>==请选择==</option>");
+            }
+        }
+        function select(val) {
+            if (val == 5) {
+                $("#trFocusUpdate").hide();
+                $("#trDownloadUrl").hide();
+                $("#trCasesType").hide();
+                $(".CType").hide();
+                $("#trVerify").hide();
+            } else if (val == 2) {
+                $("#trCasesType").show();
+                $(".CType").show();
+                $("#trVerify").hide();
+                $("#selCasesType option[value='99']").remove();
+            } else if (val == 1) {
+                $(".CType").show();
+                $("#trCasesType").show();
+                $("#trVerify").show();
+                $("#selCasesType").append("<option value=\"99\">全部</option>");
+            } else {
+                $("#trFocusUpdate").show();
+                $("#trDownloadUrl").show();
+                $("#trCasesType").hide();
+                $("#trVerify").hide();
+                $(".CType").hide();
+            }
+        }
+
+        function SelectType(val) {
+            if (val == "1") {
+                $("#selProvince").attr("disabled", "disabled");
+                $("#selCity").attr("disabled", "disabled");
+                $("#SelArea").attr("disabled", "disabled");
+                $("#sppolice").hide();
+            } else if (val == "2") {
+                $("#selProvince").removeAttr("disabled", "disabled");
+                $("#selCity").attr("disabled", "disabled");
+                $("#SelArea").attr("disabled", "disabled");
+                $("#sppolice").show();
+            } else if (val == "3") {
+                $("#selProvince").removeAttr("disabled", "disabled");
+                $("#selCity").removeAttr("disabled", "disabled");
+                $("#SelArea").attr("disabled", "disabled");
+                $("#sppolice").show();
+            } else if (val == "4") {
+                $("#selProvince").removeAttr("disabled", "disabled");
+                $("#selCity").removeAttr("disabled", "disabled");
+                $("#SelArea").removeAttr("disabled", "disabled");
+                $("#sppolice").show();
+            }
+        }
+
+        function subVal() {
+            var result = true;
+
+            if ($("#selType").val() == "0") {
+                result = false;
+                $("#spType").html("请选择更新程序类型");
+            } else {
+                $("#spType").html("");
+            }
+
+            if (($("#selType").val() == "2" || $("#selType").val() == "1") && $("#selCasesType").val() == "0") {
+                result = false;
+                $("#spCasesType").html("请选择程序类型");
+            } else {
+                $("#spCasesType").html("");
+            }
+
+            if ($("#selType").val() == "1" && $("input[name='ckVerify']:checked").length == 0) {
+                result = false;
+                $("#spVerify").html("请选择验证类型");
+            } else {
+                $("#spVerify").html("");
+            }
+
+            if ($("#selFocusUpdate").val() == "0" && $("#selType").val() != "5") {
+                result = false;
+                $("#spFocusUpdate").html("请选择是否强制升级");
+            } else {
+                $("#spFocusUpdate").html("");
+            }
+
+            if ($.trim($("#txtOutVersion").val()) == "") {
+                result = false;
+                $("#spOutVersion").html("外部版本不能为空");
+            } else {
+                $("#spOutVersion").html("");
+            }
+
+            if ($.trim($("#txtVersion").val()) == "") {
+                result = false;
+                $("#spVersion").html("内部版本不能为空");
+            } else {
+                $("#spVersion").html("");
+            }
+
+            var downloadUrl = $.trim($("#txtDownloadUrl").val());
+            if (downloadUrl == "" && $("#selType").val() != "5") {
+                result = false;
+                $("#spDownloadUrl").html("更新包下载地址不能为空");
+            } else if ($("#selType").val() == "2" && $("#selCasesType").val() != "0" && downloadUrl != "") {
+                if (($("#selCasesType").val() == "1" && downloadUrl.indexOf('ar71xx') == -1)) {
+                    result = false;
+                    $("#spDownloadUrl").html("更新包下载地址不正确，请重新输入");
+                } else if (($("#selCasesType").val() == "2" && downloadUrl.indexOf('ramips') == -1)) {
+                    result = false;
+                    $("#spDownloadUrl").html("更新包下载地址不正确，请重新输入");
+                } else if (($("#selCasesType").val() == "3" && downloadUrl.indexOf('x86') == -1)) {
+                    result = false;
+                    $("#spDownloadUrl").html("更新包下载地址不正确，请重新输入");
+                } else {
+                    $("#spDownloadUrl").html("");
+                }
+            } else {
+                $("#spDownloadUrl").html("");
+            }
+
+            if ($.trim($("#txtChangeLog").val()) != "" && $.trim($("#txtChangeLog").val()).length > 250) {
+                result = false;
+                $("#spChangeLog").html("更新说明长度不能超过250个字");
+            } else {
+                $("#spChangeLog").html("");
+            }
+
+            if ($("#selType").val() == "1" || $("#selType").val() == "2") {
+                if ($("#selUpdateType").val() == "0") {
+                    result = false;
+                    $("#spUpdateType").html("请选择升级类型");
+                } else {
+                    $("#spUpdateType").html("");
+                }
+
+                if ($("#selUpdateType").val() == "2" && $("#selProvince").val() == "0") {
+                    result = false;
+                    $("#sparea").html("请选择升级区域");
+                } else if ($("#selUpdateType").val() == "3" && $("#selCity").val() == "0") {
+                    result = false;
+                    $("#sparea").html("请选择升级区域");
+                } else if ($("#selUpdateType").val() == "4" && $("#SelArea").val() == "0") {
+                    result = false;
+                    $("#sparea").html("请选择升级区域");
+                } else {
+                    $("#sparea").html("");
+                }
+
+                if ($("#selotherType").val() == "0") {
+                    result = false;
+                    $("#spotherType").html("请选择升级范围");
+                } else {
+                    $("#spotherType").html("");
+                }
+            }
+
+            return result;
+        }
+    </script>
+
+
+

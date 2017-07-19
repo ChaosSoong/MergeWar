@@ -1,0 +1,460 @@
+﻿@{
+    ViewBag.Title = "AP设备详细信息";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    MacInfo mac = (MacInfo)ViewBag.mac;
+}
+<link href="~/Content/css/CSGL.css" rel="stylesheet" />
+@using HCZZ.ModeDB;
+@using Common;
+@using (Html.BeginForm("DetailAPMac", "Location", FormMethod.Post))
+{
+    UserInfo user = (UserInfo)Session["userInfo"];
+    int fw = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["fw"]) * 3;
+    int sj = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["sj"]);
+    <div class="contentbody" id="contentbody">
+        <div id="Cx" style="display: none">
+        </div>
+        <div class="Tjxx" id="TJ" style="display: none">
+        </div>
+        <table cellpadding="50" cellspacing="1" width="100%" class="AddCx_tab4L">
+            <tr>
+                <th colspan="2">
+                    <h1>
+                        AP设备详细信息</h1>
+                </th>
+            </tr>
+        </table>
+        <div id="mind" style="overflow-y: auto">
+            @if (mac != null)
+            {
+                string supplier = "";
+                <table cellpadding="50" cellspacing="1" width="100%" class="AddCx_tab4L">
+                    <tr>
+                        <td width="15%" align="right">
+                            AP设备名称：
+                        </td>
+                        <td width="15%">@mac.APName
+                        </td>
+                        <td width="15%" align="right">
+                            上网服务场所编码：
+                        </td>
+                        <td width="*%">@mac.NETBAR_WACODE
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            AP设备编码：
+                        </td>
+                        <td>@mac.COLLECTION_EQUIPMENT_ID
+                        </td>
+                        <td align="right">
+                            AP设备MAC地址：
+                        </td>
+                        <td>@mac.AP_MAC @(!string.IsNullOrEmpty(mac.OriginalMac) ? " 源MAC:" + mac.OriginalMac : "")
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            场所模式：
+                        </td>
+                        <td>
+                            @if (mac.ModeType == 1)
+                            {
+                                @("普通模式")
+                            }
+                            else if (mac.ModeType == 2)
+                            {
+                                @("城中村模式")
+                            if (mac.IsTrial == 0)
+                            {
+                                @("—正式收费")
+                            }
+                            else
+                            {
+                                @("—免费体验")
+                            }
+                            }
+                        </td>
+                        <td align="right">
+                            供应商：
+                        </td>
+                        <td>
+                            @if (mac.supplier == 1) { supplier = "瑜商"; }
+                            else if (mac.supplier == 2) { supplier = "永济"; }
+                            else if (mac.supplier == 3) { supplier = "汉智星"; }
+                            @supplier
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            硬件产品类型：
+                        </td>
+                        <td>
+                            @{
+@*string strProType = ChangeValue.ProjectType().Where(m => m.Key == mac.ProjectType).First().Value;
+                    string strCasesType = ChangeValue.CasesType().Where(m => m.Key == mac.CasesType).First().Value;
+                
+                    if (strProType == "") { strProType = "N/A"; }
+                    if (strCasesType == "") { strCasesType = "N/A"; }
+                        @strProType  if (mac.ProjectType == 7) { <kbd>"3CID（视频设备标识）" + mac.V3CID</kbd> }*@
+                            }
+                        </td>
+                        <td align="right">
+                            硬件方案类型：
+                        </td>
+                        <td>
+                            @*@strCasesType*@
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            认证状态：
+                        </td>
+                        <td>@Html.Raw(mac.isopen == 0 ? "<font color='red'>关闭</font>" : "<font color='green'>" + ChangeValue.GetLocaCheckValue(mac.isopen) + "</font>")
+                        </td>
+                        <td align="right">
+                            信道：
+                        </td>
+                        <td>@mac.Channel
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            是否重启：
+                        </td>
+                        <td>@(mac.IsReboot == 0 ? "否" : "是")
+                        </td>
+                        <td align="right">
+                            强制离线时间：
+                        </td>
+                        <td>@mac.ForcedOfflineTime 分钟
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            电子围栏离线时间：
+                        </td>
+                        <td>@mac.FenceOffTime
+                        </td>
+                        <td align="right">
+                            AP设备类型：
+                        </td>
+                        <td>@(mac.APType == 1 ? "固定AP设备" : "移动AP设备")
+                        </td>
+                    </tr>
+                    @if (mac.APType == 1)
+                    {
+                        <tr class="tr1">
+                            <td align="right">
+                                固定AP设备经纬度：
+                            </td>
+                            <td>@(mac.LATITUDE != "0" && mac.LONGITUDE != "0" ? (mac.LONGITUDE + "," + mac.LATITUDE) : "")
+                            </td>
+                            <td align="right">
+                                验证周期：
+                            </td>
+                            <td>@mac.PastTime 天
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        <tr>
+                            <td align="right">
+                                移动AP设备经纬度：
+                            </td>
+                            <td>
+                                @* @{
+                    string gps = "";
+                    LocaGPSInfo lgps = new MacDAL().GetLocaGPSInfo(mac.ID);
+                    if (lgps != null)
+                    {
+                        gps = lgps.LONGITUDE + "," + lgps.LATITUDE;
+                    }
+                }
+                @gps*@
+                            </td>
+                            <td align="right">
+                                终端版本：
+                            </td>
+                            <td>@mac.Version
+                            </td>
+                        </tr>
+                    }
+                    <tr class="tr1">
+                        <td align="right">
+                            楼层：
+                        </td>
+                        <td>@mac.FLOOR
+                        </td>
+                        <td align="right">
+                            终端版本：
+                        </td>
+                        <td>@mac.Version
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            SSID：
+                        </td>
+                        <td>@mac.SSID
+                        </td>
+                        <td align="right">
+                            是否隐藏SSID：
+                        </td>
+                        <td>@(mac.SSIDHidden == 1 ? "隐藏" : "显示")
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            wifi密码：
+                        </td>
+                        <td>@mac.WIFIPwd
+                        </td>
+                        <td align="right">
+                            内存信息：
+                        </td>
+                        <td>@mac.MemInfo
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            系统信息：
+                        </td>
+                        <td>@mac.SysName
+                        </td>
+                        <td align="right">
+                            系统硬件类型：
+                        </td>
+                        <td>@mac.SysType
+                        </td>
+                    </tr>
+                    <tr class="tr2">
+                        <td align="right">
+                            站点信息：
+                        </td>
+                        <td>@mac.SUBWAY_STATION
+                        </td>
+                        <td align="right">
+                            地铁线路信息：
+                        </td>
+                        <td>@mac.SUBWAY_LINE_INFO
+                        </td>
+                    </tr>
+                    <tr class="tr2">
+                        <td align="right">
+                            地铁车辆信息：
+                        </td>
+                        <td>@mac.SUBWAY_VEHICLE_INFO
+                        </td>
+                        <td align="right">
+                            地铁车厢编号：
+                        </td>
+                        <td>@mac.SUBWAY_COMPARTMENT_NUMBER
+                        </td>
+                    </tr>
+                    <tr class="tr2">
+                        <td align="right">
+                            车牌号码：
+                        </td>
+                        <td>@mac.CAR_CODE
+                        </td>
+                        <td align="right">
+                            验证周期：
+                        </td>
+                        <td>@mac.PastTime 天
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            网络接入账号或固定IP地址：
+                        </td>
+                        <td>@mac.AP_ACSSES_IP
+                        </td>
+                        <td align="right">
+                            产品接入号:
+                        </td>
+                        <td>@mac.ProjectAccessNum
+                        </td>
+                    </tr>
+                    @if (user.Type == 1 || user.Type == 8)
+                    { 
+                        <tr>
+                            <td align="right">
+                                审核：
+                            </td>
+                            <td>
+                                <label>
+                                    <input type="radio" @(mac.Verified == 3 ? "checked=checked" : "")  @(mac.Verified < 3 ? "checked=checked" : "") value="3" name="radVerified" />通过</label>
+                                <label>
+                                    <input type="radio" value="4" @(mac.Verified == 4 ? "checked=checked" : "") name="radVerified" />不通过</label><span
+                                        id="spVerified" class="color_ccc">*</span>
+                            </td>
+                            <td align="right">
+                                设备状态：
+                            </td>
+                            <td>
+                                <label>
+                                    <input type="radio" @(mac.DevStatis == 1 ? "checked=checked" : "")  disabled="disabled" value="1" name="radDevStatis" />设备工作</label>
+                                <label>
+                                    <input type="radio" @(mac.DevStatis == 2 ? "checked=checked" : "") @(mac.DevStatis < 2 ? "disabled=disabled" : "") value="2" name="radDevStatis" />设备维护</label>
+                                <label>
+                                    <input type="radio" @(mac.DevStatis == 3 ? "checked=checked" : "") disabled="disabled" value="3" name="radDevStatis" />设备异常</label><span
+                                        class="color_ccc"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="right">
+                                设备型号：
+                            </td>
+                            <td>@mac.DeviceName
+                            </td>
+                            @if (ViewBag.PotType != 0)
+                            {
+                                <input type="hidden" value="@ViewBag.PotType" name="HPotType"/>
+                                <td align="right">
+                                    拆换机审核状态：
+                                </td>
+                                <td>
+                                    <label>
+                                        <input type="radio" @(ViewBag.PotType == 1 ? "checked=checked" : "") value="1" name="radPotType"/>待审核</label>
+                                    <label>
+                                        <input type="radio" @(ViewBag.PotType == 2 ? "checked=checked" : "") value="2" name="radPotType"/>审核成功</label>
+                                    <label>
+                                        <input type="radio" @(ViewBag.PotType == 3 ? "checked=checked" : "") value="3" name="radPotType"/>审核失败</label>
+                                </td>
+                            }
+                            else
+                            {
+                                <td align="right">
+                                </td>
+                                <td>
+                                </td>
+                            }
+                        </tr>
+                        <tr>
+                            <td align="center" colspan="4">
+                                <input class="btn_SS" type="submit" name="button" value="保存" onmouseover="this.className = 'Over_SS'"
+                                    onmouseout="this.className = 'Onout_SS'" /><input type="hidden" name="HMid" id="HMid" value="@mac.ID"/>
+                            </td>
+                        </tr>
+                   
+                    }
+                    else
+                    {
+                        <tr>
+                            <td align="right">
+                                审核：
+                            </td>
+                            <td>
+                                @if (mac.Verified == 3)
+                                {@Html.Raw("审核通过") }
+                                else if (mac.Verified == 4)
+                                { @Html.Raw("审核失败")}
+                                else if (mac.Verified == 1)
+                                {@Html.Raw("待审核") }
+                            </td>
+                            <td align="right">
+                                设备状态：
+                            </td>
+                            <td>
+                                @if (mac.DevStatis == 1)
+                                {@Html.Raw("设备工作")
+                                }
+                                else if (mac.DevStatis == 2)
+                                {@Html.Raw("设备维护")
+                                }
+                                else if (mac.DevStatis == 3)
+                                {@Html.Raw("设备异常")
+                                }
+                            </td>
+                            <td align="right">
+                                拆换机审核状态：
+                            </td>
+                            <td>
+                                @if (ViewBag.PotType != 0)
+                                {
+                                    if (ViewBag.PotType == 1)
+                                    {@Html.Raw("待审核")
+                                    }
+                                    else if (ViewBag.PotType == 2)
+                                    {
+                                    @Html.Raw("审核成功")
+                                    }
+                                    else if (ViewBag.PotType == 3)
+                                    {@Html.Raw("审核失败")
+                                    }
+                                }
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="right">
+                                设备型号：
+                            </td>
+                            <td>@mac.DeviceName
+                            </td>
+                            <td align="right">
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                    }
+                </table>
+            }
+        </div>
+    </div>    
+    <div id="mapPop" style="position: absolute; background: #fff; overflow: hidden; width: 980px;
+        height: 600px; margin-left: -490px; margin-top: -300px; top: 50%; left: 50%;
+        border: 1px solid #333; z-index: 1000; display: none">
+        <iframe id="frame_content0" src="@Url.Content("~/Public/LoadItude")"  name="iframe1" height="100%" width="100%" scrolling="no" frameborder="0" >
+        </iframe>
+        <script type="text/javascript">
+            function reinitIframe() {
+                var iframe = document.getElementById("frame_content0");
+                try {
+                    var bHeight = iframe.contentWindow.document.body.scrollHeight;
+                    var dHeight = iframe.contentWindow.document.documentElement.scrollHeight;
+                    var height = Math.max(bHeight, dHeight);
+                    iframe.height = height;
+                } catch (ex) { }
+            }
+            window.setInterval("reinitIframe()", 200);
+        </script>
+    </div>
+    <div class="tBk" id="tBk" onclick="closeDiv1();hideDiv()">
+    </div>
+    <script language="javascript" type="text/javascript">
+        function showDiv1() {
+            document.getElementById('tBk').style.display = 'block';
+        }
+        function closeDiv1() {
+            document.getElementById('tBk').style.display = 'none';
+        }
+        function showItude() {
+            document.getElementById('mapPop').style.display = 'block';
+            document.getElementById('Bk').style.display = 'block';
+        }
+        function closeItude() {
+            document.getElementById('mapPop').style.display = 'none';
+            document.getElementById('Bk').style.display = 'none';
+        }
+    </script> 
+}
+<script type="text/javascript">
+    mindasd(220);
+    $(function () {
+        onSelect('@(mac != null ? mac.APType : 1)');
+        $("form").submit(function () {
+        });
+    });
+
+    function onSelect(val) {
+        if (val == 1) {
+            $(".tr1").show();
+            $(".tr2").hide();
+        } else {
+            $(".tr1").hide();
+            $(".tr2").show();
+        }
+    }
+</script>

@@ -1,0 +1,452 @@
+﻿/*首页主要内容区域content*/
+.content {
+    width: 100%;
+    min-width: 1366px;
+    position: relative;
+    z-index: 2;
+    overflow: hidden;
+}
+
+    .content .contentbody {
+        width: 1366px;
+        box-sizing: border-box;
+        margin: 0 auto;
+    }
+
+        .content .contentbody .contentLeft {
+            width: 395px;
+            float: left;
+        }
+
+            .content .contentbody .contentLeft .contentLeftSJTJ {
+                position: relative;
+                height: 212px;
+                overflow: hidden;
+                border: 1px solid #2d2e42;
+                background-color: #1E1F2D;
+            }
+
+.contentLeftSJTJTitle {
+    position: absolute;
+    z-index: 9999999;
+}
+
+    .contentLeftSJTJTitle .txtTitle {
+        height: 40px;
+        line-height: 40px;
+    }
+
+        .contentLeftSJTJTitle .txtTitle span {
+            color: #c6c5d6;
+        }
+
+            .contentLeftSJTJTitle .txtTitle span:first-child {
+                padding-left: 30px;
+                color: #c6c5d6;
+                font: 12px "微软雅黑";
+                text-shadow: 0px 3px 2px #000000;
+            }
+
+            .contentLeftSJTJTitle .txtTitle span.detail {
+                display: inline-block;
+                cursor: pointer;
+                margin-left: 260px;
+                margin-top: 10px;
+                color: #c6c5d6;
+                width: 40px;
+                height: 21px;
+                border-radius: 10px;
+                background-color: #3a3b4e;
+                text-align: center;
+                line-height: 21px;
+                box-shadow: 0px 2px 5px #000000;
+            }
+
+
+.content .contentbody .contentLeft .contentLeftJQCJSLQST {
+    position: relative;
+    height: 191px;
+    overflow: hidden;
+    border: 1px solid #2d2e42;
+    margin-top: 6px;
+    background-color: #1E1F2D;
+}
+
+.contentLeftJQCJSLQSTTitle {
+    position: absolute;
+    z-index: 9999999;
+}
+
+    .contentLeftJQCJSLQSTTitle .txtTitle {
+        height: 40px;
+        line-height: 40px;
+    }
+
+        .contentLeftJQCJSLQSTTitle .txtTitle span {
+            color: #c6c5d6;
+            cursor: pointer;
+        }
+
+            .contentLeftJQCJSLQSTTitle .txtTitle span:first-child {
+                padding-left: 30px;
+                color: #c6c5d6;
+                font: 12px "微软雅黑";
+                text-shadow: 0px 3px 2px #000000;
+            }
+
+            .contentLeftJQCJSLQSTTitle .txtTitle span.spanRadius {
+                display: inline-block;
+                cursor: pointer;
+                color: #c6c5d6;
+                width: 21px;
+                height: 21px;
+                border-radius: 50%;
+                background-color: #3a3b4e;
+                text-align: center;
+                line-height: 21px;
+                box-shadow: 0px 2px 5px #000000;
+            }
+
+            .contentLeftJQCJSLQSTTitle .txtTitle span.week {
+                margin-left: 200px;
+            }
+
+            .contentLeftJQCJSLQSTTitle .txtTitle span.month {
+                margin-left: 12px;
+            }
+
+    .contentLeftJQCJSLQSTTitle .colorTitle {
+        height: 30px;
+        line-height: 30px;
+    }
+
+        .contentLeftJQCJSLQSTTitle .colorTitle .colorTitlebg {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            box-shadow: 0px 2px 5px #000000;
+            margin-left: 20px;
+        }
+
+        .contentLeftJQCJSLQSTTitle .colorTitle .colorTitlebg1 {
+            background-color: #089cb8;
+        }
+
+        .contentLeftJQCJSLQSTTitle .colorTitle .colorTitlebg2 {
+            background-color: #c4f803;
+        }
+
+        .contentLeftJQCJSLQSTTitle .colorTitle .colorTitlebg3 {
+            background-color: #635d98;
+        }
+
+        .contentLeftJQCJSLQSTTitle .colorTitle .colorTitlebg4 {
+            background-color: #ef3406;
+        }
+
+        .contentLeftJQCJSLQSTTitle .colorTitle .colorTitlebg5 {
+            background-color: #03c4a6;
+        }
+
+        .contentLeftJQCJSLQSTTitle .colorTitle .colorTitletxt {
+            color: #616363;
+            font: 11px "微软雅黑";
+            text-shadow: 0px 2px 3px #000000;
+            padding-left: 3px;
+        }
+
+
+.content .contentbody .contentLeft .contentLeftJQSBSLQST {
+    position: relative;
+    height: 191px;
+    overflow: hidden;
+    border: 1px solid #2d2e42;
+    margin-top: 6px;
+    background-color: #1E1F2D;
+}
+
+.contentLeftJQSBSLQSTTitle {
+    position: absolute;
+    z-index: 9999999;
+}
+
+    .contentLeftJQSBSLQSTTitle .txtTitle {
+        height: 40px;
+        line-height: 40px;
+    }
+
+        .contentLeftJQSBSLQSTTitle .txtTitle span {
+            color: #c6c5d6;
+            cursor: pointer;
+        }
+
+            .contentLeftJQSBSLQSTTitle .txtTitle span:first-child {
+                padding-left: 30px;
+                color: #c6c5d6;
+                font: 12px "微软雅黑";
+                text-shadow: 0px 3px 2px #000000;
+            }
+
+            .contentLeftJQSBSLQSTTitle .txtTitle span.spanRadius {
+                display: inline-block;
+                cursor: pointer;
+                color: #c6c5d6;
+                width: 21px;
+                height: 21px;
+                border-radius: 50%;
+                background-color: #3a3b4e;
+                text-align: center;
+                line-height: 21px;
+                box-shadow: 0px 2px 5px #000000;
+            }
+
+            .contentLeftJQSBSLQSTTitle .txtTitle span.week {
+                margin-left: 200px;
+            }
+
+            .contentLeftJQSBSLQSTTitle .txtTitle span.month {
+                margin-left: 12px;
+            }
+
+    .contentLeftJQSBSLQSTTitle .colorTitle {
+        height: 30px;
+        line-height: 30px;
+    }
+
+        .contentLeftJQSBSLQSTTitle .colorTitle .colorTitlebg {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            box-shadow: 0px 2px 5px #000000;
+            margin-left: 20px;
+        }
+
+        .contentLeftJQSBSLQSTTitle .colorTitle .colorTitlebg1 {
+            background-color: #089cb8;
+        }
+
+        .contentLeftJQSBSLQSTTitle .colorTitle .colorTitlebg2 {
+            background-color: #c4f803;
+        }
+
+        .contentLeftJQSBSLQSTTitle .colorTitle .colorTitlebg3 {
+            background-color: #635d98;
+        }
+
+        .contentLeftJQSBSLQSTTitle .colorTitle .colorTitlebg4 {
+            background-color: #ef3406;
+        }
+
+        .contentLeftJQSBSLQSTTitle .colorTitle .colorTitlebg5 {
+            background-color: #03c4a6;
+        }
+
+        .contentLeftJQSBSLQSTTitle .colorTitle .colorTitletxt {
+            color: #616363;
+            font: 11px "微软雅黑";
+            text-shadow: 0px 2px 3px #000000;
+            padding-left: 3px;
+        }
+
+
+
+
+.content .contentbody .contentMiddle {
+    width: 563px;
+    float: left;
+    margin-left: 6px;
+}
+
+    .content .contentbody .contentMiddle .contentMiddleTop {
+        height: 100px;
+        box-sizing: border-box;
+        border: 1px solid #2d2e42;
+        background-color: #1E1F2D;
+    }
+
+        .content .contentbody .contentMiddle .contentMiddleTop ul li {
+            display: inline-block;
+            text-align: center;
+            float: left;
+            height: 100px;
+            font: 26px "arial, helvetica, sans-serif";
+            color: #f6f4f4;
+            background-color: #1e1f2d;
+        }
+
+        .content .contentbody .contentMiddle .contentMiddleTop .SBSLicon {
+            display: inline-block;
+            text-align: center;
+            float: left;
+            width: 145px;
+            height: 100px;
+            font: 26px "arial, helvetica, sans-serif";
+            color: #f6f4f4;
+            background-color: #1e1f2d;
+        }
+
+            .content .contentbody .contentMiddle .contentMiddleTop .SBSLicon p:first-child {
+                padding-top: 13px;
+            }
+
+            .content .contentbody .contentMiddle .contentMiddleTop .SBSLicon p:last-child {
+                font: 12px "微软雅黑";
+                color: #c6c5d6;
+                padding-top: 3px;
+            }
+
+        .content .contentbody .contentMiddle .contentMiddleTop .ZXSLicon {
+            display: inline-block;
+            float: left;
+            width: 269px;
+            height: 100px;
+            border-left: 1px solid #1b1c2a;
+            border-right: 1px solid #1b1c2a;
+        }
+
+            .content .contentbody .contentMiddle .contentMiddleTop .ZXSLicon p:first-child {
+                padding-top: 13px;
+            }
+
+            .content .contentbody .contentMiddle .contentMiddleTop .ZXSLicon p:last-child {
+                font: 12px "微软雅黑";
+                color: #c6c5d6;
+                padding-top: 3px;
+            }
+
+        .content .contentbody .contentMiddle .contentMiddleTop .ZXLicon {
+            display: inline-block;
+            float: left;
+            width: 145px;
+        }
+
+            .content .contentbody .contentMiddle .contentMiddleTop .ZXLicon p:first-child {
+                padding-top: 13px;
+            }
+
+            .content .contentbody .contentMiddle .contentMiddleTop .ZXLicon p:last-child {
+                font: 12px "微软雅黑";
+                color: #c6c5d6;
+                padding-top: 3px;
+            }
+
+
+
+
+    .content .contentbody .contentMiddle .contentMiddleMid {
+        height: 397px;
+        border: 1px solid #2d2e42;
+        margin-top: 6px;
+        background-color: #1E1F2D;
+    }
+
+    .content .contentbody .contentMiddle .contentMiddleBottom {
+        height: 97px;
+        border: 1px solid #2d2e42;
+        margin-top: 6px;
+        background-color: #1E1F2D;
+    }
+
+#FontScroll {
+    width: 563px;
+    height: 90px;
+    line-height: 23.5px;
+    overflow: Hidden;
+    padding: 0;
+    margin: 0 auto;
+    z-index: 9999;
+}
+
+    #FontScroll .line {
+        width: 100%;
+    }
+
+    #FontScroll ul li span:nth-child(1) {
+        display: inline-block;
+        color: #A9A9AC;
+        width: 140px;
+        text-align: center;
+    }
+
+    #FontScroll ul li span:nth-child(2) {
+        display: inline-block;
+        color: #6F6E7C;
+        width: 180px;
+        text-align: center;
+    }
+
+    #FontScroll ul li span:nth-child(3) {
+        display: inline-block;
+        color: #548C94;
+        width: 231px;
+        text-align: center;
+    }
+
+
+
+
+.content .contentbody .contentRight {
+    width: 396px;
+    float: left;
+    margin-left: 6px;
+}
+
+    .content .contentbody .contentRight .contentRightCSLXZXS {
+        position: relative;
+        height: 275px;
+        border: 1px solid #2d2e42;
+        background-color: #1E1F2D;
+    }
+
+.contentRightCSLXZXSTitle {
+    position: absolute;
+    z-index: 9999999;
+}
+
+    .contentRightCSLXZXSTitle .txtTitle {
+        height: 40px;
+        line-height: 40px;
+    }
+
+        .contentRightCSLXZXSTitle .txtTitle span {
+            color: #c6c5d6;
+        }
+
+            .contentRightCSLXZXSTitle .txtTitle span:first-child {
+                padding-left: 20px;
+                color: #c6c5d6;
+                font: 12px "微软雅黑";
+                text-shadow: 0px 3px 2px #000000;
+            }
+
+
+
+.content .contentbody .contentRight .contentRightCSLXZXL {
+    position: relative;
+    overflow: hidden;
+    height: 329px;
+    border: 1px solid #2d2e42;
+    margin-top: 6px;
+    background-color: #1E1F2D;
+}
+
+.contentRightCSLXZXLTitle {
+    position: absolute;
+    z-index: 9999999;
+}
+
+    .contentRightCSLXZXLTitle .txtTitle {
+        height: 40px;
+        line-height: 40px;
+    }
+
+        .contentRightCSLXZXLTitle .txtTitle span {
+            color: #c6c5d6;
+        }
+
+            .contentRightCSLXZXLTitle .txtTitle span:first-child {
+                padding-left: 20px;
+                color: #c6c5d6;
+                font: 12px "微软雅黑";
+                text-shadow: 0px 3px 2px #000000;
+            }

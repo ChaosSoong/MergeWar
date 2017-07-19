@@ -1,0 +1,342 @@
+﻿@{
+    ViewBag.Title = "场所信息详情";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/Content/css/CSGL.css" rel="stylesheet" />
+@using HCZZ.DAL;
+@using HCZZ.ModeDB;
+@using HCZZ.Models;
+@using Common;
+@using System.Data;
+<div class="contentbody" id="contentbody">
+    <table cellpadding="50" cellspacing="1" width="100%" class="AddCx_tab4L">
+        <tr>
+            <th colspan="4">
+                <h1>
+                    场所详细信息</h1>
+            </th>
+        </tr>
+    </table>
+    @using (Html.BeginForm("DetailLoca", "Location", FormMethod.Post))
+    {
+        <div id="mind" style="overflow-y: auto">
+            @{
+        Loc_NetBarInfo loca = (Loc_NetBarInfo)ViewBag.loca;
+        DataTable dt = (DataTable)ViewBag.dt;
+        UserInfo user = (UserInfo)Session["userInfo"];
+        AreaInfo area = new AreaInfo();
+        string supplier = "";
+        if (loca.Aid > 0)
+        {
+            area = new PoliceDAL().GetAreaInfoById(loca.Aid, 0);
+        }
+                <table cellpadding="50" cellspacing="1" width="100%" class="AddCx_tab4L">
+                    @if (dt != null && dt.Rows.Count > 0)
+                    {
+                        <tr>
+                            <td align="center" colspan="6">
+                                <h1>
+                                    原场所数据</h1>
+                            </td>
+                        </tr>
+                    }
+                    <tr>
+                        <td width="12%" align="right">
+                            上网服务场所编码：
+                        </td>
+                        <td width="15%">
+                            @loca.NETBAR_WACODE
+                        </td>
+                        <td width="15%" align="right">
+                            上网服务场所名称：
+                        </td>
+                        <td width="15%">
+                            @loca.PLACE_NAME
+                        </td>
+                        <td align="right" width="15%">
+                            场所状态：
+                        </td>
+                        <td>
+                            @(loca.Statis == 1 ? "营业状态" : "停业状态")
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            场所服务类型：
+                        </td>
+                        <td>
+                            @ChangeValue.GetLocaTypeValue(loca.NETSITE_TYPE)
+                        </td>
+                        <td align="right">
+                            场所网络接入服务商：
+                        </td>
+                        <td>
+                            @ChangeValue.GetServiceBusinesValue(loca.OPERATOR_NET)
+                        </td>
+                        <td align="right">
+                            场所网络接入方式：
+                        </td>
+                        <td>
+                            @ChangeValue.GetConnectTypeValue(loca.ACCESS_TYPE)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            场所经营性质：
+                        </td>
+                        <td>
+                            @if (loca.BUSINESS_NATURE == "0")
+                            {
+                                @Html.Raw("经营")
+                            }
+                            else if (loca.BUSINESS_NATURE == "1")
+                            {
+                                @Html.Raw("非经营")
+                            }
+                            else if (loca.BUSINESS_NATURE == "3")
+                            {
+                                @Html.Raw("其他")
+                            }
+                        </td>
+                        <td align="right">
+                            场所详细地址：
+                        </td>
+                        <td>
+                            @loca.SITE_ADDRESS
+                        </td>
+                        <td align="right">
+                            经营法人有效证件类型：
+                        </td>
+                        <td>
+                            @{
+                       Dictionary<string, string> dic = ChangeValue.GetCertifiCateList();
+                       foreach (var item in dic)
+                       {
+                           if (item.Key == loca.LAW_PRINCIPAL_CERTIFICATE_TYPE)
+                           {
+                                @Html.Raw(item.Value);
+                           }
+                       }
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            场所经营法人：
+                        </td>
+                        <td>
+                            @loca.LAW_PRINCIPAL_NAME
+                        </td>
+                        <td align="right">
+                            联系方式：
+                        </td>
+                        <td>
+                            @loca.RELATIONSHIP_ACCOUNT
+                        </td>
+                        <td align="right">
+                            经营法人有效证件号码：
+                        </td>
+                        <td>
+                            @loca.LAW_PRINCIPAL_CERTIFICATE_ID
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            营业开始时间：
+                        </td>
+                        <td>
+                            @loca.START_TIME
+                        </td>
+                        <td align="right">
+                            营业结束时间：
+                        </td>
+                        <td>
+                            @loca.END_TIME
+                        </td>
+                        <td align="right">
+                            安全厂商组织机构代码：
+                        </td>
+                        <td>
+                            @loca.SECURITY_SOFTWARE_ORGCODE
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            所属区域：
+                        </td>
+                        <td colspan="5">
+                            @if (area != null)
+                            {
+                                @area.PName @area.CName @area.Area @loca.PName @loca.SName
+                            }
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            经纬度：
+                        </td>
+                        <td>
+                            @(loca.LATITUDE != "0" && loca.LATITUDE != "" && loca.LONGITUDE != "0" ? (loca.LONGITUDE + "," + loca.LATITUDE) : "")
+                        </td>
+                        <td align="right">
+                            厂商数据来源：
+                        </td>
+                        <td>
+                            @loca.SECURITY_SOFTWARE_ORGNAME
+                        </td>
+                        <td align="right">
+                            @*  网络接入账号或固定IP地址：*@
+                        </td>
+                        <td>
+                            @*@loca.ACSSES_IP*@
+                        </td>
+                    </tr>
+                    @if (user.Type == 1 || user.Type == 8)
+                    {
+                        if (dt != null && dt.Rows.Count > 0)
+                        {
+                            AreaInfo areaVer = new AreaInfo();
+                            if (dt.Rows[0]["Aid"] != null && Convert.ToInt32(dt.Rows[0]["Aid"]) > 0)
+                            {
+                                areaVer = new PoliceDAL().GetAreaInfoById(Convert.ToInt32(dt.Rows[0]["Aid"]), 0);
+                            }
+                        <tr>
+                            <td align="center" colspan="6">
+                                <h1>
+                                    待审核数据</h1>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="right">
+                                上网服务场所编码：
+                            </td>
+                            <td>@dt.Rows[0]["NETBAR_WACODE"]
+                            </td>
+                            <td align="right">
+                                上网服务场所名称：
+                            </td>
+                            <td>
+                                @dt.Rows[0]["PLACE_NAME"]
+                            </td>
+                            <td align="right">
+                                经营法人有效证件类型：
+                            </td>
+                            <td>
+                                居民身份证
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="right">
+                                场所经营法人：
+                            </td>
+                            <td>@dt.Rows[0]["LAW_PRINCIPAL_NAME"]
+                            </td>
+                            <td align="right">
+                                联系方式：
+                            </td>
+                            <td>
+                                @dt.Rows[0]["RELATIONSHIP_ACCOUNT"]
+                            </td>
+                            <td align="right">
+                                经营法人有效证件号码：
+                            </td>
+                            <td>
+                                @dt.Rows[0]["LAW_PRINCIPAL_CERTIFICATE_ID"]
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="right">
+                                场所服务类型：
+                            </td>
+                            <td>
+                                其他
+                            </td>
+                            <td align="right">
+                            </td>
+                            <td>
+                            </td>
+                            <td align="right">
+                            </td>
+                            <td>@*网络接入账号或固定IP地址*@
+                            </td>
+                            @*@dt.Rows[0]["ACSSES_IP"]*@
+                        </tr>
+                        <tr>
+                            <td align="right">
+                                所属区域：
+                            </td>
+                            <td colspan="3">
+                                @if (areaVer != null)
+                                {
+                                    @areaVer.PName @areaVer.CName @areaVer.Area @dt.Rows[0]["PName"] @dt.Rows[0]["SName"]
+                                }
+                            </td>
+                            <td align="right">
+                                场所详细地址：
+                            </td>
+                            <td>@dt.Rows[0]["SITE_ADDRESS"]
+                            </td>
+                        </tr>
+                        }
+
+                        <tr>
+                            <td align="right">
+                                审核：
+                            </td>
+                            <td>
+                                <label>
+                                    <input type="radio" @(loca.Verified < 3 ? "checked=checked" : "") @(loca.Verified == 3 ? "checked=checked" : "") value="3" name="radVerified"/>通过</label>
+                                <label>
+                                    <input type="radio" @(loca.Verified == 4 ? "checked=checked" : "") value="4" name="radVerified"/>不通过</label><span
+                                        class="color_ccc">*</span>
+                            </td>
+                            <td align="right">
+                            </td>
+                            <td>
+                            </td>
+                            <td align="right">
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center" colspan="6">
+                                @if (dt != null && dt.Rows.Count > 0)
+                                {
+                                    <input class="btn_SS" type="button" name="button" onclick="javascript:location.href='@Url.Content("~/Location/EditLocation/" + loca.ID)'" value="编辑审核"
+				        onmouseover="this.className='Over_SS'"
+				        onmouseout="this.className='Onout_SS'"/>}
+                                <input class="btn_SS" type="submit" name="button" value="保存" onmouseover="this.className='Over_SS'"
+                                    onmouseout="this.className='Onout_SS'" /><input type="hidden" name="HLid" id="HLid" value="@loca.ID" />
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        <tr>
+                            <td align="right">
+                                审核：
+                            </td>
+                            <td>
+                                @if (loca.Verified == 3)
+                                {@Html.Raw("审核通过") }
+                                else if (loca.Verified == 4)
+                                { @Html.Raw("审核失败")}
+                                else if (loca.Verified == 1)
+                                {@Html.Raw("待审核") }
+                            </td>
+                            <td align="right">
+                            </td>
+                            <td>
+                            </td>
+                            <td align="right">
+                            </td>
+                            <td>
+                            </td>
+                        </tr> 
+                    }
+                </table>
+            }
+        </div>
+    }
+</div>

@@ -1,0 +1,204 @@
+﻿@{
+    ViewBag.Title = "一键查询结果";
+    Layout = "~/Views/Shared/_LayoutLeft.cshtml";
+}
+@using System
+@using System.Collections.Generic
+@using Common;
+@using HCZZ.Controllers
+@using Webdiyer.WebControls.Mvc
+@{
+    PagedList<PublicController.DatasInfo> list = (PagedList<PublicController.DatasInfo>)ViewBag.pl;
+    Dictionary<string, string> dic = (Dictionary<string, string>)ViewBag.dic;
+    string TypeVal = ChangeValue.RefRadVal(Convert.ToInt32(dic["TypeVal"]));
+    int RadVal = Convert.ToInt32(dic["TypeVal"]);
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <script src="@Url.Content("~/Content/js/jquery.js")" type="text/javascript"></script>
+        
+    <style type="text/css">
+        th, td
+        {
+            line-height: 30px;
+        }
+        tbody tr:nth-child(odd)
+        {
+            background-color: #21202e;
+        }
+        tbody tr:nth-child(even)
+        {
+            background-color: #21222f;
+        }
+        thead tr th
+        {
+            text-align: center;
+        }
+        h2
+        {
+            height: 40px;
+            margin-left: 20px;
+            float: left;
+            text-align: center;
+            line-height: 40px;
+            color: #616363;
+            cursor: pointer;
+        }
+        
+        .tab-content
+        {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .tab-content div
+        {
+            display: none;
+        }
+        
+        .selected
+        {
+            color: #eaeaea;
+        }
+        
+        .tab-content .show
+        {
+            display: block;
+            position: absolute;
+            color: #616363;
+            top: 240px;
+            left: 5px;
+            bottom: 5px;
+            right: 5px;
+        }
+    </style>
+</head>
+<body>
+<div style="width: 100%; height: 40px; color: #616363; line-height: 40px; margin-left: 20px">
+    查询条件 》 <span id="spRadVal">@TypeVal</span> 》 <span id="spKeyWord">@(!string.IsNullOrEmpty(Server.UrlDecode(dic["KeyWord"])) && Server.UrlDecode(dic["KeyWord"]).Length > 25 ? ChangeValue.ByteSubString(Server.UrlDecode(dic["KeyWord"]), 50) : Server.UrlDecode(dic["KeyWord"]))</span></div>
+    
+<div class="contentTable">
+    <input type="hidden" name="hnInput" id="hnInput" value="0"/>
+    <table cellspacing="0" cellpadding="0" border="0">
+        @if (list != null && list.Count > 0)
+        {
+            foreach (PublicController.DatasInfo item in list)
+            {
+                if (RadVal == 1 || RadVal == 2)
+                {
+                    string message = (RadVal == 1 ? item.AUTH_ACCOUNT : item.MAC);
+                    <tr>
+                        <td width="80%">@message
+                        </td>
+                        <td width="20%">
+
+                            <a class="Cz_chakan" onclick="detail('@message', @RadVal);" href="javascript:void(0)" title="详细"><img title="详情" src="@Url.Content("~/Content/images/view1_icon.png")" alt="查看"/></a><span style="display: none">@message</span>
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    <tr>
+                        <td width="20%">@item.AUTH_ACCOUNT
+                        </td>
+                        <td width="20%">@item.MAC<span style="display: none">@item.MAC</span>
+                        </td>
+                        <td width="20%">@item.NETWORK_APP_VALUES
+                        </td>
+                        <td width="20%">@ChangeValue.VidContentType(item.NETWORK_APP.ToString())
+                        </td>
+                        <td width="20%">
+                            <a class="Cz_chakan" onclick="detail('@item.MAC', @RadVal);" href="javascript:void(0)" title="详细"><img title="详情" src="@Url.Content("~/Content/images/view1_icon.png")" alt="查看"/></a>
+                        </td>
+                    </tr>
+                }
+            }
+            if (list.TotalPageCount > 1)
+            {
+                <tr>
+                    <td colspan="@((RadVal == 1 || RadVal == 2) ? 2 : 5)">
+                        <div class="pag_td">
+                            @Ajax.Pager(list, new PagerOptions() {PageIndexParameterName = "pageIndex", @CssClass = "pag1"}, new AjaxOptions() {UpdateTargetId = "DivDatasList"})
+                            <div class="pag_all">
+                                共<font>@list.TotalPageCount</font>页/共<font>@list.TotalItemCount</font>条
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="2">
+                    暂无可显示数据
+                </td>
+            </tr>
+        }
+        }
+    </table>
+</div>
+<div id="DivDatasList">
+    
+</div>
+    <div style="margin-top:5px; margin-bottom: 50px;">
+        <ul id="tabs">
+            <li onclick="tab('1','@RadVal')"><a href="javascript:void(0)" class="tab1" title="实名信息">实名信息</a></li>
+            <li onclick="tab('2','@RadVal')"><a href="javascript:void(0)" class="tab1" title="上下线信息">上下线信息</a></li>
+            <li onclick="tab('3','@RadVal')"><a href="javascript:void(0)" class="tab1" title="虚拟身份">虚拟身份</a></li>
+            <li onclick="tab('4','@RadVal')"><a href="javascript:void(0)" class="tab1" title="硬件特征">硬件特征</a></li>
+        </ul>
+        <div  id="content">
+            <div id="tab1">
+                <table cellpadding="0" cellspacing="0" width="100%" class="Cx_tab"> 
+                    <tr>
+                        <td>数据正在加载……</td>
+                    </tr>
+	            </table>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+    $(function () {
+            //获取td标签中span标签的数据
+            var message = $("td:nth-child(2)").find("span").html();
+            document.getElementById("hnInput").value = message;
+            if(message!=''){
+                showTabData(@RadVal);
+            }else{
+                showTabData(@RadVal);
+            }
+    });
+    function detail(message, RadVal) {
+    document.getElementById("hnInput").value = message;
+    showTabData(RadVal);
+}
+function showTabData(RadVal) {
+    $("#tabs li").attr("id", ""); //重置标签
+    var index = 0;
+    switch (RadVal) {
+    case 1:
+      index = 0;
+      tab(1,RadVal);
+        break;
+    case 2:
+      index = 3;
+      tab(2,RadVal);
+        break;
+    case 3:
+      index = 2;
+      tab(3,RadVal);
+        break;
+    }
+    $("#tabs li").eq(index).attr("id", "current"); // 激活Tab标签
+    $("#content div").eq(index).fadeIn(); //显示第一个Tab
+}
+function tab(type,RadVal) {
+    var Message = $.trim($("#hnInput").val());
+  $("#tab1").load("/Public/ResultList?RadVal="+RadVal +"&Id="+ Message + "&key=" +type+ "&a=" + new Date().getTime());
+}
+    </script>
+</body>
+</html>

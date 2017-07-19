@@ -1,0 +1,131 @@
+﻿html,body,div,button,ul,li,ol,dl,dd,dt,p,h1,h2,h3,h4,h5,h6,form,fieldset,legend,img {margin: 0;padding: 0;}
+        a{text-decoration:none;}
+        .show{font-size: 12px;color: #333;margin: 0px;padding: 0px;}
+        .show ul{margin: 0px;padding: 0px;}
+        .show ul li{margin: 0px;padding: 3px;list-style: none;}
+        .title{font-size: 14px;}
+        .spa{font-size: 12px}
+        .addmarker{list-style: none;margin: 0px;padding: 0px;color: #666;font-size: 12px;}
+        .addmarker li{margin: 0px;padding: 3px;}
+        .addmarker li input{border: 1px solid #D8D8D8;border-radius: 4px;}
+        .center{text-align: center;font-weight: bold;}
+        .img{text-align: center;overflow: hidden;width: 294.5px;height: 130px}
+        input:{border: none;}
+        input:focus {
+            border: none;
+            border-color: rgba(82, 168, 236, 0.8);
+            outline: 0px none;
+            box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset, 0px 0px 8px rgba(82, 168, 236, 0.6);
+        .a{color: #E9E9E9;}
+        }
+
+        /*按钮的样式*/
+        .gray {
+            color: #E9E9E9;
+            border: 1px solid #555;
+            background: transparent -moz-linear-gradient(center top , #888, #575757) repeat scroll 0% 0%;
+        }
+
+        .medium {
+            font-size: 10px;
+            padding: 1px
+        }
+
+        .button {
+            display: inline-block;
+            vertical-align: baseline;
+            margin: 0px 2px;
+            outline: medium none;
+            cursor: pointer;
+            font-weight: bold;
+            text-align: center;
+            text-decoration: none;
+            font: 13px Arial,Helvetica,sans-serif;
+            padding: 2px 10px;
+
+            text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
+            border-radius: 0.5em;
+            box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
+        }
+        .anchorBL a img{display:none; }
+        
+        
+        /*
+        数据分析
+        */
+        .mapright
+        {
+            width: 305px;
+            float: right;
+            margin: 0 20px;
+            position: relative;
+        }
+        .mapright ul li
+        {
+            height: 55px;
+            width: 100%;
+            list-style-type: none;
+        }
+        .typeicon
+        {
+            background-color: #5a9ffe;
+            width: 30px;
+            height: 20px;
+            text-align: center;
+            color: white;
+            font-size: 12px;
+            display: inline-block;
+            line-height: 20px;
+            margin-right: 10px;
+        }
+        .pointname
+        {
+            height: 20px;
+            line-height: 20px;
+            display: inline-block;
+            font-size: 13px;
+        }
+        .closeicon
+        {
+            height: 18px;
+            width: 18px;
+            background-color: #b4b2b1;
+            color: white;
+            display: inline-block;
+            text-align: center;
+            line-height: 18px;
+            float: right;
+            margin-top: 4px;
+        }
+        .closeicon:hover
+        {
+            background-color: #ec6d01;
+            cursor: pointer;
+        }
+        .timeinput
+        {
+            width: 100%;
+            height: 20px;
+            margin-top: 5px;
+            background-image: url("../../Content/images/time.png");
+            background-position: 98.5% 50%;
+            background-repeat: no-repeat;
+            text-indent: 10px;
+        }
+        .btn
+        {
+            background: url("../../Content/images/BtnCx.png") left no-repeat;
+            width: 64px;
+            height: 25px;
+            line-height: 23px;
+            display: inline-block;
+            color: #333;
+            vertical-align: middle;
+            border: none;
+            float:none;
+            margin: 0 10px;
+        }
+        .btn:hover
+        {
+            background-position: 100% 50%;
+        }

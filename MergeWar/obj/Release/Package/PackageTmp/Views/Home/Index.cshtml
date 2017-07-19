@@ -1,0 +1,1435 @@
+﻿@{
+    ViewBag.Title = "主页";
+    Layout = "~/Views/Shared/_LayoutLeft.cshtml";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>@ViewBag.Title</title>
+    <script src="~/Content/js/jquery1.42.min.js"></script>
+    <script src="../../Content/js/jquery.SuperSlide.2.1.1.js" type="text/javascript"></script>
+    <style type="text/css">
+        /*首页主要内容区域content*/
+        .content {
+            width: 100%;
+            min-width: 1366px;
+            position: relative;
+            z-index: 2;
+            overflow: hidden;
+        }
+
+            .content .contentbody {
+                width: 1366px;
+                box-sizing: border-box;
+                margin: 0 auto;
+            }
+
+                .content .contentbody .contentLeft {
+                    width: 395px;
+                    float: left;
+                }
+
+                    .content .contentbody .contentLeft .contentLeftSJTJ {
+                        position: relative;
+                        height: 212px;
+                        overflow: hidden;
+                        border: 1px solid #2d2e42;
+                        background-color: #1E1F2D;
+                    }
+
+        .contentLeftSJTJTitle {
+            position: absolute;
+            z-index: 9999999;
+        }
+
+            .contentLeftSJTJTitle .txtTitle {
+                height: 40px;
+                line-height: 40px;
+            }
+
+                .contentLeftSJTJTitle .txtTitle span {
+                    color: #c6c5d6;
+                }
+
+                    .contentLeftSJTJTitle .txtTitle span:first-child {
+                        padding-left: 30px;
+                        color: #c6c5d6;
+                        font: 12px "微软雅黑";
+                        text-shadow: 0px 3px 2px #000000;
+                    }
+
+                    .contentLeftSJTJTitle .txtTitle span.detail {
+                        display: inline-block;
+                        cursor: pointer;
+                        margin-left: 260px;
+                        margin-top: 10px;
+                        color: #c6c5d6;
+                        width: 40px;
+                        height: 21px;
+                        border-radius: 10px;
+                        background-color: #3a3b4e;
+                        text-align: center;
+                        line-height: 21px;
+                        box-shadow: 0px 2px 5px #000000;
+                    }
+
+
+        .content .contentbody .contentLeft .contentLeftJQCJSLQST {
+            position: relative;
+            height: 191px;
+            overflow: hidden;
+            border: 1px solid #2d2e42;
+            margin-top: 6px;
+            background-color: #1E1F2D;
+        }
+
+        .contentLeftJQCJSLQSTTitle {
+            position: absolute;
+            z-index: 9999999;
+        }
+
+            .contentLeftJQCJSLQSTTitle .txtTitle {
+                height: 40px;
+                line-height: 40px;
+            }
+
+                .contentLeftJQCJSLQSTTitle .txtTitle span {
+                    color: #c6c5d6;
+                    cursor: pointer;
+                }
+
+                    .contentLeftJQCJSLQSTTitle .txtTitle span:first-child {
+                        padding-left: 30px;
+                        color: #c6c5d6;
+                        font: 12px "微软雅黑";
+                        text-shadow: 0px 3px 2px #000000;
+                    }
+
+                    .contentLeftJQCJSLQSTTitle .txtTitle span.spanRadius {
+                        display: inline-block;
+                        cursor: pointer;
+                        color: #c6c5d6;
+                        width: 21px;
+                        height: 21px;
+                        border-radius: 50%;
+                        background-color: #3a3b4e;
+                        text-align: center;
+                        line-height: 21px;
+                        box-shadow: 0px 2px 5px #000000;
+                    }
+
+                    .contentLeftJQCJSLQSTTitle .txtTitle span.week {
+                        margin-left: 200px;
+                    }
+
+                    .contentLeftJQCJSLQSTTitle .txtTitle span.month {
+                        margin-left: 12px;
+                    }
+
+            .contentLeftJQCJSLQSTTitle .colorTitle {
+                height: 30px;
+                line-height: 30px;
+            }
+
+                .contentLeftJQCJSLQSTTitle .colorTitle .colorTitlebg {
+                    display: inline-block;
+                    width: 10px;
+                    height: 10px;
+                    box-shadow: 0px 2px 5px #000000;
+                    margin-left: 20px;
+                }
+
+                .contentLeftJQCJSLQSTTitle .colorTitle .colorTitlebg1 {
+                    background-color: #089cb8;
+                }
+
+                .contentLeftJQCJSLQSTTitle .colorTitle .colorTitlebg2 {
+                    background-color: #c4f803;
+                }
+
+                .contentLeftJQCJSLQSTTitle .colorTitle .colorTitlebg3 {
+                    background-color: #635d98;
+                }
+
+                .contentLeftJQCJSLQSTTitle .colorTitle .colorTitlebg4 {
+                    background-color: #ef3406;
+                }
+
+                .contentLeftJQCJSLQSTTitle .colorTitle .colorTitlebg5 {
+                    background-color: #03c4a6;
+                }
+
+                .contentLeftJQCJSLQSTTitle .colorTitle .colorTitletxt {
+                    color: #616363;
+                    font: 11px "微软雅黑";
+                    text-shadow: 0px 2px 3px #000000;
+                    padding-left: 3px;
+                }
+
+
+        .content .contentbody .contentLeft .contentLeftJQSBSLQST {
+            position: relative;
+            height: 191px;
+            overflow: hidden;
+            border: 1px solid #2d2e42;
+            margin-top: 6px;
+            background-color: #1E1F2D;
+        }
+
+        .contentLeftJQSBSLQSTTitle {
+            position: absolute;
+            z-index: 9999999;
+        }
+
+            .contentLeftJQSBSLQSTTitle .txtTitle {
+                height: 40px;
+                line-height: 40px;
+            }
+
+                .contentLeftJQSBSLQSTTitle .txtTitle span {
+                    color: #c6c5d6;
+                    cursor: pointer;
+                }
+
+                    .contentLeftJQSBSLQSTTitle .txtTitle span:first-child {
+                        padding-left: 30px;
+                        color: #c6c5d6;
+                        font: 12px "微软雅黑";
+                        text-shadow: 0px 3px 2px #000000;
+                    }
+
+                    .contentLeftJQSBSLQSTTitle .txtTitle span.spanRadius {
+                        display: inline-block;
+                        cursor: pointer;
+                        color: #c6c5d6;
+                        width: 21px;
+                        height: 21px;
+                        border-radius: 50%;
+                        background-color: #3a3b4e;
+                        text-align: center;
+                        line-height: 21px;
+                        box-shadow: 0px 2px 5px #000000;
+                    }
+
+                    .contentLeftJQSBSLQSTTitle .txtTitle span.week {
+                        margin-left: 200px;
+                    }
+
+                    .contentLeftJQSBSLQSTTitle .txtTitle span.month {
+                        margin-left: 12px;
+                    }
+
+            .contentLeftJQSBSLQSTTitle .colorTitle {
+                height: 30px;
+                line-height: 30px;
+            }
+
+                .contentLeftJQSBSLQSTTitle .colorTitle .colorTitlebg {
+                    display: inline-block;
+                    width: 10px;
+                    height: 10px;
+                    box-shadow: 0px 2px 5px #000000;
+                    margin-left: 20px;
+                }
+
+                .contentLeftJQSBSLQSTTitle .colorTitle .colorTitlebg1 {
+                    background-color: #089cb8;
+                }
+
+                .contentLeftJQSBSLQSTTitle .colorTitle .colorTitlebg2 {
+                    background-color: #c4f803;
+                }
+
+                .contentLeftJQSBSLQSTTitle .colorTitle .colorTitlebg3 {
+                    background-color: #635d98;
+                }
+
+                .contentLeftJQSBSLQSTTitle .colorTitle .colorTitlebg4 {
+                    background-color: #ef3406;
+                }
+
+                .contentLeftJQSBSLQSTTitle .colorTitle .colorTitlebg5 {
+                    background-color: #03c4a6;
+                }
+
+                .contentLeftJQSBSLQSTTitle .colorTitle .colorTitletxt {
+                    color: #616363;
+                    font: 11px "微软雅黑";
+                    text-shadow: 0px 2px 3px #000000;
+                    padding-left: 3px;
+                }
+
+
+
+
+        .content .contentbody .contentMiddle {
+            width: 563px;
+            float: left;
+            margin-left: 6px;
+        }
+
+            .content .contentbody .contentMiddle .contentMiddleTop {
+                height: 100px;
+                box-sizing: border-box;
+                border: 1px solid #2d2e42;
+                background-color: #1E1F2D;
+            }
+
+                .content .contentbody .contentMiddle .contentMiddleTop ul li {
+                    display: inline-block;
+                    text-align: center;
+                    float: left;
+                    height: 100px;
+                    font: 26px "arial, helvetica, sans-serif";
+                    color: #f6f4f4;
+                    background-color: #1e1f2d;
+                }
+
+                .content .contentbody .contentMiddle .contentMiddleTop .SBSLicon {
+                    display: inline-block;
+                    text-align: center;
+                    float: left;
+                    width: 145px;
+                    height: 100px;
+                    font: 26px "arial, helvetica, sans-serif";
+                    color: #f6f4f4;
+                    background-color: #1e1f2d;
+                }
+
+                    .content .contentbody .contentMiddle .contentMiddleTop .SBSLicon p:first-child {
+                        padding-top: 13px;
+                    }
+
+                    .content .contentbody .contentMiddle .contentMiddleTop .SBSLicon p:last-child {
+                        font: 12px "微软雅黑";
+                        color: #c6c5d6;
+                        padding-top: 3px;
+                    }
+
+                .content .contentbody .contentMiddle .contentMiddleTop .ZXSLicon {
+                    display: inline-block;
+                    float: left;
+                    width: 269px;
+                    height: 100px;
+                    border-left: 1px solid #1b1c2a;
+                    border-right: 1px solid #1b1c2a;
+                }
+
+                    .content .contentbody .contentMiddle .contentMiddleTop .ZXSLicon p:first-child {
+                        padding-top: 13px;
+                    }
+
+                    .content .contentbody .contentMiddle .contentMiddleTop .ZXSLicon p:last-child {
+                        font: 12px "微软雅黑";
+                        color: #c6c5d6;
+                        padding-top: 3px;
+                    }
+
+                .content .contentbody .contentMiddle .contentMiddleTop .ZXLicon {
+                    display: inline-block;
+                    float: left;
+                    width: 145px;
+                }
+
+                    .content .contentbody .contentMiddle .contentMiddleTop .ZXLicon p:first-child {
+                        padding-top: 13px;
+                    }
+
+                    .content .contentbody .contentMiddle .contentMiddleTop .ZXLicon p:last-child {
+                        font: 12px "微软雅黑";
+                        color: #c6c5d6;
+                        padding-top: 3px;
+                    }
+
+
+
+
+            .content .contentbody .contentMiddle .contentMiddleMid {
+                height: 397px;
+                border: 1px solid #2d2e42;
+                margin-top: 6px;
+                background-color: #1E1F2D;
+            }
+
+            .content .contentbody .contentMiddle .contentMiddleBottom {
+                height: 97px;
+                border: 1px solid #2d2e42;
+                margin-top: 6px;
+                background-color: #1E1F2D;
+            }
+
+        #FontScroll {
+            width: 563px;
+            height: 90px;
+            line-height: 23.5px;
+            overflow: Hidden;
+            padding: 0;
+            margin: 0 auto;
+            z-index: 9999;
+        }
+
+            #FontScroll .line {
+                width: 100%;
+            }
+
+            #FontScroll ul li span:nth-child(1) {
+                display: inline-block;
+                color: #A9A9AC;
+                width: 140px;
+                text-align: center;
+            }
+
+            #FontScroll ul li span:nth-child(2) {
+                display: inline-block;
+                color: #6F6E7C;
+                width: 180px;
+                text-align: center;
+            }
+
+            #FontScroll ul li span:nth-child(3) {
+                display: inline-block;
+                color: #548C94;
+                width: 231px;
+                text-align: center;
+            }
+
+
+
+
+        .content .contentbody .contentRight {
+            width: 396px;
+            float: left;
+            margin-left: 6px;
+        }
+
+            .content .contentbody .contentRight .contentRightCSLXZXS {
+                position: relative;
+                height: 275px;
+                border: 1px solid #2d2e42;
+                background-color: #1E1F2D;
+            }
+
+        .contentRightCSLXZXSTitle {
+            position: absolute;
+            z-index: 9999999;
+        }
+
+            .contentRightCSLXZXSTitle .txtTitle {
+                height: 40px;
+                line-height: 40px;
+            }
+
+                .contentRightCSLXZXSTitle .txtTitle span {
+                    color: #c6c5d6;
+                }
+
+                    .contentRightCSLXZXSTitle .txtTitle span:first-child {
+                        padding-left: 20px;
+                        color: #c6c5d6;
+                        font: 12px "微软雅黑";
+                        text-shadow: 0px 3px 2px #000000;
+                    }
+
+
+
+        .content .contentbody .contentRight .contentRightCSLXZXL {
+            position: relative;
+            overflow: hidden;
+            height: 329px;
+            border: 1px solid #2d2e42;
+            margin-top: 6px;
+            background-color: #1E1F2D;
+        }
+
+        .contentRightCSLXZXLTitle {
+            position: absolute;
+            z-index: 9999999;
+        }
+
+            .contentRightCSLXZXLTitle .txtTitle {
+                height: 40px;
+                line-height: 40px;
+            }
+
+                .contentRightCSLXZXLTitle .txtTitle span {
+                    color: #c6c5d6;
+                }
+
+                    .contentRightCSLXZXLTitle .txtTitle span:first-child {
+                        padding-left: 20px;
+                        color: #c6c5d6;
+                        font: 12px "微软雅黑";
+                        text-shadow: 0px 3px 2px #000000;
+                    }
+    </style>
+</head>
+<body id="scroll-1">
+    <!--首页主要内容区域content-->
+    <div class="content">
+        <div class="contentbody">
+            <div class="contentLeft">
+                <div class="contentLeftSJTJ" id="contentLeftSJTJ">
+                    <div class="contentLeftSJTJTitle">
+                        <div class="txtTitle">
+                            <span>数据统计</span><span class="detail">明细</span>
+                        </div>
+                    </div>
+                    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+                    <div id="mainSJTJ" style="width: 550px; height: 170px; margin-left: -165px; margin-top: 40px;">
+                    </div>
+                </div>
+                <div class="contentLeftJQCJSLQST">
+                    <div class="contentLeftJQCJSLQSTTitle">
+                        <div class="txtTitle">
+                            <span>近期采集数量趋势图</span><span class="week spanRadius">周</span><span class="month">月</span>
+                        </div>
+                        <div class="colorTitle">
+                            <span class="colorTitlebg colorTitlebg1"></span><span class="colorTitletxt">IMEI</span>
+                            <span class="colorTitlebg colorTitlebg2"></span><span class="colorTitletxt">MAC</span>
+                            <span class="colorTitlebg colorTitlebg3"></span><span class="colorTitletxt">手机号码</span>
+                            <span class="colorTitlebg colorTitlebg4"></span><span class="colorTitletxt">车牌号码</span>
+                            <span class="colorTitlebg colorTitlebg5"></span><span class="colorTitletxt">虚拟身份</span>
+                        </div>
+                    </div>
+                    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+                    <div id="mainJQCJSLQST" style="width: 475px; height: 230px; margin-left: -41px; margin-top: 15px;
+                        z-index: 99999;">
+                    </div>
+                </div>
+                <div class="contentLeftJQSBSLQST">
+                    <div class="contentLeftJQSBSLQSTTitle">
+                        <div class="txtTitle">
+                            <span>近期设备数量趋势图</span><span class="week spanRadius">周</span><span class="month">月</span>
+                        </div>
+                        <div class="colorTitle">
+                            <span class="colorTitlebg colorTitlebg1"></span><span class="colorTitletxt">IMEI</span>
+                            <span class="colorTitlebg colorTitlebg2"></span><span class="colorTitletxt">MAC</span>
+                            <span class="colorTitlebg colorTitlebg3"></span><span class="colorTitletxt">手机号码</span>
+                            <span class="colorTitlebg colorTitlebg4"></span><span class="colorTitletxt">车牌号码</span>
+                            <span class="colorTitlebg colorTitlebg5"></span><span class="colorTitletxt">虚拟身份</span>
+                        </div>
+                    </div>
+                    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+                    <div id="mainJQSBSLQST" style="width: 475px; height: 230px; margin-left: -41px; margin-top: 15px;">
+                    </div>
+                </div>
+            </div>
+            <div class="contentMiddle">
+                <div class="contentMiddleTop">
+                    <ul>
+                        <li class="SBSLicon">
+                            <p id="zn">
+                                ---
+                            </p>
+                            <img src="../../Content/images/SBSLicon.png" alt="设备数量" />
+                            <p>
+                                设备数量
+                            </p>
+                        </li>
+                        <li class="ZXSLicon">
+                            <p id="dn">
+                                ---
+                            </p>
+                            <img src="../../Content/images/ZXZSicon.png" alt="在线数量" />
+                            <p>
+                                在线数量
+                            </p>
+                        </li>
+                        <li class="ZXLicon">
+                            <p id="ol">
+                                ---
+                            </p>
+                            <img src="../../Content/images/ZXLicon.png" alt="在线率" />
+                            <p>
+                                在线率
+                            </p>
+                        </li>
+                    </ul>
+                </div>
+                <div class="contentMiddleMid" id="map">
+                </div>
+                <div class="contentMiddleBottom" id="contentMiddleBottom">
+                    <div id="FontScroll">
+                        <ul id="ulList"></ul>
+                    </div>
+                </div>
+            </div>
+            <div class="contentRight">
+                <div class="contentRightCSLXZXS">
+                    <div class="contentRightCSLXZXSTitle">
+                        <div class="txtTitle">
+                            <span>场所类型在线数</span>
+                        </div>
+                    </div>
+                    <div id="mainCSLXZXS" style="width: 390px; height: 310px; margin-top: -20px; margin-left: 6px;">
+                    </div>
+                </div>
+                <div class="contentRightCSLXZXL">
+                    <div class="contentRightCSLXZXLTitle">
+                        <div class="txtTitle">
+                            <span>场所类型在线率</span>
+                        </div>
+                    </div>
+                    <div id="mainCSLXZXL" style="width: 450px; height: 290px; margin-top: 35px; margin-left: -80px;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Step:2 Import echarts-all.js-->
+    <!--Step:2 引入echarts-all.js-->
+    @*<script src="@Url.Content("~/Content/js/echarts-all.js")"  type="text/javascript"></script>*@
+    <script src="@Url.Content("~/Content/js/echarts.common.min.js")" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+        //    (function($){
+        //        $(window).load(function(){
+        //            $("body").mCustomScrollbar({
+        //
+        //            });
+        //        });
+        //    })(jQuery);
+        // Step:3 echarts & zrender as a Global Interface by the echarts-plain.js.
+        // Step:3 echarts和zrender被echarts-plain.js写入为全局接口
+        var count = echarts.init(document.getElementById('mainSJTJ'));
+        var collTrend = echarts.init(document.getElementById('mainJQCJSLQST'));
+        var onlineCount = echarts.init(document.getElementById('mainCSLXZXS'));
+        var onlineRate = echarts.init(document.getElementById('mainCSLXZXL'));
+        var deviceTrend = echarts.init(document.getElementById('mainJQSBSLQST'));
+        //    $("#mainJQSBSLQST").load("@Url.Content("~/Content/test.htm")",function(){
+        //        console.log("echarts");
+        //    });
+        //var mapPromise = ()=>{return new Promise(function(){
+        //    $("#map").load("@Url.Content("~/Map/HLocaShowMap.html")",function(){
+        //        console.log("加载地图成功");
+        //    });
+        //        });
+        //    };
+        //var DataConuntPromise = ()=>{return new Promise(function(){
+        //    $.get("@Url.Content("~/Public/DataConunt")", function(result){
+        //        count.setOption(ECCount(result));
+        //    });
+        //        });
+        //    };
+        //var DataOnlineCountPromise = ()=>{return new Promise(function(){
+        //    $.get("@Url.Content("~/Public/DataOnlineCount")", function(result){
+        //        onlineCount.setOption(OnlineCount(result));
+        //    });
+        //        });
+        //    };
+        //var DataOnlineRatePromise = ()=>{return new Promise(function(){
+        //    $.get("@Url.Content("~/Public/DataOnlineRate")", function(result){
+        //        onlineRate.setOption(opsOnlineRate(result));
+        //    });
+        //        });
+        //    };
+        //var DataCountTrendPromise = ()=>{return new Promise(function(){
+        //    $.get("@Url.Content("~/Public/DataCountTrend?TimeType=1")", function(result){
+        //        collTrend.setOption(CollectionCountTrend(result));
+        //    })
+        //        });
+        //    };
+        //var DevNumPromise = ()=>{return new Promise(function(){
+        //    $.get("@Url.Content("~/Public/DevNum")", function(result){
+        //        $("#zn").text(result.zn);
+        //        $("#dn").text(result.dn);
+        //        $("#ol").text(result.ol+"%");
+        //    });
+        //        });
+        //    };
+        //var MapInferiorPromise = ()=>{return new Promise(function(){
+        //    $.get("@Url.Content("~/Public/MapInferior")",function(result){
+        //        for(var i=0;i<result.length;i++){
+        //            $("#ulList").append("<li><span>"+result[i].Mobile+"</span><span>"+result[i].NETWORK_APP+"："+result[i].IdValue+"</span><span>"+result[i].PLACE_NAME+"</span>")
+        //        }
+        //        jQuery(".contentMiddleBottom").slide({
+        //        mainCell: "#FontScroll ul",
+        //        autoPlay: true,
+        //        effect: "topMarquee",
+        //        vis: 5,
+        //        interTime: 50
+        //    });
+        //        });
+        //    })};
+        //    Promise.all([mapPromise(),DataConuntPromise(),DataOnlineCountPromise(),DataOnlineRatePromise(),DataCountTrendPromise(),DevNumPromise(),MapInferiorPromise()]);
+        $.ajax({
+            type: "get",
+            url: "@Url.Content("~/Public/MapInferior")",
+            async: false,
+            success: function (result) {
+                for (var i = 0; i < result.length; i++) {
+                    $("#ulList").append("<li><span>" + result[i].Mobile + "</span><span>" + result[i].NETWORK_APP + "：" + result[i].IdValue + "</span><span>" + result[i].PLACE_NAME + "</span>")
+                }
+                $("#contentMiddleBottom").slide({
+                    mainCell: "#FontScroll ul",
+                    autoPlay: true,
+                    effect: "topMarquee",
+                    vis: 5,
+                    interTime: 50
+                });
+            }
+        });
+        @*$.get("@Url.Content("~/Public/MapInferior")", function (result) {
+            for (var i = 0; i < result.length; i++) {
+                $("#ulList").append("<li><span>" + result[i].Mobile + "</span><span>" + result[i].NETWORK_APP + "：" + result[i].IdValue + "</span><span>" + result[i].PLACE_NAME + "</span>")
+            }
+            $("#contentMiddleBottom").slide({
+                mainCell: "#FontScroll ul",
+                autoPlay: true,
+                effect: "topMarquee",
+                vis: 5,
+                interTime: 50
+            });
+        })*@
+        $("#map").load("@Url.Content("~/Map/HLocaShowMap.html")", function () {
+            console.log("加载地图成功");
+        });
+        $.get("@Url.Content("~/Public/DataConunt")", function (result) {
+            count.setOption(ECCount(result));
+        });
+        $.get("@Url.Content("~/Public/DataOnlineCount")", function (result) {
+            onlineCount.setOption(OnlineCount(result));
+        });
+        $.get("@Url.Content("~/Public/DataOnlineRate")", function (result) {
+            onlineRate.setOption(opsOnlineRate(result));
+        });
+        $.get("@Url.Content("~/Public/DataCountTrend?TimeType=1")", function (result) {
+            collTrend.setOption(CollectionCountTrend(result));
+        });
+        $.get("@Url.Content("~/Public/DevNum")", function (result) {
+            $("#zn").text(result.zn);
+            $("#dn").text(result.dn);
+            $("#ol").text(result.ol + "%");
+        });
+        $(".contentLeftJQCJSLQSTTitle .month").click(function () {
+            $(".contentLeftJQCJSLQSTTitle .week").removeClass("spanRadius");
+            $(".contentLeftJQCJSLQSTTitle .month").addClass("spanRadius");
+            $.get("@Url.Content("~/Public/DataCountTrend?TimeType=2")", function (result) {
+                collTrend.setOption(CollectionCountTrend(result));
+            });
+        });
+        $(".contentLeftJQCJSLQSTTitle .week").click(function () {
+            $(".contentLeftJQCJSLQSTTitle .month").removeClass("spanRadius");
+            $(".contentLeftJQCJSLQSTTitle .week").addClass("spanRadius");
+            $.get("@Url.Content("~/Public/DataCountTrend?TimeType=1")", function (result) {
+                collTrend.setOption(CollectionCountTrend(result));
+            });
+        });
+        // 场所类型在线数
+        function OnlineCount(data) {
+            var datas = [];
+            for (var i = 0; i < data.namenum.length; i++) {
+                datas.push({ value: data.namenum[i], textStyle: { color: "#616363" } });
+            }
+            var ops = {
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'shadow'
+                    }
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis: {
+                    show: false,
+                    type: 'value',
+                    axisLine: {
+                        show: false
+                    },
+                    axisTick: {
+                        show: false
+                    }
+                },
+                yAxis: {
+                    type: 'category',
+                    data: datas,
+                    splitLine: {
+                        show: false
+                    },
+                    axisLine: {
+                        show: false
+                    },
+                    axisTick: {
+                        show: false
+                    },
+                    //            offset: 10,
+                    nameTextStyle: {
+                        fontSize: 15
+                    }
+                },
+                series: [{
+                    name: '数量',
+                    type: 'bar',
+                    data: data.datanum,
+                    barWidth: 7,
+                    barGap: 10,
+                    smooth: true,
+                    label: {
+                        normal: {
+                            show: true,
+                            position: 'right',
+                            offset: [5, -2],
+                            textStyle: {
+                                color: '#555784',
+                                fontSize: 8
+                            }
+                        }
+                    },
+                    itemStyle: {
+                        emphasis: {
+                            barBorderRadius: 35,
+                        },
+                        normal: {
+                            barBorderRadius: 15,
+                            label: {
+                                show: true, //是否展示
+                                textStyle: {
+                                    fontWeight: 'bold',
+                                    fontSize: '12',
+                                    fontFamily: '微软雅黑',
+                                }
+                            },
+                            color: new echarts.graphic.LinearGradient(
+                                0, 0, 1, 0, [{
+                                    offset: 0,
+                                    color: 'rgba(28,67,79,0.8)'
+                                }, {
+                                    offset: 0.2,
+                                    color: 'rgba(29,85,105,0.8)'
+                                }, {
+                                    offset: 0.4,
+                                    color: 'rgba(10,142,168,0.8)'
+                                }, {
+                                    offset: 0.6,
+                                    color: 'rgba(2,157,183,0.8)'
+                                }, {
+                                    offset: 0.8,
+                                    color: 'rgba(0,161,186,0.8)'
+                                }, {
+                                    offset: 1,
+                                    color: 'rgba(0,161,187,0.8)'
+                                }
+
+                                ]
+                            ),
+                            shadowColor: 'rgba(0,164,191,0.6)',
+                            shadowBlur: 10,
+                            shadowOffsetX: 3,
+                            shadowOffsetY: 0
+
+                        }
+                    }
+                }]
+            };
+            return ops;
+        }
+        var d = [20, 49, 70, 232, 256, 700, 135, 162, 326, 200, 64, 33];
+        //    onlineCount.setOption(OnlineCount(d));
+        var dataStyle = {
+            normal: {
+                label: {
+                    show: false
+                },
+                labelLine: {
+                    show: false
+                }
+            }
+        };
+        var placeHolderStyle = {
+            normal: {
+                color: 'rgba(0,0,0,0)',
+                label: {
+                    show: false
+                },
+                labelLine: {
+                    show: false
+                }
+            },
+            emphasis: {
+                color: 'rgba(0,0,0,0)',
+                label: {
+                    show: false
+                },
+                labelLine: {
+                    show: false
+                }
+            }
+        };
+        // 场所类型在线率
+        function opsOnlineRate(result) {
+            var strLegend = [];
+            for (var i = 0; i < result.namenum.length; i++) {
+                strLegend.push({ name: result.ratenum[i] + "%" + result.namenum[i], textStyle: { color: '#616363' } });
+            }
+            var series = [];
+            for (var j = 0; j < result.namenum.length; j++) {
+                series.push({
+                    name: j,
+                    type: 'pie',
+                    clockWise: true,
+                    startAngle: 300,
+                    radius: [75 - j * 5 + "%", 76 - j * 5 + "%"],
+                    center: ["45%", "50%"],
+                    itemStyle: dataStyle,
+                    data: [{
+                        value: result.ratenum[j],
+                        name: result.ratenum[j] + "%" + result.namenum[j]
+                    }, {
+                        value: 100 - result.ratenum[j],
+                        name: 'invisible',
+                        itemStyle: placeHolderStyle
+                    }]
+                });
+            }
+            var option = {
+                backgroundColor: '#1e1f2d',
+                color: [
+                    '#025AC8', '#0D7990', '#03C4A6', '#405956', '#3A402E',
+                    '#7B612A', '#A0361A', '#CE162F', '#862875', '#7E55D9',
+                    '#5A558A', '#F1314B' // , '#F4E001', '#F0805A', '#26C0C0'
+                ],
+                tooltip: {
+                    show: true,
+                    formatter: "{b}"
+                },
+                legend: {
+                    show: true,
+                    orient: 'vertical',
+                    x: "right",
+                    y: "bottom",
+                    itemGap: 1,
+                    data: strLegend
+                },
+                series: series
+            };
+            return option;
+        }
+        //    onlineRate.setOption(opsOnlineRate());
+        // 近期采集数量趋势图
+        function CollectionCountTrend(data) {
+            var series = [];
+            //        for(var i=0;j<data.){}
+            var option = {
+                tooltip: {
+                    trigger: 'axis'
+                },
+                legend: {
+                },
+                calculable: true,
+                xAxis: [{
+                    show: false,
+                    type: 'category',
+                    boundaryGap: false,
+                    //背景网格线属性
+                    splitLine: {
+                        show: false
+                    },
+                    data: data.times
+                }],
+                yAxis: [{
+                    splitLine: {
+                        show: true,
+                        lineStyle: {
+                            // 使用深浅的间隔色
+                            color: ['#2d2e42', '#2d2e42']
+                        }
+                    },
+                    type: 'value'
+                }],
+                series: [{
+                    name: 'IMEI',
+                    type: 'line',
+                    smooth: true,
+                    data: data.imei,
+                    //设置折线线条颜色
+                    lineStyle: {
+                        color: 'rgba(3,196,166,1)'
+                    },
+                    areaStyle: {
+                        normal: {
+                            color: 'rgba(0,0,0,0)',
+                        }
+                    },
+                    itemStyle: {
+                        normal: {
+                            lineStyle: {
+                                color: 'rgba(8,156,184,1)',
+                                shadowColor: 'rgba(0,0,0,0.8)',
+                                shadowBlur: 10,
+                                shadowOffsetX: -1,
+                                shadowOffsetY: 3
+                            },
+                        }
+                    },
+                }, {
+                    name: 'MAC',
+                    type: 'line',
+                    smooth: true,
+                    data: data.mac,
+                    areaStyle: {
+                        normal: {
+                            color: 'rgba(0,0,0,0)',
+                        }
+                    },
+                    itemStyle: {
+                        normal: {
+                            //设置折线线条颜色
+                            lineStyle: {
+                                color: 'rgba(196,248,3,1)',
+                                shadowColor: 'rgba(0,0,0,0.8)',
+                                shadowBlur: 10,
+                                shadowOffsetX: -1,
+                                shadowOffsetY: 3
+                            },
+                        },
+                    },
+                }, {
+                    name: '手机号码',
+                    type: 'line',
+                    smooth: true,
+                    data: data.phone,
+                    areaStyle: {
+                        normal: {
+                            color: 'rgba(0,0,0,0)',
+                        }
+                    },
+                    itemStyle: {
+                        normal: {
+                            lineStyle: {
+                                color: 'rgba(99,93,152,1)',
+                                shadowColor: 'rgba(0,0,0,0.8)',
+                                shadowBlur: 10,
+                                shadowOffsetX: -1,
+                                shadowOffsetY: 3
+                            },
+                        },
+                    },
+                }, {
+                    name: '车牌号码',
+                    type: 'line',
+                    smooth: true,
+                    data: data.carNum,
+                    areaStyle: {
+                        normal: {
+                            color: 'rgba(0,0,0,0)',
+                        }
+                    },
+                    itemStyle: {
+                        normal: {
+                            lineStyle: {
+                                color: 'rgba(239,52,6,1)',
+                                shadowColor: 'rgba(0,0,0,0.8)',
+                                shadowBlur: 10,
+                                shadowOffsetX: -1,
+                                shadowOffsetY: 3
+                            },
+                        },
+                    },
+                }, {
+                    name: '虚拟身份',
+                    type: 'line',
+                    smooth: true,
+                    data: data.virtuals,
+                    areaStyle: {
+                        normal: {
+                            color: 'rgba(0,0,0,0)',
+                        }
+                    },
+                    itemStyle: {
+                        normal: {
+                            lineStyle: {
+                                color: 'rgba(3,196,166,1)',
+                                shadowColor: 'rgba(0,0,0,0.8)',
+                                shadowBlur: 10,
+                                shadowOffsetX: -1,
+                                shadowOffsetY: 3
+                            },
+                        },
+                    },
+                }, ]
+            };
+            return option;
+        }
+        var data = {
+            imei: [123, 214, 236, 456, 258, 265, 111, 123, 214, 236, 456, 258, 265, 111, 123, 214, 236, 456, 258, 265, 111, 123, 214, 236, 456, 258, 265, 111, 265, 111],
+            mac: [236, 123, 423, 111, 264, 333, 354, 236, 123, 423, 111, 264, 333, 354, 236, 123, 423, 111, 264, 333, 354, 236, 123, 423, 111, 264, 333, 354, 333, 354],
+            phone: [92, 65, 23, 78, 165, 456, 216, 234, 92, 65, 23, 78, 165, 456, 216, 234, 92, 65, 23, 78, 165, 456, 216, 234, 92, 65, 23, 78, 165, 456, 216, 234, 216, 234],
+            virtuals: [123, 121, 22, 147, 354, 231, 98, 123, 121, 22, 147, 354, 231, 98, 123, 121, 22, 147, 354, 231, 98, 123, 121, 22, 147, 354, 231, 98, 231, 98],
+            carNum: [92, 56, 265, 123, 456, 146, 99, 92, 56, 265, 123, 456, 146, 99, 92, 56, 265, 123, 456, 146, 99, 92, 56, 265, 123, 456, 146, 99, 146, 99]
+        };
+        //    collTrend.setOption(CollectionCountTrend(data));
+        // 近期设备数量趋势图
+        function ECDeviceTrend(data) {
+            var option = {
+                tooltip: {
+                    trigger: 'axis'
+                },
+                calculable: true,
+                xAxis: [{
+                    show: false,
+                    type: 'category',
+                    boundaryGap: false,
+                    //背景网格线属性
+                    splitLine: {
+                        show: false
+                    },
+                    data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日', '周一', '周二', '周三', '周四', '周五', '周六', '周日', '周一', '周二', '周三', '周四', '周五', '周六', '周日', '周一', '周二', '周三', '周四', '周五', '周六', '周日']
+                }],
+                yAxis: [{
+                    splitLine: {
+                        show: true,
+                        lineStyle: {
+                            // 使用深浅的间隔色
+                            color: ['#2d2e42', '#2d2e42']
+                        }
+                    },
+                    type: 'value'
+                }],
+                series: [{
+                    name: 'IMEI',
+                    type: 'line',
+                    smooth: true,
+                    data: data.imei,
+                    //设置折线线条颜色
+                    lineStyle: {
+                        color: 'rgba(3,196,166,1)'
+                    },
+                    areaStyle: {
+                        normal: {}
+                    },
+                    itemStyle: {
+                        normal: {
+                            color: new echarts.graphic.LinearGradient(
+                                0, 0, 0, 1, [{
+                                    offset: 0,
+                                    color: 'rgba(8,156,184,0.8)'
+                                }, {
+                                    offset: 0.3,
+                                    color: 'rgba(8,156,184,0.6)'
+                                }, {
+                                    offset: 0.6,
+                                    color: 'rgba(8,156,184,0.4)'
+                                }, {
+                                    offset: 0.9,
+                                    color: 'rgba(8,156,184,0.4)'
+                                }, {
+                                    offset: 1,
+                                    color: 'rgba(30,31,45,0.1)'
+                                }]
+                            ),
+                            //设置折线线条颜色
+                            lineStyle: {
+                                color: 'rgba(8,156,184,1)'
+                            },
+                        }
+                    },
+                }, {
+                    name: 'MAC',
+                    type: 'line',
+                    smooth: true,
+                    data: data.mac,
+                    //设置折线线条颜色
+                    lineStyle: {
+                        color: 'rgba(196,248,3,1)'
+                    },
+                    areaStyle: {
+                        normal: {}
+                    },
+                    itemStyle: {
+                        normal: {
+                            color: new echarts.graphic.LinearGradient(
+                                0, 0, 0, 1, [{
+                                    offset: 0,
+                                    color: 'rgba(196,248,3,0.8)'
+                                }, {
+                                    offset: 0.3,
+                                    color: 'rgba(196,248,3,0.6)'
+                                }, {
+                                    offset: 0.6,
+                                    color: 'rgba(196,248,3,0.4)'
+                                }, {
+                                    offset: 0.9,
+                                    color: 'rgba(196,248,3,0.4)'
+                                }, {
+                                    offset: 1,
+                                    color: 'rgba(30,31,45,0.1)'
+                                }]
+                            ),
+                        },
+                    },
+                }, {
+                    name: '手机号码',
+                    type: 'line',
+                    smooth: true,
+                    data: data.phone,
+                    areaStyle: {
+                        normal: {}
+                    },
+                    itemStyle: {
+                        normal: {
+                            color: new echarts.graphic.LinearGradient(
+                                0, 0, 0, 1, [{
+                                    offset: 0,
+                                    color: 'rgba(99,93,152,0.8)'
+                                }, {
+                                    offset: 0.3,
+                                    color: 'rgba(99,93,152,0.6)'
+                                }, {
+                                    offset: 0.6,
+                                    color: 'rgba(99,93,152,0.4)'
+                                }, {
+                                    offset: 0.9,
+                                    color: 'rgba(99,93,152,0.4)'
+                                }, {
+                                    offset: 1,
+                                    color: 'rgba(30,31,45,0.1)'
+                                }]
+                            ),
+                            lineStyle: {
+                                color: 'rgba(99,93,152,1)'
+                            },
+                        },
+                    },
+                }, {
+                    name: '车牌号码',
+                    type: 'line',
+                    smooth: true,
+                    data: data.carNum,
+                    areaStyle: {
+                        normal: {}
+                    },
+                    itemStyle: {
+                        normal: {
+                            color: new echarts.graphic.LinearGradient(
+                                0, 0, 0, 1, [{
+                                    offset: 0,
+                                    color: 'rgba(239,52,6,0.8)'
+                                }, {
+                                    offset: 0.3,
+                                    color: 'rgba(239,52,6,0.6)'
+                                }, {
+                                    offset: 0.6,
+                                    color: 'rgba(239,52,6,0.4)'
+                                }, {
+                                    offset: 0.9,
+                                    color: 'rgba(239,52,6,0.4)'
+                                }, {
+                                    offset: 1,
+                                    color: 'rgba(30,31,45,0.1)'
+                                }]
+                            ),
+                            lineStyle: {
+                                color: 'rgba(239,52,6,1)'
+                            },
+                        },
+                    },
+                }, {
+                    name: '虚拟身份',
+                    type: 'line',
+                    smooth: true,
+                    data: data.virtuals,
+                    areaStyle: {
+                        normal: {}
+                    },
+                    itemStyle: {
+                        normal: {
+                            color: new echarts.graphic.LinearGradient(
+                                0, 0, 0, 1, [{
+                                    offset: 0,
+                                    color: 'rgba(3,196,166,0.8)'
+                                }, {
+                                    offset: 0.3,
+                                    color: 'rgba(3,196,166,0.6)'
+                                }, {
+                                    offset: 0.6,
+                                    color: 'rgba(3,196,166,0.4)'
+                                }, {
+                                    offset: 0.9,
+                                    color: 'rgba(3,196,166,0.4)'
+                                }, {
+                                    offset: 1,
+                                    color: 'rgba(30,31,45,0.1)'
+                                }]
+                            ),
+                            lineStyle: {
+                                color: 'rgba(3,196,166,1)'
+                            },
+                        },
+                    },
+                }]
+            };
+            return option;
+        }
+        deviceTrend.setOption(ECDeviceTrend(data));
+        var dataCount = {
+            imei: {
+                name: "imei",
+                data: "600"
+            },
+            mac: {
+                name: "mac",
+                data: "500"
+            },
+            phone: {
+                name: "phone",
+                data: "300"
+            },
+            virtual: {
+                name: "virtual",
+                data: "700"
+            },
+            carNum: {
+                name: "carNum",
+                data: "650"
+            },
+            imsi: {
+                name: "imsi",
+                data: "680"
+            }
+        };
+        // 数据统计
+        function ECCount(data) {
+            var strLegend = [];
+            for (var i = 0; i < data.length; i++) {
+                strLegend.push({ name: data[i].data + '个' + data[i].name, textStyle: { color: '#616363' } });
+            }
+            var option = {
+                backgroundColor: '#1e1f2d',
+                color: [
+                    '#025AC8', '#0D7990', '#03C4A6', '#405956', '#3A402E',
+                    '#7B612A', '#A0361A', '#CE162F', '#862875', '#7E55D9',
+                    '#5A558A', '#F1314B' // , '#F4E001', '#F0805A', '#26C0C0'
+                ],
+                title: {
+                    text: "数据统计",
+                    x: 24,
+                    y: 'top',
+                    textStyle: {
+                        //文字颜色
+                        color: '#EAEAEA',
+                        //字体风格,'normal','italic','oblique'
+                        fontStyle: 'normal',
+                        //字体粗细 'normal','bold','bolder','lighter',100 | 200 | 300 | 400...
+                        fontWeight: 'normal',
+                        //字体系列
+                        fontFamily: 'sans-serif',
+                        //字体大小
+
+                        fontSize: 16
+                    }
+                },
+                tooltip: {
+                    show: true,
+                    formatter: "{b}"
+                },
+                legend: {
+                    show: true,
+                    orient: 'vertical',
+                    x: "right",
+                    y: "bottom",
+                    itemGap: 3,
+                    data: strLegend
+                },
+                series: [{
+                    name: '1',
+                    type: 'pie',
+                    clockWise: true,
+                    startAngle: 270,
+                    radius: [80, 82],
+                    itemStyle: dataStyle,
+                    data: [{
+                        value: 80,
+                        name: data[0].data + '个' + data[0].name
+                    }, {
+                        value: 20,
+                        name: 'invisible',
+                        itemStyle: placeHolderStyle
+                    }]
+                }, {
+                    name: '2',
+                    type: 'pie',
+                    clockWise: true,
+                    startAngle: 270,
+                    radius: [70, 72],
+                    itemStyle: dataStyle,
+                    data: [{
+                        value: 75,
+                        name: data[1].data + '个' + data[1].name
+                    }, {
+                        value: 25,
+                        name: 'invisible',
+                        itemStyle: placeHolderStyle
+                    }]
+                }, {
+                    name: '3',
+                    type: 'pie',
+                    clockWise: true,
+                    startAngle: 270,
+                    radius: [60, 62],
+                    itemStyle: dataStyle,
+                    data: [{
+                        value: 70,
+                        name: data[2].data + '个' + data[2].name
+                    }, {
+                        value: 30,
+                        name: 'invisible',
+                        itemStyle: placeHolderStyle
+                    }]
+                }, {
+                    name: '4',
+                    type: 'pie',
+                    clockWise: true,
+                    startAngle: 270,
+                    radius: [50, 52],
+                    itemStyle: dataStyle,
+                    data: [{
+                        value: 65,
+                        name: data[3].data + '个' + data[3].name
+                    }, {
+                        value: 35,
+                        name: 'invisible',
+                        itemStyle: placeHolderStyle
+                    }]
+                }, {
+                    name: '5',
+                    type: 'pie',
+                    clockWise: true,
+                    startAngle: 270,
+                    radius: [40, 42],
+                    itemStyle: dataStyle,
+                    data: [{
+                        value: 60,
+                        name: data[4].data + '个' + data[4].name
+                    }, {
+                        value: 40,
+                        name: 'invisible',
+                        itemStyle: placeHolderStyle
+                    }]
+                }, {
+                    name: '6',
+                    type: 'pie',
+                    clockWise: true,
+                    startAngle: 270,
+                    radius: [30, 32],
+                    itemStyle: dataStyle,
+                    data: [{
+                        value: 55,
+                        name: data[5].data + '个' + data[5].name
+                    }, {
+                        value: 45,
+                        name: 'invisible',
+                        itemStyle: placeHolderStyle
+                    }]
+                }]
+            };
+            return option;
+        }
+        //    count.setOption(ECCount(dataCount));
+
+    </script>
+</body>
+</html>

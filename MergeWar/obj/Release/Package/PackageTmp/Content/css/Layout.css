@@ -1,0 +1,57 @@
+﻿		.contentLeftNav{float: left;display: inline-block;min-width: 68.3px;;box-sizing: border-box;color: #F6F4F4;box-sizing: border-box;}
+		#box{width: 100%;height: 100%;box-sizing: border-box;}  
+        #left{width: 68.3px;float: left;background-color: #161523;position: relative;box-sizing: border-box;}  
+        #btn{width: 100%;height: 43px;background-color: #0e0d1b;line-height: 43px;text-align: center;color: white;cursor: pointer;}  
+        #btnb{width: 66px;height: 43px;background-color: #0e0d1b;position: absolute;cursor: pointer;left: -50px;line-height: 43px;text-align: center;}  
+  		.contentLeftNav .sideNav{}
+  		.contentLeftNav .sideNav .sideNavLeft{}	
+		.contentLeftNav .sideNav .sideNavLeft .sideNavBtn{}
+		.contentLeftNav .sideNav .sideNavLeft ul li{width: 68.3px;height: 61px;position: relative;cursor: pointer;background-repeat: no-repeat;background-size: 25px 25px;background-position: center;}
+		.contentLeftNav .sideNav .sideNavLeft ul li:hover{background-color: #1B1A29;}
+		.contentLeftNav .sideNav .sideNavLeft ul li img{position: absolute;top:25.5px;left: 0;display: none;}
+		
+		
+		.contentbody{float: left;display: inline-block;width:95%;min-width: 1297.7px;background-color: #1e1f2d;}
+		.contentbody .contentTopNav{z-index: 3;padding-right: 20px;background-color: #161523;overflow: hidden;}
+		.contentbody .contentTopNav ul{display: inline-block;float: right;}
+		.contentbody .contentTopNav ul li{display: inline-block;color:#616363;height: 43px;line-height: 43px;}
+		.content .contentbody .contentTopNav ul li img{}
+		/*.content .contentbody .contentTopNav a{color: #616363;display: inline-block;height: 43px;line-height: 43px;}*/
+		
+		.contentbody .contentTitle{height: 61px;/*line-height: 61px;*/border-bottom: 1px solid #181926;}
+		.contentbody .contentTitle span{font: 20px "microsoft yahei";margin-top: 17px;color: #b1b1b1;display: inline-block;padding-left: 15px;}
+		.contentbody .contentTitle input{float: right;margin-top: 14px;border-radius: 3px;color: #5D9BA3;font: 13px "微软雅黑";cursor: pointer;}
+		.contentbody .contentTitle input.add{margin-right:12px;width: 95px;height: 33px;border: 1px solid #25576D;background-color: transparent;}
+		.contentbody .contentTitle input.search{margin-right:18px;width: 75px;height: 33px;border: none;background-image: url(../images/boxbg_icon1.png);padding-right: 13px;}
+	
+		.contentbody .contentConditions{height: 140px;border-bottom: 1px solid #181926;}
+		.contentbody .contentConditions ul li {display: inline-block;margin-top: 20px;margin-left: 45px;}
+		.contentbody .contentConditions ul li span{display: inline-block;text-align: right;width: 108px;height: 30px;line-height: 30px;color: #b1b1b1;font-size: 13px;font-family: "微软雅黑";}
+		.contentbody .contentConditions ul li select{
+			/*Chrome和Firefox里面的边框是不一样的，所以复写了一下*/
+			margin-left:5px;border: solid 1px #263738;width: 90px;height: 30px;color: #548C94;font-size: 13px;font-family: "微软雅黑"; padding-right: 14px;padding-left: 8px;
+			
+			/*很关键：将默认的select选择框样式清除*/
+			appearance:none;
+			-moz-appearance:none;
+			-webkit-appearance:none;
+			
+			/*在选择框的最右侧中间显示小箭头图片*/
+			background: url("../images/select_icon2.png") no-repeat scroll right center transparent;
+			}
+		.contentbody .contentConditions ul li input{width: 188px;height: 30px;background-color: transparent;border:1px solid #263738;color: #548C94;padding-left: 5px;padding-right: 5px;box-sizing: border-box;margin-left: 16px;}	
+		.content .contentbody .contentConditions ul li.Conditions6{}
+		.contentbody .contentConditions ul li.Conditions6 input{width: 88px;height: 30px;font-size: 14px;font-family: "微软雅黑";}
+		.content .contentbody .contentConditions ul li.Conditions6 input.selectbg{background-image: url(../images/selectbg.png);border-radius: 3px;box-shadow: 0px 0px 8px #111111;cursor: pointer;}
+		.contentbody .contentConditions ul li.Conditions6 input.resetbg{background-image: url(../images/resetbg.png);border-radius: 3px;box-shadow: 0px 0px 8px #111111;cursor: pointer;}
+	
+		.contentbody .contentTable{}
+		.contentbody .contentTable table{width: 100%;}
+		.contentbody .contentTable table tr{border-bottom: 1px solid #181926;height: 40px;}
+		.contentbody .contentTable table tr:nth-child(odd){background-color: #20212e;}
+		.contentbody .contentTable table tr:nth-child(even){background-color: #21222f;}
+		.contentbody .contentTable table tr:first-child{background-color: #1E1F2D;}
+		.contentbody .contentTable table tr th{text-align: center;color: #85858A;font-family: "微软雅黑";font-size: 13px;}
+		.contentbody .contentTable table tr td{text-align: center;color: #85858A;font-family: "微软雅黑";font-size: 12px;}
+		.contentbody .contentTable table tr td img{cursor: pointer;display: inline-block;margin-left: 8px;margin-right: 8px;}
+	

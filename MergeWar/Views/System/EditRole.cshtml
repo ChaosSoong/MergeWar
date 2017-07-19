@@ -1,0 +1,73 @@
+﻿@{
+    ViewBag.Title = "编辑角色";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using HCZZ.ModeDB
+<div id="Cx" style="display: none">
+</div>
+<div class="Tjxx" id="TJ" style="display: none">
+</div>
+<table>
+    <tr>
+        <th colspan="4">
+            <h1>
+                编辑角色
+            </h1>
+        </th>
+    </tr>
+</table>
+<div id="mind" style="overflow-y: auto">
+    <table>
+        <tr>
+            <td align="right" width="150px">角色名称：</td>
+            <td><input type="text" class="_text" name="txtName" maxlength="30" id="txtName" value="@Model.Name" /><span class="color_ccc" id="spName">*</span></td>
+        </tr>
+        <tr>
+            <td align="center" colspan="4">
+                <input class="btn_SS" type="button" onclick="SaveVal()" name="button" value="保存" onmouseover="this.className='Over_SS'"
+                       onmouseout="this.className='Onout_SS'" />
+            </td>
+        </tr>
+    </table>
+</div>
+
+<script type="text/javascript">
+   
+    function SaveVal() {
+        if (ckVal()) {
+            $.ajax
+            ({
+                type: "post",
+                url: '@Url.Content("~/System/EditRole")',
+                dataType: "json",
+                data: {Jid:@Model.Jid,Name:$("#txtName").val()},
+                success: function (data, status) {
+                    if (typeof (data.err) != 'undefined' && data.err != "") {
+                        alert(data.err);
+                    } else {
+                        if (data.result == "OK") {
+                            alert("修改成功");
+                            parent.window.location.href='@Url.Content("~/System/RoleList")';
+                        } else if (data.result == "NULL") {
+                            alert("修改失败");
+                        }
+                    }
+                },
+                error: function (data, status, e) {
+                    alert(e);
+                }
+            });
+        }
+    }
+
+    function ckVal() {
+        var result = true;
+
+        if ($("#txtName").val() == "") {
+            $("#spName").html("角色名称不能为空");result = false;
+        } else {
+            $("#spName").html("&nbsp;");
+        }
+        return result;
+    }
+</script>

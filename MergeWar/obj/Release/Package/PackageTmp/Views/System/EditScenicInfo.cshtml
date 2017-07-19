@@ -1,0 +1,93 @@
+﻿@{
+    Layout = null;
+}
+@using HCZZ.ModeDB
+
+<head>
+    <title></title>
+<link href="@Url.Content("~/Content/css/index.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Content/js/jquery-1.7.1.min.js")" type="text/javascript"></script>
+</head>
+
+	
+    @using(Html.BeginForm("EditScenicInfo", "System", FormMethod.Post))
+    {
+        ScenicInfo scenic = (ScenicInfo)ViewBag.scenic;
+        <div class="Pop_layer" style="float:left ;"> 
+		<div class="aq_title">
+			<div class="TT_left"></div>
+			<div class="TT_right"></div> 
+			<div class="img_close" onclick="javascript:parent.closeDiv()"></div>
+                编辑警区
+		</div>  
+        <input type="hidden" name="HidPid" value="@(scenic != null ? scenic.Pid : 0)" />
+        <input type="hidden" id="Hid" name="Hid" value="@(scenic != null ? scenic.ID : 0)" />
+        <div class="aq_tab aq_overflow2"> 
+ 			<table cellpadding="0" cellspacing="1" width="100%" class="aq_XxTab">
+                <tr>
+				    <td width="20%" align="right">省名称：</td>
+				    <td width="30%">@(scenic != null ? scenic.PName : "")</td>   
+			    </tr>
+                <tr>
+				    <td align="right">市名称：</td>
+				    <td >@(scenic != null ? scenic.CName : "")</td>   
+			    </tr>
+                <tr>
+				    <td align="right">区名称：</td>
+				    <td >@(scenic != null ? scenic.Area : "")</td>   
+			    </tr>
+                <tr>
+				    <td align="right">派出所名称：</td>
+				    <td >@(scenic != null ? scenic.Name : "")</td>  
+			    </tr>
+			    <tr>
+				    <td align="right">警区名称：</td>
+				    <td ><input type="text" id="txtName" name="txtName" class="_text"  maxlength="20" value="@(scenic != null ? scenic.SName : "")"/><span id="spName" class="color_ccc">*</span></td>  
+			    </tr>
+                <tr>
+				    <td align="right">警区地址：</td>
+				    <td ><input type="text" id="txtAddress" name="txtAddress" class="_text"  maxlength="30" value="@(scenic != null ? scenic.Address : "")"/><span id="spAddress" class="color_ccc"></span></td>  
+			    </tr>
+			    <tr>
+				    <td align="right">联系人：</td>
+				    <td ><input type="text" id="txtContact" name="txtContact" class="_text"  maxlength="15" value="@(scenic != null ? scenic.Contact : "")"/><span id="spContcat" class="color_ccc"></span></td>  
+			    </tr>
+			    <tr>
+				    <td align="right">联系电话：</td>
+				    <td ><input type="text" id="txtMobile" name="txtMobile" class="_text"  maxlength="13" value="@(scenic != null ? scenic.Mobile : "")"/><span id="spMobile" class="color_ccc"></span></td>  
+			    </tr>
+            </table>
+    </div> 
+    <div class="aq_foot"> 
+        <input class="btn_SS" type="submit" name="button" value="保存"/>
+    </div>
+    </div>
+  }
+    <script type="text/javascript">
+        function pageSubmit() {
+            var result = true;
+            if ($.trim($("#txtName").val()) == "") {
+                result = false;
+                $("#spName").html("警区名称不能为空");
+            } else {
+                $("#spName").html("");
+            }
+            var reg = new RegExp(/\d+$/);
+            if ($.trim($("#txtMobile").val()) != "" && !reg.test($.trim($("#txtMobile").val()))) {
+                result = false;
+                $("#spMobile").html("联系电话格式不正确");
+            } else {
+                $("#spMobile").html("");
+            }
+            return result;
+        }
+
+        $(function () {
+            $("form").submit(function () {
+                if (pageSubmit()) {
+                    return true;
+                }
+                return false;
+            });
+        });
+            </script>

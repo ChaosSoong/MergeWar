@@ -1,0 +1,136 @@
+﻿@{
+    ViewBag.Title = "修改安全厂商信息";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using Common;
+@using HCZZ.ModeDB;
+@using (Html.BeginForm("EditOrg", "System", FormMethod.Post))
+{
+    SecurityOrg sec=(SecurityOrg)ViewBag.sec;
+    <div id="Cx" style="display: none">
+    </div>
+    <div class="Tjxx" id="TJ" style="display: none">
+    </div>
+    <table>
+        <tr>
+            <th colspan="4">
+                <h1>修改安全厂商信息</h1>
+            </th>
+        </tr>
+    </table>
+    <div id="mind" style="overflow-y: auto">
+        <table>
+            @if (sec!=null)
+            {
+            <tr>
+                <td width="30%" align="right">
+                    厂商名称：
+                </td>
+                <td colspan="3">
+                    <input type="text" id="txtName" name="txtName" value="@sec.SECURITY_SOFTWARE_ORGNAME" class="_text" maxlength="35" /><span id="spName" class="color_ccc">*</span>
+                </td>
+            </tr>
+            <tr>
+                <td width="15%" align="right">
+                    厂商组织机构代码：
+                </td>
+                <td colspan="3">
+                    <input type="text" id="txtOrgcode" name="txtOrgcode" class="_text" maxlength="9" value="@sec.SECURITY_SOFTWARE_ORGCODE" /><span id="spOrgcode" class="color_ccc">*</span>
+                </td>
+            </tr>
+            <tr>
+                <td width="15%" align="right">
+                    厂商地址：
+                </td>
+                <td colspan="3">
+                    <input type="text" id="txtAddress" name="txtAddress" class="_text" maxlength="128" value="@sec.SECURITY_SOFTWARE_ORG_ADDRESS" /><span id="spAddress" class="color_ccc">*</span>
+                </td>
+            </tr>
+            <tr>
+                <td width="15%" align="right">
+                    联系人：
+                </td>
+                <td colspan="3">
+                    <input type="text" id="txtContact" name="txtContact" class="_text" maxlength="64" value="@sec.CONTACTOR" /><span id="spContact" class="color_ccc">*</span>
+                </td>
+            </tr>
+            <tr>
+                <td width="15%" align="right">
+                    联系人电话：
+                </td>
+                <td colspan="3">
+                    <input type="text" id="txtPhone" name="txtPhone" class="_text" maxlength="64" value="@sec.CONTACTOR_TEL" /><span id="spPhone" class="color_ccc">*</span>
+                </td>
+            </tr>
+            <tr>
+                <td width="15%" align="right">
+                    联系人邮件：
+                </td>
+                <td colspan="3">
+                    <input type="text" id="txtEmail" name="txtEmail" maxlength="32" class="_text" value="@sec.CONTACTOR_MAIL" /><span id="spEmail" class="color_ccc">*</span>
+                </td>
+            </tr>
+            <tr>
+                <td align="center" colspan="4">
+                    <input class="btn_SS" type="submit" name="button" value="保存" /><input  type="hidden" id="Hid" name="Hid" value="@sec.ID"/>
+                </td>
+            </tr>
+            }
+        </table>
+    </div>
+}
+<script type="text/javascript">
+    $(function () {
+        $("form").submit(function () {
+            return subVal();
+        });
+    });
+
+    function subVal() {
+        var result = true;
+        if ($.trim($("#txtName").val()) == "") {
+            result = false;
+            $("#spName").html("厂商名称不能为空");
+        } else {
+            $("#spName").html("");
+        }
+
+        if ($.trim($("#txtOrgcode").val()) == "") {
+            result = false;
+            $("#spOrgcode").html("厂商组织机构代码不能为空");
+        } else {
+            $("#spOrgcode").html("");
+        }
+
+        if ($.trim($("#txtAddress").val()) == "") {
+            result = false;
+            $("#spAddress").html("厂商地址不能为空");
+        } else {
+            $("#spAddress").html("");
+        }
+
+        if ($.trim($("#txtContact").val()) == "") {
+            result = false;
+            $("#spContact").html("联系人不能为空");
+        } else {
+            $("#spContact").html("");
+        }
+
+        if ($.trim($("#txtPhone").val()) == "") {
+            result = false;
+            $("#spPhone").html("联系人电话不能为空");
+        } else {
+            $("#spPhone").html("");
+        }
+
+        if ($.trim($("#txtEmail").val()) == "") {
+            result = false;
+            $("#spEmail").html("联系人邮件不能为空");
+        } else {
+            $("#spEmail").html("");
+        }
+
+        return result;
+    }
+</script>
+

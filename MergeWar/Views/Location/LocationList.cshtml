@@ -1,0 +1,646 @@
+﻿@{
+    ViewBag.Title = "管理列表";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using System
+@using System.Collections.Generic
+@using HCZZ.ModeDB;
+@using Common;
+@using Webdiyer.WebControls.Mvc;
+@{
+    PagedList<Loc_NetBarInfo> loc = (PagedList<Loc_NetBarInfo>)ViewBag.pl;
+    string relaVal = ChangeValue.RefPageRelaByPath("Location/LocationList");
+    Dictionary<string, string> dic = ViewBag.dic;
+}
+<meta charset="UTF-8" />
+<title>区县级作战平台--场所管理</title>
+<link href="@Url.Content("../../Content/css/reset.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("../../Content/css/publicHeader.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("../../Content/css/CSGL.css")" rel="stylesheet" type="text/css" />
+<script src="@Url.Content("../../Content/js/publicJS.js")" type="text/javascript" charset="utf-8"></script>
+<script src="@Url.Content("../../Content/DatePicker/WdatePicker.js")" type="text/javascript" charset="utf-8"></script>
+<style type="text/css">
+    .pag_td {
+        text-align: center;
+        float: right;
+        padding-right: 15px;
+    }
+
+    .pag1 {
+        display: inline-block;
+    }
+
+    .pag_all {
+        display: inline-block;
+    }
+
+    img {
+        display: inline-block;
+    }
+</style>
+<!--头部导航栏header-->
+<div class="contentbody" id="contentbody">
+    <div class="contentTitle">
+        <span>管理列表</span>
+        <input class="search" type="button" id="btnXY" value="查询" onclick="myFunction()" />
+        <input class="" type="button" id="" value="导出Excel" onclick="showSelDiv('ExprotPopRec')" />
+        <input class="" type="button" id="" value="下载模板" onclick="window.location.href = '@Url.Content("~/Public/DownloadTemplate")'" />
+        <input class="" type="button" id="" value="导入数据" onclick="showSelDiv('mapPopRec')" />
+        <input class="" type="button" id="" value="+ 添加" onclick="javascript:location.href='@Url.Content("~/Location/AddLocation")'" />
+    </div>
+    @using (Html.BeginForm("LocationList", "Location", FormMethod.Get))
+    {
+        <div class="contentConditions" id="zbtnXY">
+            <ul>
+                <li class="Conditions Conditions2">
+                    <span>上网服务场所编码：</span>
+                    <input type="text" name="txtNetbar_Wacode" id="txtNetbar_Wacode" maxlength="15" value="@dic["txtNetbar_Wacode"]" />
+                </li>
+                <li class="Conditions Conditions3">
+                    <span>AP_MAC：</span>
+                    <input type="text" value="" name="txtAP_MAC" maxlength="128" id="txtAP_MAC" value="@dic["AP_MAC"]" />
+                </li>
+                <li class="Conditions Conditions4">
+                    <span>场所详细地址：</span>
+                    <input type="text" value="" name="txtSite_Address" id="txtSite_Address" maxlength="128" value="@dic["txtSite_Address"]" />
+                </li>
+                <li class="Conditions Conditions5">
+                    <span>备案时间范围：</span>
+                    <input id="txtStartTime" name="txtStartTime" class="Wdate" type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',readonly:true,maxDate:'#F{$dp.$D(\'txtEndTime\')}'})" value="@dic["txtStartTime"]" />
+                    <b style="color: #b1b1b1;">—</b>
+                    <input id="txtEndTime" name="txtEndTime" class="Wdate" type="text" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',readonly:true,minDate:'#F{$dp.$D(\'txtStartTime\')}'})" value="@dic["txtEndTime"]" />
+                </li>
+                <li class="Conditions Conditions5">
+                    <span>区域：</span>
+                    <select id="selProvince" name="selProvince" onchange="changeValue('selProvince','selCity','City')">
+                        <option value="0">==省级==</option>
+                    </select>
+                    <select id="selCity" name="selCity" onchange="changeValue('selCity','selArea','Area')">
+                        <option value="0">==市级==</option>
+                    </select>
+                    <select id="selArea" name="selArea" onchange="changeValue('selArea','selPolice','police')">
+                        <option value="0">==区级==</option>
+                    </select>
+                    <select name="selPolice" id="selPolice" class="width">
+                        <option value="0">==派出所级==</option>
+                    </select>
+                </li>
+                <li class="Conditions Conditions6">
+                    <input class="selectbg" type="submit" id="" value="搜索" />
+                    <input class="resetbg" type="reset" value="重置" />
+                </li>
+            </ul>
+        </div>
+    }
+    <script type="text/javascript">
+        function changeValue(fname, sname, key) {
+            var id = parseInt($("#" + fname).val());
+            if (id != 0 || key == "Province") {
+                $.ajax
+            ({
+                type: "Get",
+                url: "/Public/AreaValue?Id=" + id + "&key= " + key,
+                dataType: "json",
+                async: false,
+                success: function (data, status) {
+                    if (typeof (data.err) != 'undefined' && data.err != "") {
+                        alert(data.err);
+                    } else {
+                        SelClear(key);
+                        for (var i = 0; i < data.length; i++) {
+                            $("#" + sname).append("<option value='" + data[i].ID + "'>" + data[i].Name + "</option>");
+                        }
+                    }
+                },
+                error: function (data, status, e) {
+                    alert(e);
+                }
+            });
+            } else {
+                SelClear(key);
+            }
+        }
+        changeValue('selProvince', 'selProvince', 'Province');
+        function SelClear(key) {
+            if (key == "City") {
+                $("#selCity").html("<option value='0'>==市级==</option>");
+                $("#selArea").html("<option value='0'>==区级==</option>");
+                $("#selPolice").html("<option value='0'>==派出所级==</option>");
+            } else if (key == "Area") {
+                $("#selArea").html("<option value='0'>==区级==</option>");
+                $("#selPolice").html("<option value='0'>==派出所级==</option>");
+            } else if (key == "police") {
+                $("#selPolice").html("<option value='0'>==派出所级==</option>");
+            }
+        }
+        function myFunction() {
+            $("#zbtnXY").toggle(100);
+        }
+    </script>
+    <div class="contentTable" id="contentTable">
+        <table border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th style="width: 4%;">
+                    序号
+                </th>
+                <th style="width: 10%;">
+                    上网服务场所编码
+                </th>
+                <th style="width: 8%;">
+                    上网服务场所名称
+                </th>
+                <th style="width: 15%;">
+                    场所详细地址
+                </th>
+                <th style="width: 7%;">
+                    场所经营法人
+                </th>
+                <th style="width: 7%;">
+                    安全厂商
+                </th>
+                <th style="width: 8%;">
+                    联系方式
+                </th>
+                <th style="width: 6%;">
+                    场所服务类型
+                </th>
+                <th style="width: 6%;">
+                    场所状态
+                </th>
+                <th style="width: 6%;">
+                    设备状态
+                </th>
+                <th style="width: 6%;">
+                    审核状态
+                </th>
+                <th style="width: 6%;">
+                    设备列表
+                </th>
+                <th style="width: 6%;">
+                    审核
+                </th>
+                <th style="width: 15%;">
+                    操作
+                </th>
+            </tr>
+            @{
+                foreach (var item in loc)
+                {
+                    <tr>
+                        <td>
+                            @item.PageNum
+                        </td>
+                        <td>
+                            @item.NETBAR_WACODE
+                        </td>
+                        <td>
+                            @item.PLACE_NAME
+                        </td>
+                        <td>
+                            @item.SITE_ADDRESS
+                        </td>
+                        <td>
+                            @item.LAW_PRINCIPAL_NAME
+                        </td>
+                        <td>
+                            @item.SECURITY_SOFTWARE_ORGNAME
+                        </td>
+                        <td>
+                            @item.RELATIONSHIP_ACCOUNT
+                        </td>
+                        <td>
+                            @ChangeValue.ChangeLevelWord(item.NETSITE_TYPE.ToString())
+                        </td>
+                        <td>
+                            @Html.Raw(item.Statis == 1 ? "<font color='green'>营业状态</font>" : "<font color='red'>停业状态</font>")
+                        </td>
+                        <td>
+                            在线
+                        </td>
+                        <td>
+                            @ChangeValue.RefVerifiedStrExcel(item.Verified)
+                        </td>
+                        <td>
+                            <a href="@(Url.Content("~/Location/DevInfoList?Id=") + item.ID)">设备列表</a>
+                        </td>
+                        <td>
+                            @if (relaVal.Contains("1"))
+                            {
+                                <a href="@(Url.Content("~/Location/DetailLoca?Id=") + item.ID)">
+                                    <img title="审核" src="@Url.Content("../../Content/images/audit_icon.png")" alt="审核" />
+                                </a>
+                            }
+                        </td>
+                        <td>
+                            @if (relaVal.Contains("1"))
+                            {
+                                <a href="@(Url.Content("~/Location/DetailLoca?Id=") + item.ID)">
+                                    <img title="详情" src="@Url.Content("../../Content/images/view1_icon.png")" alt="查看" />
+                                </a>
+                            }
+                            @if (relaVal.Contains("2"))
+                            {
+                                <a href="@(Url.Content("~/Location/EditLocation?Id=") + item.ID)">
+                                    <img title="编辑" src="@Url.Content("../../Content/images/edit1_icon.png")" alt="编辑" />
+                                </a>
+                            }
+                            @if (relaVal.Contains("3"))
+                            {
+                                <a href="javascript:void(0)">
+                                    <img title="删除" src="@Url.Content("../../Content/images/del1_icon.png")" onclick="Del(@item.ID,@item.APNum)" alt="删除" />
+                                </a>
+                            }
+                        </td>
+                    </tr>
+
+                }
+            }
+            
+        </table>
+        <div class="page">
+            <ul class="ulPage">
+                @Ajax.Pager(loc, new PagerOptions
+               {
+                   FirstPageText = "首页",
+                   PrevPageText = "上一页",
+                   NextPageText = "下一页",
+                   LastPageText = "尾页",
+                   PageIndexParameterName = "Id",
+                   NavigationPagerItemTemplate = "<li class=\"liPage\" style=\"width: 42px; \">{0}</li>",
+                   NumericPagerItemTemplate = "<li class=\"liPage\" style=\"width: 42px; \">{0}</li>",
+                   ShowMorePagerItems = false,
+               }).AjaxOptions(a => a.SetUpdateTargetId("contentTable"))
+                <li class="contPage">共<span>@loc.TotalPageCount</span>页/共<span>@loc.TotalItemCount</span>条</li>
+            </ul>
+        </div>
+    </div>
+    <div id="ExprotPopRec" style="position: absolute; top: 30%; left: 50%; background-color: White;
+            margin-left: -190px; margin-top: -200px; z-index: 1000; display: none;">
+        <div style="float: left; border: 1px solid #666; width: 380px">
+            <form action="" id="checkform" method="post">
+                <div>
+                    <div>
+                    </div>
+                    <div>
+                    </div>
+                    <div onclick="javascript:parent.closeSelDiv('ExprotPopRec')">
+                    </div>
+                    选择导出列
+                </div>
+                <div style="height: 800px">
+                    <ul style="width: 100%; margin: 10px 5px 5px 5px; float: left">
+                        <li>
+                            <label>
+                                <input type="checkbox" name="ckExprotCheck" onclick="select_all(this,'ckExprotCheck')"
+                                       value="" />全选
+                            </label>
+                        </li>
+                    </ul>
+                    <ul style="width: 100%; margin: 0 5px 5px 5px; float: left">
+                        <li>
+                            <label>
+                                <input type="checkbox" checked="checked" name="ckExprotCheck" value="1" />上网服务场所编码
+                            </label>
+                        </li>
+                        <li>
+                            <label>
+                                <input type="checkbox" checked="checked" name="ckExprotCheck" value="2" />上网服务场所名称
+                            </label>
+                        </li>
+                        <li>
+                            <label>
+                                <input type="checkbox" checked="checked" name="ckExprotCheck" value="3" />场所详细地址
+                            </label>
+                        </li>
+                        <li>
+                            <label>
+                                <input type="checkbox" checked="checked" name="ckExprotCheck" value="4" />场所服务类型
+                            </label>
+                        </li>
+                        <li>
+                            <label>
+                                <input type="checkbox" checked="checked" name="ckExprotCheck" value="5" />场所经营法人
+                            </label>
+                        </li>
+                        <li>
+                            <label>
+                                <input type="checkbox" checked="checked" name="ckExprotCheck" value="6" />联系方式
+                            </label>
+                        </li>
+                        <li>
+                            <label>
+                                <input type="checkbox" checked="checked" name="ckExprotCheck" value="7" />场所状态
+                            </label>
+                        </li>
+                        @* <li><label><input type="checkbox" checked="checked" name="ckExprotCheck" value="12" />网络接入账号或固定IP地址</label></li>*@
+                        <li>
+                            <label>
+                                <input type="checkbox" checked="checked" name="ckExprotCheck" value="9" />经度
+                            </label>
+                        </li>
+                        <li>
+                            <label>
+                                <input type="checkbox" checked="checked" name="ckExprotCheck" value="10" />纬度
+                            </label>
+                        </li>
+                        <li>
+                            <label>
+                                <input type="checkbox" checked="checked" name="ckExprotCheck" value="11" />审核状态
+                            </label>
+                        </li>
+                        <li>
+                            <label>
+                                <input type="checkbox" name="ckExprotCheck" value="8" />安全厂商组织机构代码
+                            </label>
+                        </li>
+                        <li>
+                            <label>
+                                <input type="checkbox" name="ckExprotCheck" value="13" />经营法人有效证件类型
+                            </label>
+                        </li>
+                        <li>
+                            <label>
+                                <input type="checkbox" name="ckExprotCheck" value="14" />经营法人有效证件号码
+                            </label>
+                        </li>
+                        <li>
+                            <label>
+                                <input type="checkbox" name="ckExprotCheck" value="15" />场所网络接入方式
+                            </label>
+                        </li>
+                        <li>
+                            <label>
+                                <input type="checkbox" name="ckExprotCheck" value="16" />场所网络接入服务商
+                            </label>
+                        </li>
+                        <li>
+                            <label>
+                                <input type="checkbox" name="ckExprotCheck" value="17" />营业开始时间
+                            </label>
+                        </li>
+                        <li>
+                            <label>
+                                <input type="checkbox" name="ckExprotCheck" value="18" />营业结束时间
+                            </label>
+                        </li>
+                        <li>
+                            <label>
+                                <input type="checkbox" name="ckExprotCheck" value="19" />省
+                            </label>
+                        </li>
+                        <li>
+                            <label>
+                                <input type="checkbox" name="ckExprotCheck" value="20" />市
+                            </label>
+                        </li>
+                        <li>
+                            <label>
+                                <input type="checkbox" name="ckExprotCheck" value="21" />区
+                            </label>
+                        </li>
+                        <li>
+                            <label>
+                                <input type="checkbox" name="ckExprotCheck" value="22" />派出所
+                            </label>
+                        </li>
+                        <li>
+                            <label>
+                                <input type="checkbox" name="ckExprotCheck" value="23" />警区
+                            </label>
+                        </li>
+                        <li>
+                            <label>
+                                <input type="checkbox" name="ckExprotCheck" value="24" />备案时间
+                            </label>
+                        </li>
+                        <li>
+                            <label>
+                                <input type="checkbox" name="ckExprotCheck" value="25" />服务状态
+                            </label>
+                        </li>
+                        <li>
+                            <label>
+                                <input type="checkbox" name="ckExprotCheck" value="26" />数据状态
+                            </label>
+                        </li>
+                        <li>
+                            <label>
+                                <input type="checkbox" name="ckExprotCheck" value="27" />场所标识ID
+                            </label>
+                        </li>
+                        <li>
+                            <label>
+                                <input type="checkbox" name="ckExprotCheck" value="28" />AP标识ID
+                            </label>
+                        </li>
+                        <li>
+                            <label>
+                                <input type="checkbox" name="ckExprotCheck" value="29" />AP名称
+                            </label>
+                        </li>
+                        <li>
+                            <label>
+                                <input type="checkbox" name="ckExprotCheck" value="30" />APMac地址
+                            </label>
+                        </li>
+                        <li>
+                            <label>
+                                <input type="checkbox" name="ckExprotCheck" value="31" />产品接入号
+                            </label>
+                        </li>
+                        @*          <li><label><input type="checkbox" name="ckExprotCheck" value="32"/>拆换机类型</label></li>*@
+                        @*       <li><label><input type="checkbox" name="ckExprotCheck" value="33"/>拆换机状态</label></li>*@
+                        @*                          <li><label><input type="checkbox" name="ckExprotCheck" value="34" />拆换机审核时间</label></li>*@
+                    </ul>
+                    <div style="clear: both">
+                    </div>
+                    <div style="text-align: center">
+                        <input type="button" name="button" value="导出Excel" onclick="report()" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div id="mapPopRec" style="position: absolute; top: 50%; left: 50%; margin-left: -150px;
+        margin-top: -80px; z-index: 901; display: none;">
+    <div class="Pop_SelDiv" style="float: left; border: 1px solid #666">
+        <form action="" method="post">
+            <div class="aq_title">
+                <div class="TT_left">
+                </div>
+                <div class="TT_right">
+                </div>
+                <div class="img_close" onclick="javascript:parent.closeSelDiv('mapPopRec')">
+                </div>
+                场所数据导入
+            </div>
+            <div class="aq_tab aq_overflow2" style="height: 100px;">
+                <ul style="width: 300px;">
+                    <li>
+                        模版类型：<label><input type="radio" name="radType" value="1" />新增</label><label>
+                            <input type="radio" name="radType" value="2" />编辑
+                        </label>
+                    </li>
+                    <br />
+                    @*<li></li>*@
+                    <li>
+                        <input type="file" id="file" value="选择文件" />
+                    </li>
+                </ul>
+            </div>
+            <div class="aq_foot">
+                <input class="btn_SS" type="button" name="button" value="确定" onclick="upLoadFile()"
+                       onmouseover="this.className='Over_SS'" onmouseout="this.className='Onout_SS'" />
+            </div>
+        </form>
+    </div>
+</div>
+<div id="divDown" style="position: absolute; left: 50%; top: 50%; margin-left: -62px;
+        margin-top: -62px; display: none; z-index: 1000">
+    <img src="@Url.Content("~/Content/images/loading7.gif")" width="124" height="124" />
+</div>
+<div class="Bk" id="Bk">
+</div>
+<script type="text/javascript">
+    function showDown() {
+        document.getElementById('ExprotPopRec').style.display = 'block';
+        $("#Bk").show();
+    }
+
+    function closeDown() {
+        document.getElementById('ExprotPopRec').style.display = 'none';
+        $("#Bk").hide();
+    }
+    function upLoadFile() {
+        //showDown();
+        //$(".Bk").css("z-index","1001");
+        var file = document.getElementById("file");
+        var fileFormat = file.value.substr(file.value.lastIndexOf(".")).toLowerCase();
+        var radType=$("input[name='radType']:checked").val();
+        if(typeof(radType)=="undefined"){
+            file.value = null;
+            alert("请上传Excel类型文件！");
+            $(".Bk").css("z-index","900");
+            document.getElementById('divDown').style.display = 'none';
+            return;
+        }
+        if (!(fileFormat != ".xls"||fileFormat!=".xlsx")) {
+            file.value = null;
+            alert("请上传Excel类型文件！");
+            $(".Bk").css("z-index","900");
+            document.getElementById('divDown').style.display = 'none';
+            return;
+        }
+        var formdata = new FormData();
+        var fileObj = file.files;
+        for (var i = 0; i < fileObj.length; i++)
+            formdata.append("file" + i, fileObj[i]);
+        $.ajax({
+            async: false,
+            url: "/Public/BatchAddLocation?importType="+radType+"&_="+Math.random(),
+            type: "POST",
+            data: formdata,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+                if(data.result==1){
+                    alert(data.errIndexs) ;
+                    file.value = null;
+                    $("#mapPopRec").hide();
+                    window.location.reload();
+                }else{
+                    file.value = null; //file.files = new FormData();
+                    $("#mapPopRec").hide();
+                    alert(data.message);
+                    //$(".Bk").css("z-index","900");
+                }},
+            error: function () {
+                file.value = null;
+                alert("服务器忙，请稍后再试！");
+                $("#mapPopRec").hide();
+            }
+        });
+        //document.getElementById('divDown').style.display = 'none';
+    }
+
+    //导出Excel
+    function report() {
+        var maxCount=@Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["ExprotCout"]);
+        var TotalCount =parseInt($("#spTotalItem").html());
+        if(TotalCount>maxCount){
+            alert("为保证导出数据的速度，数据源不能大于"+maxCount+"条");
+            closeDown();
+        }else{
+            var str = window.location.search;
+            if(str=="")
+                str="?a=1";
+
+            var strId = ckStrVal("ckExprotCheck");
+            if(strId=="0"){
+                alert("请选择导出数据的列");
+                return;
+            }else{str+=str!=""?("&strExprotId="+strId):"";}
+            showDown();
+            $.ajax
+                    ({
+                        type: "Get",
+                        url: '@Url.Content("~/Public/LocaExport")' + str + '&abc=' + (new Date()).getTime(),
+                        dataType: "json",
+                        cache: false,
+                        success: function (data, status) {
+                            if (typeof (data.err) != 'undefined' && data.err != "") {
+                                alert(data.err);
+                            } else {
+                                window.location.href = '@Url.Content("~/Public/Download?name=")' + encodeURIComponent('场所列表报表_') + '&path=' + encodeURIComponent(data.result);
+                            }
+                            closeDown();
+                            $("#ExprotPopRec").hide();
+                        },
+                        error: function (data, status, e) {
+                            alert(e);
+                            closeDown();
+                            $("#ExprotPopRec").hide();
+                        }
+                    });
+        }
+    }
+
+    function ckStrVal(objId){
+        var strId="0";
+        var checkedlist = $("input:checkbox[name='"+objId+"']:checked");
+        checkedlist.each(function () {
+            if ($(this).val() != "undefined")
+                strId += "," + $(this).val();
+        });
+        return strId;
+    }
+    function closeSelDiv(objId){
+        document.getElementById(objId).style.display='none';
+        document.getElementById('Bk').style.display='none';
+    }
+    //弹窗事件
+    function showSelDiv(objId) {
+        document.getElementById(objId).style.display = 'block';
+        document.getElementById('Bk').style.display = 'block';
+    }
+    //全选事件
+    function select_all(checkbox, name) {
+        var checktype = checkbox.checked;
+        var doc = document.getElementsByName(name);
+        for (var i = 0; i < doc.length; i++) {
+            var obj = doc[i];
+            obj.checked = checktype;
+        }
+    }
+    function Del(id, Num) {
+        if (Num > 0) {
+            alert("该场所下还存在" + Num + "个设备，请先删除设备！");
+        }
+        else {
+            if(confirm("确定要删除场所？")){
+                window.location.href = '@Url.Content("~/Location/DelLocation?id=")' + id;
+            }
+        }
+    }
+</script>

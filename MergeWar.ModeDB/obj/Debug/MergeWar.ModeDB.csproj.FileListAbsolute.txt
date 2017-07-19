@@ -1,0 +1,15 @@
+D:\netweb\合成作战\源码\MergeWar.ModeDB\bin\Debug\HCZZ.ModeDB.dll
+D:\netweb\合成作战\源码\MergeWar.ModeDB\bin\Debug\HCZZ.ModeDB.pdb
+D:\netweb\合成作战\源码\MergeWar.ModeDB\obj\Debug\HCZZ.ModeDB.dll
+D:\netweb\合成作战\源码\MergeWar.ModeDB\obj\Debug\HCZZ.ModeDB.pdb
+D:\netweb\合成作战\源码\MergeWar.ModeDB\obj\Debug\MergeWar.ModeDB.csprojResolveAssemblyReference.cache
+E:\workspaces\VSProject\MergeWar\MergeWar.ModeDB\bin\Debug\HCZZ.ModeDB.dll
+E:\workspaces\VSProject\MergeWar\MergeWar.ModeDB\bin\Debug\HCZZ.ModeDB.pdb
+E:\workspaces\VSProject\MergeWar\MergeWar.ModeDB\obj\Debug\HCZZ.ModeDB.dll
+E:\workspaces\VSProject\MergeWar\MergeWar.ModeDB\obj\Debug\HCZZ.ModeDB.pdb
+E:\workspaces\VSProject\MergeWar\MergeWar.ModeDB\obj\Debug\MergeWar.ModeDB.csprojResolveAssemblyReference.cache
+D:\netweb\合成作战新版\源码\MergeWar.ModeDB\bin\Debug\HCZZ.ModeDB.dll
+D:\netweb\合成作战新版\源码\MergeWar.ModeDB\bin\Debug\HCZZ.ModeDB.pdb
+D:\netweb\合成作战新版\源码\MergeWar.ModeDB\obj\Debug\HCZZ.ModeDB.dll
+D:\netweb\合成作战新版\源码\MergeWar.ModeDB\obj\Debug\HCZZ.ModeDB.pdb
+D:\netweb\合成作战新版\源码\MergeWar.ModeDB\obj\Debug\MergeWar.ModeDB.csprojResolveAssemblyReference.cache

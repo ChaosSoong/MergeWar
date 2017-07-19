@@ -1,0 +1,87 @@
+=============================================================
+====时间：2017/7/14 16:32:31
+====IP：::1
+====异常内容：
+System.ServiceModel.EndpointNotFoundException: 没有终结点在侦听可以接受消息的 http://192.168.0.92:8989/mytest/myInterface。这通常是由于不正确的地址或者 SOAP 操作导致的。如果存在此情况，请参见 InnerException 以了解详细信息。 ---> System.Net.WebException: 无法连接到远程服务器 ---> System.Net.Sockets.SocketException: 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。 192.168.0.92:8989
+   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   在 System.Net.ServicePoint.ConnectSocketInternal(Boolean connectFailure, Socket s4, Socket s6, Socket& socket, IPAddress& address, ConnectSocketState state, IAsyncResult asyncResult, Exception& exception)
+   --- 内部异常堆栈跟踪的结尾 ---
+   在 System.Net.HttpWebRequest.GetRequestStream(TransportContext& context)
+   在 System.Net.HttpWebRequest.GetRequestStream()
+   在 System.ServiceModel.Channels.HttpOutput.WebRequestHttpOutput.GetOutputStream()
+   --- 内部异常堆栈跟踪的结尾 ---
+
+Server stack trace: 
+   在 System.ServiceModel.Channels.HttpOutput.WebRequestHttpOutput.GetOutputStream()
+   在 System.ServiceModel.Channels.HttpOutput.Send(TimeSpan timeout)
+   在 System.ServiceModel.Channels.HttpChannelFactory`1.HttpRequestChannel.HttpChannelRequest.SendRequest(Message message, TimeSpan timeout)
+   在 System.ServiceModel.Channels.RequestChannel.Request(Message message, TimeSpan timeout)
+   在 System.ServiceModel.Dispatcher.RequestChannelBinder.Request(Message message, TimeSpan timeout)
+   在 System.ServiceModel.Channels.ServiceChannel.Call(String action, Boolean oneway, ProxyOperationRuntime operation, Object[] ins, Object[] outs, TimeSpan timeout)
+   在 System.ServiceModel.Channels.ServiceChannelProxy.InvokeService(IMethodCallMessage methodCall, ProxyOperationRuntime operation)
+   在 System.ServiceModel.Channels.ServiceChannelProxy.Invoke(IMessage message)
+
+Exception rethrown at [0]: 
+   在 System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage(IMessage reqMsg, IMessage retMsg)
+   在 System.Runtime.Remoting.Proxies.RealProxy.PrivateInvoke(MessageData& msgData, Int32 type)
+   在 MergeWar.JavaServer.SCPInquireService.queryTerminalManageList(queryTerminalManageList request)
+   在 MergeWar.JavaServer.SCPInquireServiceClient.MergeWar.JavaServer.SCPInquireService.queryTerminalManageList(queryTerminalManageList request) 位置 D:\netweb\合成作战新版\源码\MergeWar\Service References\JavaServer\Reference.cs:行号 371
+   在 MergeWar.JavaServer.SCPInquireServiceClient.queryTerminalManageList(String arg0) 位置 D:\netweb\合成作战新版\源码\MergeWar\Service References\JavaServer\Reference.cs:行号 378
+   在 HCZZ.Controllers.SystemController.NumSelList(Nullable`1 pageIndex, Int32 id, String startTime, String endTime, String dataType, String authType) 位置 D:\netweb\合成作战新版\源码\MergeWar\Controllers\SystemController.cs:行号 2098
+
+
+=============================================================
+====时间：2017/7/14 16:34:24
+====IP：::1
+====异常内容：
+System.InvalidOperationException: 序列不包含任何元素
+   在 System.Linq.Enumerable.First[TSource](IEnumerable`1 source)
+   在 HCZZ.Controllers.LocationController.CKMac(String Id) 位置 D:\netweb\合成作战新版\源码\MergeWar\Controllers\LocationController.cs:行号 1210
+====相关信息：
+——Function：
+LocationController.CKMac(string Id)[HttpGet]
+
+
+=============================================================
+====时间：2017/7/14 16:35:27
+====IP：::1
+====异常内容：
+System.Data.SqlClient.SqlException (0x80131904): 列名 'Remark' 无效。
+   在 System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   在 System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   在 System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   在 System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   在 System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   在 HCZZ.DAL.SqlHelper.ExecuteNonQuery(SqlConnection connection, CommandType commandType, String commandText, SqlParameter[] commandParameters) 位置 D:\netweb\合成作战新版\源码\MergeWar.DAL\SQLHelper.cs:行号 359
+   在 HCZZ.DAL.SqlHelper.ExecuteNonQuery(String connectionString, CommandType commandType, String commandText, SqlParameter[] commandParameters) 位置 D:\netweb\合成作战新版\源码\MergeWar.DAL\SQLHelper.cs:行号 276
+   在 HCZZ.DAL.LocationDAL.UpdateDevById(Int32 id) 位置 D:\netweb\合成作战新版\源码\MergeWar.DAL\LocationDAL.cs:行号 242
+   在 HCZZ.Controllers.LocationController.DelLocation(Int32 id) 位置 D:\netweb\合成作战新版\源码\MergeWar\Controllers\LocationController.cs:行号 434
+ClientConnectionId:1653ad5f-e684-403c-8796-b035c9b5c0f7
+Error Number:207,State:1,Class:16
+====相关信息：
+——Function：
+LocationController.DelLoca(int Id)[HttpGet]
+
+
+=============================================================
+====时间：2017/7/14 16:37:14
+====IP：::1
+====异常内容：
+System.Net.WebException: 未能找到路径“C:\DeviceInfo\BatchDelete”的一部分。 ---> System.IO.DirectoryNotFoundException: 未能找到路径“C:\DeviceInfo\BatchDelete”的一部分。
+   在 System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   在 System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   在 System.Net.FileWebStream..ctor(FileWebRequest request, String path, FileMode mode, FileAccess access, FileShare sharing)
+   在 System.Net.FileWebRequest.GetRequestStreamCallback(Object state)
+   --- 内部异常堆栈跟踪的结尾 ---
+   在 System.Net.WebClient.UploadValues(Uri address, String method, NameValueCollection data)
+   在 System.Net.WebClient.UploadValues(String address, String method, NameValueCollection data)
+   在 HCZZ.HttpHelps.PostSend(Int32 sendType, Int32 DataType, String DeviceList) 位置 D:\netweb\合成作战新版\源码\MergeWar\AppCode\HttpHelps.cs:行号 56
+====相关信息：
+——sendMessage：
+{"MAC":"A1-B2-C3-D4-E5-F6","APName":"12345"}
+
+

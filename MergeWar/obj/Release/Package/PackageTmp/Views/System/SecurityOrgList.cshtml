@@ -1,0 +1,112 @@
+﻿@using System.Collections.Generic
+@using Common
+@using HCZZ.ModeDB
+@using Webdiyer.WebControls.Mvc
+@{
+    ViewBag.Title = "SecurityOrgList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string relaVal = ChangeValue.RefPageRelaByPath("System/UserList");
+}
+<link href="@Url.Content("~/Content/css/publicHeader.css")" rel="stylesheet" type="text/css" />
+<div class="contentbody" id="contentbody">
+    <div class="contentTitle">
+        <input class="add" id="" value="添加安全厂商" type="button" onclick="PublicFun(1,'System/AddOrg')"/>
+    </div>
+    <div class="contentTable">
+        <table cellspacing="0" cellpadding="0" border="0">
+            <tr>
+                <th style="width: 10%;">
+                序号
+                </th>
+                <th style="width: 15%;">厂商名称</th>
+                <th style="width: 15%;">机构代码</th>
+                <th style="width: 10%;">联系人</th>
+                <th style="width: 10%;">联系电话</th>
+                <th style="width: 10%;">IMSI</th>
+                <th style="width: 10%;">IMEI</th>
+                <th style="width: 10%;">虚拟身份</th>
+                <th style="width: 10%;">操作</th>
+            </tr>
+            @{
+                PagedList<SecurityOrg> list = (PagedList<SecurityOrg>)ViewBag.pl;
+                if (list != null && list.Count > 0)
+                {
+                    foreach (SecurityOrg item in list)
+                    {
+                        <tr >
+                            <td width="5%">
+                                @item.PageNum
+                            </td>
+                            <td width="5%"title='@item.SECURITY_SOFTWARE_ORGNAME'>@(ChangeValue.ByteSubString(item.SECURITY_SOFTWARE_ORGNAME, 12))</td>
+                            <td width="5%">@item.SECURITY_SOFTWARE_ORGCODE</td>
+                            <td width="5%">@item.CONTACTOR</td>
+                            <td width="5%">@item.CONTACTOR_TEL</td>
+                            <td width="5%"></td>
+                            <td width="5%"></td>
+                            <td width="5%"></td>
+                            <td width="5%">
+                                @if (relaVal.Contains("1"))
+                                {
+                                    <img title="详情" src="@Url.Content("~/Content/images/view1_icon.png")" alt="查看" onclick="PublicFun(1,'System/DetOrg?Id=@item.ID')"/>
+                                }
+                                @if (relaVal.Contains("2"))
+                                {
+                                    <img title="编辑" src="@Url.Content("~/Content/images/edit1_icon.png")" alt="编辑"  onclick="PublicFun(1,'System/EditOrg?id=@item.ID')"/>
+                                }
+                                @if (relaVal.Contains("3"))
+                                {
+                                    <img title="删除" src="@Url.Content("~/Content/images/del1_icon.png")" alt="删除" onclick="PublicFun(2,'System/DelOrg?id=@item.ID')"/>
+                                }
+                            </td>
+                        </tr>
+                    }
+                    <tr><td colspan="9">
+                    <div style="width: 100%; text-align: left; margin-left: 30px">
+                    </div>
+                    </td>
+                </tr>
+                      <tr>
+                    <td colspan="9">
+                        <div class="pag_td" style="width: 100%; text-align: center; font-size: 12px">
+                            @Html.Pager(list, new PagerOptions()
+                       {
+                           PageIndexParameterName = "pageIndex",
+                           @CssClass = "pag"
+                       })
+                        <div class="pag_all">
+                                共<font>@list.TotalPageCount</font>页/共<font id="spTotalItem">@list.TotalItemCount</font>条</div>
+                        </div>
+                    </td>
+                </tr>     
+                }
+                else
+                {
+                    <tr><td>没有配置信息</td></tr>
+                }
+            }
+        </table>
+    </div>
+</div>
+<script type="text/javascript">
+//    window.onload = parent.changeFrameHeight($(document.body).height());
+//    $(document).ready(function () {
+//        for (var i = 0; i < parent.NewIdList.length; i++) {
+//            $("input:checkbox[value='" + parent.NewIdList[i] + "']").attr("checked", "checked");
+//        }
+//        if ($(".checkone").length == $(".checkone[checked='checked']").length && $(".checkone").length != 0) {
+//            $("#checkall").attr("checked", true);
+//        }
+//    });
+//    //查看该值是否存在于数组中，是则返回位置，否则返回-1
+//    function contains(arr, obj) {
+//        var i = arr.length;
+//        while (i--) {
+//            if (arr[i] == obj) {
+//                return i;
+//            }
+//        }
+//        return -1;
+//    }
+
+
+</script>

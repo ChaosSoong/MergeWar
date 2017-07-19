@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://service/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="SCPInquireServiceImplService" targetNamespace="http://service/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xs:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://service/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="addNetLogList" type="tns:addNetLogList" />
+      <xs:element name="addNetLogListResponse" type="tns:addNetLogListResponse" />
+      <xs:element name="addTerminalManageList" type="tns:addTerminalManageList" />
+      <xs:element name="addTerminalManageListResponse" type="tns:addTerminalManageListResponse" />
+      <xs:element name="queryTerminalManageList" type="tns:queryTerminalManageList" />
+      <xs:element name="queryTerminalManageListResponse" type="tns:queryTerminalManageListResponse" />
+      <xs:complexType name="addTerminalManageList">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="addTerminalManageListResponse">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:complexType name="addNetLogList">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="addNetLogListResponse">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:complexType name="queryTerminalManageList">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="queryTerminalManageListResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="SolrServerException" type="tns:SolrServerException" />
+      <xs:complexType name="SolrServerException">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:element name="IOException" type="tns:IOException" />
+      <xs:complexType name="IOException">
+        <xs:sequence />
+      </xs:complexType>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="addTerminalManageList">
+    <wsdl:part name="parameters" element="tns:addTerminalManageList" />
+  </wsdl:message>
+  <wsdl:message name="SolrServerException">
+    <wsdl:part name="SolrServerException" element="tns:SolrServerException" />
+  </wsdl:message>
+  <wsdl:message name="queryTerminalManageList">
+    <wsdl:part name="parameters" element="tns:queryTerminalManageList" />
+  </wsdl:message>
+  <wsdl:message name="addTerminalManageListResponse">
+    <wsdl:part name="parameters" element="tns:addTerminalManageListResponse" />
+  </wsdl:message>
+  <wsdl:message name="addNetLogList">
+    <wsdl:part name="parameters" element="tns:addNetLogList" />
+  </wsdl:message>
+  <wsdl:message name="IOException">
+    <wsdl:part name="IOException" element="tns:IOException" />
+  </wsdl:message>
+  <wsdl:message name="addNetLogListResponse">
+    <wsdl:part name="parameters" element="tns:addNetLogListResponse" />
+  </wsdl:message>
+  <wsdl:message name="queryTerminalManageListResponse">
+    <wsdl:part name="parameters" element="tns:queryTerminalManageListResponse" />
+  </wsdl:message>
+  <wsdl:portType name="SCPInquireService">
+    <wsdl:operation name="addTerminalManageList">
+      <wsdl:input name="addTerminalManageList" message="tns:addTerminalManageList" />
+      <wsdl:output name="addTerminalManageListResponse" message="tns:addTerminalManageListResponse" />
+      <wsdl:fault name="SolrServerException" message="tns:SolrServerException" />
+      <wsdl:fault name="IOException" message="tns:IOException" />
+    </wsdl:operation>
+    <wsdl:operation name="addNetLogList">
+      <wsdl:input name="addNetLogList" message="tns:addNetLogList" />
+      <wsdl:output name="addNetLogListResponse" message="tns:addNetLogListResponse" />
+      <wsdl:fault name="SolrServerException" message="tns:SolrServerException" />
+      <wsdl:fault name="IOException" message="tns:IOException" />
+    </wsdl:operation>
+    <wsdl:operation name="queryTerminalManageList">
+      <wsdl:input name="queryTerminalManageList" message="tns:queryTerminalManageList" />
+      <wsdl:output name="queryTerminalManageListResponse" message="tns:queryTerminalManageListResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="SCPInquireServiceImplServiceSoapBinding" type="tns:SCPInquireService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="addTerminalManageList">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="addTerminalManageList">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="addTerminalManageListResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="SolrServerException">
+        <soap:fault use="literal" name="SolrServerException" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="IOException">
+        <soap:fault use="literal" name="IOException" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="addNetLogList">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="addNetLogList">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="addNetLogListResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="SolrServerException">
+        <soap:fault use="literal" name="SolrServerException" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="IOException">
+        <soap:fault use="literal" name="IOException" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="queryTerminalManageList">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="queryTerminalManageList">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="queryTerminalManageListResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="SCPInquireServiceImplService">
+    <wsdl:port name="SCPInquireServiceImplPort" binding="tns:SCPInquireServiceImplServiceSoapBinding">
+      <soap:address location="http://192.168.0.92:8989/mytest/myInterface" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

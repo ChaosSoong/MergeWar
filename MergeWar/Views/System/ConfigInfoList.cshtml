@@ -1,0 +1,42 @@
+﻿@using System.Collections.Generic
+@using Common
+@using HCZZ.ModeDB
+@{
+    ViewBag.Title = "系统设置-系统参数配置";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="@Url.Content("~/Content/css/XTGL.css")" rel="stylesheet" type="text/css" />
+<div class="contentbody" id="contentbody">
+    <div class="contentTitle">
+        <input  class="search"  onclick="javascript:location.replace('@Url.Content("~/System/EditConfigInfo")')" type="button" name="button" value="修改配置信息" />
+    </div>
+    <div class="contentTable">
+        <table cellspacing="0" cellpadding="0" border="0">
+            <tr>
+                <th style="width: 10%;">序号</th>
+                <th style="width: 45%;">配置类型</th>
+                <th style="width: 45%;">配置值</th>
+            </tr>
+            @{
+                List<SystemConfigInfo> list = (List<SystemConfigInfo>) ViewBag.pl;
+                if (list != null && list.Count > 0)
+                {
+                    int i = 1;
+                    foreach (SystemConfigInfo item in list)
+                    {
+                        <tr>
+                            <td width="5%">@i</td>
+                            <td width="40%">@ChangeValue.RefConfigType(item.ConfigType)</td>
+                            <td width="40%">@ChangeValue.RefSysConfigVal(item.ConfigType, item.ConfigValue)</td>
+                        </tr>
+                        i++;
+                    }
+                }
+                else
+                {
+                    <tr><td>没有配置信息</td></tr>
+                }
+            }
+        </table>
+    </div>
+</div>

@@ -1,0 +1,329 @@
+﻿@{
+    ViewBag.Title = "添加用户";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+@using (Html.BeginForm("AddUser", "System", FormMethod.Post))
+{
+    <div id="Cx" style="display: none">
+    </div>
+    <div>
+    </div>
+    <table>
+        <tr>
+            <th colspan="4">
+                <h1>添加用户</h1>
+            </th>
+        </tr>
+    </table>
+    <div>
+        <table>
+            <tr>
+                <td width="15%" align="right">
+                    用户账号：
+                </td>
+                <td colspan="3">
+                    <input type="text" id="txtName" name="txtName" class="_text" maxlength="18" />
+                    <span id="spName" class="color_ccc">*长度为4-18,以字母开头,可以包含数字和下划线</span>
+                </td>
+            </tr>
+            <tr>
+                <td width="15%" align="right">
+                    用户密码：
+                </td>
+                <td colspan="3">
+                    <input type="password" id="txtPassword" name="txtPassword" class="_text" maxlength="18" /><span id="spPassword" class="color_ccc">*</span>
+                </td>
+            </tr>
+            <tr>
+                <td width="15%" align="right">
+                    真实姓名：
+                </td>
+                <td colspan="3">
+                    <input type="text" id="txtTrueName" name="txtTrueName" class="_text" maxlength="13" /><span id="spTrueName" class="color_ccc">*</span>
+                </td>
+            </tr>
+            <tr>
+                <td width="15%" align="right">
+                    手机号码：
+                </td>
+                <td colspan="3">
+                    <input type="text" id="txtMobile" name="txtMobile" class="_text" maxlength="11" /><span id="spMobile" class="color_ccc">*</span>
+                </td>
+            </tr>
+            <tr>
+                <td width="15%" align="right">
+                    Email：
+                </td>
+                <td colspan="3">
+                    <input type="text" id="txtEmail" name="txtEmail" maxlength="250" class="_text" /><span id="spEmail" class="color_ccc">*</span>
+                </td>
+            </tr>
+            <tr>
+                <td width="15%" align="right">
+                    用户类型：
+                </td>
+                <td colspan="3">
+                    <select id="selUserType" name="selUserType" onclick="SelectType()">
+                        <option value="0">==请选择==</option>
+                        <option value="1">管理员</option>
+                        <option value="2">分局用户</option>
+                        <option value="3">派出所用户</option>
+                        <option value="4">市局用户</option>
+                        <option value="5">分中心用户</option>
+                        <option value="6">省用户</option>
+                        <option value="7">全国用户</option>
+                        <option value="8">运营用户</option>
+                    </select>
+                    <span id="spUserType" class="color_ccc">*</span>
+                </td>
+            </tr>
+            <tr>
+                <td align="right">
+                    所属区域：
+                </td>
+                <td colspan="3">
+                    <p style="padding-left: 5px">
+                        省：
+                        <select id="selProvince" name="selProvince" onchange="changeValue('selProvince','selCity','City')">
+                            <option value="0">==请选择==</option>
+                        </select>
+                        市：
+                        <select id="selCity" name="selCity" onchange="changeValue('selCity','SelArea','Area')">
+                            <option value="0">==请选择==</option>
+                        </select>
+                        区：
+                        <select id="SelArea" name="SelArea" onchange="changeValue('SelArea','selPolice','police')"
+                                style="width: 160px">
+                            <option value="0">==请选择==</option>
+                        </select>
+                        派出所：
+                        <select id="selPolice" name="selPolice" style="width: 160px">
+                            <option value="0">==请选择==</option>
+                        </select>
+                        <span id="sppolice" class="color_ccc">*</span>
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td width="15%" align="right">
+                    证件类型：
+                </td>
+                <td>
+                    <select name="selIdType" id="selIdType">
+                        <option value="0">=请选择=</option>
+                        <option value="1">身份证</option>
+                        <option value="2">军官证</option>
+                        <option value="3">港澳通行证</option>
+                        <option value="4">护照</option>
+                        <option value="5">驾驶证</option>
+                    </select><span id="SIdType"></span>
+                </td>
+            </tr>
+            <tr>
+                <td width="15%" align="right">
+                    证件号码：
+                </td>
+                <td colspan="3">
+                    <input type="text" id="txtIdnumber" name="txtIdnumber" class="_text" maxlength="18" />
+                    <span id="spIdnumber" class="color_ccc">*</span>
+                </td>
+            </tr>
+            <tr>
+                <td align="center" colspan="4">
+                    <input class="btn_SS" type="submit" name="button" value="保存" />
+                </td>
+            </tr>
+        </table>
+    </div>
+
+}
+<script type="text/javascript">
+    $(function () {
+        changeValue("selProvince", "selProvince", "Province")
+        $("form").submit(function () {
+            if (subVal()) {
+                return true;
+            }
+            return false;
+        });
+    });
+    function changeValue(fname, sname, key) {
+        var id = parseInt($("#" + fname).val());
+        if (id != 0 || key == "Province") {
+            $.ajax
+			    ({
+			        type: "Get",
+			        url: "/Public/AreaValue?Id=" + id + "&key= " + key,
+			        dataType: "json",
+			        async: false,
+			        cache: false,
+			        success: function (data, status) {
+			            if (typeof (data.err) != 'undefined' && data.err != "") {
+			                alert(data.err);
+			            } else {
+			                SelClear(key);
+			                if (key != "Scenic") {
+			                    for (var i = 0; i < data.length; i++) {
+			                        $("#" + sname).append("<option value='" + data[i].ID + "'>" + data[i].Name + "</option>");
+			                    }
+			                } else {
+			                    for (var i = 0; i < data.length; i++) {
+			                        $("#" + sname).append("<option value='" + data[i].ID + "'>" + data[i].SName + "</option>");
+			                    }
+			                }
+			            }
+			        },
+			        error: function (data, status, e) {
+			            alert(e);
+			        }
+			    });
+        } else {
+            SelClear(key);
+        }
+    }
+    function SelClear(key) {
+        if (key == "City") {
+            $("#selCity").html("<option value='0'>==请选择==</option>");
+            $("#SelArea").html("<option value='0'>==请选择==</option>");
+            $("#selPolice").html("<option value='0'>==请选择==</option>");
+        } else if (key == "Area") {
+            $("#SelArea").html("<option value='0'>==请选择==</option>");
+            $("#selPolice").html("<option value='0'>==请选择==</option>");
+        } else if (key == "police") {
+            $("#selPolice").html("<option value='0'>==请选择==</option>");
+        }
+    }
+
+    function subVal() {
+        var result = true;
+        var regName = new RegExp(/^[a-zA-Z]\w{3,15}$/ig);
+        if ($.trim($("#txtName").val()) == "") {
+            result = false;
+            $("#spName").html("用户名不能为空");
+        } else if (!regName.test($.trim($("#txtName").val()))) {
+            result = false;
+            $("#spName").html("用户名格式不正确,长度为4-18,以字母开头,可以包含数字和下划线");
+        } else {
+            $("#spName").html("");
+        }
+        if ($("#txtPassword").val() == "") {
+            result = false;
+            $("#spPassword").html("密码不能为空");
+        } else {
+            if (!($("#txtPassword").val().length >= 6 && $("#txtPassword").val().length <= 18)) {
+                result = false;
+                $("#spPassword").html("密码长度为6-18位");
+            } else {
+                $("#spPassword").html("");
+            }
+        }
+
+        if ($.trim($("#txtTrueName").val()) == "") {
+            result = false;
+            $("#spTrueName").html("真实姓名不能为空");
+        } else {
+            $("#spTrueName").html("");
+        }
+        if ($.trim($("#txtMobile").val()) == "") {
+            result = false;
+            $("#spMobile").html("手机号码不能为空");
+        } else if (isNaN($.trim($("#txtMobile").val()))) {
+            result = false;
+            $("#spMobile").html("手机号码只能是11位数字");
+        } else if ($.trim($("#txtMobile").val()).length != 11) {
+            result = false;
+            $("#spMobile").html("手机号码的长度为11位");
+        } else {
+            $("#spMobile").html("");
+        }
+
+        var reg = new RegExp(/^\w+([-+.']\w+)*@@\w+([-.]\w+)*\.\w+([-.]\w+)*$/g);
+        if ($.trim($("#txtEmail").val()) == "") {
+            result = false;
+            $("#spEmail").html("邮箱不能为空");
+        } else if (!reg.test($.trim($("#txtEmail").val()))) {
+            result = false;
+            $("#spEmail").html("邮箱格式不正确");
+        } else {
+            $("#spEmail").html("");
+        }
+        var type = $("#selUserType").val();
+        if (type == "0") {
+            result = false;
+            $("#spUserType").html("请选择用户类型");
+        } else {
+            $("#spUserType").html("");
+        }
+
+        if (type != "0" && type != "7") {
+            if (type == 3 && $("#selPolice").val() == "0") {
+                result = false;
+                $("#sppolice").html("请选择派出所");
+            } else if (type == "2" && $("#SelArea").val() == "0") {
+                result = false;
+                $("#sppolice").html("请选择区");
+            } else if (type == "4" && $("#selCity").val() == "0") {
+                result = false;
+                $("#sppolice").html("请选择市");
+            } else if (type == "6" && $("#selProvince").val() == "0") {
+                result = false;
+                $("#sppolice").html("请选择省");
+            }
+            else {
+                $("#sppolice").html("");
+            }
+        }
+
+        if ($.trim($("#txtIdnumber").val()) == "") {
+            result = false;
+            $("#spIdnumber").html("证件号码不能为空");
+        } else {
+            $("#spIdnumber").html("");
+        }
+        return result;
+    }
+
+    function SelectType() {
+        var type = $("#selUserType").val();
+        if (type == "8") {
+            $("#selProvince").removeAttr("disabled", "disabled");
+            $("#selCity").removeAttr("disabled", "disabled");
+            $("#SelArea").removeAttr("disabled", "disabled");
+            $("#selPolice").attr("disabled", "disabled");
+            $("#sppolice").hide();
+        } else if (type == "7") {
+            $("#selProvince").attr("disabled", "disabled");
+            $("#selCity").attr("disabled", "disabled");
+            $("#SelArea").attr("disabled", "disabled");
+            $("#selPolice").attr("disabled", "disabled");
+            $("#sppolice").hide();
+        } else if (type == "6") {
+            $("#selProvince").removeAttr("disabled", "disabled");
+            $("#selCity").attr("disabled", "disabled");
+            $("#SelArea").attr("disabled", "disabled");
+            $("#selPolice").attr("disabled", "disabled");
+            $("#sppolice").show();
+        } else if (type == "4") {
+            $("#selProvince").removeAttr("disabled", "disabled");
+            $("#selCity").removeAttr("disabled", "disabled");
+            $("#SelArea").attr("disabled", "disabled");
+            $("#selPolice").attr("disabled", "disabled");
+            $("#sppolice").show();
+        } else if (type == "2") {
+            $("#selProvince").removeAttr("disabled", "disabled");
+            $("#selCity").removeAttr("disabled", "disabled");
+            $("#SelArea").removeAttr("disabled", "disabled");
+            $("#selPolice").attr("disabled", "disabled");
+            $("#sppolice").show();
+        } else if (type == "3") {
+            $("#selProvince").removeAttr("disabled", "disabled");
+            $("#selCity").removeAttr("disabled", "disabled");
+            $("#SelArea").removeAttr("disabled", "disabled");
+            $("#selPolice").removeAttr("disabled", "disabled");
+            $("#sppolice").show();
+        }
+    }
+</script>
+
+

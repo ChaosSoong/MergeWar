@@ -1,0 +1,7 @@
+*.via
+*.tmp
+*.err
+bin/*
+obj/*
+maptile/*
+

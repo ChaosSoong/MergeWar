@@ -1,0 +1,153 @@
+=============================================================
+====时间：2017/7/13 11:30:13
+====IP：::1
+====异常内容：
+System.InvalidOperationException: 序列不包含任何元素
+   在 System.Linq.Enumerable.First[TSource](IEnumerable`1 source)
+   在 HCZZ.Controllers.LocationController.CKMac(String Id) 位置 D:\netweb\合成作战新版\源码\MergeWar\Controllers\LocationController.cs:行号 1200
+====相关信息：
+——Function：
+LocationController.CKMac(string Id)[HttpGet]
+
+
+=============================================================
+====时间：2017/7/13 11:30:54
+====IP：::1
+====异常内容：
+System.Net.WebException: 未能找到路径“C:\DeviceInfo\BatchDelete”的一部分。 ---> System.IO.DirectoryNotFoundException: 未能找到路径“C:\DeviceInfo\BatchDelete”的一部分。
+   在 System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   在 System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   在 System.Net.FileWebStream..ctor(FileWebRequest request, String path, FileMode mode, FileAccess access, FileShare sharing)
+   在 System.Net.FileWebRequest.GetRequestStreamCallback(Object state)
+   --- 内部异常堆栈跟踪的结尾 ---
+   在 System.Net.WebClient.UploadValues(Uri address, String method, NameValueCollection data)
+   在 System.Net.WebClient.UploadValues(String address, String method, NameValueCollection data)
+   在 HCZZ.HttpHelps.PostSend(Int32 sendType, Int32 DataType, String DeviceList) 位置 D:\netweb\合成作战新版\源码\MergeWar\AppCode\HttpHelps.cs:行号 56
+====相关信息：
+——sendMessage：
+{"MAC":"AB-3F-01-3C-00-2F","APName":"新添加"}
+
+
+=============================================================
+====时间：2017/7/13 11:32:48
+====IP：::1
+====异常内容：
+System.Data.SqlClient.SqlException (0x80131904): 列名 'Remark' 无效。
+   在 System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   在 System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   在 System.Data.SqlClient.SqlCommand.FinishExecuteReader(SqlDataReader ds, RunBehavior runBehavior, String resetOptionsString, Boolean isInternal, Boolean forDescribeParameterEncryption)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReaderTds(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, Boolean async, Int32 timeout, Task& task, Boolean asyncWrite, Boolean inRetry, SqlDataReader ds, Boolean describeParameterEncryptionRequest)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteReader(CommandBehavior cmdBehavior, RunBehavior runBehavior, Boolean returnStream, String method, TaskCompletionSource`1 completion, Int32 timeout, Task& task, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   在 System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   在 System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   在 HCZZ.DAL.SqlHelper.ExecuteNonQuery(SqlConnection connection, CommandType commandType, String commandText, SqlParameter[] commandParameters) 位置 D:\netweb\合成作战新版\源码\MergeWar.DAL\SQLHelper.cs:行号 359
+   在 HCZZ.DAL.SqlHelper.ExecuteNonQuery(String connectionString, CommandType commandType, String commandText, SqlParameter[] commandParameters) 位置 D:\netweb\合成作战新版\源码\MergeWar.DAL\SQLHelper.cs:行号 276
+   在 HCZZ.DAL.LocationDAL.UpdateDevById(Int32 id) 位置 D:\netweb\合成作战新版\源码\MergeWar.DAL\LocationDAL.cs:行号 242
+   在 HCZZ.Controllers.LocationController.DelLocation(Int32 id) 位置 D:\netweb\合成作战新版\源码\MergeWar\Controllers\LocationController.cs:行号 430
+ClientConnectionId:132e5b3f-d5ca-4642-9fcd-c16c1eaff2a1
+Error Number:207,State:1,Class:16
+====相关信息：
+——Function：
+LocationController.DelLoca(int Id)[HttpGet]
+
+
+=============================================================
+====时间：2017/7/13 11:47:22
+====IP：::1
+====异常内容：
+System.InvalidOperationException: 序列不包含任何元素
+   在 System.Linq.Enumerable.First[TSource](IEnumerable`1 source)
+   在 HCZZ.Controllers.LocationController.CKMac(String Id) 位置 D:\netweb\合成作战新版\源码\MergeWar\Controllers\LocationController.cs:行号 1200
+====相关信息：
+——Function：
+LocationController.CKMac(string Id)[HttpGet]
+
+
+=============================================================
+====时间：2017/7/13 11:47:24
+====IP：::1
+====异常内容：
+System.InvalidOperationException: 序列不包含任何元素
+   在 System.Linq.Enumerable.First[TSource](IEnumerable`1 source)
+   在 HCZZ.Controllers.LocationController.CKMac(String Id) 位置 D:\netweb\合成作战新版\源码\MergeWar\Controllers\LocationController.cs:行号 1200
+====相关信息：
+——Function：
+LocationController.CKMac(string Id)[HttpGet]
+
+
+=============================================================
+====时间：2017/7/13 11:47:24
+====IP：::1
+====异常内容：
+System.InvalidOperationException: 序列不包含任何元素
+   在 System.Linq.Enumerable.First[TSource](IEnumerable`1 source)
+   在 HCZZ.Controllers.LocationController.CKMac(String Id) 位置 D:\netweb\合成作战新版\源码\MergeWar\Controllers\LocationController.cs:行号 1200
+====相关信息：
+——Function：
+LocationController.CKMac(string Id)[HttpGet]
+
+
+=============================================================
+====时间：2017/7/13 11:47:30
+====IP：::1
+====异常内容：
+System.InvalidOperationException: 序列不包含任何元素
+   在 System.Linq.Enumerable.First[TSource](IEnumerable`1 source)
+   在 HCZZ.Controllers.LocationController.CKMac(String Id) 位置 D:\netweb\合成作战新版\源码\MergeWar\Controllers\LocationController.cs:行号 1200
+====相关信息：
+——Function：
+LocationController.CKMac(string Id)[HttpGet]
+
+
+=============================================================
+====时间：2017/7/13 13:52:13
+====IP：::1
+====异常内容：
+System.Data.SqlClient.SqlException (0x80131904): 列名 'AP_MAC' 无效。
+列名 'MAC' 无效。
+   在 System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   在 System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteNonQueryTds(String methodName, Boolean async, Int32 timeout, Boolean asyncWrite)
+   在 System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   在 System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   在 HCZZ.DAL.SqlHelper.ExecuteNonQuery(SqlConnection connection, CommandType commandType, String commandText, SqlParameter[] commandParameters) 位置 D:\netweb\合成作战新版\源码\MergeWar.DAL\SQLHelper.cs:行号 359
+   在 HCZZ.DAL.SqlHelper.ExecuteNonQuery(String connectionString, CommandType commandType, String commandText, SqlParameter[] commandParameters) 位置 D:\netweb\合成作战新版\源码\MergeWar.DAL\SQLHelper.cs:行号 276
+   在 HCZZ.DAL.SqlHelper.ExecuteNonQuery(String connectionString, CommandType commandType, String commandText) 位置 D:\netweb\合成作战新版\源码\MergeWar.DAL\SQLHelper.cs:行号 231
+   在 HCZZ.DAL.MacDAL.RecCheck(Dictionary`2 dic) 位置 D:\netweb\合成作战新版\源码\MergeWar.DAL\MacDAL.cs:行号 605
+   在 HCZZ.Controllers.LocationController.RecCheck(Int32 id, String txtAP_MAC_ID, String txtAP_MAC, String StrLid, String PastTime) 位置 D:\netweb\合成作战新版\源码\MergeWar\Controllers\LocationController.cs:行号 1125
+ClientConnectionId:71995324-3c12-4b22-9f8d-4114277916c2
+Error Number:207,State:1,Class:16
+====相关信息：
+——Function：
+APMacController.RecCheck(int ckType, string StrLid, string txtName, string selName, string selMAC, string txtMAC, string selSN, string txtSN, string selPolice, string selStatus, string selArea, string selType, string txtBeginTime, string txtEndTime, string selUserName, string txtUserName, string selProvince, string selCity, string radLocaType, string selValid)[HttpGet]
+
+
+=============================================================
+====时间：2017/7/13 13:52:51
+====IP：::1
+====异常内容：
+System.Data.SqlClient.SqlException (0x80131904): 列名 'AP_MAC' 无效。
+列名 'MAC' 无效。
+   在 System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   在 System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   在 System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   在 System.Data.SqlClient.SqlCommand.RunExecuteNonQueryTds(String methodName, Boolean async, Int32 timeout, Boolean asyncWrite)
+   在 System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean& usedCache, Boolean asyncWrite, Boolean inRetry)
+   在 System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   在 HCZZ.DAL.SqlHelper.ExecuteNonQuery(SqlConnection connection, CommandType commandType, String commandText, SqlParameter[] commandParameters) 位置 D:\netweb\合成作战新版\源码\MergeWar.DAL\SQLHelper.cs:行号 359
+   在 HCZZ.DAL.SqlHelper.ExecuteNonQuery(String connectionString, CommandType commandType, String commandText, SqlParameter[] commandParameters) 位置 D:\netweb\合成作战新版\源码\MergeWar.DAL\SQLHelper.cs:行号 276
+   在 HCZZ.DAL.SqlHelper.ExecuteNonQuery(String connectionString, CommandType commandType, String commandText) 位置 D:\netweb\合成作战新版\源码\MergeWar.DAL\SQLHelper.cs:行号 231
+   在 HCZZ.DAL.MacDAL.RecCheck(Dictionary`2 dic) 位置 D:\netweb\合成作战新版\源码\MergeWar.DAL\MacDAL.cs:行号 605
+   在 HCZZ.Controllers.LocationController.RecCheck(Int32 id, String txtAP_MAC_ID, String txtAP_MAC, String StrLid, String PastTime) 位置 D:\netweb\合成作战新版\源码\MergeWar\Controllers\LocationController.cs:行号 1125
+ClientConnectionId:71995324-3c12-4b22-9f8d-4114277916c2
+Error Number:207,State:1,Class:16
+====相关信息：
+——Function：
+APMacController.RecCheck(int ckType, string StrLid, string txtName, string selName, string selMAC, string txtMAC, string selSN, string txtSN, string selPolice, string selStatus, string selArea, string selType, string txtBeginTime, string txtEndTime, string selUserName, string txtUserName, string selProvince, string selCity, string radLocaType, string selValid)[HttpGet]
+
+

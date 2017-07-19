@@ -1,0 +1,113 @@
+﻿@using System.Collections.Generic
+@using Common
+@using HCZZ.DAL
+@using HCZZ.ModeDB
+@using Webdiyer.WebControls.Mvc
+@{
+    ViewBag.Title = "日志管理";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    PagedList<OPLog> userlist = (PagedList<OPLog>)ViewBag.log;
+    string relaVal = ChangeValue.RefPageRelaByPath("System/UserList");
+    Dictionary<string, string> dic = (Dictionary<string, string>)ViewBag.dic;
+}
+<script src="@Url.Content("~/Content/DatePicker/WdatePicker.js")" type="text/javascript"></script>
+@using (Html.BeginForm("LogList", "System", new {@Id = 1}, FormMethod.Get))
+{
+    <div class="contentbody" id="contentbody">
+        <div class="contentTitle">
+            <span>查询条件和按钮区</span>
+            <input class="search" type="button" id="BtnSelect" onclick="myFunction(this, 'contentConditions')" value="隐藏"/>
+        </div>
+        <div class="contentConditions">
+            <ul>
+                <li class="Conditions Conditions1">
+                    <span>用户名：</span>
+                    <select name="selName" id="selName">
+                        <option value="1">模糊</option>
+                        <option value="2">精确</option>
+                    </select>
+                    <input type="text" id="txtName" name="txtName" value="@dic["txtName"]"/>
+                </li>
+                <li class="Conditions Conditions4">
+                    <span>操作描述：</span>
+                    <input type="text" id="txtWhat" name="txtWhat" value="@dic["txtWhat"]"/>
+                </li>
+                <li class="Conditions Conditions2">
+                    <span>IP地址：</span>
+                    <select name="selAdderss" id="selAdderss">
+                        <option value="1">模糊</option>
+                        <option value="2">精确</option>
+                    </select>
+                    <input type="text" id="txtAdderss" name="txtAdderss" value="@dic["txtAdderss"]"/>
+                </li>
+
+               <li class="Conditions Conditions5">
+						<span>备案时间范围：</span>
+                   <input type="text" name="CreateTime" id="CreateTime" value="@dic["CreateTime"]" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',readonly:true,maxDate:'#F{$dp.$D(\'EndTime\')}'})" /> --- 
+        <input type="text" name="EndTime" id="EndTime" value="@dic["EndTime"]" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',readonly:true,minDate:'#F{$dp.$D(\'CreateTime\')}'})" />
+					</li>
+                <li class="Conditions Conditions6">
+                    <input class="selectbg" type="submit" id="but_Seek"value="搜索"/>
+                    <input class="resetbg" type="reset" value="重置" onclick="Reset()"/>
+                </li>
+            </ul>
+        </div>
+        <div class="contentTable">
+            <table border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <th style="width: 5%;">序号</th>
+                    <th style="width: 10%;">用户名</th>
+                    <th style="width: 15%;">操作模块</th>
+                    <th style="width: 35%;">操作描述</th>
+                    <th style="width: 15%;">操作IP</th>
+                    <th style="width: 15%;">操作时间</th>
+                    <th style="width: 5%;">操作</th>
+                </tr>
+                @if (userlist != null && userlist.Count > 0)
+                {
+                    foreach (OPLog item in userlist)
+                    {
+                        <tr>
+                            <td style="width: 5%;">@item.PageNum</td>
+                            <td style="width: 10%;">@item.UserName</td>
+                            <td style="width: 15%;">@item.Module</td>
+                            <td style="width: 35%;">@(StringFilter.Base64Str(2,item.What))</td>
+                            <td style="width: 15%;">@item.IpAddress</td>
+                            <td style="width: 15%;">@item.CreateTime.ToString("yyyy年MM月dd日HH点mm分")</td>
+                            <td style="width: 5%;">
+                                @if (relaVal.Contains("1"))
+                                {
+                                    <a href="@Url.Content("~/System/DetailLog?Id=" + item.ID)">
+                                        <img title="详情" src="@Url.Content("~/Content/images/view1_icon.png")" alt="查看"/>
+                                    </a>
+                                }
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                            @*<tr><td>暂无可显示数据</td></tr>*@
+                }
+            </table>
+            <table border="0" cellspacing="0" cellpadding="0">
+                <tr><td> @Html.Pager(userlist, new PagerOptions() {PageIndexParameterName = "PageIndex", @CssClass = ""})
+                    <div class="">共<font>@userlist.TotalPageCount</font>页/共<font>@userlist.TotalItemCount</font>条
+                    </div></td></tr>
+            </table>
+        </div>
+    </div>
+}
+<script>
+    function InputVerify() {
+        return true;
+    }
+    $("form").submit(function () {
+        return InputVerify();
+    });
+    $(function () {
+        $("#selName").val('@dic["selName"]');
+        $("#selAdderss").val('@dic["selAdderss"]');
+    });
+</script>

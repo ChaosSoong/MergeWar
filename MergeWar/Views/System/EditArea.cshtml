@@ -1,0 +1,86 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+@using HCZZ.ModeDB
+<head>
+    <title></title>
+    <link href="@Url.Content("~/Content/css/index.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Content/js/jquery-1.7.1.min.js")" type="text/javascript"></script>
+	<script src="@Url.Content("~/Content/DatePicker/WdatePicker.js")" type="text/javascript"></script>
+</head>
+
+	    @{AreaInfo area = (AreaInfo) ViewBag.area;}
+        @using (Html.BeginForm("EditArea", "System", FormMethod.Post))
+        {
+            <div class="Pop_layer" style="float:left ;"> 
+		<div class="aq_title">
+			<div class="TT_left"></div>
+			<div class="TT_right"></div> 
+			<div class="img_close" onclick="javascript:parent.closeDiv()"></div>
+			编辑区
+		</div>
+            <input type="hidden" name="Hid" value="@(area != null ? area.ID : 0)" />
+            <input type="hidden" name="Hpid" value="@(area != null ? area.Pid : 0)" />
+            <div class="aq_tab aq_overflow2">
+            <table cellpadding="0" cellspacing="1" width="100%" class="aq_XxTab">
+                <tr>
+                    <td width="20%" align="right">省名称：</td>
+                    <td width="30%">@(area != null ? area.PName : "")</td>
+                </tr>
+                <tr>
+                    <td align="right">市名称：</td>
+                    <td>@(area != null ? area.CName : "")</td>
+                </tr>
+                <tr>
+                    <td align="right">区名称：</td>
+                    <td><input type="text" class="_text" name="txtArea" id="txtArea" maxlength="25" value="@(area != null ? area.Area : "")"/><span id="spArea" class="color_ccc">*</span></td>
+                </tr>
+                <tr>
+                    <td align="right">区代码：<input type="hidden" name="oldCode" maxlength="25" value="@(area != null ? area.City_code : "")"/></td>
+                    <td><input type="text" id="txtCity_code" name="txtCity_code" class="_text" value="@(area != null ? area.City_code : "")"/><span id="spCity_code" class="color_ccc">*例如：黄浦区，310101</span></td>
+                </tr>
+                </table>
+				}
+            </div> 
+            <div class="aq_foot"> 
+			    <input class="btn_SS" type="submit" name="button" value="保存";
+			      onmouseover="this.className='Over_SS'"
+			      onmouseout="this.className='Onout_SS'"/>
+            </div>
+           </div>
+        }
+ <script type="text/javascript">
+     function pageSubmit() {
+         var result = true;
+         if ($.trim($("#txtArea").val()) == "") {
+             result = false;
+             $("#spArea").html("区名称不能为空");
+         } else {
+             $("#spArea").html("");
+         }
+         var reg = new RegExp(/\d+$/);
+         if ($.trim($("#txtCity_code").val()) == "") {
+             result = false;
+             $("#spCity_code").html("区域代码不能为空");
+         } else if (!reg.test($.trim($("#txtCity_code").val()))) {
+             result = false;
+             $("#spCity_code").html("区域代码格式不正确");
+         } else {
+             $("#spCity_code").html("");
+         }
+         return result;
+     }
+
+     $(function () {
+         $("form").submit(function () {
+             if (pageSubmit()) {
+                 return true;
+             }
+             return false;
+         });
+     });
+</script>
+
+

@@ -1,0 +1,256 @@
+﻿@{
+    ViewBag.Title = "地图标记";
+}
+<script type="text/javascript" src="../Map/js/apiv.2.0.js"></script>
+<script type="text/javascript" src="../Map/test/js/TextIconOverlay.js"></script>
+<script type="text/javascript" src="../Map/test/js/MarkerClusterer.js"></script>
+<link href="@Url.Content("../../Content/css/CSGL.css")" rel="stylesheet" type="text/css"  />
+<div class="contentbody" id="contentbody">
+    <div style="width: 150px; float: left;">
+        <table cellpadding="0" cellspacing="0" width="100%" style="margin-top: 10px">
+            <tr>
+                <th style="line-height: 40px;" align="center" colspan="2">
+                    <h2 style="font-size: 16px">
+                        查询条件</h2>
+                </th>
+            </tr>
+            <tr>
+                <td style="line-height: 30px;" align="center" width="120">
+                    <select id="selProvince" name="ProId" onchange="changeValue('selProvince', 'selCity', 'City')">
+                        <option value="0">==请选择省==</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td style="line-height: 30px;" align="center">
+                    <select id="selCity" name="CityId" onchange="changeValue('selCity', 'selArea', 'Area')">
+                        <option value="0">==请选择市==</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td style="line-height: 30px;" align="center">
+                    <select id="selArea" name="Aid">
+                        <option value="0">==请选择区==</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    <input class="btn_SS" type="button" onclick="submitValue()" name="button" value="搜索"
+                        onmouseover="this.className = 'Over_SS'" onmouseout="this.className = 'Onout_SS'" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span id="lblMessage" style="color: Red; padding-left: 5px;"></span>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div style="width: auto; margin: 0 auto; height: 440px; width: 100%; border: 2px solid #1e1f2d;"
+        id="dituContent">
+    </div>
+</div>
+<script type="text/javascript">
+    //mindasd(170);
+    var MAX = "";
+    var mar = "";
+    var a = "";
+    var Id = "";
+    var retnbidval = "";
+    $(function () {
+        //$("#dituContent").load("../Map/HLocaShowMap.html");
+        changeValue("selProvince", "selProvince", "Province");
+        //document.getElementById("selProvince").value = '@ViewBag.ProId';
+        changeValue('selProvince', 'selCity', 'City');
+        submitValue();
+    });
+    function changeValue(fname, sname, key) {
+        var id = parseInt($("#" + fname).val());
+        if (id != 0 || key == "Province") {
+            $.ajax({ type: "Get",
+                url: "/Public/AreaValue?Id=" + id + "&key= " + key,
+                dataType: "json",
+                async: false,
+                cache: false,
+                success: function (data, status) {
+                    if (typeof (data.err) != 'undefined' && data.err != "") {
+                        console.dir(data);
+                    } else {
+                        SelClear(key);
+                        for (var i = 0; i < data.length; i++) {
+                            $("#" + sname).append("<option value='" + data[i].ID + "'>" + (key == "Scenic" ? data[i].SName : data[i].Name) + "</option>");
+                        }
+                    }
+                },
+                error: function (data, status, e) {
+                    console.dir(e);
+                }
+            });
+        } else {
+            SelClear(key);
+        }
+    }
+
+    function SelClear(key) {
+        if (key == "City" || key == "Province") {
+            $("#selCity").html("<option value='0'>==请选择市==</option>");
+            $("#selArea").html("<option value='0'>==请选择区==</option>");
+        } else if (key == "Area") {
+            $("#selArea").html("<option value='0'>==请选择区==</option>");
+        }
+    }
+
+    function isSubmit() {
+        if ($("#selProvince").val() == "0" && $("#selCity").val() == "0" && $("#selArea").val() == "0") {
+            $("#lblMessage").html("请选择区域信息");
+            return false;
+        }
+        else {
+            $("#lblMessage").html("");
+            return true;
+        }
+    }
+
+    var mapOptions = { mapType: BMAP_NORMAL_MAP }
+    var map = new BMap.Map("dituContent", mapOptions); //设置卫星图为底图BMAP_PERSPECTIVE_MAP
+    var initPoint = new BMap.Point(114.067837, 22.556793);    // 创建点坐标
+    //var geoc = new BMap.Geocoder();
+    map.centerAndZoom(initPoint, 14);                    // 初始化地图,设置中心点坐标和地图级别。
+    map.enableScrollWheelZoom();                  // 启用滚轮放大缩小。
+    map.enableKeyboard();                         // 启用键盘操作。
+    map.enableContinuousZoom(); 				 //启用连续缩放效果
+    // ----- control -----
+    map.addControl(new BMap.NavigationControl()); //地图平移缩放控件
+    map.addControl(new BMap.ScaleControl()); //显示比例尺在左下角
+    //-------显示卫星地图----
+    //map.addControl(new BMap.MapTypeControl({mapTypes: [BMAP_NORMAL_MAP,BMAP_SATELLITE_MAP]}));
+    //------显示缩略图控件---
+    //map.addControl(new BMap.OverviewMapControl({anchor: BMAP_ANCHOR_BOTTOM_RIGHT, isOpen: true}));
+
+
+    function addSimulatorMarkers(point, id) {
+    }
+
+    //显示信息窗口的函数
+    function showInfo(marker, id) {
+    }
+
+    //防止出现undefinded
+    function checkEmpty(str) {
+        if (str == undefined) {
+            return ' ';
+        };
+        return str;
+    }
+    var data_info1 = eval("[]");
+    function addMarkerList() {
+        for (var i = 0; i < data_info1.length; i++) {
+            addSimulatorMarkers2(new BMap.Point(data_info1[i].lng, data_info1[i].lat), data_info1[i].loadMessage, data_info1[i].statis);
+        }
+    }
+
+    function addSimulatorMarkers2(point, id, statis) {
+        var simulatorIcon = new BMap.Icon("../Map/images/" + (statis == 1 ? "GPSzaixian" : "GPSlixian") + ".png", new BMap.Size(32, 37));
+        // 创建标注对象并添加到地图
+        var simulatorMarkerOptions = {
+            icon: simulatorIcon,
+            enableDragging: false,
+            draggingCursor: "move",
+            title: "新标注"
+        }
+        var simulatorMarker = new BMap.Marker(point, simulatorMarkerOptions);
+        simulatorMarker.setAnimation(BMAP_ANIMATION_DROP);
+        map.addOverlay(simulatorMarker);
+
+        //为标注添加点击事件——弹出信息窗口
+        simulatorMarker.addEventListener("click", function () {
+            showInfoList(simulatorMarker, id);
+        });
+    }
+
+    //显示信息窗口的函数
+    function showInfoList(marker, strobj) {
+        SolrSelnbId(marker.nbId);
+        var mywindow = '<div class="show">' + marker.showMessage + retnbidval + '</div>';
+        opts = {
+            width: 305
+        }
+        var aa = new BMap.InfoWindow(mywindow, opts);
+        marker.openInfoWindow(aa);
+    }
+
+    function submitValue() {
+        if (isSubmit()) {
+            var strSearch = "?ProId=" + $("#selProvince").val() + "&CityId=" + $("#selCity").val() + "&Aid=" + $("#selArea").val();
+            $.ajax({ type: "Get",
+                url: '@Url.Content("~/Public/RefLocaMapVal")' + strSearch,
+                dataType: "json",
+                async: false,
+                cache: false,
+                success: function (data, status) {
+                    map.clearOverlays();
+                    if (typeof (data.jsAlter) != 'undefined' && data.jsAlter != "") {
+                        if (data.jsAlter == "null") {
+                            showMapDiv();
+                            setTimeout('closeMapDiv()', 5000);
+                        } else {
+                            alert('地图数据加载失败，请稍后重试！');
+                        }
+                    } else {
+                        setTimeout(function () {
+                            map.panTo(new BMap.Point(data.pointLng, data.pointLat)); //10毫秒后移动中心点
+                        }, 10);
+                        data_info1 = eval(data.mapJs);
+                        MAX = data;
+                        if (MAX != "") {
+                            //                                createNewOverlay();
+                            Point_aggregation();
+                        }
+                    }
+                },
+                error: function (data, status, e) {
+                    console.dir(e);
+                }
+            });
+        }
+    }
+
+    function Point_aggregation() {
+        //清空界面标注
+        if (mar != "") {
+            mar.removeMarkers(a);
+        }
+        var markers = [];
+        for (var i = 0; i < MAX.mapJs.length; i++) {
+            var maker = new BMap.Marker(new BMap.Point(MAX.mapJs[i].lng, MAX.mapJs[i].lat));
+            maker.setIcon(new BMap.Icon("../Map/images/" + (MAX.mapJs[i].statis == 1 ? "GPSzaixian" : "GPSlixian") + ".png", new BMap.Size(32, 37)));
+            maker.showMessage = MAX.mapJs[i].loadMessage;
+            maker.nbId = MAX.mapJs[i].ID;
+            maker.addEventListener("click", function () {
+                showInfoList(this);
+            });
+            markers.push(maker);
+        }
+        var markerClusterer = new BMapLib.MarkerClusterer(map, { markers: markers });
+        mar = markerClusterer;
+        a = markers;
+    }
+    function SolrSelnbId(nbId) {
+        $.ajax({
+            type: "Get",
+            url: '@Url.Content("~/Public/IdMapVal?nbId=")' + nbId,
+            dataType: "json",
+            async: false,
+            cache: false,
+            success: function (data) {
+                retnbidval = (data.mapJs);
+            },
+            error: function (data, status, e) {
+                console.dir(e);
+            }
+
+        });
+    }
+</script>

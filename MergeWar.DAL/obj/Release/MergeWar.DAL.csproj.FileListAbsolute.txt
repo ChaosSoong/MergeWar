@@ -1,0 +1,11 @@
+D:\netweb\合成作战新版\源码\MergeWar.DAL\bin\Release\HCZZ.DAL.dll
+D:\netweb\合成作战新版\源码\MergeWar.DAL\bin\Release\HCZZ.DAL.pdb
+D:\netweb\合成作战新版\源码\MergeWar.DAL\bin\Release\Common.dll
+D:\netweb\合成作战新版\源码\MergeWar.DAL\bin\Release\HCZZ.ModeDB.dll
+D:\netweb\合成作战新版\源码\MergeWar.DAL\bin\Release\Webdiyer.MvcPager.dll
+D:\netweb\合成作战新版\源码\MergeWar.DAL\bin\Release\Common.pdb
+D:\netweb\合成作战新版\源码\MergeWar.DAL\bin\Release\HCZZ.ModeDB.pdb
+D:\netweb\合成作战新版\源码\MergeWar.DAL\bin\Release\Webdiyer.MvcPager.xml
+D:\netweb\合成作战新版\源码\MergeWar.DAL\obj\Release\MergeWar.DAL.csprojResolveAssemblyReference.cache
+D:\netweb\合成作战新版\源码\MergeWar.DAL\obj\Release\HCZZ.DAL.dll
+D:\netweb\合成作战新版\源码\MergeWar.DAL\obj\Release\HCZZ.DAL.pdb

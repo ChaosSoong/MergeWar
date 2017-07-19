@@ -1,0 +1,105 @@
+﻿@{
+    ViewBag.Title = "-区管理";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    Dictionary<string, string> dic = (Dictionary<string, string>)ViewBag.dic;
+}
+<link href="@Url.Content("~/Content/css/publicHeader.css")" rel="stylesheet" type="text/css" />
+@using System.Collections.Generic
+@using Common
+@using HCZZ.DAL
+@using HCZZ.ModeDB
+@using Webdiyer.WebControls.Mvc
+@using (Html.BeginForm("AreaInfoList", "System", new { @Id = dic["Cid"] }, FormMethod.Get))
+{
+    <div class="contentbody" id="contentbody">
+    <div class="contentTitle">
+            <span>查询条件和按钮区</span>
+            <input class="search" type="button" id="BtnSelect" onclick="myFunction(this, 'contentConditions')" value="隐藏"/>
+            <input  class="search"  onclick="javascript:location.replace('@Url.Content("~/System/AddArea/" + dic["Cid"])')" type="button" name="button" value="添加区" />
+        </div>
+        <div class="contentConditions">
+            <ul>
+                <li class="Conditions Conditions1">
+                    <span>区名称：</span>
+                    <select name="selName" id="selName">
+                        <option value="1">模糊</option>
+                        <option value="2">精确</option>
+                    </select>
+                    <input type="text" id="txtName" name="txtName" value="@dic["txtName"]"/>
+                </li>
+                <li class="Conditions Conditions6">
+                    <input class="selectbg" type="submit" id="but_Seek"value="搜索"/>
+                    <input class="resetbg" type="reset" value="重置" onclick="Reset()"/>
+                </li>
+            </ul>
+        </div>
+	 <div class="contentTable">
+            <table border="0" cellspacing="0" cellpadding="0">
+			<tr>
+				<th style="width: 10%;">序号</th>
+                <th style="width: 20%;">市名称</th>
+                <th style="width: 20%;">区名称</th>
+                <th style="width: 20%;">区代码</th>
+                <th style="width: 30%;">操作</th>
+			</tr>
+		</table>
+	</div>
+    <div class="contentTable">
+            <table border="0" cellspacing="0" cellpadding="0">
+        @{
+            PagedList<AreaInfo> list = (PagedList<AreaInfo>)ViewBag.Pro;
+            if (list != null && list.Count > 0)
+            {
+                foreach (AreaInfo item in list)
+                {
+			        <tr>
+				        <td style="width: 10%;">@item.PageNum</td>
+                        <td style="width: 20%;">@item.PName</td>
+                        <td style="width: 20%;">@item.Area</td>
+                        <td style="width: 20%;">@item.City_code</td>
+				        <td style="width: 30%;">
+                            <a class="Cz_Wenzi" href ="@Url.Content("~/System/PoliceInfoList/"+item.ID)"  title="派出所列表">派出所列表</a>
+                            <a class="Cz_bianji" href ="@Url.Content("~/System/EditArea/"+item.ID)" >
+                            <img title="编辑" src="@Url.Content("~/Content/images/edit1_icon.png")" alt="编辑"/>  
+                            </a>
+					        <a class="Cz_shanchu" href="javascript:void(0)" onclick="del('@item.ID','Area')" >
+                            <img title="删除" src="@Url.Content("~/Content/images/del1_icon.png")" alt="删除" />
+                            </a>	
+				        </td>
+			        </tr>   
+                }
+                if (list.TotalPageCount > 1)
+                { 
+	
+              <tr>
+                    <td colspan="5">
+                        <div class="pag_td" style="width: 100%; text-align: center; font-size: 14px">
+                            @Html.Pager(list, new PagerOptions()
+                       {
+                           PageIndexParameterName = "key",
+                           @CssClass = "pag1"
+                       })
+                            <div class="pag_all">
+                                共<font>@list.TotalPageCount</font>页/共<font id="spTotalItem">@list.TotalItemCount</font>条</div>
+                        </div>
+                    </td>
+                </tr>
+                }
+            }
+            else
+            {
+                <tr><td colspan="5">暂无可显示数据</td></tr>
+            }              
+        }   
+		</table>
+    </div> </div>
+<script type="text/javascript">
+ function del(obj, key,key1) {
+        if (confirm("确定要删除吗？")) {
+             location.href = "/System/DelProArea?Id=" + obj + "&key=" + key+"&key1="+@dic["Cid"];
+        }
+    }
+</script> 
+}
+	 
+

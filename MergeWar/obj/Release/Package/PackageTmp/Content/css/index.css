@@ -1,0 +1,211 @@
+html,body,div,span,ul,ol,li,h1,h2,h3,h4,h5,h6,form,fieldset,table,td,th,img,dl,input,textarea,p,dd,dt,span,p{margin:0;padding:0;border:0;font-size:12px; font-family:"宋体"，"微软雅黑"，Verdana, Geneva, sans-serif; line-height:1.5;}
+ul,ol,li,dd,dt,dl{ list-style:none;}
+a{ color:#333; text-decoration:none; cursor:hand} 
+a:hover{ color:#eaeaea; text-decoration:none;} 
+a:active {outline:none;}
+:focus { -moz-outline-style: none; } /* for Firefox */
+.footer{width:100%;height:35px;text-align:center; position:fixed ;bottom:0}
+.innerFooter a{ line-height:35px; color:#EAEAEA ; font-family:Arial;}
+.innerFooter a:hover{ color:#EAEAEA}
+body{background-color:#0e0d1b}
+:root {
+    --color: #1e1f2d;
+}
+
+.header 
+{
+    display:block; 
+    width:100%; 
+    height: 150px;
+}
+
+.logo {
+    height: 50px;
+    width: 100%;
+    background-color: #0e0d1b;
+}
+.divSearch{cursor:pointer;color:#EAEAEA;margin-top:10px;float:right;background-color:#146c83;height:30px;width:90px;border-radius: 2px;text-align:center;font-size:16px; line-height:30px; margin-right:25px;}
+.welcome{color:#EAEAEA;margin-top:16px;margin-right:16px;float:right;text-align:center;font-size:12px;}
+.time{color:#EAEAEA;margin-top:16px;margin-right:20px;float:right;text-align:center;font-size:12px;}
+
+.module {
+    height: 90px;
+    width: 100%;
+    margin-top: 10px;
+    background-color: #171621;
+}
+.nav1{background:url(../images/首页.png) center 10px no-repeat;display:block;}
+.nav2{background:url(../images/一键查询.png) center 10px no-repeat;display:block}
+.nav3{background:url(../images/MAC分析.png) center 10px no-repeat;display:block}
+.nav4{background:url(../images/围栏分析.png) center 10px no-repeat;display:block}
+.nav5{background:url(../images/车牌分析.png) center 10px no-repeat;display:block}
+.nav6{background:url(../images/特征碰撞.png) center 10px no-repeat;display:block}
+.nav7{background:url(../images/场所管理.png) center 10px no-repeat;display:block}
+.nav8{background:url(../images/报警管理.png) center 10px no-repeat;display:block}
+.nav9{background:url(../images/系统管理.png) center 10px no-repeat;display:block}
+.active1{background:url(../images/首页蓝色.png) center 10px no-repeat;display:block;}
+.active2{background:url(../images/一键查询蓝色.png) center 10px no-repeat;display:block}
+.active3{background:url(../images/MAC分析蓝色.png) center 10px no-repeat;display:block}
+.active4{background:url(../images/围栏分析蓝色.png) center 10px no-repeat;display:block}
+.active5{background:url(../images/车牌分析蓝色.png) center 10px no-repeat;display:block}
+.active6{background:url(../images/特征碰撞蓝色.png) center 10px no-repeat;display:block}
+.active7{background:url(../images/场所管理蓝色.png) center 10px no-repeat;display:block}
+.active8{background:url(../images/报警管理蓝色.png) center 10px no-repeat;display:block}
+.active9{background:url(../images/系统管理蓝色.png) center 10px no-repeat;display:block}
+#nav1:hover{background:url(../images/首页蓝色.png) center 10px no-repeat;display:block;}
+#nav2:hover{background:url(../images/一键查询蓝色.png) center 10px no-repeat;display:block}
+#nav3:hover{background:url(../images/MAC分析蓝色.png) center 10px no-repeat;display:block}
+#nav4:hover{background:url(../images/围栏分析蓝色.png) center 10px no-repeat;display:block}
+#nav5:hover{background:url(../images/车牌分析蓝色.png) center 10px no-repeat;display:block}
+#nav6:hover{background:url(../images/特征碰撞蓝色.png) center 10px no-repeat;display:block}
+#nav7:hover{background:url(../images/场所管理蓝色.png) center 10px no-repeat;display:block}
+#nav8:hover{background:url(../images/报警管理蓝色.png) center 10px no-repeat;display:block}
+#nav9:hover{background:url(../images/系统管理蓝色.png) center 10px no-repeat;display:block}
+.word{margin-top:55px; text-align:center}
+.word :hover{margin-top:55px; text-align:center;color:#035ac8}
+/* 所有class为module的div中的ul样式 */
+div.module ul
+{
+    list-style:none; /* 去掉ul前面的符号 */
+    margin: 0 auto; /* 与外界元素的距离为0 */
+    padding: 0px; /* 与内部元素的距离为0 */
+    width: 100%; /* 宽度根据元素内容调整 */
+    background-color: #1e1f26; /* 背景色 */
+}
+/* 所有class为module的div中的ul中的li样式 */
+div.module ul li
+{
+    float:left; /* 向左漂移，将竖排变为横排 */
+    margin-right: 7px;
+    width: 144px;
+    height:90px;
+    text-align:center;
+    cursor:pointer;
+    background-color: #1e1f26; /* 背景色 */
+}
+/* 所有class为module的div中的ul中的a样式(包括尚未点击的和点击过的样式) */
+div.module ul li a, div.module ul li a:visited
+{
+    background-color: #1e1f2d; /* 背景色 */
+    border: 1px #212030 solid; /* 边框 */
+    color: #dde4ec; /* 文字颜色 */
+    display: block; /* 此元素将显示为块级元素，此元素前后会带有换行符 */
+    height:88px;
+    text-decoration: none; /* 不显示超链接下划线 */
+    white-space: nowrap; /* 对于文本内的空白处，不会换行，文本会在在同一行上继续，直到遇到 <br> 标签为止。 */
+}
+/* 所有class为module的div中的ul中的a样式(鼠标移动到元素中的样式) */
+div.module ul li a:hover
+{
+    background-color: #212030; /* 背景色 */
+    color: #035ac8; /* 文字颜色 */
+    text-decoration: none; /* 不显示超链接下划线 */
+}
+/* 所有class为module的div中的ul中的a样式(鼠标点击元素时的样式) */
+div.module ul li a:active
+{
+    background-color: #465c71; /* 背景色 */
+    color: #cfdbe6; /* 文字颜色 */
+    text-decoration: none; /* 不显示超链接下划线 */
+}
+.module ul li ul{display: none;
+position: absolute;}
+.module li:hover ul,.module li:hover ul:hover{color:#eaeaea;display: block;z-index:9999;width:600px}
+.box {
+    display: -webkit-flex;
+    display: flex;
+    width:100%;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    min-height:600px
+}
+
+.left .center .right {
+    display: -webkit-flex;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.left{flex:29%;-ms-flex:29%;-webkit-flex:29%;}
+.right{flex:29%;-ms-flex:29%;-webkit-flex:29%;}
+.center{flex:41%;-ms-flex:41%;-webkit-flex:41%;}
+.count {
+    height: 38%;
+    margin-top: 6px;
+    margin-right: 6px;
+    border:1px solid #1e1f2d;
+    min-height:242px;
+}
+
+.collTrend {
+    height: 31%;
+    margin-top: 6px;
+    margin-right: 6px;
+    border:1px solid #1e1f2d;
+    min-height:191px;
+}
+
+.deviceTrend {
+    height: 31%;
+    margin-top: 6px;
+    margin-right:6px;
+    border:1px solid #1e1f2d;
+    min-height:191px;
+}
+
+.centerNum 
+{
+    display:flex;
+    display: -webkit-flex;
+    justify-content: space-between;
+    background-color: #1e1f2d;
+    height: 15%;
+    margin-top: 6px;
+    margin-right: 6px;
+    flex-direction: raw;
+    border:1px solid #1e1f2d;
+}
+.cnleft{flex:25%:-ms-flex:25%;-webkit-flex:25%;background:url(../images/设备数量图标.png) center 45px no-repeat;display:block;text-align:center;margin-right:2px}
+.cncenter{flex:50%;-ms-flex:50%;-webkit-flex:50%;background:url(../images/在线总数图标.png) center 45px no-repeat;display:block;text-align:center;margin-right:2px}
+.cnright{flex:25%;-ms-flex:25%;-webkit-flex:25%;background:url(../images/在线率图标.png) center 45px no-repeat;display:block;text-align:center}
+.map {
+    height: 66%;
+    margin-top: 6px;
+    margin-right: 6px;
+    border:1px solid #1e1f2d;
+    background-color:var(--color);
+    min-height:397px;
+}
+
+.rollup {
+    height: 19%;
+    margin-top: 6px;
+    margin-right: 6px;
+    background-color: var(--color);
+    border:1px solid #1e1f2d;
+}
+
+.onlineCount {
+    height: 51%;
+    margin-top: 6px;
+    border:1px solid #1e1f2d;
+    min-height:301px;
+}
+
+.onlineRate {
+    height:50%;
+    margin-top: 6px;
+    border:1px solid #1e1f2d;
+    min-height:329px;
+}
+
+.txtMarquee-top{ width:100%;height:100%;  overflow:hidden; position:relative;}
+.txtMarquee-top .hd{ overflow:hidden;  height:28px; background:#f4f4f4; padding:0 1px;  }
+.txtMarquee-top .infoList li{ height:28px; line-height:24px;}
+.bd .infoList li{display:flex;display: -webkit-flex;justify-content: space-between;}
+.bd .infoList li:nth-child(odd){background-color:#212330}
+.bd .infoList li .qq{flex:1:-ms-flex:1;-webkit-flex:1;color:#eaeaea;margin-top:3px}
+.bd .infoList li .phone{flex:1:-ms-flex:1;-webkit-flex:1;color:#eaeaea;margin-top:3px}
+.bd .infoList li .company{flex:1:-ms-flex:1;-webkit-flex:1;color:#03c4a6;margin-top:3px}
+

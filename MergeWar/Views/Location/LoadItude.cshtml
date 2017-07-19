@@ -1,0 +1,188 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>LoadItude</title>@*<link href="@Url.Content("~/Content/css/index.css")" rel="stylesheet" type="text/css" />*@
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=UQ3wpItwxpXe7cud8heDB94d"></script>
+    @*<link rel="stylesheet" type="text/css" href="@Url.Content("~/Content/css/home.css")"/>*@
+    <script>
+        function returnValue() {
+            var X = document.getElementById("mapCenterPointX").value;
+            var Y = document.getElementById("mapCenterPointY").value;
+            if (X != "" || Y != "") {
+                var val = X + "," + Y;
+                parent.document.getElementById("txtItude").value = val;
+                parent.closeItude();
+            } else {
+                alert("请输入地址查询经纬度");
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="aq_title">
+        <div class="TT_left">
+        </div>
+        <div class="TT_right">
+        </div>
+        <div class="img_close" onclick="javascript:parent.closeItude()">
+        </div>
+        定位
+    </div>
+    <div id="wiki_header">
+        <div id="wiki_login">
+            <a id="login" name="login"></a>
+        </div>
+    </div>
+    <!--head ed-->
+    <div class="signBoxCon">
+        <!-- 对话框 -->
+        <div style="position: absolute; left: 155px; top: 219px; width: 752px; height: 379px;
+            z-index: 9999; background-image: none; background-attachment: scroll; background-color: rgb(235, 236, 237);
+            display: none; background-position: 0% 0%; background-repeat: repeat repeat;"
+            id="Layer1">
+            <div class="box1">
+                <div class="box2">
+                    <div style="float: right; width: 125px;" class="">
+                        <div class="t10" id="copy_sign">
+                            <div class="bder_color t10" style="width: 98px; height: 34px;">
+                                <span id="copy_code" class="bder_color cen bg_h2 bold font_color font14" style="display: block;
+                                    cursor: pointer; width: 94px; height: 30px; margin: 1px; line-height: 30px; vertical-align: middle;">
+                                    复制代码</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- body -->
+        <div class="body t10" style="margin: 0">
+            <div class="sign_content1 margin_sT5" style="margin: 0">
+                <!--<div class="l color_h" style="width:227px;height:281px;margin:10px 0px 10px 10px;float:left;display:inline-block;">-->
+                <table id="wxp_zdydt">
+                    <tbody>
+                        <tr>
+                            <td style="width: 223px; text-align: left; vertical-align: top;">
+                                <div>
+                                    <div class="map_open" id="mapCenter">
+                                        <div class="map_title_s bg_h2 bold font14" style="margin-top: 0" navtype="setMapCenter">
+                                            定位中心点
+                                        </div>
+                                        <div class="map_content">
+                                            <ul class="wxp_list1">
+                                                <li style="margin-top: -10px">
+                                                    <div id="CurrentCityCon" style="display: none">
+                                                        <span class="cor_1">当前城市：</span><span id="cityName">深圳市</span> <span class="cor_2"
+                                                            onclick="editCurrentCity()">切换</span>
+                                                    </div>
+                                                    <div id="CurrentCityEdit" class="wxp_lis_con2" style="display: none;">
+                                                        <input type="text" class="inputT_2 inputT_4" value="请输入城市名称" onfocus="input_focus(this,&#39;请输入城市名称&#39;,&#39;&#39;)"
+                                                            onblur="input_blur(this,&#39;请输入城市名称&#39;,&#39;&#39;)" id="CurrentCityInput"
+                                                            title="请输入城市中文名称" style="color: rgb(140, 140, 140);">
+                                                        <div class="dwzxd_box2 dwzxd_box3">
+                                                            <span onclick="updateCurrentCity()">确 定</span>
+                                                        </div>
+                                                        <div class="dwzxd_box2 dwzxd_box3">
+                                                            <span onclick="canelCurrentCity()">取 消</span>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li id="cityNameTip" style="display: none; text-align: center; color: rgb(255, 0, 0);">
+                                                </li>
+                                                <li>
+                                                    <input type="text" class="inputT_2" id="searchMap" value="请输入地址确定经纬度" onfocus="if(this.value=='请输入地址确定经纬度'){this.value=''}"
+                                                        onblur="if(this.value==''){this.value='请输入地址确定经纬度'}">
+                                                    <div class="dwzxd_box2">
+                                                        <span onclick="setCenterMap()">查找</span>
+                                                    </div>
+                                                </li>
+                                                <li>当前地图中心点经纬度： </li>
+                                                <li class="input1"><b>经度：</b><input type="text" id="mapCenterPointX" readonly="true">
+                                                </li>
+                                                <li class="input1"><b>纬度：</b><input type="text" id="mapCenterPointY" readonly="true">
+                                                </li>
+                                                <li>
+                                                    <div class="dwzxd_box2 dwzxd_box3">
+                                                        <span onclick="returnValue()" style="width: 100px;">确定</span>
+                                                    </div>
+                                                </li>
+                                                <li class="input2" style="display: none">当前地图级别：<input type="text" id="mapCenterLevel"
+                                                    readonly="true">
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                            </td>
+                            <td style="vertical-align: top">
+                                <div style="width: 697px; height: 550px; border: #ccc solid 1px;" id="dituContent">
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <script type="text/javascript">
+                //创建和初始化地图函数：
+                function initMap() {
+                    createMap(); //创建地图
+                    setMapEvent(); //设置地图事件
+                    addMapControl(); //向地图添加控件
+                }
+
+                //创建地图函数：
+                function createMap() {
+                    var map = new BMap.Map("dituContent"); //在百度地图容器中创建一个地图
+
+                    var point = new BMap.Point(113.903308, 22.737348); //定义一个中心点坐标
+                    map.centerAndZoom(point, 12); //设定地图的中心点和坐标并将地图显示在地图容器中
+                    window.map = map; //将map变量存储在全局
+
+                    function showInfo(e) {
+                        document.getElementById("mapCenterPointX").value = e.point.lng;
+                        document.getElementById("mapCenterPointY").value = e.point.lat;
+                    }
+                    map.addEventListener("click", showInfo);
+                }
+
+                function setCenterMap() {
+                    // 创建地址解析器实例
+                    var myGeo = new BMap.Geocoder();
+                    // 将地址解析结果显示在地图上,并调整地图视野
+                    var address = document.getElementById("searchMap").value;
+                    myGeo.getPoint(address, function (point) {
+                        if (point) {
+                            map.centerAndZoom(point, 16);
+                            map.addOverlay(new BMap.Marker(point));
+                            document.getElementById("mapCenterPointX").value = point.lng;
+                            document.getElementById("mapCenterPointY").value = point.lat;
+                        }
+                    }, "广东省");
+                }
+
+                //地图事件设置函数：
+                function setMapEvent() {
+                    map.enableDragging(); //启用地图拖拽事件，默认启用(可不写)
+                    map.enableScrollWheelZoom(); //启用地图滚轮放大缩小
+                    map.enableDoubleClickZoom(); //启用鼠标双击放大，默认启用(可不写)
+                    map.enableKeyboard(); //启用键盘上下左右键移动地图
+                }
+
+                //地图控件添加函数：
+                function addMapControl() {
+                    //向地图中添加缩放控件
+                    var ctrl_nav = new BMap.NavigationControl({ anchor: BMAP_ANCHOR_TOP_LEFT, type: BMAP_NAVIGATION_CONTROL_LARGE });
+                    map.addControl(ctrl_nav);
+                    //向地图中添加缩略图控件
+                    var ctrl_ove = new BMap.OverviewMapControl({ anchor: BMAP_ANCHOR_BOTTOM_RIGHT, isOpen: 1 });
+                    map.addControl(ctrl_ove);
+                    //向地图中添加比例尺控件
+                    var ctrl_sca = new BMap.ScaleControl({ anchor: BMAP_ANCHOR_BOTTOM_LEFT });
+                    map.addControl(ctrl_sca);
+                }
+                initMap(); //创建和初始化地图
+            </script>
+        </div>
+    </div>
+</body>
+</html>

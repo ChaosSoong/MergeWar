@@ -1,0 +1,37 @@
+﻿@{
+    ViewBag.Title = "-日志详细信息";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using HCZZ.ModeDB;
+@using Common;
+@using Webdiyer.WebControls.Mvc;
+	<table >	
+			<tr>
+				<th colspan="4"><h1>日志详细信息</h1></th>
+			</tr>
+	</table>
+	<div>
+	<table >
+        @{
+            OPLog log = (OPLog)ViewBag.log;
+            if (log != null)
+            {
+                <tr>
+				    <td width="15%" align="right">操作模块：</td>
+				    <td>@log.Module</td>   
+				    <td width="15%" align="right">操作描述：</td>
+				    <td>@StringFilter.Base64Str(0,log.What)</td>   
+			    </tr>
+            
+                <tr>
+				    <td width="15%" align="right">操作IP：</td>
+				    <td>@log.IpAddress</td>   
+				    <td width="15%" align="right">操作时间：</td>
+				    <td>@log.CreateTime.ToString("yyyy-MM-dd HH:mm:ss")</td>   
+			    </tr>
+            }
+         }
+	</table>
+	</div>
+
+

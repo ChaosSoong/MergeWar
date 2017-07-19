@@ -1,0 +1,558 @@
+﻿@{
+    ViewBag.Title = "编辑场所信息";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using System.Collections.Generic
+@using Common;
+@using HCZZ.ModeDB;
+<script src="@Url.Content("~/Content/DatePicker/WdatePicker.js")" type="text/javascript"></script>
+<script type="text/javascript">
+    function changeValue(fname, sname, key) {
+        var id = parseInt($("#" + fname).val());
+        if (id != 0 || key == "Province") {
+            $.ajax
+			    ({ type: "Get",
+			        url: "/Location/AreaValue?Id=" + id + "&key= " + key,
+			        dataType: "json",
+			        async: false,
+			        cache: false,
+			        success: function (data, status) {
+			            if (typeof (data.err) != 'undefined' && data.err != "") {
+			                alert(data.err);
+			            } else {
+			                SelClear(key);
+			                if (key != "Scenic") {
+			                    for (var i = 0; i < data.length; i++) {
+			                        $("#" + sname).append("<option value='" + data[i].ID + "'>" + data[i].Name + "</option>");
+			                    }
+			                } else {
+			                    for (var i = 0; i < data.length; i++) {
+			                        $("#" + sname).append("<option value='" + data[i].ID + "'>" + data[i].SName + "</option>");
+			                    }
+			                }
+			            }
+			        },
+			        error: function (data, status, e) {
+			            alert(e);
+			        }
+			    });
+        } else {
+            SelClear(key);
+        }
+    }
+
+    function SelClear(key) {
+        if (key == "City") {
+            $("#selCity").html("<option value='0'>==请选择==</option>");
+            $("#SelArea").html("<option value='0'>==请选择==</option>");
+            $("#selPolice").html("<option value='0'>==请选择==</option>");
+            $("#selscenic").html("<option value='0'>==请选择==</option>");
+        } else if (key == "Area") {
+            $("#SelArea").html("<option value='0'>==请选择==</option>");
+            $("#selPolice").html("<option value='0'>==请选择==</option>");
+            $("#selscenic").html("<option value='0'>==请选择==</option>");
+        } else if (key == "police") {
+            $("#selPolice").html("<option value='0'>==请选择==</option>");
+            $("#selscenic").html("<option value='0'>==请选择==</option>");
+        } else if (key == "Scenic") {
+            $("#selscenic").html("<option value='0'>==请选择==</option>");
+        }
+    }
+</script>
+@using (Html.BeginForm("EditLocation", "Location", FormMethod.Post))
+{
+    UserInfo user = (UserInfo)Session["userInfo"];
+    Loc_NetBarInfo loca = (Loc_NetBarInfo)ViewBag.loca;
+    int isVerifiy = string.IsNullOrEmpty(ViewBag.vnetbar) ? 0 : 1;
+    <div class="contentbody" id="contentbody">
+        <table cellpadding="50" cellspacing="1" width="100%" class="AddCx_tab4L">
+            <tr>
+                <th colspan="4">
+                    <h1>
+                        编辑场所信息</h1>
+                </th>
+            </tr>
+        </table>
+        <div id="mind" style="overflow-y: auto">
+            @if (loca != null)
+            {
+                <table cellpadding="50" cellspacing="1" width="100%" class="AddCx_tab4L">
+                    <tr>
+                        <td width="12%" align="right">
+                            上网服务场所名称：
+                        </td>
+                        <td width="35%">
+                            <input type="text" id="txtPLACE_NAME" name="txtPLACE_NAME" class="_text" maxlength="250" value="@loca.PLACE_NAME" /><span
+                                id="spPLACE_NAME" class="color_ccc">*</span>
+                        </td>
+                        <td width="14%" align="right">
+                            场所服务类型：
+                        </td>
+                        <td>
+                            <select id="SelNETSITE_TYPE" name="SelNETSITE_TYPE">
+                                <option value="0">==请选择==</option>
+                                @{
+                                                                                                                       Dictionary<int, string> dicType = ChangeValue.GetLocaTypeList();
+                                                                                                                       foreach (var item in dicType)
+                                                                                                                       {
+                                    <option value="@item.Key">@item.Value</option>
+                                                                                                                       }
+                                }
+                            </select>
+                            <span id="spNETSITE_TYPE" class="color_ccc">*</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            场所经营性质：
+                        </td>
+                        <td>
+                            <select name="selBusiness_Nature" id="selBusiness_Nature" style="float: left; margin-top: 3px;
+                                margin-right: 10px;">
+                                <option value="-1">==请选择==</option>
+                                <option value="0">经营</option>
+                                <option value="1">非经营</option>
+                                <option value="3">其他</option>
+                            </select><span id="spBusiness_Nature" class="color_ccc">*</span>
+                        </td>
+                        <td align="right">
+                            场所详细地址：
+                        </td>
+                        <td>
+                            <input type="text" id="txtSITE_ADDRESS" name="txtSITE_ADDRESS" maxlength="250" class="_text"
+                        value="@loca.SITE_ADDRESS" /><span id="spSITE_ADDRESS" class="color_ccc">*</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            场所经营法人：
+                        </td>
+                        <td>
+                            <input type="text" id="txtUserName" name="txtUserName" maxlength="15" class="_text"
+                        value="@loca.LAW_PRINCIPAL_NAME" /><span id="spUserName" class="color_ccc"></span>
+                        </td>
+                        <td align="right">
+                            联系方式：
+                        </td>
+                        <td>
+                            <input type="text" id="txtMobile" name="txtMobile" maxlength="15" class="_text" value="@loca.RELATIONSHIP_ACCOUNT" /><span
+                                id="spMobile" class="color_ccc">手机号码或座机</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            经营法人有效证件类型：
+                        </td>
+                        <td>
+                            @{
+                                                                                                              string certifiName = "";
+                                                                                                              Dictionary<string, string> dic = ChangeValue.GetCertifiCateList();
+                                                                                                              foreach (var item in dic)
+                                                                                                              {
+                                                                                                                  if (item.Key == loca.LAW_PRINCIPAL_CERTIFICATE_TYPE)
+                                                                                                                  {
+                                                                                                                      certifiName = item.Value;
+                                                                                                                  }
+                                                                                                              }
+                            }
+                            <input type="text" id="txtCERTIFICATE_TYPE" name="txtCERTIFICATE_TYPE" readonly="readonly" maxlength="11" class="_text" value="@certifiName" /><input type="hidden" id="txtCertifiID" name="txtCertifiID" value="@loca.LAW_PRINCIPAL_CERTIFICATE_TYPE" /><a
+                        href="javascript:void(0)" onclick="javascript:showIdentify()" style="background: #1b5579; border: 1px solid #000;
+                        padding: 4px 5px; margin-left: 5px; color: #fff">选择证件类型</a> <span id="spCERTIFICATE_TYPE"
+                            class="color_ccc"></span>
+                        </td>
+                        <td align="right">
+                            经营法人有效证件号码：
+                        </td>
+                        <td>
+                            <input type="text" id="txtCERTIFICATE_ID" name="txtCERTIFICATE_ID" maxlength="50" class="_text"
+                        value="@loca.LAW_PRINCIPAL_CERTIFICATE_ID" /><span id="spCERTIFICATE_ID" class="color_ccc"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            营业开始时间：
+                        </td>
+                        <td>
+                            <input type="text" id="txtSTART_TIME" name="txtSTART_TIME" readonly="readonly" maxlength="11" class="_text" onfocus="WdatePicker({dateFmt:'HH:mm',readonly:true})" value="@loca.START_TIME" /><span
+                                id="spSTART_TIME" class="color_ccc"></span>
+                        </td>
+                        <td align="right">
+                            营业结束时间：
+                        </td>
+                        <td>
+                            <input type="text" id="txtEND_TIME" name="txtEND_TIME" readonly="readonly" maxlength="15" class="_text" onfocus="WdatePicker({dateFmt:'HH:mm',readonly:true})"
+                        value="@loca.START_TIME" /><span id="spEND_TIME" class="color_ccc"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            所属区域：
+                        </td>
+                        <td colspan="3">
+                            省:<select id="selProvince" name="selProvince" onchange="changeValue('selProvince','selCity','City')" value="@loca.ProID">
+                                <option value="0">==请选择==</option>
+                            </select>
+                            市:<select id="selCity" name="selCity" onchange="changeValue('selCity','SelArea','Area')" value="@loca.CityID">
+                                <option value="0">==请选择==</option>
+                            </select>
+                            区:<select id="SelArea" name="SelArea" onchange="changeValue('SelArea','selPolice','police')" value="@loca.Aid">
+                                <option value="0">==请选择==</option>
+                            </select>
+                            派出所:<select id="selPolice" name="selPolice" onchange="changeValue('selPolice','selscenic','Scenic')" value="@loca.Pid">
+                                <option value="0">==请选择==</option>
+                            </select>
+                            警区:<select id="selscenic" name="selscenic" value="@loca.Sid">
+                                <option value="0">==请选择==</option>
+                            </select>
+                            <span id="spscenic" class="color_ccc">*</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            经纬度：
+                        </td>
+                        <td>
+                            <input type="text" id="txtItude" maxlength="23" name="txtItude" @(user.Type == 1 ? "" : "readonly=readonly")  class="_text" value="@(loca.LATITUDE != "" && loca.LONGITUDE != "" ? (loca.LONGITUDE + "," + loca.LATITUDE) : "")" /><a
+                                href="javascript:void(0)" onclick="showItude()" style="background: #1b5579;
+                                border: 1px solid #000; padding: 4px 5px; margin-left: 5px; color: #fff">获取经纬度</a>
+                            <span id="spItude" class="color_ccc"></span>
+                        </td>
+                        <td align="right">
+                            厂商数据来源：
+                        </td>
+                        <td>
+                            <select id="SelMakeType" name="SelMakeType">
+                                @{
+                                                                                                                                                           Dictionary<int, string> dicMakeType = ChangeValue.DicMakeType();
+                                                                                                                                                           foreach (var item in dicMakeType)
+                                                                                                                                                           {
+                                    <option @(item.Key == 1 ? "selected=selected" : "")  value="@item.Key">@item.Value</option>
+                                                                                                                                                           }
+                                }
+                            </select><span id="spMakeType" class="color_ccc"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            场所网络接入方式：
+                        </td>
+                        <td>
+                            <select name="SelConnectType" id="SelConnectType">
+                                <option value="0">==请选择==</option>
+                                @{
+                                                                                                                                                           Dictionary<int, string> dicConType = ChangeValue.GetConnectTypeList();
+                                                                                                                                                           foreach (var item in dicConType)
+                                                                                                                                                           {
+                                    <option value="@item.Key">@item.Value</option>
+                                                                                                                                                           }
+                                }
+                            </select><span id="spConnectType" class="color_ccc"></span>
+                        </td>
+                        <td align="right">
+                            场所网络接入服务商：
+                        </td>
+                        <td>
+                            <select name="SelServiceBusines" id="SelServiceBusines">
+                                <option value="0">==请选择==</option>
+                                @{
+                                                                                                                                                           Dictionary<string, string> dicSerBus = ChangeValue.GetServiceBusinesList();
+                                                                                                                                                           foreach (var item in dicSerBus)
+                                                                                                                                                           {
+                                    <option value="@item.Key">@item.Value</option>
+                                                                                                                                                           }
+                                }
+                            </select><span id="spServiceBusines" class="color_ccc"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">
+                            场所状态：
+                        </td>
+                        <td>
+                            <label>
+                                <input type="radio" name="radStatis" @(loca.Statis == 1 ? "checked=checked" : "") value="1" />场所营业</label>
+                            <label>
+                                <input type="radio" @(loca.Statis == 2 ? "checked=checked" : "") name="radStatis" value="2" />场所停业</label>
+                        </td>
+                        <td align="right">
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                    @if (isVerifiy == 1)
+                    {
+                        <tr>
+                            <td align="right">
+                                审核：
+                            </td>
+                            <td>
+                                <label>
+                                    <input type="radio" @(loca.Verified < 3 ? "checked=checked" : "") @(loca.Verified == 3 ? "checked=checked" : "") value="3" name="radVerified" />通过</label>
+                                <label>
+                                    <input type="radio" @(loca.Verified == 4 ? "checked=checked" : "") value="4" name="radVerified" />不通过</label><span
+                                        class="color_ccc">*</span>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                            </td>
+                        </tr>
+                    }
+                    <tr>
+                        <td align="center" colspan="4">
+                            <input class="btn_SS" type="submit" name="button" value="保存" onmouseover="this.className='Over_SS'"
+                                onmouseout="this.className='Onout_SS'" />
+                            @if (isVerifiy == 1)
+                            {
+                                <a href="javascript:void(0)" onclick="VerifiyData()" style="background: #1b5579;
+                                    border: 1px solid #000; padding: 4px 5px; margin-left: 5px; color: #fff">加载审核数据</a>
+                            }
+                            else
+                            { <input type="hidden" name="radVerified" value="@loca.Verified" />}
+                            <input type="hidden" name="Hid" value="@loca.ID" /><input type="hidden" name="HLocaType" value="@loca.NETSITE_TYPE" /><input type="hidden" name="HAid" value="@loca.Aid" /><input type="hidden" name="HService_Code" value="@loca.Service_code" /><input type="hidden" name="HNETBAR_WACODE" value="@loca.NETBAR_WACODE" /><input
+                                type="hidden" id="ReturnUrl" name="ReturnUrl" value="" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" align="right">
+                            <font color="red">说明：</font>
+                        </td>
+                        <td colspan="2" style="padding-left: 5px">
+                            <font color="red">
+                                @if (isVerifiy == 1)
+                                {
+                                    <k>1、加载审核数据是将待审核数据填充到页面文本框中；<br />2、场所经纬度如果为空，则在地图标记中不显示。</k>
+                                }
+                                else
+                                {<k>场所经纬度如果为空，则在地图标记中不显示。</k>}</font>
+                        </td>
+                    </tr>
+                </table>
+            }
+        </div>
+    <div id="mapPop" style="position: absolute; background: #fff; overflow: hidden; width: 980px;
+            height: 600px; margin-left: -490px; margin-top: -300px; top: 50%; left: 50%;
+            border: 1px solid #333; z-index: 1000; display: none">
+            <iframe src="../../Map/HGetItude.html" height="100%" width="100%" scrolling="no"
+                frameborder="0"></iframe>
+        </div>
+        <div id="identify" style="position: absolute; background: #fff; overflow: hidden;
+            width: 980px; height: 600px; margin-left: -490px; margin-top: -300px; top: 50%;
+            left: 50%; border: 1px solid #333; z-index: 1000; display: none">
+            <iframe src="/Location/ShowCertifi" style="height: 100%; width: 100%"></iframe>
+        </div>
+    </div>
+    <script language="javascript" type="text/javascript">
+        var showItude=()=>{
+        $("#mapPop").css("display","block");
+    }
+    var hideItude=()=>{
+        $("#mapPop").css("display","none");
+    }
+    var showIdentify=()=>{
+        $("#identify").css("display","block");
+    }
+    var hideIdentify=()=>{
+        $("#identify").css("display","none");
+    }
+    </script> 
+    <script type="text/javascript">
+        //mindasd(210);
+        var verifiy_json = '@Html.Raw(ViewBag.vnetbar)';
+
+        $(function () {
+
+            var path = '';
+            try {
+                if (document.referrer.length > 0) {
+                    path = document.referrer;
+                } else {
+                    path = opener.location.href;
+                }
+            } catch (e) {
+
+            }
+            $("#ReturnUrl").val(path);
+
+            if (verifiy_json != "") {
+                verifiy_json = eval('(' + verifiy_json + ')');
+            }
+            changeValue("selProvince", "selProvince", "Province");
+            $("#selProvince").val('@(loca == null ? 0 : loca.ProID)');
+            changeValue('selProvince', 'selCity', 'City');
+            $("#selCity").val('@(loca == null ? 0 : loca.CityID)');
+            changeValue('selCity', 'SelArea', 'Area');
+            $("#SelArea").val('@(loca == null ? 0 : loca.Aid)');
+            changeValue('SelArea', 'selPolice', 'police');
+            $("#selPolice").val('@(loca == null ? 0 : loca.Pid)');
+            changeValue('selPolice', 'selscenic', 'Scenic');
+            $("#selscenic").val('@(loca == null ? 0 : loca.Sid)');
+
+
+            $("#SelNETSITE_TYPE").val('@(loca == null ? 0 : loca.NETSITE_TYPE)');
+            $("#selBusiness_Nature").val('@(loca == null ? "0" : loca.BUSINESS_NATURE)');
+            $("#SelServiceBusines").val('@(loca == null || string.IsNullOrEmpty(loca.OPERATOR_NET) ? "01" : loca.OPERATOR_NET)');
+            $("#SelConnectType").val('@(loca == null || loca.ACCESS_TYPE == 0 ? 3 : loca.ACCESS_TYPE)');
+            $("#SelMakeType").val('@(loca == null ? 0 : loca.MakeType)');
+
+
+
+            $("form").submit(function () {
+                if (subVal()) {
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+        });
+
+        function VerifiyData() {
+            if (verifiy_json != "") {
+                $("#txtPLACE_NAME").val(verifiy_json.PLACE_NAME);
+                $("#txtSITE_ADDRESS").val(verifiy_json.SITE_ADDRESS);
+                $("#txtUserName").val(verifiy_json.LAW_PRINCIPAL_NAME);
+                $("#txtMobile").val(verifiy_json.RELATIONSHIP_ACCOUNT);
+                $("#txtOutIpAddress").val(verifiy_json.ACSSES_IP);
+                $("#txtCERTIFICATE_TYPE").val(verifiy_json.certifiName);
+                $("#txtCertifiID").val(verifiy_json.LAW_PRINCIPAL_CERTIFICATE_TYPE);
+                $("#txtCERTIFICATE_ID").val(verifiy_json.LAW_PRINCIPAL_CERTIFICATE_ID);
+                $("#SelConnectType").val(verifiy_json.ACCESS_TYPE);
+                $("#SelServiceBusines").val(verifiy_json.OPERATOR_NET);
+                $("#selBusiness_Nature").val(verifiy_json.BUSINESS_NATURE);
+                $("#SelNETSITE_TYPE").val(verifiy_json.NETSITE_TYPE);
+
+                $("#selProvince").val(verifiy_json.ProID);
+                changeValue('selProvince', 'selCity', 'City');
+                $("#selCity").val(verifiy_json.CityID);
+                changeValue('selCity', 'SelArea', 'Area');
+                $("#SelArea").val(verifiy_json.Aid);
+                changeValue('SelArea', 'selPolice', 'police');
+                $("#selPolice").val(verifiy_json.Pid);
+                changeValue('selPolice', 'selscenic', 'Scenic');
+                $("#selscenic").val(verifiy_json.Sid);
+            }
+        }
+
+        function SelProject(val) {
+            if (val != 3) {
+                $("#spItude").html("*");
+            } else {
+                $("#spItude").html("");
+            }
+        }
+
+        function subVal() {
+            var result = true;
+
+            if (!regtxt()) {
+                result = false;
+            }
+
+            var regInput = new RegExp(/^[\u4e00-\u9fa5A-Za-z\d_( ).,—@@:-]*$/);
+
+            if ($.trim($("#txtPLACE_NAME").val()) == "") {
+                result = false;
+                $("#spPLACE_NAME").html("上网服务场所名称不能为空");
+            } else if (!regInput.test($.trim($("#txtPLACE_NAME").val()))) {
+                result = false;
+                $("#spPLACE_NAME").html("上网服务场所名称不能存在特殊字符");
+            } else {
+                $("#spPLACE_NAME").html("");
+            }
+
+            var regAddress = new RegExp(/^[\u4e00-\u9fa5A-Za-z\d_( ).—-]*$/);
+            if ($.trim($("#txtSITE_ADDRESS").val()) == "") {
+                result = false;
+                $("#spSITE_ADDRESS").html("场所详细地址不能为空");
+            } else if (!regAddress.test($.trim($("#txtSITE_ADDRESS").val()))) {
+                result = false;
+                $("#spSITE_ADDRESS").html("场所地址中只能包含数字、汉字、英文字母、-_.()等字符");
+            } else {
+                $("#spSITE_ADDRESS").html("");
+            }
+
+            if ($("#SelNETSITE_TYPE").val() == "0") {
+                result = false;
+                $("#spNETSITE_TYPE").html("请选择场所服务类型");
+            } else {
+                $("#spNETSITE_TYPE").html("");
+            }
+
+            if ($("#selBusiness_Nature").val() == "-1") {
+                result = false;
+                $("#spBusiness_Nature").html("请选择场所经营性质");
+            } else {
+                $("#spBusiness_Nature").html("");
+            }
+
+            if ($("#selscenic").val() == "0") {
+                result = false;
+                $("#spscenic").html("请选择所属区域");
+            } else {
+                $("#spscenic").html("");
+            }
+
+            var reg = new RegExp(/^\w+([-+.']\w+)*@@\w+([-.]\w+)*\.\w+([-.]\w+)*$/g);
+            if ($.trim($("#txtInterEmail").val()) != "") {
+                if (!reg.test($.trim($("#txtInterEmail").val()))) {
+                    result = false;
+                    $("#spInterEmail").html("邮箱格式不正确，请重新输入");
+                } else {
+                    $("#spInterEmail").html("");
+                }
+            }
+
+            var regZipCode = new RegExp(/^[1-9]\d{5}(?!\d)/g);
+            if ($.trim($("#txtZipcode").val()) != "") {
+                if (!regZipCode.test($.trim($("#txtZipcode").val()))) {
+                    result = false;
+                    $("#spZipcode").html("邮编不正确，请重新输入");
+                } else {
+                    $("#spZipcode").html("");
+                }
+            }
+
+            var txtItude = $.trim($("#txtItude").val());
+            reg = new RegExp(/^(-?\d+)(\.\d+)?$/);
+            if (txtItude != "") {
+                if (!(reg.test(txtItude.split(",")[0]) && reg.test(txtItude.split(",")[1])) || txtItude.split(",").length != 2) {
+                    result = false;
+                    $("#spItude").html("经纬度格式不正确，请重新输入！");
+                } else {
+                    $("#spItude").html("");
+                }
+            }
+
+
+            var regmobile = new RegExp(/^[\d-]+$/);
+            if ($.trim($("#txtMobile").val()) != "") {
+                if (!regmobile.test($.trim($("#txtMobile").val()))) {
+                    result = false;
+                    $("#spMobile").html("联系方式只能为数字或-");
+                } else {
+                    $("#spMobile").html("");
+                }
+            } else {
+                $("#spMobile").html("");
+            }
+
+            var WebTel = $.trim($("#txtWebTel").val());
+            if (WebTel != "") {
+                if (isNaN(WebTel)) {
+                    result = false;
+                    $("#spWebTel").html("网络负责人联系电话只能是11或12位数字");
+                } else if (WebTel.length != 11 && WebTel.length != 12) {
+                    result = false;
+                    $("#spWebTel").html("网络负责人联系电话的长度为11或12位");
+                } else {
+                    $("#spWebTel").html("");
+                }
+            }
+
+            return result;
+        }
+
+    </script>
+
+
+}

@@ -1,0 +1,179 @@
+﻿@using System.Collections.Generic
+@using System.Linq
+@using HCZZ.ModeDB
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model List<Sys_UserPowerInfo>
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>EditPower</title>
+</head>
+<body>
+    <div class="row" style="margin-left:200px">
+    <div  class="box">
+        @{
+            List<Sys_UserPowerInfo> list = Model;
+            IEnumerable<Sys_UserPowerInfo> IElist = list.Where(m => m.Pid == 0).OrderBy(m => m.Indexs);
+            if (IElist != null && IElist.ToList().Count > 0)
+            {
+                string JsVal = "";
+                List<Sys_UserPowerInfo> QXlist = (List<Sys_UserPowerInfo>)ViewBag.QXlist;
+                List<Sys_UserPowerInfo> Flist = IElist.ToList();
+                foreach (Sys_UserPowerInfo item in Flist)
+                {
+                    List<Sys_UserPowerInfo> sulist = QXlist.Where(m => m.Qid == item.Id).ToList();
+                    string RoleName = (QXlist != null && QXlist.Count > 0 ? QXlist.First().RoleName : "");
+                    <div class="smallBox" id="div_@(item.Id)">
+        	            <p><label><input type="checkbox" onclick="FQXclick(this)" name="pwF" id="pwF_@(item.Id)" @(sulist.Count > 0 ? "checked=checked" : "") value="@item.Id"/>@item.Name</label></p>
+                        @{
+                                                                                                                                                                        IEnumerable<Sys_UserPowerInfo> slist = list.Where(m => m.Pid == item.Id).OrderBy(m => m.Indexs);
+                                                                                                                                                                        if (slist != null && slist.ToList().Count > 0)
+                                                                                                                                                                        {
+                                                                                                                                                                            foreach (Sys_UserPowerInfo sItem in slist.ToList())
+                                                                                                                                                                            {
+                                                                                                                                                                                List<Sys_UserPowerInfo> twolist = QXlist.Where(m => m.Qid == sItem.Id).ToList();
+                                                                                                                                                                                if ((sItem.Name == "系统用户管理" || sItem.Name == "公司管理" || sItem.Name == "角色管理") && RoleName != "管理员")
+                                                                                                                                                                                { }                                                                                                                                    else
+                                       {
+                                           if (sItem.Name == "角色管理")
+                                           {
+                                               JsVal = item.Id + "_" + sItem.Id + "_" + "1-2-3-";
+                                           }
+                                           else
+                                           {
+                                    <ul id="ul_@(sItem.Id)">
+            	                        <li style="font-size:14px;"><label><input type="checkbox" onclick="SQXclick(this)" @(twolist.Count > 0 ? "checked=checked" : "") id="pwF_@(item.Id)_@(sItem.Id)" name="pwFTwo" value="@sItem.Id"/>@sItem.Name</label></li>
+            	                        <li style="margin-left:5px;">
+                                            @if (sItem.IdValues.IndexOf('1') != -1)
+                                            {
+                                            <label><input type="checkbox" onclick="QXOnclick(this)" @(twolist.Count > 0 && twolist.First().SelValues.Contains("1") ? "checked=checked" : "") id="pwF_@(item.Id)_@(sItem.Id)_1" name="pwFThree_@(sItem.Id)" value="1"/>读</label>
+                                            }
+                                            @if (sItem.IdValues.IndexOf('2') != -1)
+                                            {
+                                            <label><input type="checkbox" onclick="QXOnclick(this)" @(twolist.Count > 0 && twolist.First().SelValues.Contains("2") ? "checked=checked" : "") id="pwF_@(item.Id)_@(sItem.Id)_2" name="pwFThree_@(sItem.Id)" value="2"/>写</label>
+                                            }
+                                            @if (sItem.IdValues.IndexOf('3') != -1)
+                                            {
+                                            <label><input type="checkbox" onclick="QXOnclick(this)" @(twolist.Count > 0 && twolist.First().SelValues.Contains("3") ? "checked=checked" : "") id="pwF_@(item.Id)_@(sItem.Id)_3" name="pwFThree_@(sItem.Id)" value="3"/>删除</label>
+                                            }
+                                            @if (sItem.IdValues.IndexOf('4') != -1)
+                                            {
+                                            <label><input type="checkbox" onclick="QXOnclick(this)" @(twolist.Count > 0 && twolist.First().SelValues.Contains("4") ? "checked=checked" : "") id="pwF_@(item.Id)_@(sItem.Id)_4" name="pwFThree_@(sItem.Id)" value="4"/>审核</label>
+                                            }
+                                            @if (sItem.IdValues.IndexOf('5') != -1)
+                                            {
+                                            <label><input type="checkbox" onclick="QXOnclick(this)" @(twolist.Count > 0 && twolist.First().SelValues.Contains("5") ? "checked=checked" : "") id="pwF_@(item.Id)_@(sItem.Id)_5" name="pwFThree_@(sItem.Id)" value="5"/>下载</label>
+                                            }
+                                             @if (sItem.IdValues.IndexOf('6') != -1)
+                                            {
+                                                 <label><input type="checkbox" onclick="QXOnclick(this)" @(twolist.Count > 0 && twolist.First().SelValues.Contains("6") ? "checked=checked" : "")id="pwF_@(item.Id)_@(sItem.Id)_6" name="pwFThree_@(sItem.Id)" value="6"/>数据查询</label>
+                                            }
+                                            
+                                        </li>
+                                    </ul>
+                                                                                                                                                                                    }
+                                                                                                                                                                                }
+                                                                                                                                                                            }
+                                                                                                                                                                        }
+                        }
+                    </div>
+                    <hr/>
+                }
+        	    <input type="hidden" value="@JsVal" name="HidJsVal" id="HidJsVal" />
+            }
+         }
+        <div style="width:100%;text-align:center;margin:15px auto;">
+        	<input class="button radius secondary " name="button" value="确定" onclick="EdState()"  type="button">
+        </div>
+    </div>
+</div>
+
+    <script type="text/javascript">
+        function QXOnclick(obj) {
+            var sp = obj.id.split("_");
+            var ck1 = $(obj).parent().parent().find("input[type='checkbox']:checked").length;
+            var ck2 = $(obj).parent().parent().find("input[type='checkbox']").length;
+            var sid = obj.id.substring(0, obj.id.length - 2);
+
+            if ($("#" + obj.id).attr("checked") == "checked") {
+                $("#" + sid).attr("checked", "checked");
+                $("#pwF_" + sp[1]).attr("checked", "checked");
+                if ($("#" + obj.id).value != "1") {
+                    $("#" + sid + "_1").attr("checked", "checked");
+                }
+            } else if (obj.value == "1") {
+                $("#ul_" + sp[2]).find("input[type='checkbox']").removeAttr("checked");
+            }
+
+            if ($("#ul_" + sp[2]).find("input[type='checkbox'][name!='pwFTwo']:checked").length == 0) {
+                $("#" + sid).removeAttr("checked");
+            }
+            if ($("#div_" + sp[1]).find("input[type='checkbox'][name!='pwF']:checked").length == 0) {
+                $("#pwF_" + sp[1]).removeAttr("checked");
+            }
+        }
+
+        function SQXclick(obj) {
+            var sp = obj.id.split("_");
+            if ($("#" + obj.id).attr("checked") == "checked") {
+                $("#ul_" + sp[2]).find("input[type='checkbox']").attr("checked", "checked");
+                $("#pwF_" + sp[1]).attr("checked", "checked");
+            } else {
+                $("#ul_" + sp[2]).find("input[type='checkbox']").removeAttr("checked");
+            }
+
+            if ($("#div_" + sp[1]).find("input[type='checkbox'][name!='pwF']:checked").length == 0) {
+                $("#pwF_" + sp[1]).removeAttr("checked");
+            }
+        }
+
+        function FQXclick(obj) {
+            if ($("#" + obj.id).attr("checked") == "checked") {
+                $("#div_" + obj.value).find("input[type='checkbox']").attr("checked", "checked");
+            } else {
+                $("#div_" + obj.value).find("input[type='checkbox'][value!='角色管理']").removeAttr("checked");
+            }
+        }
+
+        function EdState() {
+            var slist = $("input[type='checkbox'][name='pwFTwo']:checked");
+            var subVal = "";
+            if (slist.length > 0) {
+                for (var i = 0; i < slist.length; i++) {
+                    var id = slist[i].id;
+                    var qxlist = $("input[type='checkbox'][name='pwFThree_" + id.split('_')[2] + "']:checked");
+                    var qxVal = "";
+                    for (var k = 0; k < qxlist.length; k++) {
+                        qxVal += qxlist[k].value + "-";
+                    }
+                    subVal += id.replace("pwF_", "") + "_" + qxVal + ",";
+                }
+                subVal += $("#HidJsVal").val();
+                var jid = '@ViewBag.JId';
+                $.ajax
+			    ({
+			        type: "post",
+			        url: '@Url.Content("~/System/AddPower")',
+			        dataType: "json",
+			        async: false,
+			        data: { Jid: jid, strVal: subVal },
+			        success: function (data, status) {
+			            if (typeof (data.err) != 'undefined' && data.err != "") {
+			                alert("保存失败，请稍后重试");
+			            } else {
+			                alert("保存成功！");
+			                window.location.href = '@Url.Content("~/System/RoleList")';
+			            }
+			        }
+			    });
+            } else {
+                alert("请勾选模块");
+                return false;
+            }
+        }
+    </script>
+</body>
+</html>

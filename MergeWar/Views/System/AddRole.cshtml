@@ -1,0 +1,70 @@
+﻿@{
+    ViewBag.Title = "添加角色";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div id="Cx" style="display: none">
+</div>
+<div class="Tjxx" id="TJ" style="display: none">
+</div>
+<table>
+    <tr>
+        <th colspan="4">
+            <h1>
+                添加角色
+            </h1>
+        </th>
+    </tr>
+</table>
+<div id="mind" style="overflow-y: auto">
+    <table>
+        <tr>
+            <td align="right" width="150px">角色名称：</td>
+            <td><input type="text" class="_text" name="txtName" maxlength="30" id="txtName" value="" /><span class="color_ccc" id="spName">*</span></td>
+        </tr>
+        <tr>
+            <td align="center" colspan="4">
+                <input class="btn_SS" type="button" onclick="SaveVal()" name="button" value="保存" />
+            </td>
+        </tr>
+    </table>
+</div>
+
+<script type="text/javascript">
+    function SaveVal() {
+        if (ckVal()) {
+            $.ajax
+            ({
+                type: "post",
+                url: '@Url.Content("~/System/AddRole")',
+                dataType: "json",
+                data: { "name": $("#txtName").val()},
+                success: function (data, status) {
+                    if (typeof (data.err) != 'undefined' && data.err != "") {
+                        alert(data.err);
+                    } else {
+                        if (data.result == "OK") {
+                            alert("添加成功");
+                            parent.window.location.href = '@Url.Content("~/System/RoleList")';
+                        } else if (data.result == "NO") {
+                            alert("添加失败");
+                        }
+                    }
+                },
+                error: function (data, status, e) {
+                    alert(e);
+                }
+            });
+        }
+    }
+
+    function ckVal() {
+        var result = true;
+
+        if ($("#txtName").val() == "") {
+            $("#spName").html("角色名称不能为空"); result = false;
+        } else {
+            $("#spName").html("&nbsp;");
+        }
+        return result;
+    }
+</script>

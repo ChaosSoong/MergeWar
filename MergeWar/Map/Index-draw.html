@@ -1,0 +1,364 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>百度离线地图示例</title>
+    <!--<script type="text/javascript" src="js/DistanceTool_min.js"></script>-->
+    <script type="text/javascript" src="../Map/Pub/js/jquery-1.8.0.min.js"></script>
+    <!--<script type="text/javascript" src="Pub/js/jquery.uploadify.min.js" ></script>-->
+    <script type="text/javascript" src="../Map/js/apiv.2.0.js"></script>
+    <script type="text/javascript" src="../Map/js/getmodules.js"></script>
+    <!--<script type="text/javascript" src="Pub/layer/layer.js"></script>
+    <script type="text/javascript" src="Pub/js/console.js"></script>-->
+    <!--<link rel="stylesheet" type="text/css" href="bmap.css"/>-->
+
+    <!--点聚合js-->
+    <script type="text/javascript" src="../Map/js/TextIconOverlay_min.js"></script>
+    <script type="text/javascript" src="../Map/js/MarkerClusterer_min.js"></script>
+
+<!--画线js-->
+<script type="text/javascript" src="../Map/js/DrawingManager_min.js"></script>
+<link rel="stylesheet" href="../Map/js/DrawingManager_min.css" />
+<!-- 工具栏设置 -->
+<!--<script src="Pub/js/jquery.minicolors.js"></script>
+<link rel="stylesheet" href="Pub/css/jquery.minicolors.css">
+<script type="text/javascript" src="Pub/js/jquery.reveal.js"></script>-->
+<!--画线js结束-->
+<!--<link rel="stylesheet" type="text/css" href="Pub/css/uploadify.css"/>
+<link rel="stylesheet" type="text/css" href="Pub/css/console.css"/>-->
+    <style type="text/css">
+        html,body,div,button,ul,li,ol,dl,dd,dt,p,h1,h2,h3,h4,h5,h6,form,fieldset,legend,img {margin: 0;padding: 0;}
+        html,body{height: 100%}
+        a{text-decoration:none;}
+        .show{font-size: 12px;color: #333;margin: 0px;padding: 0px;}
+        .show ul{margin: 0px;padding: 0px;}
+        .show ul li{margin: 0px;padding: 3px;list-style: none;}
+        .title{font-size: 14px;}
+        .spa{font-size: 12px}
+        .addmarker{list-style: none;margin: 0px;padding: 0px;color: #666;font-size: 12px;}
+        .addmarker li{margin: 0px;padding: 3px;}
+        .addmarker li input{border: 1px solid #D8D8D8;border-radius: 4px;}
+        .center{text-align: center;font-weight: bold;}
+        .img{text-align: center;overflow: hidden;width: 294.5px;height: 130px}
+        input:{border: none;}
+        input:focus {
+            border: none;
+            border-color: rgba(82, 168, 236, 0.8);
+            outline: 0px none;
+            box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset, 0px 0px 8px rgba(82, 168, 236, 0.6);
+        .a{color: #E9E9E9;}
+        }
+
+        /*按钮的样式*/
+        .gray {
+            color: #E9E9E9;
+            border: 1px solid #555;
+            background: transparent -moz-linear-gradient(center top , #888, #575757) repeat scroll 0% 0%;
+        }
+
+        .medium {
+            font-size: 10px;
+            padding: 1px
+        }
+
+        .button {
+            display: inline-block;
+            vertical-align: baseline;
+            margin: 0px 2px;
+            outline: medium none;
+            cursor: pointer;
+            font-weight: bold;
+            text-align: center;
+            text-decoration: none;
+            font: 13px Arial,Helvetica,sans-serif;
+            padding: 2px 10px;
+
+            text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
+            border-radius: 0.5em;
+            box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.2);
+        }
+        .anchorBL a img{display:none; }
+    </style>
+</head>
+<body>
+<div style="width:70%;height:100%;float: left;" id="container"></div>
+<div style="width: 30%;float: left; font-family:12px" id="mapHtml"></div>
+</body>
+</html>
+<script type="text/javascript">
+    var mapOptions = {
+        mapType: BMAP_NORMAL_MAP
+    }
+    var map = new BMap.Map("container", mapOptions); //设置卫星图为底图BMAP_PERSPECTIVE_MAP
+    var initPoint = new BMap.Point(114.067837,22.556793);    // 创建点坐标
+    //var geoc = new BMap.Geocoder();
+    map.centerAndZoom(initPoint,9);                    // 初始化地图,设置中心点坐标和地图级别。
+    map.enableScrollWheelZoom();                  // 启用滚轮放大缩小。
+    map.enableKeyboard();                         // 启用键盘操作。
+    map.enableContinuousZoom();					 //启用连续缩放效果
+    // ----- control -----
+    map.addControl(new BMap.NavigationControl()); //地图平移缩放控件
+    map.addControl(new BMap.ScaleControl()); //显示比例尺在左下角
+    //-------显示卫星地图----
+    //map.addControl(new BMap.MapTypeControl({mapTypes: [BMAP_NORMAL_MAP,BMAP_SATELLITE_MAP]}));
+    //------显示缩略图控件---
+    //map.addControl(new BMap.OverviewMapControl({anchor: BMAP_ANCHOR_BOTTOM_RIGHT, isOpen: true}));
+
+
+    /**
+    **点聚合代码
+    
+    var MAX = 100;
+    var markers = [];
+    var pt = null;
+    var i = 0;
+    for (; i < MAX; i++) {
+        pt = new BMap.Point(Math.random() * 40 + 85, Math.random() * 30 + 21);
+        markers.push(new BMap.Marker(pt));
+    }
+    //最简单的用法，生成一个marker数组，然后调用markerClusterer类即可。
+    var markerClusterer = new BMapLib.MarkerClusterer(map, { markers: markers });
+    **/
+
+
+    //清空界面标注，重新打上标注
+    function createNewOverlay(lng,lat){
+        map.clearOverlays();
+        map.addOverlay(new BMap.Marker(new BMap.Point(lng,lat))); // 创建标注
+    }
+
+    function addSimulatorMarkers(point,id) {
+        var simulatorIcon = new BMap.Icon("../Map/images/2.png", new BMap.Size(32, 37));
+        // 创建标注对象并添加到地图
+        var simulatorMarkerOptions = {
+            icon: simulatorIcon,
+            enableDragging: true,
+            draggingCursor: "move",
+            title: "新标注"
+        }
+        var simulatorMarker = new BMap.Marker(point, simulatorMarkerOptions);
+        simulatorMarker.setAnimation(BMAP_ANIMATION_DROP);
+        map.addOverlay(simulatorMarker);
+
+        //edit(simulatorMarker,id);
+        //为标注添加点击事件——弹出信息窗口
+        simulatorMarker.addEventListener("click", function(){
+            showInfo(simulatorMarker,id);
+        });
+    }
+
+    function cleardraw() {
+        map.clearOverlays();
+    }
+
+
+
+
+//	
+//    // ----- menu -----
+//    var contextMenu = new BMap.ContextMenu();
+//    var txtMenuItem = [
+//        {
+//            //text:'在此处添加标注',
+//            callback:function(p){
+//                $.ajax({
+//                    type:'post',
+//                    url:'add.php',
+//                    timeout:'3000',
+//                    data:{
+//                        lat:p.lat,
+//                        lng:p.lng,
+//                    },
+//                    success:function  (data,status,xhr) {
+//                        if (data) {
+//                            addSimulatorMarkers(p,data);
+//                        };
+//                    },
+//                    error:function  (errorType) {
+//                        console.log(errorType);
+//                    }
+//                });
+
+//            }
+//        },
+//    ];
+
+//    for(var i=0; i < txtMenuItem.length; i++){
+//        contextMenu.addItem(new BMap.MenuItem(txtMenuItem[i].text,txtMenuItem[i].callback,100));
+//        if(i==0) {
+//            contextMenu.addSeparator();
+//        }
+//    }
+//    map.addContextMenu(contextMenu);
+
+    //显示信息窗口的函数
+    function showInfo (marker,id) {
+//        $.ajax({
+//            type:'post',
+//            url:'http://'+lpyhtj+'/CommonMap/show',
+//            data:{
+//                id:id
+//            },
+//            success:function  (data,status,xhr) {
+//                data=$.parseJSON(data);
+//                img=data.img;
+//                tel=data.tel;
+//                info=data.info;
+//                address=data.address;
+//                link_a=data.link_a;
+//                if(link_a=="http://"||link_a==""){
+//                    link_b="http://www.bigemap.com";
+//                }else{
+//                    link_b=link_a;
+//                }
+//                tel=checkEmpty(tel);address=checkEmpty(address);info=checkEmpty(info);link_a=checkEmpty(link_a);
+//                //如果当前标注没有图片，则加载默认的图片
+//                if (img==''|| img==undefined) {
+//                    img='./images/sorry.png';
+//                }
+//                //判断上传图片orMP4
+//                if(img.indexOf(".mp4")<0){
+//                    show_img='<img src="'+img+'" style="width:290px">';
+//                }else{
+//                    show_img='<video style="width:180px" src="'+img+'" controls="controls"></video>';
+//                }
+
+//                var mywindow='<div class="show"><ul><li class="title">'+info+'　<a href="'+link_b+'" target="_blank"><span class="spa">详情>></span></a></li><li class="img">'+show_img+'</li><li class="info"><hr style="height:1px;border:none;border-top:1px dotted #555555;" />地名：'+info+'</li><li class="info">地址：'+address+'</li><li class="info">电话：'+tel+'</li></ul></div>';
+//                opts={
+//                    width:305,
+//                    //height:260,
+//                }
+//                var aa=new BMap.InfoWindow(mywindow,opts);
+//                marker.openInfoWindow(aa);
+//            }
+//        })
+    }
+//    //当页面加载时显示所有的数据.
+//    $.ajax({
+//        type:'post',
+//        url:'http://'+lpyhtj+'/CommonMap/show',
+//        data:{
+//            type:'marker'
+//        },
+//        success:function  (data,status,xhr) {
+//            data=$.parseJSON(data);
+//            var i=0;
+//            $.each(data, function(index, val) {
+//                var p = new BMap.Point(val.lng, val.lat);
+//                var markerOptions = {
+//                    enableDragging: false,
+//                    //raiseOnDrag: true,       //跳动的效果
+//                    draggingCursor: "move",
+//                }
+//                var marker = new BMap.Marker(p,markerOptions);
+//                marker.id=val.id;
+//                marker.setTitle(val.info);
+//                marker.setAnimation(BMAP_ANIMATION_DROP);
+//                //添加图标
+//                var myIcon = new BMap.Icon('icon/'+val.type+'.png', new BMap.Size(32, 37), {
+//                    // anchor: new BMap.Size(15,35), // 指定定位位置
+//                    // imageOffset: new BMap.Size(0,-20) // 设置图片偏移
+//                });
+//                marker.setIcon(myIcon);
+//                //为标注添加点击事件——弹出信息窗口
+//                marker.addEventListener("click", function(e){
+//                    showInfo(marker,marker.id,val.img,val.tel,val.address,val.info,val.link_a);
+//                });
+
+//                //当停止拖动时修改
+//                marker.addEventListener("dragend", function(e) {
+//                    $.post('add.php',{id:marker.id,lat:e.point.lat,lng:e.point.lng},function  (data) {
+//                    });
+//                });
+//                map.addOverlay(marker);
+//                var markerMenu = new BMap.ContextMenu();
+//                //保存右键
+//                marker.addContextMenu(markerMenu);
+//            });
+//        },
+//        error:function  (errorType) {
+//        }
+    //    });
+
+    var jsonData = [];
+    var ajaxResult = 0;
+        //当页面加载时显示所有的数据.
+//    $.ajax({
+//        type: "get",
+//        url: "http://localhost:24561/CommonMap/Loadshow",
+//        dataType: "json",
+//        //async: false,
+//        success: function (data, status) {
+//            jsonData = eval(data);
+//            ajaxResult = 1;
+//        },
+//        error: function (data, status, e) {
+//        }
+//    });
+
+//   var b= setTimeout(loadMark,2000);
+
+//    function loadMark() {
+//        if (ajaxResult == 1) {
+//            clearTimeout(b);
+//        }
+//        if (jsonData.length > 0) {
+//            var markers = [];
+//            for (var kk = 0; kk < jsonData.length; kk++) {
+//                markers.push(new BMap.Marker(new BMap.Point(jsonData[kk].lng, jsonData[kk].lat)));
+//            }
+
+//            var markerClusterer = new BMapLib.MarkerClusterer(map, { markers: markers });
+//        }
+//    }
+
+    //防止出现undefinded
+    function checkEmpty (str) {
+        if (str==undefined) {
+            return ' ';
+        };
+        return str;
+    }
+	 
+</script>
+<!--<script type="text/javascript" src="Pub/js/draw1.js"></script>-->
+<!--<script type="text/javascript" src="Pub/js/draw.js"></script>-->
+
+<script type="text/javascript">
+	var overlays = [];
+	var overlaycomplete = function (e) {
+	    clearAll();//画图前清除之前画的图
+	    overlays.push(e.overlay);
+	    clearAll(); //画图后清除画的图
+
+        //画图完成后关闭画图并还原按钮状态
+	    var h = e.currentTarget._drawingTool.drawingManager;
+	    h.close(); //关闭画图
+	};
+    var styleOptions = {
+        strokeColor:"red",    //边线颜色。
+        fillColor:"red",      //填充颜色。当参数为空时，圆形将没有填充效果。
+        strokeWeight: 3,       //边线的宽度，以像素为单位。
+        strokeOpacity: 0.8,	   //边线透明度，取值范围0 - 1。
+        fillOpacity: 0.2,      //填充的透明度，取值范围0 - 1。
+        strokeStyle: 'solid' //边线的样式，solid或dashed。
+    }
+    //实例化鼠标绘制工具
+    var drawingManager = new BMapLib.DrawingManager(map, {
+        isOpen: false, //是否开启绘制模式
+        enableDrawingTool: true, //是否显示工具栏
+        drawingToolOptions: {
+            anchor: BMAP_ANCHOR_TOP_RIGHT, //位置
+            offset: new BMap.Size(5, 5) //偏离值
+        },
+        rectangleOptions: styleOptions //矩形的样式
+    });  
+	 //添加鼠标绘制工具监听事件，用于获取绘制结果
+    drawingManager.addEventListener('overlaycomplete', overlaycomplete);
+    function clearAll() {
+		for(var i = 0; i < overlays.length; i++){
+            map.removeOverlay(overlays[i]);
+        }
+        overlays.length = 0   
+    }
+</script>

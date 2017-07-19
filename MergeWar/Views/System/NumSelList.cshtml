@@ -1,0 +1,21 @@
+﻿@{
+    Layout = null;
+}
+@using HCZZ.ModeDB;
+@using Webdiyer.WebControls.Mvc
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>安全厂商数据查询</title>
+</head>
+<body>
+    <div>
+        @{ 
+            PagedList<TermianlAccessLog> list = (PagedList<TermianlAccessLog>)ViewBag.pl;
+
+        }
+    </div>
+</body>
+</html>

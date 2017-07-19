@@ -1,0 +1,74 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<head>
+    <title></title>
+<link href="@Url.Content("~/Content/css/index.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Content/js/jquery-1.7.1.min.js")" type="text/javascript"></script>
+</head>
+ @using (Html.BeginForm("AddProArea", "System", FormMethod.Post))
+        {
+            <div class="Pop_layer" style="float:left ;"> 
+		<div class="aq_title">
+			<div class="TT_left"></div>
+			<div class="TT_right"></div> 
+			<div class="img_close" onclick="javascript:parent.closeDiv()"></div>
+			添加省
+		</div>  
+            <div class="aq_tab aq_overflow2"> 
+ 			     <table cellpadding="0" cellspacing="1" width="100%" class="aq_XxTab">
+                    <tr>
+				        <td width="20%" align="right">省名称：</td>
+				        <td width="30%"><input type="text" class="_text" name="txtArea" maxlength="25" id="txtArea" /><span id="spArea" class="color_ccc">*</span></td>   
+			        </tr>
+                    <tr>
+				        <td align="right">省代码：</td>
+				        <td><input type="text" class="_text" name="txtCity_code" maxlength="25" id="txtCity_code" /><span id="spCity_code" class="color_ccc">*</span></td>   
+			        </tr>
+                </table>
+            </div> 
+            <div class="aq_foot"> 
+			    <input class="btn_SS" type="submit" name="button" value="保存";
+			      onmouseover="this.className='Over_SS'"
+			      onmouseout="this.className='Onout_SS'"/>
+            </div>
+            </div>  
+        }
+        
+    <script type="text/javascript">
+        function pageSubmit() {
+                    var result = true;
+                    if ($.trim($("#txtArea").val()) == "") {
+                        result = false;
+                        $("#spArea").html("省名称不能为空");
+                    } else {
+                        $("#spArea").html("");
+                    }
+
+
+                    var reg = new RegExp(/\d+$/);
+                    if ($.trim($("#txtCity_code").val()) == "") {
+                        result = false;
+                        $("#spCity_code").html("省代码不能为空");
+                    } else if (!reg.test($.trim($("#txtCity_code").val()))) {
+                        result = false;
+                        $("#spCity_code").html("省代码格式不正确");
+                    } else {
+                        $("#spCity_code").html("");
+                    }
+                    return result;
+                }
+
+                $(function () {
+                    $("form").submit(function () {
+                        if (pageSubmit()) {
+                            return true;
+                        }
+                        return false;
+                    });
+                });
+            </script>
+

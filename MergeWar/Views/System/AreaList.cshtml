@@ -1,0 +1,91 @@
+﻿@{
+    ViewBag.Title = "区管理";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    Dictionary<string, string> dic = (Dictionary<string, string>)ViewBag.dic;
+}
+
+@using System.Collections.Generic
+@using Common
+@using HCZZ.DAL
+@using HCZZ.ModeDB
+@using Webdiyer.WebControls.Mvc
+@using (Html.BeginForm("AreaList", "System", new { @Id = dic["Cid"] }, FormMethod.Get))
+{
+    <div class="contentbody" id="contentbody">
+    <div class="contentTitle">
+            <span>查询条件和按钮区</span>
+            <input class="search" type="button" id="BtnSelect" onclick="myFunction(this, 'contentConditions')" value="隐藏"/>
+            <input class="search"  onclick="window.location.href='@Url.Content("~/System/AddArea/"+dic["Cid"])'" type="button" name="button" value="添加区" />
+        </div>
+        <div class="contentConditions">
+            <ul>
+                <li class="Conditions Conditions1">
+                    <span>区名称：</span>
+                    <select name="selName" id="selName">
+                        <option value="1">模糊</option>
+                        <option value="2">精确</option>
+                    </select>
+                    <input type="text" id="txtName" name="txtName" value="@dic["txtName"]"/>
+                </li>
+                <li class="Conditions Conditions6">
+                    <input class="selectbg" type="submit" id="but_Seek"value="搜索"/>
+                    <input class="resetbg" type="reset" value="重置" onclick="Reset()"/>
+                </li>
+            </ul>
+        </div>
+	<div>
+		<table>
+			<tr>
+				<th>序号</th>
+                <th>市名称</th>
+                <th>区名称</th>
+                <th>区代码</th>
+                <th>操作</th>
+			</tr>
+		</table>
+	</div>
+    <div>
+		<table>	
+        @{
+            PagedList<AreaInfo> list = (PagedList<AreaInfo>)ViewBag.Pro;
+            if (list != null && list.Count > 0)
+            {
+                foreach (AreaInfo item in list)
+                {
+			        <tr>
+				        <td>@item.PageNum</td>
+                        <td>@item.PName</td>
+                        <td>@item.Area</td>
+                        <td>@item.City_code</td>
+				        <td>
+                            <a class="Cz_Wenzi" href ="@Url.Content("~/System/PoliceInfoList/"+item.ID)"  title="派出所列表">派出所列表</a>
+                            <a class="Cz_bianji" href ="@Url.Content("~/System/EditArea/"+item.ID)" >编辑</a>
+					        <a class="Cz_shanchu" href="javascript:void(0)"  title="删除">删除</a>	
+				        </td>
+			        </tr>   
+                }
+                if (list.TotalPageCount > 1)
+                { 
+		<tr>
+			<td colspan="5">
+                <div class="pag_td">
+                @Html.Pager(list, new PagerOptions() { PageIndexParameterName = "key", @CssClass = "pag" })
+                <div class="pag_all">共<font>@list.TotalPageCount</font>页/共<font>@list.TotalItemCount</font>条</div>
+                </div>
+			</td> 
+		</tr>
+                }
+            }
+            else
+            {
+                <tr><td colspan="5">暂无可显示数据</td></tr>
+            }              
+        }   
+		</table>
+    </div> </div>
+<script type="text/javascript">
+
+</script> 
+}
+	 
+

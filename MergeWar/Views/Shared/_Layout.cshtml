@@ -1,0 +1,84 @@
+﻿@using System.Collections.Generic
+@using System.Linq
+@using Common
+@using HCZZ.ModeDB
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>@ViewBag.Title</title>
+    @*<link rel="icon" href="@Url.Content("~/Content/images/f.ico")" type="image/x-icon"/>  *@
+    <link href="@Url.Content("~/Content/css/reset.css")" rel="stylesheet" type="text/css"/>
+    <link href="@Url.Content("~/Content/css/Layout.css")" rel="stylesheet" type="text/css"/>
+    <link href="@Url.Content("~/Content/css/publicHeader.css")" rel="stylesheet" type="text/css"/>
+    <script src="@Url.Content("~/Content/js/jquery-1.7.1.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Content/js/publicJS.js")" type="text/javascript"></script>
+</head>
+@{
+    UserInfo DBuser = (UserInfo) Session["userInfo"];
+    IEnumerable<Sys_UserPowerInfo>TopIElist = DBuser._UserShowPage;
+    IEnumerable<Sys_UserPowerInfo>LeftIElist = DBuser._UserShowPage;
+    TopIElist = TopIElist.Where(a => a.PageType == 0 && !string.IsNullOrEmpty(a.FilePath)).OrderBy(a => a.Indexs);
+    List<Sys_UserPowerInfo> topList = TopIElist.ToList();
+
+    List<Sys_UserPowerInfo> LeftList=new List<Sys_UserPowerInfo>();
+    LeftIElist = LeftIElist.Where(a => a.Name == ViewBag.LfetShow && !string.IsNullOrEmpty(a.FilePath)).OrderBy(a => a.Indexs);
+    LeftList = LeftIElist.ToList();
+
+    IEnumerable<Sys_UserPowerInfo> ZleftIElist = DBuser._UserShowPage;
+    ZleftIElist = ZleftIElist.Where(a => a.Pid == LeftList[0].Id && !string.IsNullOrEmpty(a.FilePath)).OrderBy(a => a.Indexs);
+    LeftList = ZleftIElist.ToList();
+ }
+     
+<body style="min-width:1366px">
+<!--最顶部top-->
+	<div class="top">
+		<div class="toplogo">
+			<img src=""/>
+		</div>
+		<div class="toplogin">
+			<span id="time"></span>
+			<span class="loginUser">欢迎<a href="#" style="color: #aaaaaa;display: inline-block;margin: 0px 3px;">@DBuser.UserName</a>登录</span>
+			<input type="button" name="" id="" value="快捷查询"/>
+		</div>
+	</div>
+<!--头部导航栏header-->
+<div class="header">
+    <ul>
+        @for (int i = 0; i < topList.Count; i++)
+        {
+            <li class="@( ViewBag.lishow == topList[i].Class ? topList[i].Class+"2" : topList[i].Class)">
+                <a href="@Url.Content("~/" + topList[i].FilePath + "")">@topList[i].Name</a>
+            </li>
+        }
+    </ul>
+</div>
+<div style="color: #616363; margin-right: 25px; height: 30px; line-height: 30px; float: right">
+    <ul>
+        <li><img src="@Url.Content("~/Content/images/home_icon.png")"/>@Html.Raw(ViewBag.location)</li>
+    </ul>
+</div>
+<!--左边子级页面-->
+<div class="content">
+    <div class="contentLeftNav">
+        <div class="sideNav" id="box">
+            <div class="sideNavLeft" id="left" style="height: 642px; left: 0px; display: inline-block;">
+                <div class="sideNavBtn" id="btn">收缩</div>
+                <ul>
+                    @for (int i = 0; i < LeftList.Count; i++)
+                    {
+                       <a href="@Url.Content("~/" + LeftList[i].FilePath + "")"> <li class="@(ViewBag.ashow == LeftList[i].SelShowValue ? LeftList[i].Class + "" + LeftList[i].Class.Substring(LeftList[i].Class.Length-1,1) + "" : LeftList[i].Class)" title="@LeftList[i].Name"></li></a>
+                    }
+                </ul>
+            </div>
+        </div>
+        <div class="sideNavBtnb" id="btnb" style="left: -66px;">
+            显示
+        </div>
+    </div>
+            @RenderBody()
+	</div>
+    <script type="text/javascript">
+    </script>
+</body>
+</html>

@@ -1,0 +1,125 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>百度离线地图</title>
+    <link rel="stylesheet" href="../Content/css/index.css" type="text/css" />
+    <script type="text/javascript" src="../Map/Pub/js/jquery-1.8.0.min.js"></script>
+    <script type="text/javascript" src="../Map/js/apiv.2.0.js"></script>
+    <script type="text/javascript" src="../Map/js/getmodules.js"></script>
+    <script type="text/javascript" src="../Map/Pub/layer/layer.js"></script>
+    <script type="text/javascript" src="../Map/Pub/js/console.js"></script>
+    <link rel="stylesheet" type="text/css" href="../Map/css/bmap.css" />
+    <link rel="stylesheet" type="text/css" href="../Map/css/defaultMapStyle.css" />
+</head>
+<body style="background:none">
+    <div class="aq_title">
+        <div class="TT_left"></div>
+        <div class="TT_right"></div>
+        <div class="img_close" onclick="javascript:parent.hideItude()"></div>
+        定位
+    </div>
+    <div class="map_open" style="margin: 0 15px;width:223px;float:left">
+    <div style="width:223px;height:30px;line-height:30px;color:#2f84c7;font-size:14px;font-weight:bold">定位中心点</div>
+    <input style="border:#d6d6d6 solid 1px;width:149px;height:22px;color:#c0c0c0;float:left;line-height:22px;margin-top:5px;" class="inputT_2" id="searchMap" value="请输入地址确定经纬度" onfocus="if(this.value=='请输入地址确定经纬度'){this.value=''}" onblur="if(this.value==''){this.value='请输入地址确定经纬度'}" type="text">
+    <span onclick="setCenterMap()" style="display:block;float:left;margin-top:5px;border:#cfe9ff solid 1px;color:#2f83c9;padding:1px;width:50px;height:20px;line-height:20px;text-align:center; cursor:pointer">查找</span>
+    <div style="clear:both;height:10px;"></div>
+    <div>当前地图中心点经纬度：</div>
+    <div style="margin-top:10px;"><b style="color:#727272">经度：</b><input id="mapCenterPointX" readonly="true" type="text" style="background:#F5F5F5;border:1px solid #D1E7FB;color:#727272"></div>
+    <div style="margin-top:5px;"><b style="color:#727272">纬度：</b><input id="mapCenterPointY" readonly="true" type="text" style="background:#F5F5F5;border:1px solid #D1E7FB;color:#727272"></div>
+    <div> <span onclick="returnValue()" style="display:block;float:left;border:#cfe9ff solid 1px;color:#2f83c9;padding:1px;width:100px;height:20px;line-height:20px; margin-top:10px;text-align:center;cursor:pointer">确定</span></div>
+    </div>
+    <div style="width: 720px; height: 550px; border: #ccc solid 1px; float: left;" id="container"></div>
+</body>
+</html>
+<script type="text/javascript">
+    function returnValue() {
+        var X = document.getElementById("mapCenterPointX").value;
+        var Y = document.getElementById("mapCenterPointY").value;
+        if (X != "" || Y != "") {
+            var val = X + "," + Y;
+            parent.document.getElementById("txtItude").value = val;
+            parent.hideItude();
+        } else {
+            alert("请输入地址查询经纬度");
+        }
+    }
+    var mapOptions = {
+        mapType: BMAP_NORMAL_MAP
+    }
+    var map = new BMap.Map("container", mapOptions); //设置卫星图为底图BMAP_PERSPECTIVE_MAP
+    var initPoint = new BMap.Point(114.067837,22.556793);    // 创建点坐标
+    //var geoc = new BMap.Geocoder();
+    map.centerAndZoom(initPoint,14);                    // 初始化地图,设置中心点坐标和地图级别。
+    map.enableScrollWheelZoom();                  // 启用滚轮放大缩小。
+    map.enableKeyboard();                         // 启用键盘操作。
+    map.enableContinuousZoom();					 //启用连续缩放效果
+    // ----- control -----
+    map.addControl(new BMap.NavigationControl()); //地图平移缩放控件
+    map.addControl(new BMap.ScaleControl()); //显示比例尺在左下角
+    //-------显示卫星地图----
+    //map.addControl(new BMap.MapTypeControl({mapTypes: [BMAP_NORMAL_MAP,BMAP_SATELLITE_MAP]}));
+    //------显示缩略图控件---
+    //map.addControl(new BMap.OverviewMapControl({anchor: BMAP_ANCHOR_BOTTOM_RIGHT, isOpen: true}));
+	
+    map.addEventListener("click",function(e){
+        showInfoMap(e.point.lng,e.point.lat);
+        createNewOverlay(e.point.lng,e.point.lat);
+	});
+	
+	function setCenterMap() {
+		var queryVal="";
+		var address = document.getElementById("searchMap").value;
+	  	if(address!=""){
+            showInfoMap("","");
+			$.ajax({
+				type:"get",
+				url: strProto + lpyhtj + "/CommonMap/RefAddressToVal?Address=" + encodeURIComponent(address) + "&a=" + (new Date()).getTime(),
+			    dataType: "json",
+			    async: false,
+				success:function  (data,status) {
+					if (data.status==1) {
+						alert(data.message);
+					}else{
+                        showInfoMap(data.lng,data.lat);
+                        map.clearOverlays();
+                        createNewOverlay(data.lng,data.lat); // 创建标注
+                        
+                        setTimeout(function(){
+                            var initPoint = new BMap.Point(data.lng, data.lat);    // 创建点坐标
+                            map.panTo(map.centerAndZoom(initPoint, 16));    //10毫秒后移动中心点
+	                    }, 10);
+                    }
+				},
+				error:function  (data, status, e) {
+					alert(e);
+				}
+			});
+		}
+  	}
+
+	//将经纬度赋值到指定的文本框中
+    function showInfoMap(lng,lat){
+        $("#mapCenterPointX").val(lng);
+        $("#mapCenterPointY").val(lat);
+    }
+
+    //清空界面标注，重新打上标注
+    function createNewOverlay(lng,lat){
+        map.clearOverlays();
+        map.addOverlay(new BMap.Marker(new BMap.Point(lng,lat))); // 创建标注
+    }
+
+    function addSimulatorMarkers(point,id) {
+    }
+
+    //显示信息窗口的函数
+    function showInfo (marker,id) {
+    }
+
+    //防止出现undefinded
+    function checkEmpty (str) {
+    }
+	 
+</script>
+<script type="text/javascript" src="../Map/Pub/js/draw1.js"></script>

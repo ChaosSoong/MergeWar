@@ -1,0 +1,225 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <script src="../Content/js/echarts.common.min.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body style="width:100%;height:700px;margin:0;padding:0">
+    <div style="width:100%;height:100%" id="mainJQSBSLQST">
+    </div>
+</body>
+<script type="text/javascript">
+var deviceTrend = echarts.init(document.getElementById('mainJQSBSLQST'));
+var data = {
+        imei: [123, 214, 236, 456, 258, 265, 111,123, 214, 236, 456, 258, 265, 111,123, 214, 236, 456, 258, 265, 111,123, 214, 236, 456, 258, 265, 111, 265, 111],
+        mac: [236, 123, 423, 111, 264, 333, 354,236, 123, 423, 111, 264, 333, 354,236, 123, 423, 111, 264, 333, 354,236, 123, 423, 111, 264, 333, 354, 333, 354],
+        phone: [92, 65, 23, 78, 165, 456, 216, 234,92, 65, 23, 78, 165, 456, 216, 234,92, 65, 23, 78, 165, 456, 216, 234,92, 65, 23, 78, 165, 456],
+        virtuals: [123, 121, 22, 147, 354, 231, 98,123, 121, 22, 147, 354, 231, 98,123, 121, 22, 147, 354, 231, 98,123, 121, 22, 147, 354, 231, 98, 231, 98],
+        carNum: [92, 56, 265, 123, 456, 146, 99,92, 56, 265, 123, 456, 146, 99,92, 56, 265, 123, 456, 146, 99,92, 56, 265, 123, 456, 146, 99, 146, 99]
+    };
+//    collTrend.setOption(CollectionCountTrend(data));
+    // 近期设备数量趋势图
+    function ECDeviceTrend(data) {
+        var option = {
+        tooltip: {
+            trigger: 'axis'
+        },
+        calculable: true,
+        xAxis: [{
+            show: false,
+            type: 'category',
+            boundaryGap: false,
+            //背景网格线属性
+            splitLine: {
+                show: false
+            },
+            data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日','周一', '周二', '周三', '周四', '周五', '周六', '周日','周一', '周二', '周三', '周四', '周五', '周六', '周日','周一', '周二', '周三', '周四', '周五', '周六', '周日','周一', '周二']
+        }],
+        yAxis: [{
+            splitLine: {
+                show: true,
+                lineStyle: {
+                    // 使用深浅的间隔色
+                    color: ['#2d2e42', '#2d2e42']
+                }
+            },
+            type: 'value'
+        }],
+        series: [{
+            name: 'IMEI',
+            type: 'line',
+            smooth: true,
+            data: data.imei,
+            //设置折线线条颜色
+            lineStyle: {
+                color: 'rgba(3,196,166,1)'
+            },
+            areaStyle: {
+                normal: {}
+            },
+            itemStyle: {
+                normal: {
+                    color: new echarts.graphic.LinearGradient(
+                        0, 0, 0, 1, [{
+                            offset: 0,
+                            color: 'rgba(8,156,184,0.8)'
+                        }, {
+                            offset: 0.3,
+                            color: 'rgba(8,156,184,0.6)'
+                        }, {
+                            offset: 0.6,
+                            color: 'rgba(8,156,184,0.4)'
+                        }, {
+                            offset: 0.9,
+                            color: 'rgba(8,156,184,0.4)'
+                        }, {
+                            offset: 1,
+                            color: 'rgba(30,31,45,0.1)'
+                        }]
+                    ),
+                    //设置折线线条颜色
+                    lineStyle: {
+                        color: 'rgba(8,156,184,1)'
+                    },
+                }
+            },
+        }, {
+            name: 'MAC',
+            type: 'line',
+            smooth: true,
+            data: data.mac,
+            //设置折线线条颜色
+            lineStyle: {
+                color: 'rgba(196,248,3,1)'
+            },
+            areaStyle: {
+                normal: {}
+            },
+            itemStyle: {
+                normal: {
+                    color: new echarts.graphic.LinearGradient(
+                        0, 0, 0, 1, [{
+                            offset: 0,
+                            color: 'rgba(196,248,3,0.8)'
+                        }, {
+                            offset: 0.3,
+                            color: 'rgba(196,248,3,0.6)'
+                        }, {
+                            offset: 0.6,
+                            color: 'rgba(196,248,3,0.4)'
+                        }, {
+                            offset: 0.9,
+                            color: 'rgba(196,248,3,0.4)'
+                        }, {
+                            offset: 1,
+                            color: 'rgba(30,31,45,0.1)'
+                        }]
+                    ),
+                },
+            },
+        }, {
+            name: '手机号码',
+            type: 'line',
+            smooth: true,
+            data: data.phone,
+            areaStyle: {
+                normal: {}
+            },
+            itemStyle: {
+                normal: {
+                    color: new echarts.graphic.LinearGradient(
+                        0, 0, 0, 1, [{
+                            offset: 0,
+                            color: 'rgba(99,93,152,0.8)'
+                        }, {
+                            offset: 0.3,
+                            color: 'rgba(99,93,152,0.6)'
+                        }, {
+                            offset: 0.6,
+                            color: 'rgba(99,93,152,0.4)'
+                        }, {
+                            offset: 0.9,
+                            color: 'rgba(99,93,152,0.4)'
+                        }, {
+                            offset: 1,
+                            color: 'rgba(30,31,45,0.1)'
+                        }]
+                    ),
+                    lineStyle: {
+                        color: 'rgba(99,93,152,1)'
+                    },
+                },
+            },
+        }, {
+            name: '车牌号码',
+            type: 'line',
+            smooth: true,
+            data: data.carNum,
+            areaStyle: {
+                normal: {}
+            },
+            itemStyle: {
+                normal: {
+                    color: new echarts.graphic.LinearGradient(
+                        0, 0, 0, 1, [{
+                            offset: 0,
+                            color: 'rgba(239,52,6,0.8)'
+                        }, {
+                            offset: 0.3,
+                            color: 'rgba(239,52,6,0.6)'
+                        }, {
+                            offset: 0.6,
+                            color: 'rgba(239,52,6,0.4)'
+                        }, {
+                            offset: 0.9,
+                            color: 'rgba(239,52,6,0.4)'
+                        }, {
+                            offset: 1,
+                            color: 'rgba(30,31,45,0.1)'
+                        }]
+                    ),
+                    lineStyle: {
+                        color: 'rgba(239,52,6,1)'
+                    },
+                },
+            },
+        }, {
+            name: '虚拟身份',
+            type: 'line',
+            smooth: true,
+            data: data.virtuals,
+            areaStyle: {
+                normal: {}
+            },
+            itemStyle: {
+                normal: {
+                    color: new echarts.graphic.LinearGradient(
+                        0, 0, 0, 1, [{
+                            offset: 0,
+                            color: 'rgba(3,196,166,0.8)'
+                        }, {
+                            offset: 0.3,
+                            color: 'rgba(3,196,166,0.6)'
+                        }, {
+                            offset: 0.6,
+                            color: 'rgba(3,196,166,0.4)'
+                        }, {
+                            offset: 0.9,
+                            color: 'rgba(3,196,166,0.4)'
+                        }, {
+                            offset: 1,
+                            color: 'rgba(30,31,45,0.1)'
+                        }]
+                    ),
+                    lineStyle: {
+                        color: 'rgba(3,196,166,1)'
+                    },
+                },
+            },
+        }]
+    };
+        return option;
+    }
+    deviceTrend.setOption(ECDeviceTrend(data));
+</script>
+</html>
