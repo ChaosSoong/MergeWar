@@ -1,6 +1,215 @@
 ﻿@{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "报警管理-人员报警";
 }
-
-<h2>Index</h2>
+<link href="~/Content/css/BJGL_JSTXBJ.css" rel="stylesheet" />
+<div class="contentbody" id="contentbody">
+    <div class="contentTitle">
+        <span>管理列表</span>
+        <input class="search" type="button" id="btnXY" value="查询" onclick="myFunction('zbtnXY')" />
+        <input class="" type="button" id="" value="导出Excel" />
+    </div>
+    <div class="contentConditions" id="zbtnXY">
+        <ul>
+            <li class="Conditions Conditions1">
+                <span>用户名：</span>
+                <select name="">
+                    <option value="">模糊</option>
+                    <option value="">精确</option>
+                </select>
+                <input type="text" id="" value="" />
+            </li>
+            <li class="Conditions Conditions2">
+                <span>真实姓名：</span>
+                <select name="">
+                    <option value="">模糊</option>
+                    <option value="">精确</option>
+                </select>
+                <input type="text" id="" value="" />
+            </li>
+            <li class="Conditions Conditions3">
+                <span>用户类型：</span>
+                <select name="" style="width: 188px;">
+                    <option value="">请选择</option>
+                </select>
+            </li>
+            <li class="Conditions Conditions4">
+                <span>手机号码：</span>
+                <select name="">
+                    <option value="">模糊</option>
+                    <option value="">精确</option>
+                </select>
+                <input type="text" id="" value="" />
+            </li>
+            <li class="Conditions Conditions5">
+                <span>证件号码：</span>
+                <select name="">
+                    <option value="">模糊</option>
+                    <option value="">精确</option>
+                </select>
+                <input type="text" id="" value="" />
+            </li>
+            <li class="Conditions Conditions6">
+                <input class="selectbg" type="button" id="" value="搜索" />
+                <input class="resetbg" type="reset" value="重置" />
+            </li>
+        </ul>
+    </div>
+    <!--<script type="text/javascript">
+        function myFunction(){
+            $("#zbtnXY").toggle(200);
+        };
+    </script>-->
+    <div class="contentTable">
+        <table border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th style="width: 4%;">序号</th>
+                <th style="width: 10%;">任务名称</th>
+                <th style="width: 12%;">场所名称</th>
+                <th style="width: 10%;">布控条件</th>
+                <th style="width: 12%;">布控值</th>
+                <th style="width: 15%;">预警邮箱</th>
+                <th style="width: 10%;">报警时间</th>
+                <th style="width: 7%;">场所内网端口号</th>
+                <th style="width: 10%;">目的公网IPv4地址</th>
+                <th style="width: 10%;">操作</th>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>mac_wrx</td>
+                <td>深圳市加号科技有限公司</td>
+                <td>上网终端MAC地址 </td>
+                <td>50-37-2B-AC-BD-9A</td>
+                <td>king_of_eagles126@163.com</td>
+                <td>2017-06-22 10:44:15</td>
+                <td>33886</td>
+                <td>14.17.38.134</td>
+                <td><img title="审核" src="../../Content/images/audit_icon.png" alt="审核" /></td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>mac_wrx</td>
+                <td>深圳市加号科技有限公司</td>
+                <td>上网终端MAC地址 </td>
+                <td>50-37-2B-AC-BD-9A</td>
+                <td>king_of_eagles126@163.com</td>
+                <td>2017-06-22 10:44:15</td>
+                <td>33886</td>
+                <td>14.17.38.134</td>
+                <td><img title="审核" src="../../Content/images/audit_icon.png" alt="审核" /></td>
+            </tr>
+            <tr>
+                <td>3</td>
+                <td>mac_wrx</td>
+                <td>深圳市加号科技有限公司</td>
+                <td>上网终端MAC地址 </td>
+                <td>50-37-2B-AC-BD-9A</td>
+                <td>king_of_eagles126@163.com</td>
+                <td>2017-06-22 10:44:15</td>
+                <td>33886</td>
+                <td>14.17.38.134</td>
+                <td><img title="审核" src="../../Content/images/audit_icon.png" alt="审核" /></td>
+            </tr>
+            <tr>
+                <td>4</td>
+                <td>mac_wrx</td>
+                <td>深圳市加号科技有限公司</td>
+                <td>上网终端MAC地址 </td>
+                <td>50-37-2B-AC-BD-9A</td>
+                <td>king_of_eagles126@163.com</td>
+                <td>2017-06-22 10:44:15</td>
+                <td>33886</td>
+                <td>14.17.38.134</td>
+                <td><img title="审核" src="../../Content/images/audit_icon.png" alt="审核" /></td>
+            </tr>
+            <tr>
+                <td>5</td>
+                <td>mac_wrx</td>
+                <td>深圳市加号科技有限公司</td>
+                <td>上网终端MAC地址 </td>
+                <td>50-37-2B-AC-BD-9A</td>
+                <td>king_of_eagles126@163.com</td>
+                <td>2017-06-22 10:44:15</td>
+                <td>33886</td>
+                <td>14.17.38.134</td>
+                <td><img title="审核" src="../../Content/images/audit_icon.png" alt="审核" /></td>
+            </tr>
+            <tr>
+                <td>6</td>
+                <td>mac_wrx</td>
+                <td>深圳市加号科技有限公司</td>
+                <td>上网终端MAC地址 </td>
+                <td>50-37-2B-AC-BD-9A</td>
+                <td>king_of_eagles126@163.com</td>
+                <td>2017-06-22 10:44:15</td>
+                <td>33886</td>
+                <td>14.17.38.134</td>
+                <td><img title="审核" src="../../Content/images/audit_icon.png" alt="审核" /></td>
+            </tr>
+            <tr>
+                <td>7</td>
+                <td>mac_wrx</td>
+                <td>深圳市加号科技有限公司</td>
+                <td>上网终端MAC地址 </td>
+                <td>50-37-2B-AC-BD-9A</td>
+                <td>king_of_eagles126@163.com</td>
+                <td>2017-06-22 10:44:15</td>
+                <td>33886</td>
+                <td>14.17.38.134</td>
+                <td><img title="审核" src="../../Content/images/audit_icon.png" alt="审核" /></td>
+            </tr>
+            <tr>
+                <td>8</td>
+                <td>mac_wrx</td>
+                <td>深圳市加号科技有限公司</td>
+                <td>上网终端MAC地址 </td>
+                <td>50-37-2B-AC-BD-9A</td>
+                <td>king_of_eagles126@163.com</td>
+                <td>2017-06-22 10:44:15</td>
+                <td>33886</td>
+                <td>14.17.38.134</td>
+                <td><img title="审核" src="../../Content/images/audit_icon.png" alt="审核" /></td>
+            </tr>
+            <tr>
+                <td>9</td>
+                <td>mac_wrx</td>
+                <td>深圳市加号科技有限公司</td>
+                <td>上网终端MAC地址 </td>
+                <td>50-37-2B-AC-BD-9A</td>
+                <td>king_of_eagles126@163.com</td>
+                <td>2017-06-22 10:44:15</td>
+                <td>33886</td>
+                <td>14.17.38.134</td>
+                <td><img title="审核" src="../../Content/images/audit_icon.png" alt="审核" /></td>
+            </tr>
+            <tr>
+                <td>10</td>
+                <td>mac_wrx</td>
+                <td>深圳市加号科技有限公司</td>
+                <td>上网终端MAC地址 </td>
+                <td>50-37-2B-AC-BD-9A</td>
+                <td>king_of_eagles126@163.com</td>
+                <td>2017-06-22 10:44:15</td>
+                <td>33886</td>
+                <td>14.17.38.134</td>
+                <td><img title="审核" src="../../Content/images/audit_icon.png" alt="审核" /></td>
+            </tr>
+        </table>
+        <div class="page">
+            <ul class="ulPage">
+                <li class="liPage" style="width: 42px;">首页</li>
+                <li class="liPage" style="width: 55px;">上一页</li>
+                <li class="liPage active">1</li>
+                <li class="liPage">2</li>
+                <li class="liPage">3</li>
+                <li class="liPage">4</li>
+                <li class="liPage">5</li>
+                <li class="liPage">···</li>
+                <li class="liPage" style="width: 55px;">下一页</li>
+                <li class="liPage" style="width: 42px;">末页</li>
+                <li class="contPage">共<span>3614</span>页/共<span>36137</span>条</li>
+                <li class="jumpPage"><input class="jumpPageText" type="text" /><input class="jumpPageBtn" type="button" id="" value="跳转" /></li>
+            </ul>
+        </div>
+    </div>
+</div>
 

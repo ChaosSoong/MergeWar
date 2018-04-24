@@ -1,0 +1,215 @@
+﻿
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+@using HCZZ.ModeDB;
+<html>
+<head>
+    <link href="~/Content/css/reset.css" rel="stylesheet" />
+    <script src="~/Content/js/jquery-1.7.1.min.js"></script>
+    <meta name="viewport" content="width=device-width" />
+    <title>编辑设备MAC</title>
+    <style type="text/css">
+        .pupMain {
+            width: 510px;
+            height: 375px;
+            background-color: #161523;
+            margin: 0 auto;
+        }
+
+        .title {
+            width: 510px;
+            height: 65px;
+            background-image: url(/Content/images/title_bg.png);
+            line-height: 65px;
+        }
+
+            .title span:first-child {
+                float: left;
+                color: #b1b1b1;
+                font: 20px "微软雅黑";
+                margin-left: 20px;
+                margin-top: 19.5px;
+            }
+
+            .title span:last-child {
+                float: right;
+                margin-right: 23px;
+                cursor: pointer;
+                margin-top: 1px;
+            }
+
+            .title span img {
+                width: 15px;
+                height: 15px;
+            }
+
+        .pupMain ul li:nth-child(2) {
+            margin-top: 50px;
+            text-align: center;
+        }
+
+            .pupMain ul li:nth-child(2) input {
+                box-sizing: border-box;
+                padding-left: 15px;
+                width: 360px;
+                height: 50px;
+                background-color: #1e1f2d;
+                border: 1px solid #263738;
+                color: #7bd2da;
+                font: 14px "微软雅黑";
+            }
+
+            .pupMain ul li:nth-child(2) span {
+                position: absolute;
+                top: 131px;
+                right: 50px;
+            }
+
+        .pupMain ul li:nth-child(3) {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+            .pupMain ul li:nth-child(3) select {
+                box-sizing: border-box;
+                padding-left: 15px;
+                width: 360px;
+                height: 50px;
+                background-color: #1e1f2d;
+                border: 1px solid #263738;
+                color: #7bd2da;
+                font: 14px "微软雅黑";
+            }
+
+            .pupMain ul li:nth-child(3) span {
+                position: absolute;
+                top: 210px;
+                right: 50px;
+            }
+
+        .pupMain ul li:nth-child(4) {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+            .pupMain ul li:nth-child(4) input {
+                box-sizing: border-box;
+                cursor: pointer;
+                width: 360px;
+                height: 50px;
+                background-color: #1e1f2d;
+                color: #7bd2da;
+                border: none;
+                font: 14px "微软雅黑";
+                background-image: url(/Content/images/save_bg.png);
+            }
+    </style>
+</head>
+<body>
+    @using (Html.BeginForm("EditMac", "System", FormMethod.Post))
+    {
+        @*<div class="pupMain">
+                @{
+                    MacInfo mac = (MacInfo)ViewBag.mac;
+                    if (mac != null)
+                    {
+                        <ul>
+                            <li class="title">
+                                <span>编辑设备MAC</span>
+                                <span onclick="layerClose()"><img src="/Content/images/icon_close.png"></span>
+                            </li>
+                            <li>
+                                <input name="txtMacAddress" id="txtMacAddress" value="@mac.AP_MAC" type="text" maxlength="17"><span></span>
+                            </li>
+                            <li>
+                                <select id="selSecurity" name="selSecurity" class="_text">
+                                    @{
+                                        List<SecurityOrg> list = HCZZ.AppCode.WebCommon.RefSecurityList();
+                                        foreach (SecurityOrg item in list)
+                                        {
+                                            <option value="@item.SECURITY_SOFTWARE_ORGCODE" @(item.SECURITY_SOFTWARE_ORGCODE == (string.IsNullOrEmpty(mac.COLLECTION_EQUIPMENT_ID) ? "779852855" : mac.COLLECTION_EQUIPMENT_ID.Substring(0, 9)) ? "selected=selected" : "")>@item.SECURITY_SOFTWARE_ORGNAME</option>
+                                        }
+                                    }
+                                </select>
+                            </li>
+                            <li>
+                                <input name="" id="" value="保存" type="submit" class="btn_SS">
+                                <input type="hidden" name="Hid" value="@mac.ID" />
+                            </li>
+                        </ul>
+                                        }
+
+                }
+            </div>*@
+        <div class="pupMain">
+            @{
+                MacInfo mac = (MacInfo)ViewBag.mac;
+                if (mac != null)
+                {
+                    <ul>
+                        <li class="title">
+                            <span>编辑设备MA</span>
+                            <span onclick="layerClose()"><img src="/Content/images/icon_close.png"></span>
+                        </li>
+                        <li>
+                            <input name="txtMacAddress" id="txtMacAddress" value="@mac.AP_MAC" type="text"><span><img src="/Content/images/star.png"></span>
+                        </li>
+                        <li>
+                            <select id="selSecurity" name="selSecurity" class="_text">
+                                @{
+                                    List<SecurityOrg> list = HCZZ.AppCode.WebCommon.RefSecurityList();
+                                    foreach (SecurityOrg item in list)
+                                    {
+                                     <option value="@item.SECURITY_SOFTWARE_ORGCODE">@item.SECURITY_SOFTWARE_ORGNAME</option>
+                                    }
+                                }
+                            </select>
+                        </li>
+                        <li>
+                            <input name="" id="" value="保存" type="submit" class="btn_SS">
+                            <input type="hidden" name="Hid" value="@mac.ID" />
+                        </li>
+                    </ul>
+                                    }
+<script>
+    $(function () {
+        $("#selSecurity").val('@mac.COLLECTION_EQUIPMENT_ID.Substring(0, mac.COLLECTION_EQUIPMENT_ID.Length - 12)');
+    })
+            </script>
+            }
+        </div>
+                                    }
+
+    <script>
+        $(function () {
+            $("form").submit(function () {
+                if (subVal()) {
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+        });
+       
+        function subVal() {
+            var result = true;
+            var reg = new RegExp(/[A-Fa-f\d]{2}-[A-Fa-f\d]{2}-[A-Fa-f\d]{2}-[A-Fa-f\d]{2}-[A-Fa-f\d]{2}-[A-Fa-f\d]{2}/);
+            if ($.trim($("#txtMacAddress").val()) == "") {
+                result = false;
+                alert("设备MAC地址不能为空");
+            } else if (!reg.test($.trim($("#txtMacAddress").val()))) {
+                result = false;
+                alert("设备MAC地址由字母或数字和-组成");
+            }
+            return result;
+        }
+        //点击弹窗中的某个元素关闭自身（弹窗）
+        function layerClose() {
+            var index = parent.layer.getFrameIndex(window.name);
+            parent.layer.close(index);
+        }
+    </script>
+</body>
+</html>

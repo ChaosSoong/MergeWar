@@ -17,6 +17,22 @@
 <script type="text/javascript" src="../../Map/test/js/searchInRectangle.js"></script>
 <script type="text/javascript" src="../../Map/test/js/GeoUtils.js"></script>
 <style type="text/css">
+    .wdate {
+        border: #999 1px solid;
+        height: 20px;
+        background: #fff url(../../images/date.png) no-repeat right;
+        background-color: rgb(255, 255, 255);
+        background-image: url("/Content/images/date.png");
+        background-repeat: no-repeat;
+        background-attachment: scroll;
+        background-clip: border-box;
+        background-origin: padding-box;
+        background-position-x: right;
+        background-position-y: center;
+        background-size: auto auto;
+        background-color: transparent;
+    }
+
     .listyle {
         text-align: left;
         border-top: 2px solid #0e0d1b;
@@ -27,7 +43,7 @@
         cursor: pointer;
         margin-right: 10px;
         color: red;
-        background: url("../../Content/images/del1_icon.png") no-repeat;
+        background: url("/Content/images/del1_icon.png") no-repeat;
         width: 20px;
         height: 20px;
     }
@@ -37,7 +53,7 @@
             cursor: pointer;
             margin-right: 10px;
             color: red;
-            background: url("../../Content/images/del1_icon.png") no-repeat;
+            background: url("/Content/images/del1_icon.png") no-repeat;
             width: 20px;
             height: 20px;
             border: 1px solid #25576D;
@@ -53,7 +69,8 @@
         word-break: break-all;
         color: #eaeaea;
         word-wrap: break-word;
-        white-space: -moz-pre-wrap;
+        display: block;
+        /*white-space: -moz-pre-wrap;*/
     }
 
     ._time {
@@ -61,12 +78,11 @@
     }
 
     #dataInput { /*很关键：将默认的select选择框样式清除*/
-        ;
         appearance: none;
         -moz-appearance: none;
         -webkit-appearance: none;
         /*在选择框的最右侧中间显示小箭头图片*/
-        background: url("../../Content/images/search_icon.png") no-repeat scroll 210px center transparent;
+        background: url("/Content/images/search_icon.png") no-repeat scroll 210px center transparent;
         box-shadow: 0px 0px 8px #111111;
         width: 244px;
         height: 44px;
@@ -88,14 +104,14 @@
         height: 38px;
         margin: 0 auto;
         cursor: pointer;
-        background-image: url(../../Content/images/btnAnalyze.png);
+        background-image: url(/Content/images/btnAnalyze.png);
         background-position: center;
         border: none;
         border-radius: 3px;
         font-size: 16px;
         font-family: "微软雅黑";
         color: #7bd2da;
-        margin: 15px 0px 15px 63px;
+        margin-left: -128px;
         cursor: pointer;
     }
 
@@ -103,7 +119,7 @@
         overflow: auto;
         position: absolute;
         bottom: 38px;
-        top: 0px;
+        top: 26px;
         right: 0;
         left: 0;
     }
@@ -119,170 +135,263 @@
         min-height: 620px;
         display: none;
     }
+
+    #size {
+        background-color: #1e1f2d;
+        border: 1px solid #999;
+        color: #eaeaea;
+    }
+
+    input {
+        color: #eaeaea;
+    }
+
+    #mac {
+        background-color: #1e1f2d;
+        border: 1px solid #999;
+        color: #eaeaea;
+    }
 </style>
 <div class="contentbody" id="contentbody">
-    <div class="contentMap" id="map" style="min-height: 620px">
+    <div class="contentMap" id="map" style="min-height: 770px">
     </div>
-    <div id="condition">
-        <ul id="contentList"></ul>
-        <input type="button" class="analysis" value="开始分析" />
-    </div>
+    @*@using (Html.BeginForm("Analysis", "Mac", FormMethod.Post))
+        {
+            <div id="condition">
+                <span class="spid">碰撞次数:</span>
+                <input type="hidden" id="ids" value="" name="ids" />
+                <input type="hidden" id="txtStartTimes" value="" name="txtStartTimes" />
+                <input type="hidden" id="txtEndTimes" value="" name="txtEndTimes" />
+                <input type="number" id="size" value="2" min="2" name="size" />
+                <ul id="contentList"></ul>
+                <input type="submit" class="analysis" value="开始分析" />
+            </div>
+        }*@
+    <script src="~/Content/js/Macanalyze.js"></script>
 </div>
 <script type="text/javascript">
-    //分析获取节点提交到后台
-    $(".analysis").click(function () {
-        var ids = '', txtStartTimes = '', txtEndTimes = '';
-        $("#contentList").find("li").each(function (idx, item) {
-            var id = $(this).children(".sphtml").text();
-            var txtStartTime = $(this).children("#txtStartTime").val();
-            var txtEndTime = $(this).children("#txtEndTime").val();
-            ids += id + '.'; txtStartTimes += txtStartTime + '.'; txtEndTimes += txtEndTime + '.';
+    $(function () {
+        showDown();
+        GetAnalyzeType(1);
+    })
+    $("#left ul a").click(function (ev) {
+        map.removeOverlay(overlay);//清除选框
+        map.removeOverlay(overlayi);
+        $("form").remove();//移除表单
+        //$("#map").width("100%");
+        $(".BMapLib_Drawing_panel").css("marginRight", "0");
+        $("#condition").css("display", "none");
+        $("#left ul a").attr("href", "javascript:void(0);");//禁用a标签跳转
+        $("#left ul").find("li").each(function (index) {
+            $(this).attr("class", "sideNavImg" + (index + 1));
         });
-        $.ajax({
-            type: 'GET',
-            traditional: true,
-            url: '/Mac/Analysis',
-            data: { 'ids': ids, 'txtStartTimes': txtStartTimes, 'txtEndTimes': txtEndTimes },
-            success: function (data) {
-                console.log(data);
-                window.location.href = "/Mac/Analysis";
-            }
-        });
-    });
-    function del(t) {
-        $(t).parent().remove();
-        if ($("#contentList").children().length === 0) {
-            $("#map").width("100%");
-            $("#condition").css("display", "none");
+        var index = $(this).find("li")[0].className.charAt($(this).find("li")[0].className.length - 1)//点击哪个标签
+        $(this).find("li")[0].className = "sideNavImg" + index + index;//点击li改变选中样式
+        switch (index) {
+            case "1":
+                GetAnalyzeType(1);
+                break;
+            case "2":
+                GetAnalyzeType(2);
+                break;
+            case "3":
+                GetAnalyzeType(3);
+                break;
+            case "4":
+                GetAnalyzeType(4);
+                break;
         }
-    }
-    var distance = 0.2;
-    $('#button').click(function () {
-        distance = Number($("#input").val());
     });
-    // 创建Map实例
-    var map = new BMap.Map("map", {
-        enableMapClick: false
-    });
-
-    // 设置地图背景色
-    map.getContainer().style.background = '#1e1f2d';
-    // 初始化地图,设置中心点坐标和地图级别
-    var point = new BMap.Point(114.067837, 22.556793);
-    map.centerAndZoom(point, 14);
-    map.enableScrollWheelZoom(); // 启用滚轮放大缩小。
-
-    map.addControl(new BMap.NavigationControl({
-        anchor: BMAP_ANCHOR_BOTTOM_LEFT
-    }));
-    // 定义一个控件类，即function
-    function myControl() {
-        // 设置默认停靠位置和偏移量
-        this.defaultAnchor = BMAP_ANCHOR_TOP_LEFT;
-        this.defaultOffset = new BMap.Size(10, 10);
-    }
-    // 通过JavaScript的prototype属性继承于BMap.Control
-    myControl.prototype = new BMap.Control();
-    // 自定义控件必须实现initialize方法，并且将控件的DOM元素返回
-    // 在本方法中创建个div元素作为控件的容器，并将其添加到地图容器中
-    myControl.prototype.initialize = function (map) {
-        // 创建一个DOM元素
-        var div = document.createElement("div");
-        // 添加文字说明
-        var input = document.createElement("input");
-        input.placeholder = "请输入关键字";
-        input.id = "dataInput";
-        div.appendChild(input);
-        // 绑定事件
-        $(function () {
-            $('#dataInput').bind('keypress', function (event) {
-                if (event.keyCode == "13") {
-                    alert('你输入的内容为：' + $('#dataInput').val());
-                }
-            });
-        });
-        // 添加DOM元素到地图中
-        map.getContainer().appendChild(div);
-        // 将DOM元素返回
-        return div;
-    }
-    // 创建控件实例
-    var myZoomCtrl = new myControl();
-    // 添加到地图当中
-    map.addControl(myZoomCtrl);
-    var polygons = [];
-    var mkr = new BMap.Marker(point);
-
-    var overlays = [];
-    var overlaycomplete = function (e) {
-        overlays.push(e.overlay);
-    };
-    var styleOptions = {
-        strokeColor: "blue", //边线颜色。
-        fillColor: "blue", //填充颜色。当参数为空时，圆形将没有填充效果。
-        strokeWeight: 3, //边线的宽度，以像素为单位。
-        strokeOpacity: 0.8, //边线透明度，取值范围0 - 1。
-        fillOpacity: 0.2, //填充的透明度，取值范围0 - 1。
-        strokeStyle: 'solid' //边线的样式，solid或dashed。
-    }
-    //实例化鼠标绘制工具
-    var drawingManager = new BMapLib.DrawingManager(map, {
-        isOpen: false, //是否开启绘制模式
-        enableDrawingTool: true, //是否显示工具栏
-        drawingToolOptions: {
-            anchor: BMAP_ANCHOR_TOP_RIGHT, //位置
-            offset: new BMap.Size(20, 5), //偏离值
-        },
-        circleOptions: styleOptions, //圆的样式
-        polylineOptions: styleOptions, //线的样式
-        polygonOptions: styleOptions, //多边形的样式
-        rectangleOptions: styleOptions //矩形的样式
-    });
-    //添加鼠标绘制工具监听事件，用于获取绘制结果
-    drawingManager.addEventListener('overlaycomplete', overlaycomplete);
-    var MAX = 100000;
-    var markers = [];
-    var ptpt = null;
-    var pts = [];
-    $.get("@Url.Content("~/Mac/Generate")", function (result) {
-        //        console.log(result);
-        // 点聚合示例
-
-        for (var i = 0; i < result.length; i++) {
-            ptpt = new BMap.Point(Math.random() * 10 + 113, Math.random() * 10 + 15);
-            pts.push(ptpt);
-            var marker = new BMap.Marker(ptpt, {
-                title: result[i]
-            });
-            markers.push(marker);
-            //     marker.hide(); //隐藏标注
-        }
-        // 最简单的用法，生成一个marker数组，然后调用markerClusterer类即可。
-        var markerClusterer = new BMapLib.MarkerClusterer(map, {
-            markers: markers
-        });
-        // markerClusterer.clearMarkers(); //清除标记
-    });
-    //// 点聚合示例
-    //var MAX = 100000;
-    //var markers = [];
-    //var ptpt = null;
-    //var pts = [];
-    //for (var i = 0; i < MAX; i++) {
-    //    ptpt = new BMap.Point(Math.random() * 10 + 113, Math.random() * 10 + 15);
-    //    pts.push(ptpt);
-    //    var marker = new BMap.Marker(ptpt, {
-    //        title: i
-    //    });
-    //    markers.push(marker);
-    ////     marker.hide(); //隐藏标注
-    //}
-    //// 最简单的用法，生成一个marker数组，然后调用markerClusterer类即可。
-    //var markerClusterer = new BMapLib.MarkerClusterer(map, {
-    //    markers: markers
-    //});
-    //// markerClusterer.clearMarkers(); //清除标记
-    // var myDis = new BMapLib.DistanceTool(map);
-    // myDis.open(); //开启鼠标测距
-    //myDis.close();  //关闭鼠标测距
 </script>
+@*<script type="text/javascript">
+        $(function () {
+            showDown();
+        })
+        var numval = parseInt($("#num").val());
+        //分析获取节点提交到后台
+        $("form").submit(function () {
+            if (analysis()) {
+                showDown();
+                return true;
+            } else {
+                return false;
+            }
+        })
+        function analysis() {
+            var result = true;
+            var Time = true;
+            var ids = '', txtStartTimes = '', txtEndTimes = '';
+            $("#contentList").find("li").each(function (idx, item) {
+                var id = $(this).children(".sphtml").text();
+
+                var txtStartTime = $(this).children("input[type='text']").get(0);
+                txtStartTime = $(txtStartTime).val();
+                txtStartTime = txtStartTime.replace(new RegExp("-", "gm"), "/");
+                var StartTime = (new Date(txtStartTime)).getTime();
+                StartTime = (StartTime) / 1000;
+
+                var txtEndTime = $(this).children("input[type='text']").get(1);
+                txtEndTime = $(txtEndTime).val();
+                txtEndTime = txtEndTime.replace(new RegExp("-", "gm"), "/");
+                var EndTime = (new Date(txtEndTime)).getTime();
+                EndTime = (EndTime) / 1000;
+
+                ids += id + '_';
+                txtStartTimes += StartTime + '_';
+                txtEndTimes += EndTime + '_';
+            });
+            $("#ids").val(ids);
+            $("#txtStartTimes").val(txtStartTimes);
+            $("#txtEndTimes").val(txtEndTimes);
+            if ($("#contentList li").length <= 1) {
+                alert("最少选择两个区域碰撞");
+                result = false;
+            }
+            $("#contentList").find("li input[type='text']").each(function () {
+                if ($.trim($(this).val()) == "") {
+                    result = false;
+                    Time = false;
+                }
+            })
+            if (Time == false) {
+                alert("时间不能为空!")
+            }
+            if (Time == true && result == true) {
+                return result;
+            }
+        }
+        function del(t) {
+            map.removeOverlay(overlay);
+            map.removeOverlay(overlayi);
+            $(t).parent().remove();
+            if ($("#contentList").children().length === 0) {
+                $("#map").width("100%");
+                $("#condition").css("display", "none");
+            }
+        }
+        var distance = 0.002
+        $('#button').click(function () {
+            distance = Number($("#input").val());
+        });
+        // 创建Map实例
+        var map = new BMap.Map("map", {
+            enableMapClick: false
+        });
+
+        // 设置地图背景色
+        map.getContainer().style.background = '#1e1f2d';
+        // 初始化地图,设置中心点坐标和地图级别
+        var point = new BMap.Point(114.067837, 22.556793);
+        map.centerAndZoom(point, 14);
+        map.enableScrollWheelZoom(); // 启用滚轮放大缩小。
+
+        map.addControl(new BMap.NavigationControl({
+            anchor: BMAP_ANCHOR_BOTTOM_LEFT
+        }));
+        // 定义一个控件类，即function
+        function myControl() {
+            // 设置默认停靠位置和偏移量
+            this.defaultAnchor = BMAP_ANCHOR_TOP_LEFT;
+            this.defaultOffset = new BMap.Size(10, 10);
+        }
+        // 通过JavaScript的prototype属性继承于BMap.Control
+        myControl.prototype = new BMap.Control();
+        // 自定义控件必须实现initialize方法，并且将控件的DOM元素返回
+        // 在本方法中创建个div元素作为控件的容器，并将其添加到地图容器中
+        myControl.prototype.initialize = function (map) {
+            // 创建一个DOM元素
+            var div = document.createElement("div");
+            // 添加文字说明
+            var input = document.createElement("input");
+            input.placeholder = "按回车键搜索";
+            input.id = "dataInput";
+            div.appendChild(input);
+            // 绑定事件
+            $(function () {
+                $('#dataInput').bind('keypress', function (event) {
+                    if (event.keyCode == "13") {
+                        GetAddressLM();
+                    }
+                });
+            });
+            // 添加DOM元素到地图中
+            map.getContainer().appendChild(div);
+            // 将DOM元素返回
+            return div;
+        }
+        // 创建控件实例
+        var myZoomCtrl = new myControl();
+        // 添加到地图当中
+        map.addControl(myZoomCtrl);
+        var polygons = [];
+        var mkr = new BMap.Marker(point);
+
+        var overlays = [];
+        var overlaycomplete = function (e) {
+            overlays.push(e.overlay);
+        };
+        var styleOptions = {
+            strokeColor: "blue", //边线颜色。
+            fillColor: "blue", //填充颜色。当参数为空时，圆形将没有填充效果。
+            strokeWeight: 3, //边线的宽度，以像素为单位。
+            strokeOpacity: 0.8, //边线透明度，取值范围0 - 1。
+            fillOpacity: 0.2, //填充的透明度，取值范围0 - 1。
+            strokeStyle: 'solid' //边线的样式，solid或dashed。
+        }
+        //实例化鼠标绘制工具
+        var drawingManager = new BMapLib.DrawingManager(map, {
+            isOpen: false, //是否开启绘制模式
+            enableDrawingTool: true, //是否显示工具栏
+            drawingToolOptions: {
+                anchor: BMAP_ANCHOR_TOP_RIGHT, //位置
+                offset: new BMap.Size(20, 5), //偏离值
+            },
+            circleOptions: styleOptions, //圆的样式
+            polylineOptions: styleOptions, //线的样式
+            polygonOptions: styleOptions, //多边形的样式
+            rectangleOptions: styleOptions //矩形的样式
+        });
+        //添加鼠标绘制工具监听事件，用于获取绘制结果
+        drawingManager.addEventListener('overlaycomplete', overlaycomplete);
+        var MAX = 100000;
+        var markers = [];
+        var ptpt = null;
+        var pts = [];
+        $.get("/Public/Generate", function (result) {
+            // console.log(result);
+            // 点聚合示例
+            //var json = eval("(" + result + ")");
+            console.log("获取：" + new Date().toLocaleTimeString() + ":" + new Date().getMilliseconds());
+            var json = JSON.parse(result);
+            console.log("json:" + new Date().toLocaleTimeString() + ":" + new Date().getMilliseconds());
+            var length = json.length;
+            for (var i = 0; i < length; i++) {
+                ptpt = new BMap.Point(json[i].J, json[i].W);
+                pts.push(ptpt);
+                var marker = new BMap.Marker(ptpt, {
+                    title: json[i].N,
+                });
+                var l = new BMap.Label(json[i].ID);
+                marker.setLabel(l);
+                l.setStyle({ display: "none" });
+                markers.push(marker);
+                marker.hide(); //隐藏标注
+            }
+            console.log("循环：" + new Date().toLocaleTimeString() + ":" + new Date().getMilliseconds());
+            // 最简单的用法，生成一个marker数组，然后调用markerClusterer类即可。
+            var markerClusterer = new BMapLib.MarkerClusterer(map, {
+                markers: markers
+            });
+            console.log("聚合：" + new Date().toLocaleTimeString() + ":" + new Date().getMilliseconds());
+            closeDown();
+            markerClusterer.clearMarkers(); //清除标记
+            var options = {
+                size: BMAP_POINT_SIZE_SMALL,
+                shape: BMAP_POINT_SHAPE_STAR,
+                color: '#eaeaae'
+            }
+            var pointCollection = new BMap.PointCollection(pts, options);
+            map.addOverlay(pointCollection);  // 添加Overlay
+            console.log("海量点：" + new Date().toLocaleTimeString() + ":" + new Date().getMilliseconds());
+        });
+    </script>*@

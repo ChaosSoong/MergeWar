@@ -1,9 +1,10 @@
 ﻿@{
-    ViewBag.Title = "-警区列表";
+    ViewBag.Title = "系统设置-警区列表";
     Layout = "~/Views/Shared/_Layout.cshtml";
     Dictionary<string, string> dic = (Dictionary<string, string>)ViewBag.dic;
 }
 <link href="@Url.Content("~/Content/css/publicHeader.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/css/XTGL.css")" rel="stylesheet" type="text/css" />
 @using System.Collections.Generic
 @using Common
 @using HCZZ.DAL
@@ -14,126 +15,142 @@
     @Id = dic["PId"]
 }, FormMethod.Get))
 {
+    string relaVal = ChangeValue.RefPageRelaByPath("System/AreaManageInfoList");
     PoliceInfo police = (PoliceInfo)ViewBag.police;
     string pName = police == null ? "" : police.Name;
-     <div class="contentbody" id="contentbody">
-   <span>查询条件和按钮区</span>
-		 <div class="contentTitle">
+    <div class="contentbody" id="contentbody">
+        <div class="contentTitle">
             <span>查询条件和按钮区</span>
-            <input class="search" type="button" id="BtnSelect" onclick="myFunction(this, 'contentConditions')" value="隐藏"/>
-            <input  class="search"  onclick="javascript:location.replace('@Url.Content("~/System/AddScenicInfo/" + police.ID)')" type="button" name="button" value="添加警区" />
+            <input class="search" type="button" id="BtnSelect" onclick="myFunction(this, 'contentConditions')" value="隐藏" />
+            @if (relaVal.Contains("2"))
+            {
+                <input class="add" onclick="javascript:location.replace('@Url.Content("~/System/AddScenicInfo/" + police.ID)')" type="button" name="button" value="+添加警区" />
+            }
         </div>
-    <div class="contentConditions">
-    <ul>
-         <li class="Conditions Conditions1">
-        <span>警区名称：</span>
-        <select name="selName" id="selName">
-        <option value="1">模糊</option>
-        <option value="2">精确</option>
-        </select> 
-        <input type="text" name="txtName" id="txtName" class="_text" value="@dic["txtName"]" /></li>
-        <li class="Conditions Conditions2">
-        <span>警区地址：</span>
-        <select name="selAddress" id="selAddress">
-        <option value="1">模糊</option>
-        <option value="2">精确</option>
-        </select> 
-        <input type="text" name="txtAddress" id="txtAddress" class="_text" value="@dic["txtAddress"]" /></li>
-         <li class="Conditions Conditions3">
-        <span>联系人：</span>
-        <select name="selContact" id="selContact">
-        <option value="1">模糊</option>
-        <option value="2">精确</option>
-        </select> 
-        <input type="text" name="txtContact" id="txtContact" class="_text" value="@dic["txtContact"]" /></li>
-        <li class="Conditions Conditions4">
-        <span>联系电话：</span>
-        <select name="selMobile" id="selMobile">
-        <option value="1">模糊</option>
-        <option value="2">精确</option>
-        </select> 
-        <input type="text" name="txtMobile" id="txtMobile" class="_text" value="@dic["txtMobile"]" /></li> 
-         <li class="Conditions Conditions5">
-            <input class="btn_SS" type="button" name="button" value="重置";/>
-            <input class="btn_SS" type="submit" name="button" value="搜索";/>   
-        </li>
-        </ul>
-	</div>
-	 <div class="contentTable">
+        <div class="contentConditions" style="height:170px">
+            <ul>
+                <li class="Conditions Conditions1">
+                    <span>警区名称：</span>
+                    <select name="selName" id="selName">
+                        <option value="1">模糊</option>
+                        <option value="2">精确</option>
+                    </select>
+                    <input type="text" name="txtName" id="txtName" class="_text" value="@dic["txtName"]" />
+                </li>
+                <li class="Conditions Conditions2">
+                    <span>警区地址：</span>
+                    <select name="selAddress" id="selAddress">
+                        <option value="1">模糊</option>
+                        <option value="2">精确</option>
+                    </select>
+                    <input type="text" name="txtAddress" id="txtAddress" class="_text" value="@dic["txtAddress"]" />
+                </li>
+                <li class="Conditions Conditions3">
+                    <span>联系人：</span>
+                    <select name="selContact" id="selContact">
+                        <option value="1">模糊</option>
+                        <option value="2">精确</option>
+                    </select>
+                    <input type="text" name="txtContact" id="txtContact" class="_text" value="@dic["txtContact"]" />
+                </li>
+                <li class="Conditions Conditions4">
+                    <span>联系电话：</span>
+                    <select name="selMobile" id="selMobile">
+                        <option value="1">模糊</option>
+                        <option value="2">精确</option>
+                    </select>
+                    <input type="text" name="txtMobile" id="txtMobile" class="_text" value="@dic["txtMobile"]" />
+                </li>
+                @*<li class="Conditions Conditions5">
+                    <input class="btn_SS" type="button" name="button" value="重置" ; />
+                    <input class="btn_SS" type="submit" name="button" value="搜索" ; />
+                </li>*@
+                <li class="Conditions Conditions6" style="margin-left:500px">
+                    <input class="selectbg" type="submit" id="but_Seek" value="搜索" />
+                    <input class="resetbg" type="reset" value="重置" onclick="Reset()" />
+                </li>
+            </ul>
+        </div>
+        <div class="contentTable" id="taskManagementId">
             <table border="0" cellspacing="0" cellpadding="0">
-			<tr>
-				<th  style="width: 5%;">序号</th>
-                <th  style="width: 5%;">自增ID</th>
-                <th  style="width: 20%;">所属派出所</th>
-                <th  style="width: 20%;">警区名称</th>
-				<th  style="width: 10%;">警区地址</th>
-				<th  style="width: 10%;">联系人</th>
-                <th  style="width: 10%;">联系电话</th>
-                <th  style="width: 20%;">操作</th>
-			</tr>
-		</table>
-	</div>
-    <div class="contentTable">
-            <table border="0" cellspacing="0" cellpadding="0">
-        @{
-            PagedList<ScenicInfo> list = (PagedList<ScenicInfo>)ViewBag.scenic;
-             if (list != null && list.Count > 0)
-                {foreach (ScenicInfo item in list){
-			        <tr>
-				        <td style="width: 5%;">@item.PageNum</td>
-                        <td style="width: 5%;">@item.ID</td>
-                        <td style="width: 20%;">@pName</td>
-                        <td style="width: 20%;">@item.SName</td>
-                        <td style="width: 10%;">@item.Address</td>
-				        <td style="width: 10%;">@item.Contact</td>
-                        <td style="width: 10%;">@item.Mobile</td>
-				        <td style="width: 20%;">
-                        <a class="Cz_bianji" href ="@Url.Content("~/System/EditScenicInfo/"+item.ID)" >
-                        <img title="编辑" src="@Url.Content("~/Content/images/edit1_icon.png")" alt="编辑"/>  
-                        </a>
-                        <a class="Cz_shanchu" href="javascript:void(0)" onclick="del('@item.ID','Scenic')" >
-                        <img title="删除" src="@Url.Content("~/Content/images/del1_icon.png")" alt="删除" />
-                        </a>	
-				        </td>
-			        </tr>                                                                                                                                              }
-                                                                                                                                                                if (list.TotalPageCount > 1)
-                                                                                                                                                                { 
-			 
-              <tr>
-                    <td colspan="8">
-                        <div class="pag_td" style="width: 100%; text-align: center; font-size: 14px">
-                            @Html.Pager(list, new PagerOptions()
-                       {
-                           PageIndexParameterName = "key",
-                           @CssClass = "pag1"
-                       })
-                            <div class="pag_all">
-                                共<font>@list.TotalPageCount</font>页/共<font id="spTotalItem">@list.TotalItemCount</font>条</div>
-                        </div>
-                    </td>
+                <tr>
+                    <th style="width: 5%;">序号</th>
+                    <th style="width: 5%;">自增ID</th>
+                    <th style="width: 20%;">所属派出所</th>
+                    <th style="width: 20%;">警区名称</th>
+                    <th style="width: 10%;">警区地址</th>
+                    <th style="width: 10%;">联系人</th>
+                    <th style="width: 10%;">联系电话</th>
+                    <th style="width: 20%;">操作</th>
                 </tr>
-                                                                                                                                                                }
-                                                                           }
-                                                                           else
-                                                                           {
-                <tr><td colspan="8">暂无可显示数据</td></tr>
-                                                                           }
-                
-        }   
-		</table>
-    </div> 
-    </div> 
+            </table>
+        </div>
+        <div class="contentTable">
+            <table border="0" cellspacing="0" cellpadding="0">
+                @{
+                    PagedList<ScenicInfo> list = (PagedList<ScenicInfo>)ViewBag.scenic;
+                    if (list != null && list.Count > 0)
+                    {
+                        foreach (ScenicInfo item in list)
+                        {
+                            <tr>
+                                <td style="width: 5%;">@item.PageNum</td>
+                                <td style="width: 5%;">@item.ID</td>
+                                <td style="width: 20%;">@pName</td>
+                                <td style="width: 20%;">@item.SName</td>
+                                <td style="width: 10%;">@item.Address</td>
+                                <td style="width: 10%;">@item.Contact</td>
+                                <td style="width: 10%;">@item.Mobile</td>
+                                <td style="width: 20%;">
+                                    @if (relaVal.Contains("2"))
+                                    {
+                                        <a class="Cz_bianji" href="@Url.Content("~/System/EditScenicInfo/" + item.ID)">
+                                            <img title="编辑" src="@Url.Content("~/Content/images/edit1_icon.png")" alt="编辑" />
+                                        </a>
+                                    }
+                                    @if (relaVal.Contains("3"))
+                                    {
+                                        <a class="Cz_shanchu" href="javascript:void(0)" onclick="del('@item.ID','Scenic')">
+                                            <img title="删除" src="@Url.Content("~/Content/images/del1_icon.png")" alt="删除" />
+                                        </a>
+                                    }
+                                </td>
+                            </tr>                                   }
+                    }
+                }
+            </table>
+            @Html.Partial("~/Views/Shared/_PartialPage.cshtml", new RouteValueDictionary { { "model", list }, { "pageindex", "PageIndex" } })
+        </div>
+    </div>
     <script type="text/javascript">
         function del(obj,key,key1) {
             if (confirm("确定要删除吗？")) {
-               location.href = "/System/DelProArea?Id=" + obj + "&key=" + key+"&key1="+@police.ID;
-                
+                location.href = "/System/DelProArea?Id=" + obj + "&key=" + key+"&key1="+@police.ID;
             }
         }
-
+        $(function(){
+            $("#selName").val("@dic["selName"]");
+            $("#selAddress").val("@dic["selAddress"]");
+            $("#selContact").val("@dic["selContact"]");
+            $("#selMobile").val("@dic["selMobile"]");
+        })
+        $("form").submit(function(){
+            if(issubmit()==true){
+                return true;
+            }else{
+                alert("请输入条件");
+                return false;
+            }
+        });
+        function issubmit(){
+            var resl=false;
+            $("input[type='text']").each(function(){
+                if ($.trim($(this).val()) != "") {
+                    resl= true
+                }
+            })
+            return resl;
+        };
     </script>
 
-}
-	 
-
-
+                    }

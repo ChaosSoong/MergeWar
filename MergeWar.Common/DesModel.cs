@@ -5,7 +5,7 @@ using System.Web;
 using System.Security.Cryptography;
 using System.IO;
 
-namespace Common
+namespace HCZZ.Common
 {
     public class DesModel
     {

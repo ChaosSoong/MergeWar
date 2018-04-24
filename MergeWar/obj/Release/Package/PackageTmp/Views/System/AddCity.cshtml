@@ -35,14 +35,12 @@
 			        </tr>
                     <tr>
 				        <td align="right">市代码：</td>
-				        <td><input type="text" class="_text" name="txtCity_code" maxlength="25" id="txtCity_code" /><span id="spCity_code" class="color_ccc">*</span></td>   
+				        <td><input type="text" class="_text" name="txtCity_code" maxlength="6" id="txtCity_code" /><span id="spCity_code" class="color_ccc">*</span></td>   
 			        </tr>
                 </table>
             </div> 
             <div class="aq_foot"> 
-			    <input class="btn_SS" type="submit" name="button" value="保存";
-			      onmouseover="this.className='Over_SS'"
-			      onmouseout="this.className='Onout_SS'"/>
+			    <input class="btn_SS" type="submit" name="button" value="保存"; onmouseover="this.className='Over_SS'"onmouseout="this.className='Onout_SS'"/>
             </div>
             </div>
            
@@ -60,10 +58,7 @@
 
 
          var reg = new RegExp(/\d+$/);
-         if ($.trim($("#txtCity_code").val()) == "") {
-             result = false;
-             $("#spCity_code").html("市代码不能为空");
-         } else if (!reg.test($.trim($("#txtCity_code").val()))) {
+         if ($.trim($("#txtCity_code").val()) != "" && !reg.test($.trim($("#txtCity_code").val()))) {
              result = false;
              $("#spCity_code").html("市代码格式不正确");
          } else {

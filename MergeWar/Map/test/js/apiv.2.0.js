@@ -1,4 +1,4 @@
-var lpyhtj = 'localhost:16950';
+var lpyhtj = 'localhost:16955';
 var strProto="http://";
 
 window.VTC = {
@@ -2331,7 +2331,7 @@ window.BMAP_AUTHENTIC_KEY = "O69mIPtSwrCNzUg7olEDsrvd";
             a && ("loaded" == a.readyState || "complete" == a.readyState) && a.parentNode.removeChild(a)
         });
         setTimeout(function() {
-            document.getElementsByTagName("head")[0].appendChild(d);
+            //document.getElementsByTagName("head")[0].appendChild(d);
             //console.log(d);
             d = p
         }, 1)

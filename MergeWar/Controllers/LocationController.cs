@@ -5,7 +5,7 @@ using System.Web.Mvc;
 using HCZZ.ModeDB;
 using HCZZ.DAL;
 using HCZZ.AppCode;
-using Common;
+using HCZZ.Common;
 using System.Web.Script.Serialization;
 using System.Data;
 using HCZZ.Models;
@@ -16,24 +16,27 @@ namespace HCZZ.Controllers
     [SystemAutherFilter]
     public class LocationController : Controller
     {
-        OPLog log = new OPLog();
+        /// <summary>
+        /// 每页显示数量
+        /// </summary>
+        public static string PageSize = System.Configuration.ConfigurationManager.AppSettings["PageSize"];
+        OPLog log = new OPLog("场所管理");
         private string lishow = "CSGL";
         public ActionResult Index()
         {
             ViewBag.LfetShow = "场所管理";
             return View();
         }
-
         #region 场所管理
         #region 场所管理数据列表 上网场所名称,APmac,场所详细地址,备案时间范围，省市区，
         [HttpGet]
-        public ActionResult LocationList(int? Id, string txtNetbar_Wacode, string txtAP_MAC, string txtStartTime, string txtEndTime, string txtSite_Address, string selProvince, string selCity, string selArea, string selPolice)
+        public ActionResult LocationList(int? PageIndex, string txtNetbar_Wacode, string txtAP_MAC, string txtBeginTime, string txtEndTime, string txtSite_Address, string selProvince, string selCity, string selArea, string selPolice)
         {
             ViewBag.location = "所在位置：<a href='" + Url.Content("~/Location/LocationList") + "'>场所管理</a>>><a href='" + Url.Content("~/Location/LocationList") + "'>场所列表</a>";
             ViewBag.LfetShow = "场所管理";
             ViewBag.lishow = lishow;
             ViewBag.ashow = "local";
-            ViewBag.Id = Id;
+            ViewBag.Id = PageIndex;
             try
             {
                 selProvince = selProvince ?? "0";
@@ -46,17 +49,17 @@ namespace HCZZ.Controllers
                 //string proId = "0";
                 //if (userType[0] != 1 && userType[0] != 7)
                 //    proId = user.ProID.ToString();
-                Dictionary<string, string> dic = new Dictionary<string, string>() 
-                { 
-                    {"pageIndex",(Id??1).ToString()},
-                    {"pageSize","5"},
+                Dictionary<string, string> dic = new Dictionary<string, string>()
+                {
+                    {"pageIndex",(PageIndex??1).ToString()},
+                    {"pageSize",PageSize},
                     {"txtNetbar_Wacode",txtNetbar_Wacode},
                     {"txtSite_Address",txtSite_Address},
                     {"UserType",userType[0].ToString()},
                     {"AreaId",userType[1].ToString()},
                     {"AP_MAC",txtAP_MAC},
                     {"selProvince",selProvince},
-                    {"txtStartTime",txtStartTime},
+                    {"txtBeginTime",txtBeginTime},
                     {"txtEndTime",txtEndTime},
                     {"selCity",selCity},
                     {"selArea",selArea},
@@ -68,7 +71,7 @@ namespace HCZZ.Controllers
                 if (!string.IsNullOrEmpty(txtNetbar_Wacode)) log.What += "上网服务场所编码：" + txtNetbar_Wacode;
                 if (!string.IsNullOrEmpty(txtSite_Address)) log.What += "场所详细地址：" + txtSite_Address;
                 if (!string.IsNullOrEmpty(txtAP_MAC)) log.What += "APMAC：" + txtAP_MAC;
-                if (txtStartTime != "0") log.What += "开始搜索时间范围:" + txtStartTime;
+                if (txtBeginTime != "0") log.What += "开始搜索时间范围:" + txtBeginTime;
                 if (txtEndTime != "0") log.What += "终止搜索时间范围:" + txtEndTime;
                 if (selProvince != "0") log.What += " 省Id：" + selProvince;
                 if (selCity != "0") log.What += " 市Id：" + selCity;
@@ -79,17 +82,11 @@ namespace HCZZ.Controllers
             catch (System.Data.SqlClient.SqlException sql)
             {
                 ViewBag.errscript = "alert('检索数据遇到错误，请联系管理员')";
-                Logger.ErrorLog(sql, new Dictionary<string, string>()
-                {
-                    {"Function","LocationController.List(int? Id, string txtNetbar_Wacode, string txtPlace_Name, string txtSite_Address, string txtLaw_Principal_Name, string txtRelationship_Account, string selNetsite_Type, string selAccess_Type, string selStatus, string selBusiness_Nature, string selOperator_Net, string txtBeginTime, string txtEndTime, string selApfwStatus, string selApsjStatus, string txtAP_MAC, string selVerified, string txtOutIpAddress)[HttpGet]"}
-                });
+                Logger.ErrorLog(sql, null);
             }
             catch (Exception ex)
             {
-                Logger.ErrorLog(ex, new Dictionary<string, string>()
-                {
-                    {"Function","LocationController.List(int? Id, string txtNetbar_Wacode, string txtPlace_Name, string txtSite_Address, string txtLaw_Principal_Name, string txtRelationship_Account, string selNetsite_Type, string selAccess_Type, string selStatus, string selBusiness_Nature, string selOperator_Net, string txtBeginTime, string txtEndTime, string selApfwStatus, string selApsjStatus, string txtAP_MAC, string selVerified, string txtOutIpAddress)[HttpGet]"}
-                });
+                Logger.ErrorLog(ex, null);
                 ViewBag.errscript = "alert('未知错误，请联系管理员')";
             }
             return View();
@@ -104,7 +101,7 @@ namespace HCZZ.Controllers
             ViewBag.LfetShow = "场所管理";
             ViewBag.lishow = lishow;
             ViewBag.ashow = "local";
-            ViewBag.dic = new LocationDAL().GetSecurityList();  
+            ViewBag.dic = new LocationDAL().GetSecurityList();
             return View();
         }
         [HttpPost]
@@ -135,10 +132,15 @@ namespace HCZZ.Controllers
                 NetBarInfo.RELATIONSHIP_ACCOUNT = form["txtMobile"];//联系方式
                 NetBarInfo.LAW_PRINCIPAL_CERTIFICATE_ID = form["txtCERTIFICATE_ID"];//有效证件号码
                 NetBarInfo.END_TIME = form["txtEND_TIME"];//营业结束时间
+                NetBarInfo.ProID = Convert.ToInt32(form["selProvince"]);
+                NetBarInfo.CityID = Convert.ToInt32(form["selCity"]);
+                NetBarInfo.Aid = Convert.ToInt32(form["SelArea"]);
+                NetBarInfo.Pid = Convert.ToInt32(form["selPolice"]);
+                NetBarInfo.Sid = Convert.ToInt32(form["selscenic"]);
                 // 数据来源
                 NetBarInfo.SecId = Convert.ToInt32(form["SelMakeType"]);//安全厂商ID
                 NetBarInfo.OPERATOR_NET = form["SelServiceBusines"];//网络接入服务商
-                NetBarInfo.CODE_ALLOCATION_ORGANIZATION = (NetBarInfo.MakeType == 8 ? (WebCommon.RefSecurityList().Where(m => m.SECURITY_SOFTWARE_ORGNAME.Contains("舜游")).First().SECURITY_SOFTWARE_ORGCODE) : "779852855");//安全厂商组织机构代码
+                NetBarInfo.CODE_ALLOCATION_ORGANIZATION = (NetBarInfo.MakeType == "8" ? (WebCommon.RefSecurityList().Where(m => m.SECURITY_SOFTWARE_ORGNAME.Contains("舜游")).First().SECURITY_SOFTWARE_ORGCODE) : "779852855");//安全厂商组织机构代码
                 NetBarInfo.Service_code = 0;//流水号
                 //NetBarInfo.NETBAR_WACODE = "";//上网服务场所编码
                 NetBarInfo.IsUpdate_NETBAR_WACODE = 0;//是否更新场所编码
@@ -196,6 +198,7 @@ namespace HCZZ.Controllers
                 LocationDAL ldal = new LocationDAL();
                 ViewBag.loca = ldal.GetNetBarModelById(Id);
                 ViewBag.dt = ldal.GetVerifiyNetBarById(Id);
+                ViewBag.dtAddress = ldal.GetAddress(Id);
             }
             catch (System.Data.SqlClient.SqlException sql)
             {
@@ -269,6 +272,7 @@ namespace HCZZ.Controllers
             ViewBag.LfetShow = "场所管理";
             ViewBag.lishow = lishow;
             ViewBag.ashow = "local";
+            ViewBag.Hid = Id;
             ViewBag.dic = new LocationDAL().GetSecurityList();
             try
             {
@@ -336,9 +340,9 @@ namespace HCZZ.Controllers
                 loca.Aid = Convert.ToInt32(form["SelArea"]);
                 loca.Pid = Convert.ToInt32(form["selPolice"]);
                 loca.Sid = Convert.ToInt32(form["selscenic"]);
-                loca.MakeType = Convert.ToInt32(form["SelMakeType"]);
+                loca.MakeType = form["SelMakeType"];
                 loca.SecId = Convert.ToInt32(form["SelMakeType"]);
-                loca.CODE_ALLOCATION_ORGANIZATION = (loca.MakeType == 8 ? (WebCommon.RefSecurityList().Where(m => m.SECURITY_SOFTWARE_ORGNAME.Contains("舜游")).First().SECURITY_SOFTWARE_ORGCODE) : "779852855");
+                loca.CODE_ALLOCATION_ORGANIZATION = (loca.MakeType == "8" ? (WebCommon.RefSecurityList().Where(m => m.SECURITY_SOFTWARE_ORGNAME.Contains("舜游")).First().SECURITY_SOFTWARE_ORGCODE) : "779852855");
                 loca.Statis = Convert.ToInt32(form["radStatis"]);
                 loca.ID = Convert.ToInt32(form["Hid"]);
                 loca.TableKey = "";
@@ -471,6 +475,20 @@ namespace HCZZ.Controllers
             ViewBag.location = "所在位置：<a href='" + Url.Content("~/Location/LocationList") + "'>场所管理</a>>><a href='" + Url.Content("~/Location/LocaShowMap") + "'>地图标记</a>";
             ViewBag.lishow = lishow;
             ViewBag.ashow = "map";
+            UserInfo user = (UserInfo)Session["userinfo"];
+            if (user != null && (user.Type == 4 || user.Type == 2 || user.Type == 3 || user.Type == 5 || user.Type == 6 || user.Type == 8))
+            {
+                ViewBag.ProId = user.ProID.ToString();
+                ViewBag.CityId = user.CityID.ToString();
+                //Aid = user.Type == 2 ? user.AId.ToString() : Aid;
+                ViewBag.Aid = user.AId.ToString();
+            }
+            else
+            {
+                ViewBag.ProId = "0";
+                ViewBag.CityId = "0";
+                ViewBag.Aid = "0";
+            }
             return View();
         }
 
@@ -485,10 +503,10 @@ namespace HCZZ.Controllers
             ViewBag.ashow = "undev";
             try
             {
-                Dictionary<string, string> dic = new Dictionary<string, string>() 
-                { 
+                Dictionary<string, string> dic = new Dictionary<string, string>()
+                {
                     {"pageIndex",(pageIndex??1).ToString()},
-                    {"pageSize","10"},
+                    {"pageSize",PageSize},
                     {"AP_MAC",txtAP_MAC},
                     {"StartTime",txtStartTime},
                     {"EndTime",txtEndTime},
@@ -545,7 +563,7 @@ namespace HCZZ.Controllers
 
         #region 设备管理
         #region 设备列表
-        public ActionResult DevInfoList(int Id, string key, string txtAP_MAC_ID, string txtAP_MAC, string PotType)
+        public ActionResult DevInfoList(int Id, string PageIndex, string txtAP_MAC_ID, string txtAP_MAC, string PotType)
         {
             ViewBag.location = "所在位置：<a href='" + Url.Content("~/Location/LocationList") + "'>场所管理</a>>><a href='" + Url.Content("~/Location/DevInfoList") + "'>设备列表</a>";
             ViewBag.LfetShow = "场所管理";
@@ -553,10 +571,10 @@ namespace HCZZ.Controllers
             ViewBag.ashow = "local";
             try
             {
-                Dictionary<string, string> dic = new Dictionary<string, string>() 
+                Dictionary<string, string> dic = new Dictionary<string, string>()
                 {
-                    {"pageIndex",key??"1"},
-                    {"pageSize","10"},
+                    {"pageIndex",PageIndex??"1"},
+                    {"pageSize",PageSize},
                     {"Lid",Id.ToString()},
                     {"txtAP_MAC_ID",txtAP_MAC_ID},
                     {"txtAP_MAC",txtAP_MAC},
@@ -617,7 +635,7 @@ namespace HCZZ.Controllers
                 Loc_NetBarInfo loca = locadal.GetLocaById(mac.NETBAR_ID, "");
                 mac.SECURITY_SOFTWARE_ORGCODE = loca.CODE_ALLOCATION_ORGANIZATION;
                 mac.ID = Convert.ToInt32(form["HMid"] == "" ? "0" : form["HMid"]);
-                mac.APType = Convert.ToInt32(form["radAPType"]);
+                mac.APType = Convert.ToInt32(form["radAPType1"]);
                 mac.APName = form["txtAPName"].ToString();
 
                 mac.ModeType = Convert.ToInt32(form["selModeType"]);
@@ -626,7 +644,7 @@ namespace HCZZ.Controllers
                 //mac.LogCapture = ChangeValue.ReturnUintValue(form["ckLogCapture"]);
                 mac.COLLECTION_EQUIPMENT_ID = form["txtCOLLECTION_EQUIPMENT_ID"];
                 mac.LogCapture = 7;
-                mac.supplier = Convert.ToInt32(form["selsupplier"]);
+                mac.supplier = Convert.ToInt32(form["selsupplier"]);//供应商
                 mac.ProjectType = Convert.ToInt32(form["selProjectType"]);
                 mac.CasesType = Convert.ToInt32(form["selCasesType"]);
                 mac.FenceOffTime = Convert.ToInt32(form["txtFenceOffTime"]);
@@ -800,6 +818,7 @@ namespace HCZZ.Controllers
             ViewBag.LfetShow = "场所管理";
             ViewBag.lishow = lishow;
             ViewBag.ashow = "local";
+            ViewBag.Lid = Id;
             try
             {
                 MacInfo mac = new MacDAL().GetMACInfoById(Id, "");
@@ -841,7 +860,7 @@ namespace HCZZ.Controllers
 
                 loca.SECURITY_SOFTWARE_ORGCODE = loca.SECURITY_SOFTWARE_ORGCODE;
                 mac.ID = Convert.ToInt32(form["HMid"]);
-                mac.APType = Convert.ToInt32(form["radAPType"]);
+                mac.APType = Convert.ToInt32(form["radAPType1"]);
                 mac.APName = form["txtAPName"].ToString();
                 mac.COLLECTION_EQUIPMENT_ID = form["txtCOLLECTION_EQUIPMENT_ID"];
                 mac.ModeType = Convert.ToInt32(form["selModeType"]);
@@ -1034,8 +1053,8 @@ namespace HCZZ.Controllers
                 int[] userType = ChangeValue.GetUserType();
                 UserInfo user = (UserInfo)Session["userInfo"];
 
-                Dictionary<string, string> dic = new Dictionary<string, string>() 
-                { 
+                Dictionary<string, string> dic = new Dictionary<string, string>()
+                {
                     {"RecVal",id.ToString()},
                     {"StrLid",StrLid},
                     {"txtAP_MAC_ID",txtAP_MAC_ID},
@@ -1067,6 +1086,6 @@ namespace HCZZ.Controllers
         #endregion
 
         #endregion
-        
+
     }
 }

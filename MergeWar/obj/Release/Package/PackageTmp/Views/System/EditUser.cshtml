@@ -1,212 +1,181 @@
 ﻿@{
-    ViewBag.Title = "-编辑用户";
+    ViewBag.Title = "编辑用户";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@using HCZZ.ModeDB;
 @using Common;
-@using HCZZ.ModeDB
+@model List<Sys_UserPowerInfo>
 @using (Html.BeginForm("EditUser", "System", FormMethod.Post))
 {
-    <div id="Cx" style="display: none">
-    </div> 
-    <div class="Tjxx" id="TJ" style="display: none">
-    </div>
     <table>
         <tr>
             <th colspan="4">
                 <h1>
-                    编辑用户</h1>
+                    编辑用户
+                </h1>
             </th>
         </tr>
     </table>
-    <div >
+    <div>
         <table>
             @{
-            UserInfo user = (UserInfo)ViewBag.user;
-            if (user != null)
-            {         
-                <tr>
-                    <td width="15%" align="right">
-                        用户账号：
-                    </td>
-                    <td colspan="3">
-                        <input type="text" id="txtName" name="txtName" class="_text"  maxlength="18" value="@user.UserName" readonly="readonly"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td width="15%" align="right">
-                        用户密码：
-                    </td>
-                    <td colspan="3">
-                        <input type="password" id="txtPassword" name="txtPassword" class="_text" maxlength="18" /><span
-                            id="spPassword" class="color_ccc">* 密码为空不修改密码</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td width="15%" align="right">
-                        真实姓名：
-                    </td>
-                    <td colspan="3">
-                        <input type="text" id="txtTrueName" name="txtTrueName" class="_text"  maxlength="13" value="@user.TrueName"/><span
-                            id="spTrueName" class="color_ccc">*</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td width="15%" align="right">
-                        手机号码：
-                    </td>
-                    <td colspan="3">
-                        <input type="text" id="txtMobile" name="txtMobile" class="_text"  maxlength="13" value="@user.Mobile"/><span
-                            id="spMobile" class="color_ccc">*</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td width="15%" align="right">
-                        Email：
-                    </td>
-                    <td colspan="3">
-                        <input type="text" id="txtEmail" name="txtEmail" maxlength="250" class="_text" value="@user.Email" /><span
-                            id="spEmail" class="color_ccc">*</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td width="15%" align="right">
-                        用户类型：
-                    </td>
-                    <td colspan="3">
-                        <select id="selUserType" name="selUserType" onchange="SelectType();">
-                            <option value="0">==请选择==</option>
-                            @{
-                                Dictionary<int, string> UserType_dic = ChangeValue.UserListDIC();
-                                foreach (var item in UserType_dic)
+                UserInfo user = (UserInfo)ViewBag.user;
+                if (user != null)
+                {
+                    <tr>
+                        <td width="15%" align="right">
+                            用户账号：
+                        </td>
+                        <td colspan="3">
+                            <input type="text" id="txtName" name="txtName" class="_text" maxlength="18" value="@user.UserName" readonly="readonly" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="15%" align="right">
+                            用户密码：
+                        </td>
+                        <td colspan="3">
+                            <input type="password" id="txtPassword" name="txtPassword" class="_text" maxlength="18" /><span id="spPassword" class="color_ccc">* 密码为空不修改密码</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="15%" align="right">
+                            真实姓名：
+                        </td>
+                        <td colspan="3">
+                            <input type="text" id="txtTrueName" name="txtTrueName" class="_text" maxlength="16" value="@user.TrueName" /><span id="spTrueName" class="color_ccc">*</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="15%" align="right">
+                            手机号码：
+                        </td>
+                        <td colspan="3">
+                            <input type="text" id="txtMobile" name="txtMobile" class="_text" maxlength="13" value="@user.Mobile" /><span id="spMobile" class="color_ccc">*</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="15%" align="right">
+                            Email：
+                        </td>
+                        <td colspan="3">
+                            <input type="text" id="txtEmail" name="txtEmail" maxlength="64" class="_text" value="@user.Email" /><span id="spEmail" class="color_ccc">*</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="15%" align="right">
+                            用户类型：
+                        </td>
+                        <td colspan="3">
+                            <select id="selUserType" name="selUserType" onclick="SelectType()">
+                                <option value="0">==请选择==</option>
+                                <option value="1">管理员</option>
+                                <option value="2">分局用户</option>
+                                <option value="3">派出所用户</option>
+                                <option value="4">市局用户</option>
+                                <option value="5">分中心用户</option>
+                                <option value="6">省用户</option>
+                                <option value="7">全国用户</option>
+                                <option value="8">运营用户</option>
+                            </select>
+                            <span id="spUserType" class="color_ccc">*</span>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td align="right">
+                            所属区域：
+                        </td>
+                        <td colspan="3">
+                            <p style="padding-left: 5px">
+                                省：
+                                <select id="selProvince" name="selProvince" onchange="changeValue('selProvince','selCity','City')">
+                                    <option value="0">==请选择==</option>
+                                </select>
+                                市：
+                                <select id="selCity" name="selCity" onchange="changeValue('selCity','SelArea','Area')">
+                                    <option value="0">==请选择==</option>
+                                </select>
+                                区：
+                                <select id="SelArea" name="SelArea" onchange="changeValue('SelArea','selPolice','police')"
+                                        style="width: 160px">
+                                    <option value="0">==请选择==</option>
+                                </select>
+                                派出所：
+                                <select id="selPolice" name="selPolice" style="width: 160px">
+                                    <option value="0">==请选择==</option>
+                                </select>
+                                <span id="sppolice" class="color_ccc">*</span>
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="15%" align="right">
+                            证件类型：
+                        </td>
+                        <td>
+                            <select name="selIdType" id="selIdType">
+                                <option value="0">=请选择=</option>
+                                <option value="1">身份证</option>
+                                <option value="2">军官证</option>
+                                <option value="3">港澳通行证</option>
+                                <option value="4">护照</option>
+                                <option value="5">驾驶证</option>
+                            </select><span id="SIdType"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="15%" align="right">
+                            证件号码：
+                        </td>
+                        <td colspan="3">
+                            <input type="text" id="txtIdnumber" name="txtIdnumber" class="_text" maxlength="25" value="@user.idNumber" /><span id="spIdnumber" class="color_ccc">*</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="15%" align="right">角色：</td>
+                        <td colspan="3">
+                            <select id="Sys_RID" name="Sys_RID">
+                                <option value="0">==请选择==</option>
+                                @foreach (Sys_UserPowerInfo item in Model)
                                 {
-                                <option value="@item.Key" >@item.Value</option>
+                                    <option value="@item.Id">@item.Name</option>
                                 }
-                            }
-                        </select>
-                        <span id="spUserType" class="color_ccc">*</span>
-                    </td>
-                </tr>
-        
-                <tr>
-                    <td align="right">
-                        所属区域：
-                    </td>
-                    <td colspan="3">
-                        <p style="padding-left: 5px">
-                            省：
-                            <select id="selProvince" name="selProvince" onchange="changeValue('selProvince','selCity','City')">
-                                <option value="0">==请选择==</option>
-                            </select>
-                            市：
-                            <select id="selCity" name="selCity" onchange="changeValue('selCity','SelArea','Area')">
-                                <option value="0">==请选择==</option>
-                            </select>
-                            区：
-                            <select id="SelArea" name="SelArea" onchange="changeValue('SelArea','selPolice','police')"
-                                style="width: 160px">
-                                <option value="0">==请选择==</option>
-                            </select>
-                            派出所：
-                            <select id="selPolice" name="selPolice" style="width: 160px">
-                                <option value="0">==请选择==</option>
-                            </select>
-                            <span id="sppolice" class="color_ccc">*</span></p>
-                    </td>
-                </tr>
-         
-                <tr>
-                    <td width="15%" align="right">
-                        证件类型：
-                    </td>
-                    <td>
-                   <select name="selIdType" id="selIdType">
-                       <option value="0">=请选择=</option>
-                       <option value="1">身份证</option>
-                       <option value="2">军官证</option>
-                       <option value="3">港澳通行证</option>
-                       <option value="4">护照</option>
-                       <option value="5">驾驶证</option>
-                   </select>
-                 </td>
-                    @*<td colspan="3">
-                        @{
-                            string certifiName = "";
-                            Dictionary<string, string> dic = ChangeValue.GetCertifiCateList();
-                           
-                            foreach (var item in dic)
-                            {
-                                    certifiName = item.Value;
-                            }
-                        }
-                        <input type="text" id="txtCERTIFICATE_TYPE" name="txtCERTIFICATE_TYPE" maxlength="11" class="_text" value="@certifiName" />
-                        <input type="hidden" id="txtCertifiID" name="txtCertifiID" value="@user.idType" />
-                        <a href="javascript:void(0)"  onclick="javascript:showIdentify()" style="background: #1b5579; border: 1px solid #000;padding: 4px 5px; margin-left: 5px; color: #fff">选择证件类型</a> 
-                        <span id="spIdType" class="color_ccc">*</span>
-                    </td>*@
-                </tr> 
-                <tr>
-                    <td width="15%" align="right">
-                        证件号码：
-                    </td>
-                    <td colspan="3">
-                        <input type="text" id="txtIdnumber" name="txtIdnumber" class="_text" maxlength="18" value="@user.idNumber" /><span
-                            id="spIdnumber" class="color_ccc">*</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td width="15%" align="right">
-                        USBKey串号：
-                    </td>
-                    <td> <input type="text" id="txtUSBKey" name="txtUSBKey" class="_text" maxlength="16"/>
-                        <span id="spUSBKey" class="color_ccc">*</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="center" colspan="4">
-                        <input class="btn_SS" type="submit" name="button" value="保存"/><input type="hidden" id="HId" name="HId" value="@user.ID" />
-                    </td>
-                </tr> 
-            }
+                            </select><span id="spSys_RID" class="color_ccc">*</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="center" colspan="4">
+                            <input class="btn_SS" type="submit" name="button" value="保存" /><input type="hidden" id="HId" name="HId" value="@user.ID" />
+                        </td>
+                    </tr>
+                }
             }
         </table>
     </div>
-   
-   @* <div id="identify" style="position: absolute; background: #fff; overflow: hidden;
-            width: 980px; height: 600px; margin-left: -490px; margin-top: -300px; top: 50%;
-            left: 50%; border: 1px solid #333; z-index: 1000; display: none">
-            <iframe src="/Location/ShowCertifi" style="height: 100%; width: 100%"></iframe>
-        </div>*@
-    <script type="text/javascript">
-        $(function () {
-            changeValue("selProvince", "selProvince", "Province");
-            $("#selUserType").val('@(user == null ? 0 : user.Type)');
-            $("#selProvince").val('@(user == null ? 0 : user.ProID)');
-            changeValue('selProvince', 'selCity', 'City');
-            $("#selCity").val('@(user == null ? 0 : user.CityID)');
-            changeValue('selCity', 'SelArea', 'Area');
-            $("#SelArea").val('@(user == null ? 0 : user.AId)');
-            changeValue('SelArea', 'selPolice', 'police');
-            $("#selPolice").val('@(user == null ? 0 : user.PId)');
+<script type="text/javascript">
+    $(function () {
+        changeValue("selProvince", "selProvince", "Province");
+       
+        $("#selIdType").val('@(user == null ? 0 : user.idType)');
+        $("#selUserType").val('@(user == null ? 0 : user.Type)');
+        $("#selProvince").val('@(user == null ? 0 : user.ProID)');
+        changeValue('selProvince', 'selCity', 'City');
+        $("#selCity").val('@(user == null ? 0 : user.CityID)');
+        changeValue('selCity', 'SelArea', 'Area');
+        $("#SelArea").val('@(user == null ? 0 : user.AId)');
+        changeValue('SelArea', 'selPolice', 'police');
+        $("#selPolice").val('@(user == null ? 0 : user.PId)');
+        $("#Sys_RID").val('@(user == null ? 0 : user.JId)');
             SelectType();
-        });
-
-    </script>
-    }
-    <script type="text/javascript">
-//        var showIdentify=()=>{
-//            $("#identify").css("display","block");
-//        }
-//         var hideIdentify=()=>{
-//            $("#identify").css("display","none");
-//        }
-
-        $(function () {
             $("form").submit(function () {
                 if (subVal()) {
                     return true;
+                } else {
+                    return false;
                 }
-                return false;
             });
+
         });
         function subVal() {
             var result = true;
@@ -224,6 +193,13 @@
                 $("#spIdType").html("请选择证件类型");
             } else {
                 $("#spIdType").html("");
+            }
+
+            if ($("#selSR_Id").val() == "0") {
+                result = false;
+                $("#spSR_Id").html("请选择角色");
+            } else {
+                $("#spSR_Id").html("");
             }
 
 
@@ -292,18 +268,11 @@
             } else {
                 $("#spEmail").html("");
             }
-
-//            if ($.trim($("#txtUSBKey").val()) == "") {
-//                result = false;
-//                $("#spUSBKey").html("USBKey号不能为空");
-//            } else {
-//                $("#spUSBKey").html("");
-//            }
-
             return result;
         }
 
         function SelectType() {
+
             var type = $("#selUserType").val();
             if (type == "8") {
                 $("#selProvince").removeAttr("disabled", "disabled");
@@ -311,7 +280,7 @@
                 $("#SelArea").removeAttr("disabled", "disabled");
                 $("#selPolice").attr("disabled", "disabled");
                 $("#sppolice").hide();
-            } else if (type == "7") {
+            } else if (type == "7" || type == "1") {
                 $("#selProvince").attr("disabled", "disabled");
                 $("#selCity").attr("disabled", "disabled");
                 $("#SelArea").attr("disabled", "disabled");
@@ -343,13 +312,14 @@
                 $("#sppolice").show();
             }
         }
+
         function changeValue(fname, sname, key) {
             var id = parseInt($("#" + fname).val());
             if (id != 0 || key == "Province") {
                 $.ajax
 			    ({
 			        type: "Get",
-			        url: "/Location/AreaValue?Id=" + id + "&key= " + key,
+			        url: "/Public/AreaValue?Id=" + id + "&key= " + key,
 			        dataType: "json",
 			        async: false,
 			        cache: false,
@@ -377,17 +347,17 @@
                 SelClear(key);
             }
         }
-        function SelClear(key) {
-            if (key == "City") {
-                $("#selCity").html("<option value='0'>==请选择==</option>");
-                $("#SelArea").html("<option value='0'>==请选择==</option>");
-                $("#selPolice").html("<option value='0'>==请选择==</option>");
-            } else if (key == "Area") {
-                $("#SelArea").html("<option value='0'>==请选择==</option>");
-                $("#selPolice").html("<option value='0'>==请选择==</option>");
-            } else if (key == "police") {
-                $("#selPolice").html("<option value='0'>==请选择==</option>");
-            }
+    function SelClear(key) {
+        if (key == "City") {
+            $("#selCity").html("<option value='0'>==请选择==</option>");
+            $("#SelArea").html("<option value='0'>==请选择==</option>");
+            $("#selPolice").html("<option value='0'>==请选择==</option>");
+        } else if (key == "Area") {
+            $("#SelArea").html("<option value='0'>==请选择==</option>");
+            $("#selPolice").html("<option value='0'>==请选择==</option>");
+        } else if (key == "police") {
+            $("#selPolice").html("<option value='0'>==请选择==</option>");
         }
-    </script>   
-
+    }
+    </script>
+                }

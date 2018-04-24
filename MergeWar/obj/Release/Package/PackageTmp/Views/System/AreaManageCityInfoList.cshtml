@@ -1,9 +1,11 @@
 ﻿@{
-    ViewBag.Title = "-市管理";
+    ViewBag.Title = "系统管理-市管理";
     Layout = "~/Views/Shared/_Layout.cshtml";
     Dictionary<string, string> dic = (Dictionary<string, string>)ViewBag.dic;
 }
 <link href="@Url.Content("~/Content/css/publicHeader.css")" rel="stylesheet" type="text/css" />
+<link href="@Url.Content("~/Content/css/XTGL.css")" rel="stylesheet" type="text/css" />
+<link href="~/Content/css/XTGL_QYGL.css" rel="stylesheet" />
 @using System.Collections.Generic
 @using Common
 @using HCZZ.DAL
@@ -14,16 +16,20 @@
     @Id = dic["ProId"]
 }, FormMethod.Get))
 {
+    string relaVal = ChangeValue.RefPageRelaByPath("System/AreaManageInfoList");
      <div class="contentbody" id="contentbody">
     <div class="contentTitle">
             <span>查询条件和按钮区</span>
             <input class="search" type="button" id="BtnSelect" onclick="myFunction(this, 'contentConditions')" value="隐藏"/>
-            <input  class="search"  onclick="javascript:location.replace('@Url.Content("~/System/AddCity/" + dic["ProId"])')" type="button" name="button" value="添加市" />
+        @if (relaVal.Contains("2"))
+        {
+            <input class="add" onclick="javascript:location.replace('@Url.Content("~/System/AddCity/" + dic["ProId"])')" type="button" name="button" value="+添加市" />
+        }
         </div>
         <div class="contentConditions">
             <ul>
                 <li class="Conditions Conditions1">
-                    <span>名市称：</span>
+                    <span>市名称：</span>
                     <select name="selName" id="selName">
                         <option value="1">模糊</option>
                         <option value="2">精确</option>
@@ -38,7 +44,7 @@
         </div>
      <div class="Cx_tt">
      </div>
-	 <div class="contentTable">
+	 <div class="contentTable" id="taskManagementId">
             <table border="0" cellspacing="0" cellpadding="0">
 			<tr>
 				<th style="width: 10%;">序号</th>
@@ -52,7 +58,7 @@
    <div class="contentTable">
             <table border="0" cellspacing="0" cellpadding="0">
         @{
-             PagedList<AreaInfo> list = (PagedList<AreaInfo>)ViewBag.Pro;
+            PagedList<AreaInfo> list = (PagedList<AreaInfo>)ViewBag.Pro;
             if (list != null && list.Count > 0)
             {
                 foreach (AreaInfo item in list)
@@ -63,40 +69,39 @@
                 <td style="width: 20%;">@item.Area</td>
                 <td style="width: 20%;">@item.City_code</td>
 				<td style="width: 30%;">
-                    <a class="Cz_Wenzi" href ="@Url.Content("~/System/AreaInfoList/" + item.ID)" title="区列表">区列表</a>
-                    <a class="Cz_bianji" href ="@Url.Content("~/System/EditCity/" + item.ID)">
-                    <img title="编辑" src="@Url.Content("~/Content/images/edit1_icon.png")" alt="编辑"/>   
-                    </a>  
-					<a class="Cz_shanchu" href="javascript:void(0)" onclick="del('@item.ID','AreaManageCity')" >
-                    <img title="删除" src="@Url.Content("~/Content/images/del1_icon.png")" alt="删除" />
-                    </a>	
+                    @if (relaVal.Contains("1"))
+                    {
+                        <span><a class="Cz_Wenzi" href="@Url.Content("~/System/AreaInfoList/" + item.ID)" title="区列表" style="color:green">区列表</a></span>
+                    }
+                   @if (relaVal.Contains("2"))
+                   {
+                    <a class="Cz_bianji" href="@Url.Content("~/System/EditCity/" + item.ID)">
+                        <img title="编辑" src="@Url.Content("~/Content/images/edit1_icon.png")" alt="编辑" />
+                    </a>
+                   }
+                    @if (relaVal.Contains("3"))
+                    {
+                        if (item.Num==0)
+                        {
+                            <a class="Cz_shanchu" href="javascript:void(0)" onclick="del('@item.ID','AreaManageCity')">
+                                <img title="删除" src="@Url.Content("~/Content/images/del1_icon.png")" alt="删除" />
+                            </a>
+                        }
+                        else
+                        {
+                            <a class="Cz_shanchu">
+                                <img title="删除" src="@Url.Content("~/Content/images/del_icon.png")" alt="删除" />
+                            </a>
+                        }
+
+                    }
 				</td>
 			</tr>   
                 }
-                if (list.TotalPageCount > 1)
-                { 
-
-            <tr>
-                    <td colspan="5">
-                        <div class="pag_td" style="width: 100%; text-align: center; font-size: 14px">
-                            @Html.Pager(list, new PagerOptions()
-                       {
-                           PageIndexParameterName = "key",
-                           @CssClass = "pag1"
-                       })
-                            <div class="pag_all">
-                                共<font>@list.TotalPageCount</font>页/共<font id="spTotalItem">@list.TotalItemCount</font>条</div>
-                        </div>
-                    </td>
-                </tr>
                 }
             }
-            else
-            {
-                <tr><td colspan="5">暂无可显示数据</td></tr>
-            }
- }   
 		</table>
+       @Html.Partial("~/Views/Shared/_PartialPage.cshtml", new RouteValueDictionary { { "model", list }, { "pageindex", "PageIndex" } })
     </div> 
 </div>
  <script type="text/javascript">
@@ -104,7 +109,16 @@
         if (confirm("确定要删除吗？")) {
              location.href = "/System/DelProArea?Id=" + obj + "&key=" + key+"&key1="+@dic["ProId"];
         }
-    }
+   }
+$(function(){
+            $("#selName").val("@dic["selName"]");
+        })
+        $("form").submit(function () {
+            if ($("input[type='text']").val() == "") {
+                alert("请输入查询条件");
+                return false;
+            }
+        })
  </script>
 }
 	 

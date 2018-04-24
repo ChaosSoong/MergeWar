@@ -3,9 +3,185 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     MacInfo mac = (MacInfo)ViewBag.mac;
 }
+<style type="text/css">
+    .contentbody .contentInfo table {
+        color: #b1b1b1;
+        width: 1250px;
+        border: 1px solid #2a393a;
+        margin: 0 auto;
+        background-color: #21222f;
+    }
+
+        .contentbody .contentInfo table tr {
+            height: 40px;
+        }
+
+            .contentbody .contentInfo table tr:nth-child(even) {
+                background-color: #21202E;
+            }
+
+            .contentbody .contentInfo table tr:nth-child(odd) {
+                background-color: #21222F;
+            }
+
+            .contentbody .contentInfo table tr th {
+                text-align: left;
+                padding-left: 50px;
+                background-color: #1E1F2D;
+                border-bottom: 1px solid #2A393A;
+            }
+
+            .contentbody .contentInfo table tr td {
+                border-right: 1px solid #2A393A;
+                padding-left: 50px;
+            }
+
+                .contentbody .contentInfo table tr td .spanTitle {
+                    color: #999999;
+                }
+
+                .contentbody .contentInfo table tr td .spanText {
+                    color: #CCCCCC;
+                }
+
+                .contentbody .contentInfo table tr td .spanTextHint {
+                    color: #AA301C;
+                    margin-left: 10px;
+                }
+
+        .contentbody .contentInfo table:nth-child(1) {
+            margin-top: 20px;
+        }
+
+        .contentbody .contentInfo table:last-child {
+            margin-bottom: 50px;
+            border-top: none;
+        }
+
+        .contentbody .contentInfo table tr td img {
+            vertical-align: middle;
+        }
+
+        .contentbody .contentInfo table tr td input {
+            margin-left: 5px;
+            background-color: transparent;
+            border: none;
+            background-color: #222B3B;
+            height: 25px;
+            padding-left: 5px;
+            color: #999999;
+        }
+
+        .contentbody .contentInfo table tr td select {
+            margin-left: 5px;
+            background-color: transparent;
+            border: none;
+            background-color: #222B3B;
+            height: 25px;
+            padding-left: 5px;
+            color: #999999;
+        }
+
+        .contentbody .contentInfo table tr td .SYHLXbtn {
+            border: 1px solid #222B3B;
+            cursor: pointer;
+            outline: none;
+            box-sizing: border-box;
+            /*padding-top: 3px;*/
+            margin-left: 10px;
+            padding-bottom: 3px;
+            padding-left: 15px;
+            padding-right: 15px;
+            -moz-border-radius: 15px; /* Firefox */
+            -webkit-border-radius: 15px; /* Safari 和 Chrome */
+            border-radius: 15px; /* Opera 10.5+, 以及使用了IE-CSS3的IE浏览器 */
+        }
+
+        .contentbody .contentInfo table tr td .YHLXbtnActive {
+            cursor: pointer;
+            box-sizing: border-box;
+            outline: none;
+            color: #7BD2DA;
+            border: 1px solid #7BD2DA;
+        }
+
+        .contentbody .contentInfo table tr td .SYHLXbtn1 {
+            border: 1px solid #222B3B;
+            cursor: pointer;
+            outline: none;
+            box-sizing: border-box;
+            /*padding-top: 3px;*/
+            margin-left: 10px;
+            padding-bottom: 3px;
+            padding-left: 15px;
+            padding-right: 15px;
+            -moz-border-radius: 15px; /* Firefox */
+            -webkit-border-radius: 15px; /* Safari 和 Chrome */
+            border-radius: 15px; /* Opera 10.5+, 以及使用了IE-CSS3的IE浏览器 */
+        }
+
+        .contentbody .contentInfo table tr td .YHLXbtnActive1 {
+            cursor: pointer;
+            box-sizing: border-box;
+            outline: none;
+            color: #7BD2DA;
+            border: 1px solid #7BD2DA;
+        }
+
+        .contentbody .contentInfo table tr td .SYHLXbtn2 {
+            border: 1px solid #222B3B;
+            cursor: pointer;
+            outline: none;
+            box-sizing: border-box;
+            /*padding-top: 3px;*/
+            margin-left: 10px;
+            padding-bottom: 3px;
+            padding-left: 15px;
+            padding-right: 15px;
+            -moz-border-radius: 15px; /* Firefox */
+            -webkit-border-radius: 15px; /* Safari 和 Chrome */
+            border-radius: 15px; /* Opera 10.5+, 以及使用了IE-CSS3的IE浏览器 */
+        }
+
+        .contentbody .contentInfo table tr td .YHLXbtnActive2 {
+            cursor: pointer;
+            box-sizing: border-box;
+            outline: none;
+            color: #7BD2DA;
+            border: 1px solid #7BD2DA;
+        }
+
+
+
+        .contentbody .contentInfo table tr td .ZJLX {
+            width: 80px;
+            border: 1px solid #0A7891;
+            cursor: pointer;
+            background-color: #0B2A3C;
+            color: #7BD2DA;
+        }
+            .autocomplete{    display: none;
+    position: absolute;
+    background-color: rgb(26, 42, 67);
+    padding: 5px 8px;
+    top: 95px;
+    right: 390px;
+    }
+                .btn_SS {
+        box-sizing: border-box;
+        cursor: pointer;
+        width: 250px;
+        height: 50px;
+        background-color: #1e1f2d;
+        color: #7bd2da;
+        border: none;
+        font: 14px "Î¢ÈíÑÅºÚ";
+        background-image: url(/Content/images/save_bg.png);
+    }
+</style>
 <link href="~/Content/css/CSGL.css" rel="stylesheet" />
 @using HCZZ.ModeDB;
-@using Common;
+@using HCZZ.Common;
 @using (Html.BeginForm("EditAPMac", "Location", FormMethod.Post))
 {
     <div class="contentbody" id="contentbody">
@@ -13,276 +189,192 @@
         </div>
         <div class="Tjxx" id="TJ" style="display: none">
         </div>
-        <table cellpadding="50" cellspacing="1" width="100%" class="AddCx_tab4L">
-            <tr>
-                <th colspan="2">
-                    <h1>
-                        编辑AP设备</h1>
-                </th>
-            </tr>
-        </table>
-        <div id="mind" style="overflow-y: auto">
-            @if (mac != null)
-            {
-                //List<int> list = Szcert.Audit.Common.ChangeValue.GetReturnInt(mac.LogCapture);
-                <table cellpadding="50" cellspacing="1" width="100%" class="AddCx_tab4L">
-                    <tr>
-                        <td width="30%" align="right">
-                            AP设备名称：
-                        </td>
-                        <td>
-                            <input type="text" class="_text" name="txtAPName" id="txtAPName" value="@mac.APName" maxlength="64" /><input name="hidApName" type="hidden" value="@mac.APName" /><span
-                                id="spAPName" class="color_ccc">*</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="right">
-                            上网服务场所编码：
-                        </td>
-                        <td>@mac.NETBAR_WACODE
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="right">
-                            AP设备编码：
-                        </td>
-                        <td>
-                            <input type="text" class="_text" name="txtCOLLECTION_EQUIPMENT_ID" id="txtCOLLECTION_EQUIPMENT_ID"  onkeyup="CheckMacId()" onblur="CheckMacId()" value="@mac.COLLECTION_EQUIPMENT_ID"/><input
-                                type="button" value="恢复默认值" class="btn_SS" onclick="defulatVal()" /><span id="spCOLLECTION_EQUIPMENT_ID"
-                                    class="color_ccc">*请输入设备Mac地址，例如：A1B2C3D4E5F6</span><input type="hidden" value=""
-                                        id="HselNum" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="right">
-                            AP设备MAC地址：
-                        </td>
-                        <td>
-                            <input type="text" class="_text" name="txtDeviceMac" readonly="readonly" id="txtDeviceMac" value="@mac.AP_MAC"/><input type="hidden" name="hidDeviceMac" value="@mac.AP_MAC"/><span
-                                id="spDeviceMac" class="color_ccc">*</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="right">
-                            设备模式：
-                        </td>
-                        <td>
-                            <select id="selModeType" name="selModeType" onchange="changeModel(this.value)">
-                                <option value="1">普通模式</option>
-                                <option value="2">城中村模式</option>
-                            </select><label id="lblTrial" style="margin-left: 10px; float: none; display: inline;"><input
-                                type="checkbox" id="ckIstrial" name="ckIstrial" value="1" />免费体验
-                            </label>
-                            <span id="spModeType" class="color_ccc">*</span>
-                        </td>
-                    </tr>
-                    @*<tr>
-				<td align="right">
-                    采集粒度：
-                </td>
-                <td>
-                    <label>
-                        <input type="checkbox" @(list.Contains(1) ? "checked=checked" : "") name="ckLogCapture" value="1" />HTTP日志</label>
-                    <label>
-                        <input type="checkbox" @(list.Contains(1) ? "checked=checked" : "") name="ckLogCapture" value="2" />电子围栏</label>
-                    <label>
-                        <input type="checkbox" @(list.Contains(1) ? "checked=checked" : "") name="ckLogCapture" value="4" />虚拟账户</label>
-                    <label>
-                        <input type="checkbox" @(list.Contains(1) ? "checked=checked" : "") name="ckLogCapture" value="8" />数据解密</label>
-                    <span id="spLogCapture" class="color_ccc" style="display: inline-block; margin-top: 5px;">
-                        *至少选择一项</span>
-                </td> 
-			</tr>*@
-                    <tr>
-                        <td align="right">
-                            供应商：
-                        </td>
-                        <td>
-                            <select name="selsupplier" id="selsupplier">
-                                <option value="0">==请选择==</option>
-                                <option value="1">瑜商</option>
-                                <option value="2">永济</option>
-                                <option value="3">汉智星</option>
-                            </select>
-                            <span id="spsupplier" class="color_ccc"></span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="right">
-                            硬件产品类型：
-                        </td>
-                        <td>
-                            <select name="selProjectType" id="selProjectType" onchange="projectVal(this.value)">
-                                <option value="0">==请选择==</option>
-                                @{
-                                                                                                                                                                                       Dictionary<int, string> dicProjectType = ChangeValue.ProjectType();
-                                                                                                                                                                                       foreach (var item in dicProjectType)
-                                                                                                                                                                                       {
-                                    <option value="@item.Key">@item.Value</option>
-                                                                                                                                                                                       }
+        <div class="contentInfo">
+            @{
+                if (mac != null)
+                {
+            <table border="0" cellspacing="0" cellpadding="0">
+                <tr><th colspan="3">基础信息</th></tr>
+                <tr>
+                    <td style="width: 50%;">
+                        <img src="@Url.Content("~/Content/images/star1.png")" />
+                        <span class="spanTitle">AP设备名称:</span>
+                        <input style="width: 180px;" type="text" name="txtAPName" id="txtAPName" value="@mac.APName" />
+                        <!--<span class="spanTextHint">长度为4-18，以字母开头，可以包含数字和下划线</span>-->
+                    </td>
+                    <td style="width: 50%;">
+                        <img src="@Url.Content("~/Content/images/star1.png")" />
+                        <span class="spanTitle">AP设备编码:</span>
+                        <input style="width: 180px;" type="text" onkeyup="CheckMacId()" onblur="CheckMacId()" onchange="CheckMacId()" name="txtCOLLECTION_EQUIPMENT_ID" id="txtCOLLECTION_EQUIPMENT_ID" value="" />
+                        <span class="spanTextHint">请输入设备Mac地址，例如：Mac1314520</span>
+                        <input type="hidden" value="" id="HselNum" />
+
+                    </td>
+                </tr>
+                <tr>
+                    <td style="margin-top: 20px;">
+                        <img src="@Url.Content("~/Content/images/star1.png")" />
+                        <span class="spanTitle">AP设备Mac地址:</span>
+                        <input style="width: 320px;" type="text" name="txtDeviceMac" readonly="readonly" id="txtDeviceMac" value="@mac.AP_MAC" />
+                        <!--<span class="spanText">17512007984</span>-->
+                    </td>
+                    <td>
+                        <img src="@Url.Content("~/Content/images/star1.png")" />
+                        <span class="spanTitle">硬件产品类型:</span><!--selProjectType-->
+
+                        @{
+                            int i = 1;
+                            Dictionary<int, string> dicProjectType = ChangeValue.ProjectType();
+                            <input type="hidden" id="selProjectType" name="selProjectType" value="1" />
+                            foreach (var item in dicProjectType)
+                            {
+                                <input class="@(i == mac.ProjectType ? "SYHLXbtn YHLXbtnActive" : "SYHLXbtn")" type="button" name="ProjectType@(i)" id="ProjectType@(i)" onclick="ProjectType(@item.Key)" value="@item.Value" />
+                                i++;
+                            }
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <img src="@Url.Content("~/Content/images/star1.png")" />
+                        <span class="spanTitle">硬件方案类型:</span>
+                        <input type="hidden" id="selCasesType" name="selCasesType" value="1" />
+                        @{
+                            int j = 1;
+                            Dictionary<int, string> dicCasesType = ChangeValue.CasesType();
+                            foreach (var item in dicCasesType)
+                            {
+                                <input class="@(j == mac.CasesType ? "SYHLXbtn1 YHLXbtnActive1" : "SYHLXbtn1")" type="button" onclick="CasesType(@item.Key)" name="selCasesType@(j)" id="selCasesType@(j)" value="@item.Value" />
+                                j++;
+                            }
+                        }
+                    </td>
+                    <td>
+                        <div>
+
+                        </div>
+
+                    </td>
+                </tr>
+            </table>
+            <table border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td style="border-right: none;">
+                        <img src="@Url.Content("~/Content/images/star1.png")" />
+                        <span class="spanTitle">AP设备类型</span>
+                    </td>
+                </tr>
+                <tr style="border-top: 1px solid #2A393A;">
+                    <td style="display: inline-block;width:173%;height: 200px;border-right: none;border: 1px solid #2A393A;margin: 15px 50px;border-radius: 20px;overflow: hidden;">
+                        <div class="XXKTitle" style="height: 50px;background-color: #272839;width: 110%;margin-left: -10%;padding-left: 8%;line-height: 50px;">
+                            <label class="labelTab" style="margin-right: 20px;cursor: pointer;" for="radAPType1">
+                            <input style="vertical-align: middle;margin-right: 5px;" type="radio" name="radAPType1" id="radAPType1" value="1" @(mac.APType == 1 ? "checked=checked" : "") />固定AP设备</label>
+                            <label class="labelTab" style="cursor: pointer;" for="radAPType1">
+                            <input style="vertical-align: middle;margin-right: 5px;" type="radio" name="radAPType1" id="radAPType1" value="2" @(mac.APType == 2 ? "checked=checked" : "")  />移动AP设备</label>
+                        </div>
+                        <div class="XXKContent XXKContentActive" style="@(mac.APType==1?"":"display: none;")">
+                            <input type="text" class="_text" name="txtItude" readonly="readonly" maxlength="23"
+                                   id="txtItude" value="@(mac.APType == 1 && mac.LATITUDE != "0" && mac.LONGITUDE != "0" ? (mac.LONGITUDE + "," + mac.LATITUDE) : "")"/>
+                            <a href="javascript:void(0)" onclick="AlertShow(1000, 550, '/Map/HGetItude.html')" style="background: #1b5579;
+                                border: 1px solid #000; padding: 4px 5px; margin-left: 5px; color: #fff">获取经纬度</a>
+                            <span id="spItude" class="color_ccc">*</span>
+                            <span class="XXKContentspanTitle">楼层:</span>
+                            <input style="width: 380px;" type="text" name="txtFloor" id="txtFloor" value="@mac.FLOOR" />
+                        </div>
+                        <div class="XXKContent" style="@(mac.APType==2?"":"display: none;")">
+                            <span class="XXKContentspanTitle">站点信息:</span>
+                            <input style="width: 380px;margin-right: 50px;" type="text" name="txtStation" id="txtStation" value="@mac.SUBWAY_STATION" />
+                            <span class="XXKContentspanTitle">地铁线路信息:</span>
+                            <input style="width: 380px;" type="text" name="txtLine_Info" id="txtLine_Info" value="@mac.SUBWAY_LINE_INFO" />
+                            <span class="XXKContentspanTitle">地铁车辆信息:</span>
+                            <input style="width: 355px;" type="text" name="txtVehicle_Info" id="txtVehicle_Info"  value="@mac.SUBWAY_VEHICLE_INFO"  />
+                            <span class="XXKContentspanTitle" style="margin-left: 51px;">地铁车厢编号:</span>
+                            <input style="width: 380px;" type="text" name="txtCompartment" id="txtCompartment" value="@mac.SUBWAY_COMPARTMENT_NUMBER" />
+                            <span class="XXKContentspanTitle" style="">车牌号码:</span>
+                            <input style="width: 380px;" type="text" name="txtCar_Code" id="txtCar_Code" value="@mac.CAR_CODE" />
+                        </div>
+                        <style type="text/css">
+                            /*.XXKContentActive{display: inline-block;}*/
+                            .XXKContentspanTitle {
+                                display: inline-block;
+                                padding: 5px 10px;
+                                margin-top: 15px;
+                            }
+                        </style>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td style="border-right: none;">
+                        <img src="@Url.Content("~/Content/images/star1.png")" />
+                        <span class="spanTitle">设备模式</span>
+                        <label><input type="radio" value="1" @(mac.ModeType == 1 ? "checked=checked" : "") name="selModeType" />普通模式</label>
+                        &nbsp;
+                        <label><input type="radio" value="2" @(mac.ModeType == 2 ? "checked=checked" : "") name="selModeType" />城中村模式</label>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border-right: none;">
+                        <img src="@Url.Content("~/Content/images/star1.png")" />
+                        <span class="spanTitle">信道</span>
+                        <input style="width: 180px;" type="text" name="txtChannel" id="txtChannel" value="@mac.Channel" /><span id="spChannel" class="color_ccc">工作信道的范围在1~14之间</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="border-right: none;">
+                        <img src="@Url.Content("~/Content/images/star1.png")" />
+                        <span class="spanTitle">是否重启</span>
+                        <label><input type="radio" @(mac.IsReboot == 0 ? "checked=checked" : "") value="0" checked="checked" name="radIsReboot" />否</label>
+                        &nbsp;
+                        <label><input type="radio" @(mac.IsReboot == 1 ? "checked=checked" : "") value="1" name="radIsReboot" />是</label>
+                        <span id="spIsReboot" class="color_ccc">*</span>
+                    </td>
+                </tr>
+                <tr style="border-top: 1px solid #2A393A;">
+                    <td style="width:50%;"></td>
+                    <td style="width:50%;"></td>
+                </tr>
+            </table>
+            <table border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td style="border-right: none;">
+                        <span class="spanTitle">附加信息</span>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr style="border-top: 1px solid #2A393A;">
+                    <td style="width:50%;">
+                        <span class="spanTitle">供应商:</span>
+                        <input type="hidden" id="selsupplier" name="selsupplier" value="1" />
+                        <input class="@(mac.supplier==1?"SYHLXbtn2 YHLXbtnActive2":"SYHLXbtn2")" type="button" onclick="supplier(1)" name="" id="" value="瑜商" />
+                        <input class="@(mac.supplier==2?"SYHLXbtn2 YHLXbtnActive2":"SYHLXbtn2")" type="button" name="" id="" value="汉智星" onclick="supplier(2)" />
+                        <input class="@(mac.supplier==3?"SYHLXbtn2 YHLXbtnActive2":"SYHLXbtn2")" type="button" name="" id="" value="永济" onclick="supplier(3)" />
+                    </td>
+                    <td style="width:50%;">
+                        <span class="spanTitle">网络接入账号	或固定IP地址:</span>
+                        <input style="width: 180px;" type="text" name="txtACSSES_IP" id="txtACSSES_IP" value="@(!string.IsNullOrEmpty(mac.AP_ACSSES_IP) && !mac.AP_ACSSES_IP.Contains("@163.gd") ? mac.AP_ACSSES_IP + "@163.gd" : mac.AP_ACSSES_IP)" />
+                    </td>
+                </tr>
+                <tr style="border-top: 1px solid #2A393A;">
+                    <td style="width:50%;">
+                        <span class="spanTitle">强制离线时间:</span>
+                        <input style="width: 180px;" type="text" maxlength="3" name="txtForcedOfflineTime" id="txtForcedOfflineTime" value="@mac.ForcedOfflineTime" />
+                        <span class="spanTextHint">单位分钟，0：不强制下线</span>
+                    </td>
+                    <td style="width:50%;">
+                        <span class="spanTitle">电子围栏离线时间:</span>
+                        <input style="width: 180px;" type="text" maxlength="3" name="txtFenceOffTime" id="txtFenceOffTime" value="@mac.FenceOffTime" />
+                        <span class="spanTextHint">单位秒，0-600秒，0表示采用系统配置</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center" colspan="2">
+                        <input class="btn_SS" type="submit" name="button" value="保存"/><input type="hidden" name="HLid" value="@mac.NETBAR_ID" /><input type="hidden" name="HMid" id="HMid" value="@mac.ID" /><input type="hidden" name="HMac" id="HMac" value="@mac.AP_MAC" />
+                    </td>
+                </tr>
+            </table>
                                 }
-                            </select>
-                            <span id="spProjectType" class="color_ccc">*</span>
-                        </td>
-                    </tr>
-                    <tr id="tr3CID" style="display: none">
-                        <td align="right">
-                            视频设备标识(3CID)：
-                        </td>
-                        <td>
-                            <input type="text" class="_text" maxlength="25" name="txt3CID" value="@mac.V3CID" id="txt3CID" /><span
-                                id="sp3CID" class="color_ccc">*</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="right">
-                            硬件方案类型：
-                        </td>
-                        <td>
-                            <select name="selCasesType" id="selCasesType">
-                                <option value="0">==请选择==</option>
-                                @{
-                                                                                             Dictionary<int, string> dicCasesType = ChangeValue.CasesType();
-                                                                                             foreach (var item in dicCasesType)
-                                                                                             {
-                                    <option value="@item.Key">@item.Value</option>
-                                                                                             }
-                                }
-                            </select>
-                            <span id="spCasesType" class="color_ccc">*</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="right">
-                            网络接入账号或固定IP地址：
-                        </td>
-                        <td>
-                            <input type="text" class="_text" name="txtACSSES_IP" id="txtACSSES_IP" value="@(!string.IsNullOrEmpty(mac.AP_ACSSES_IP) && !mac.AP_ACSSES_IP.Contains("@163.gd") ? mac.AP_ACSSES_IP + "@163.gd" : mac.AP_ACSSES_IP)" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="right">
-                            信道：
-                        </td>
-                        <td>
-                            <input type="text" class="_text" name="txtChannel" maxlength="3" id="txtChannel" value="@mac.Channel" /><span
-                                id="spChannel" class="color_ccc">工作信道的范围在1~14之间</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="right">
-                            是否重启：
-                        </td>
-                        <td>
-                            <label>
-                                <input type="radio"  @(mac.IsReboot == 0 ? "checked=checked" : "") value="0"   name="radIsReboot" />否</label>
-                            &nbsp;<label><input type="radio"  @(mac.IsReboot == 1 ? "checked=checked" : "") value="1"   name="radIsReboot" />是</label><span
-                                id="spIsReboot" class="color_ccc"></span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="right">
-                            强制离线时间：
-                        </td>
-                        <td>
-                            <input type="text" class="_text" name="txtForcedOfflineTime" maxlength="3" id="txtForcedOfflineTime" value="@mac.ForcedOfflineTime" /><span
-                                id="spForcedOfflineTime" class="color_ccc">单位分钟，0：不强制离线</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="right">
-                            电子围栏离线时间：
-                        </td>
-                        <td>
-                            <input type="text" class="_text" name="txtFenceOffTime" maxlength="3" id="txtFenceOffTime" value="@mac.FenceOffTime" /><span
-                                id="spFenceOffTime" class="color_ccc">单位秒，0~600秒，0表示采用系统配置</span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="right">
-                            AP设备类型：
-                        </td>
-                        <td>
-                            <label>
-                                <input type="radio" @(mac.APType == 1 ? "checked=checked" : "") name="radAPType" value="1" onclick="onSelect('1')" id="radAPType1" />固定AP设备</label>
-                            <label>
-                                <input type="radio" name="radAPType" id="radAPType2" @(mac.APType == 2 ? "checked=checked" : "") value="2" onclick="onSelect('2')" />移动AP设备</label><span
-                                    id="spAPType" class="color_ccc">*</span>
-                        </td>
-                    </tr>
-                    <tr class="tr1">
-                        <td align="right">
-                            AP设备经纬度：
-                        </td>
-                        <td>
-                            <input type="text" class="_text" name="txtItude" readonly="readonly" maxlength="23" id="txtItude" value="@(mac.APType == 1 && mac.LATITUDE != "0" && mac.LONGITUDE != "0" ? (mac.LONGITUDE + "," + mac.LATITUDE) : "")" /><a
-                                href="javascript:void(0)" onclick="showItude()" style="background: #1b5579; border: 1px solid #000;
-                                padding: 4px 5px; margin-left: 5px; color: #fff">获取经纬度</a> <span id="spItuude" class="color_ccc">
-                                    *</span>
-                        </td>
-                    </tr>
-                    <tr class="tr1">
-                        <td align="right">
-                            楼层：
-                        </td>
-                        <td>
-                            <input type="text" class="_text" name="txtFloor" id="txtFloor" maxlength="8" value="@mac.FLOOR" /><span
-                                id="spFloor" class="color_ccc"></span>
-                        </td>
-                    </tr>
-                    <tr class="tr2">
-                        <td align="right">
-                            站点信息：
-                        </td>
-                        <td>
-                            <input type="text" class="_text" name="txtStation" id="txtStation" maxlength="64" value="@mac.SUBWAY_STATION" /><span
-                                id="spStation" class="color_ccc"></span>
-                        </td>
-                    </tr>
-                    <tr class="tr2">
-                        <td align="right">
-                            地铁线路信息：
-                        </td>
-                        <td>
-                            <input type="text" class="_text" name="txtLine_Info" id="txtLine_Info" maxlength="128" value="@mac.SUBWAY_LINE_INFO" /><span
-                                id="spLine_Info" class="color_ccc"></span>
-                        </td>
-                    </tr>
-                    <tr class="tr2">
-                        <td align="right">
-                            地铁车辆信息：
-                        </td>
-                        <td>
-                            <input type="text" class="_text" name="txtVehicle_Info" id="txtVehicle_Info" maxlength="128" value="@mac.SUBWAY_VEHICLE_INFO" /><span
-                                id="spVehicle_Info" class="color_ccc"></span>
-                        </td>
-                    </tr>
-                    <tr class="tr2">
-                        <td align="right">
-                            地铁车厢编号：
-                        </td>
-                        <td>
-                            <input type="text" class="_text" name="txtCompartment" id="txtCompartment" maxlength="128" value="@mac.SUBWAY_COMPARTMENT_NUMBER" /><span
-                                id="spCompartment" class="color_ccc"></span>
-                        </td>
-                    </tr>
-                    <tr class="tr2">
-                        <td align="right">
-                            车牌号码：
-                        </td>
-                        <td>
-                            <input type="text" class="_text" name="txtCar_Code" id="txtCar_Code" maxlength="64" value="@mac.CAR_CODE" /><span
-                                id="spCar_Code" class="color_ccc"></span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="center" colspan="2">
-                            <input class="btn_SS" type="submit" name="button" value="保存" onmouseover="this.className='Over_SS'"
-                                onmouseout="this.className='Onout_SS'" /><input type="hidden" name="HLid" value="@mac.NETBAR_ID" /><input type="hidden" name="HOldMid" id="HOldMid" value="@mac.ID" /><input type="hidden" name="HMid" id="HMid" value="@mac.ID" /><input type="hidden" name="HMac" id="HMac" value="@mac.AP_MAC" /><input type="hidden" name="HNum" id="HNum" value="@mac.COLLECTION_EQUIPMENT_ID" />
-                        </td>
-                    </tr>
-                </table>
-            }
+                            }
         </div>
     </div>    
     <div id="mapPop" style="position: absolute; background: #fff; overflow: hidden; width: 980px;
@@ -321,6 +413,46 @@
     </script> 
 }
 <script type="text/javascript">
+    //硬件产品类型
+    function ProjectType(value) {
+        $("#selProjectType").val(value);
+    }
+    //硬件产品方案
+    function CasesType(value) {
+        $("#selCasesType").val(value);
+    }
+    //供应商
+    function supplier(value) {
+        $("#selsupplier").val(value);
+    }
+    //硬件产品类型
+    $(document).ready(function () {
+        $(".SYHLXbtn").click(function () {
+            $(".SYHLXbtn").eq($(this).index() - 3).addClass("YHLXbtnActive").siblings().removeClass('YHLXbtnActive');
+        });
+    });
+    //硬件方案类型
+    $(document).ready(function () {
+        $(".SYHLXbtn1").click(function () {
+            $(".SYHLXbtn1").eq($(this).index() - 3).addClass("YHLXbtnActive1").siblings().removeClass('YHLXbtnActive1');
+
+        });
+    });
+    //供应商
+    $(document).ready(function () {
+        $(".SYHLXbtn2").click(function () {
+            $(".SYHLXbtn2").eq($(this).index() - 2).addClass("YHLXbtnActive2").siblings().removeClass('YHLXbtnActive2');
+        });
+    });
+    $(document).ready(function () {
+        $(".labelTab").click(function () {
+            $(".labelTab").eq($(this).index()).addClass("cur").siblings().removeClass('cur');
+            $(".XXKContent").hide().eq($(this).index()).show();
+            //另一种方法: $("div").eq($(".tab li").index(this)).addClass("on").siblings().removeClass('on');
+
+        });
+    });
+
         //mindasd(220);
         $(function () {
             onSelect('@(mac != null ? mac.APType : 1)');
@@ -410,7 +542,7 @@
                 $("#spAPName").html("");
             }
 
-            var apType = $("input[name='radAPType']:checked").val();
+            var apType = $("input[name='radAPType1']:checked").val();
 
             if (typeof (apType) != "undefined") {
                 if (apType == 1) {
@@ -424,7 +556,7 @@
             } else {
                 $("#APType").html("请选择AP设备类型");
             }
-            
+
             var txtItude = $.trim($("#txtItude").val());
             reg = new RegExp(/^(-?\d+)(\.\d+)?$/);
             if (apType == 1 && txtItude != "") {
@@ -453,7 +585,7 @@
             } else {
                 $("#spCasesType").html("");
             }
-            
+
             var reg2 =new RegExp(/^[1-9]*[1-9][0-9]*$/g);
             var Channel = $.trim($("#txtChannel").val());
             if (Channel != "") {
@@ -523,7 +655,7 @@
                 $.ajax
 			    ({
 			        type: "Get",
-			        url: '@Url.Content("~/Location/CKMac/")' + macId,
+			        url: "/Public/CKMac?Id=" + macId,
 			        dataType: "json",
 			        async: false,
 			        cache: false,

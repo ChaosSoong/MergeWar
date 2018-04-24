@@ -90,10 +90,8 @@
                 {
                     string message = (RadVal == 1 ? item.AUTH_ACCOUNT : item.MAC);
                     <tr>
-                        <td width="80%">@message
-                        </td>
+                        <td width="80%">@message</td>
                         <td width="20%">
-
                             <a class="Cz_chakan" onclick="detail('@message', @RadVal);" href="javascript:void(0)" title="详细"><img title="详情" src="@Url.Content("~/Content/images/view1_icon.png")" alt="查看"/></a><span style="display: none">@message</span>
                         </td>
                     </tr>

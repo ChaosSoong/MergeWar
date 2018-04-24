@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using HCZZ.ModeDB;
 using HCZZ.DAL;
-using Common;
+using HCZZ.Common;
 
 namespace HCZZ.AppCode
 {
@@ -31,7 +31,7 @@ namespace HCZZ.AppCode
             if (HttpContext.Current.Cache["CacheMacAll"] == null || isReset)
             {
                 List<Loc_DevInfo> list = new LocationDAL().GetDevList();
-                HttpContext.Current.Cache.Insert("CacheMacLoca", list, null, DateTime.Now.AddHours(6), TimeSpan.Zero);
+                HttpContext.Current.Cache.Insert("CacheMacAll", list, null, DateTime.Now.AddHours(6), TimeSpan.Zero);
             }
         }
         /// <summary>
@@ -204,7 +204,7 @@ namespace HCZZ.AppCode
                     else if (!string.IsNullOrEmpty(AP_MAC))
                         IEList = IEList.Where(m => m.AP_MAC == AP_MAC);
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
                     return null;
                 }

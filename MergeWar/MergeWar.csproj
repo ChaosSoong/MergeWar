@@ -100,6 +100,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>ThirdLib\NPOI.OpenXmlFormats.dll</HintPath>
     </Reference>
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Web.DynamicData" />
@@ -152,16 +153,33 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\css\BJGL.css" />
+    <Content Include="Content\css\BJGL_JSTXBJ.css" />
+    <Content Include="Content\css\BJGL_JSTXBJ_SH.css" />
     <Content Include="Content\css\CSGL.css" />
     <Content Include="Content\css\index.css" />
     <Content Include="Content\css\jquery.mCustomScrollbar.css" />
     <Content Include="Content\css\Layout.css" />
+    <Content Include="Content\css\page.css" />
     <Content Include="Content\css\publicHeader.css" />
     <Content Include="Content\css\PZFX.css" />
     <Content Include="Content\css\reset.css" />
+    <Content Include="Content\css\reset1.css" />
     <Content Include="Content\css\SY.css" />
+    <Content Include="Content\css\TZPZ.css" />
     <Content Include="Content\css\XTGL.css" />
+    <Content Include="Content\css\XTGL_AQCSGL.css" />
+    <Content Include="Content\css\XTGL_AQCSGL_JBXX.css" />
+    <Content Include="Content\css\XTGL_XTPZCSGL.css" />
+    <Content Include="Content\css\XTGL_XTPZCSGL_XGPZXX.css" />
+    <Content Include="Content\css\XTGL_XTRZCX.css" />
+    <Content Include="Content\css\XTGL_YHGL.css" />
+    <Content Include="Content\css\XTGL_YHGLXXXX.css" />
+    <Content Include="Content\css\XTGL_ZDBBGL.css" />
+    <Content Include="Content\css\XTGL_JSGL.css" />
+    <Content Include="Content\css\XTGL_QYGL.css" />
     <Content Include="Content\css\YJCX.css" />
+    <Content Include="Content\css\YJCX_CXJG.css" />
     <Content Include="Content\DatePicker\calendar.js" />
     <Content Include="Content\DatePicker\config.js" />
     <Content Include="Content\DatePicker\datePicker.gif" />
@@ -188,6 +206,7 @@
     <Content Include="Content\images\boxbg_icon1.png" />
     <Content Include="Content\images\btnAnalyze.png" />
     <Content Include="Content\images\btnExcelbg.png" />
+    <Content Include="Content\images\BUTTON.png" />
     <Content Include="Content\images\bxobg2_icon.png" />
     <Content Include="Content\images\contentYJFXLi1Down.png" />
     <Content Include="Content\images\contentYJFXLi2Demand.png" />
@@ -200,17 +219,24 @@
     <Content Include="Content\images\del_icon.png" />
     <Content Include="Content\images\edit1_icon.png" />
     <Content Include="Content\images\edit_icon.png" />
+    <Content Include="Content\images\error.png" />
     <Content Include="Content\images\fullScreen.png" />
+    <Content Include="Content\images\header.png" />
     <Content Include="Content\images\home_icon.png" />
+    <Content Include="Content\images\icon_close.png" />
+    <Content Include="Content\images\icon_close1.png" />
     <Content Include="Content\images\INDEXblue.png" />
     <Content Include="Content\images\INDEXgray.png" />
+    <Content Include="Content\images\L.png" />
     <Content Include="Content\images\loading7.gif" />
+    <Content Include="Content\images\loginbg.png" />
     <Content Include="Content\images\MACblue.png" />
     <Content Include="Content\images\MACgray.png" />
     <Content Include="Content\images\month.png" />
     <Content Include="Content\images\pageBg.png" />
     <Content Include="Content\images\resetbg.png" />
     <Content Include="Content\images\routeSelection.png" />
+    <Content Include="Content\images\save_bg.png" />
     <Content Include="Content\images\SBSLicon.png" />
     <Content Include="Content\images\search_icon.png" />
     <Content Include="Content\images\selectbg.png" />
@@ -264,7 +290,9 @@
     <Content Include="Content\images\sideYellow5.png" />
     <Content Include="Content\images\sideYellow6.png" />
     <Content Include="Content\images\sideYellow7.png" />
+    <Content Include="Content\images\star1.png" />
     <Content Include="Content\images\system.png" />
+    <Content Include="Content\images\title_bg.png" />
     <Content Include="Content\images\TZPZblue.png" />
     <Content Include="Content\images\TZPZgray.png" />
     <Content Include="Content\images\view1_icon.png" />
@@ -274,21 +302,31 @@
     <Content Include="Content\images\WLFXgray.png" />
     <Content Include="Content\images\XTGLblue.png" />
     <Content Include="Content\images\XTGLgray.png" />
+    <Content Include="Content\images\yesBtn.png" />
     <Content Include="Content\images\YJCXblue.png" />
     <Content Include="Content\images\YJCXgray.png" />
+    <Content Include="Content\images\YZM.png" />
     <Content Include="Content\images\ZXLicon.png" />
     <Content Include="Content\images\ZXZSicon.png" />
     <Content Include="Content\js\echarts-all.js" />
     <Content Include="Content\js\echarts.common.min.js" />
-    <Content Include="Content\js\fontscroll.js" />
     <Content Include="Content\js\jquery-1.7.1.min.js" />
     <Content Include="Content\js\jquery.js" />
     <Content Include="Content\js\jquery.mCustomScrollbar.concat.min.js" />
     <Content Include="Content\js\jquery.SuperSlide.2.1.1.js" />
     <Content Include="Content\js\jquery1.42.min.js" />
+    <Content Include="Content\js\Macanalyze.js" />
     <Content Include="Content\js\publicJS.js" />
-    <Content Include="Content\js\scroll.js" />
-    <Content Include="Content\test.htm" />
+    <Content Include="Content\layer\jquery1.9.js" />
+    <Content Include="Content\layer\layer.js" />
+    <Content Include="Content\layer\mobile\layer.js" />
+    <Content Include="Content\layer\mobile\need\layer.css" />
+    <Content Include="Content\layer\skin\default\icon-ext.png" />
+    <Content Include="Content\layer\skin\default\icon.png" />
+    <Content Include="Content\layer\skin\default\layer.css" />
+    <Content Include="Content\layer\skin\default\loading-0.gif" />
+    <Content Include="Content\layer\skin\default\loading-1.gif" />
+    <Content Include="Content\layer\skin\default\loading-2.gif" />
     <Content Include="Global.asax" />
     <Content Include="Map\css\bitnami.css" />
     <Content Include="Map\css\bmap.css" />
@@ -11793,15 +11831,6 @@
     <Content Include="Map\Pub\js\jquery.minicolors.js" />
     <Content Include="Map\Pub\js\jquery.reveal.js" />
     <Content Include="Map\Pub\js\jquery.uploadify.min.js" />
-    <Content Include="Map\Pub\layer\extend\layer.ext.js" />
-    <Content Include="Map\Pub\layer\layer.js" />
-    <Content Include="Map\Pub\layer\skin\default\icon-ext.png" />
-    <Content Include="Map\Pub\layer\skin\default\icon.png" />
-    <Content Include="Map\Pub\layer\skin\default\loading-0.gif" />
-    <Content Include="Map\Pub\layer\skin\default\loading-1.gif" />
-    <Content Include="Map\Pub\layer\skin\default\loading-2.gif" />
-    <Content Include="Map\Pub\layer\skin\layer.css" />
-    <Content Include="Map\Pub\layer\skin\layer.ext.css" />
     <Content Include="Map\test\images\areaSelection.png" />
     <Content Include="Map\test\images\bg_drawing_tool.png" />
     <Content Include="Map\test\images\blank.gif" />
@@ -11861,32 +11890,62 @@
     <Content Include="Map\test\Pub\js\jquery.minicolors.js" />
     <Content Include="Map\test\Pub\js\jquery.reveal.js" />
     <Content Include="Map\test\Pub\js\jquery.uploadify.min.js" />
-    <Content Include="Map\test\Pub\laydate\laydate.js" />
-    <Content Include="Map\test\Pub\laydate\need\laydate.css" />
-    <Content Include="Map\test\Pub\laydate\skins\dahong\icon.png" />
-    <Content Include="Map\test\Pub\laydate\skins\dahong\laydate.css" />
-    <Content Include="Map\test\Pub\laydate\skins\default\icon.png" />
-    <Content Include="Map\test\Pub\laydate\skins\default\laydate.css" />
-    <Content Include="Map\test\Pub\laydate\skins\molv\icon.png" />
-    <Content Include="Map\test\Pub\laydate\skins\molv\laydate.css" />
-    <Content Include="Map\test\Pub\layer\extend\layer.ext.js" />
-    <Content Include="Map\test\Pub\layer\layer.js" />
-    <Content Include="Map\test\Pub\layer\skin\default\icon-ext.png" />
-    <Content Include="Map\test\Pub\layer\skin\default\icon.png" />
-    <Content Include="Map\test\Pub\layer\skin\default\loading-0.gif" />
-    <Content Include="Map\test\Pub\layer\skin\default\loading-1.gif" />
-    <Content Include="Map\test\Pub\layer\skin\default\loading-2.gif" />
-    <Content Include="Map\test\Pub\layer\skin\layer.css" />
-    <Content Include="Map\test\Pub\layer\skin\layer.ext.css" />
+    <None Include="Properties\PublishProfiles\MergeWarWeb.pubxml" />
+    <None Include="Service References\JavaServer\bigdataserver1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\JavaServer\BigDataService1.wsdl" />
     <None Include="Service References\JavaServer\configuration91.svcinfo" />
     <None Include="Service References\JavaServer\configuration.svcinfo" />
-    <Content Include="Service References\JavaServer\MergeWar.JavaServer.addTerminalManageListResponse.datasource">
+    <Content Include="Service References\JavaServer\MergeWar.JavaServer.accompanyAnalysisMACResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
-    <Content Include="Service References\JavaServer\MergeWar.JavaServer.queryTerminalManageListResponse.datasource">
+    <Content Include="Service References\JavaServer\MergeWar.JavaServer.appearDevMACResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
-    <Content Include="Service References\JavaServer\MergeWar.JavaServer.addNetLogListResponse.datasource">
+    <Content Include="Service References\JavaServer\MergeWar.JavaServer.collisionAnalysisMACResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\JavaServer\MergeWar.JavaServer.disappearDevMACResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\JavaServer\MergeWar.JavaServer.queryFenchTerminalInfoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\JavaServer\MergeWar.JavaServer.accompanyAnalysisDetailMACResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\JavaServer\MergeWar.JavaServer.collisionAnalysisDetailMACResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\JavaServer\MergeWar.JavaServer.queryTermianlAccessLogResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\JavaServer\MergeWar.JavaServer.queryTermianlNetworkLogResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\JavaServer\MergeWar.JavaServer.queryByHardwareFeatureResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\JavaServer\MergeWar.JavaServer.queryByRealnameInfoResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\JavaServer\MergeWar.JavaServer.queryByVirtualIdentityResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\JavaServer\MergeWar.JavaServer.queryHardwareResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\JavaServer\MergeWar.JavaServer.queryRealnameResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\JavaServer\MergeWar.JavaServer.queryTermianlAccessLogDetailResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\JavaServer\MergeWar.JavaServer.queryVirtualIdentDetailResponse1.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\JavaServer\MergeWar.JavaServer.queryTermianlAccessLogListResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
     <None Include="Service References\JavaServer\Reference.svcmap">
@@ -11911,10 +11970,10 @@
   <ItemGroup>
     <Compile Include="AppCode\ComNPOIExcel.cs" />
     <Compile Include="AppCode\HttpHelps.cs" />
+    <Compile Include="AppCode\JavaServerAction.cs" />
     <Compile Include="AppCode\WebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\CharacterController.cs" />
-    <Compile Include="Controllers\CollisionController.cs" />
     <Compile Include="Controllers\FenceController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LocationController.cs" />
@@ -11924,12 +11983,14 @@
     <Compile Include="Controllers\PublicController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\SystemController.cs" />
+    <Compile Include="Controllers\VideoController.cs" />
     <Compile Include="Controllers\WarningController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\JSON.cs" />
+    <Compile Include="Models\Index_Json.cs" />
     <Compile Include="Models\Json_LocaMap.cs" />
+    <Compile Include="Models\SolrShowModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\JavaServer\Reference.cs">
       <AutoGen>True</AutoGen>
@@ -11949,7 +12010,6 @@
     <Content Include="Map\Pub\install.php" />
     <Content Include="Map\test\Pub\install.php" />
     <Content Include="Views\Character\Index.cshtml" />
-    <Content Include="Views\Collision\Index.cshtml" />
     <Content Include="Views\Fence\Index.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
@@ -12029,9 +12089,34 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <None Include="Properties\PublishProfiles\MergeWar.pubxml" />
     <Content Include="Views\System\NumSelList.cshtml" />
-    <None Include="Service References\JavaServer\SCPInquireServiceImplService.wsdl" />
     <Content Include="Views\Mac\Analysis.cshtml" />
     <Content Include="Views\Public\ShowCertifi.cshtml" />
+    <Content Include="Views\Shared\_PartialPage.cshtml" />
+    <Content Include="Views\Character\MacImei.cshtml" />
+    <Content Include="Views\Character\MacPlate.cshtml" />
+    <Content Include="Views\Character\MacImsi.cshtml" />
+    <Content Include="Views\Character\ImeiImsi.cshtml" />
+    <Content Include="Views\Character\ImeiPlate.cshtml" />
+    <Content Include="Views\Character\PlateImsi.cshtml" />
+    <Content Include="Views\Warning\TimelyMsg.cshtml" />
+    <Content Include="Views\Warning\Audit.cshtml" />
+    <Content Include="Views\Public\AnalysisDet.cshtml" />
+    <Content Include="Views\Mac\GowithSwot.cshtml" />
+    <Content Include="Views\Mac\DisappearDevRes.cshtml" />
+    <Content Include="Views\Mac\AppearDevRes.cshtml" />
+    <Content Include="Views\Public\TableShow.cshtml" />
+    <Content Include="Views\Public\_ResultListPaital.cshtml" />
+    <Content Include="Views\Public\OninfoDetail.cshtml" />
+    <Content Include="Views\System\MacList.cshtml" />
+    <Content Include="Views\System\AddMac.cshtml" />
+    <Content Include="Views\System\EditMac.cshtml" />
+    <Content Include="Views\Public\EditUser.cshtml" />
+    <Content Include="Views\System\GetDataNum.cshtml" />
+    <Content Include="Views\Warning\AddIndex.cshtml" />
+    <Content Include="Views\Warning\EditIndex.cshtml" />
+    <Content Include="Views\Warning\IndexModel.cshtml" />
+    <Content Include="Views\Warning\TimelyMsgModel.cshtml" />
+    <Content Include="Views\Video\VideoList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -12077,11 +12162,11 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>False</UseIIS>
+          <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>16950</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:16950/</IISUrl>
+          <IISUrl>http://localhost:16955/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

@@ -9,7 +9,10 @@ namespace HCZZ.Controllers
 {
     [SystemAutherFilter]
     public class FenceController : Controller
-    {
+    {        /// <summary>
+             /// 每页显示数量
+             /// </summary>
+        public static string PageSize = System.Configuration.ConfigurationManager.AppSettings["PageSize"];
         public ActionResult Index()
         {
             ViewBag.LfetShow = "围栏分析";

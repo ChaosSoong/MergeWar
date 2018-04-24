@@ -1,0 +1,167 @@
+﻿
+@{
+    Layout = null;
+}
+@using HCZZ.Common;
+@using HCZZ.ModeDB;
+<!DOCTYPE html>
+<script src="~/Content/js/jquery-1.7.1.min.js"></script>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>上下线详细信息</title>
+    <link href="~/Content/css/YJCX_CXJG.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="content">
+        <div class="contentbody">
+            <div class="contentTable">
+                <table cellpadding="0" cellspacing="1" width="100%" class="AddXxwenzi_tab">
+                    @{
+                        TermianlAccessLog audit = (TermianlAccessLog)ViewBag.talog;
+                        if (audit != null)
+                        {
+                            Loc_DevInfo mac = HCZZ.AppCode.WebCommon.GetMacInfoByDevAP_ID(0, audit.AP_MAC);
+                            Loc_NetBarInfo loca = HCZZ.AppCode.WebCommon.GetLocaInfoByNetBar_ID(Convert.ToInt32(audit.NETBAR_ID));
+                            string PLACE_NAME = (loca != null ? loca.PLACE_NAME : "");
+                            string apName = (mac != null ? mac.APName : "");
+                            <tr>
+                                <td width="15%" align="right">场所名称：</td>
+                                <td width="35%">@PLACE_NAME</td>
+                                <td align="right">场所类型：</td>
+                                <td>@ChangeValue.GetLocaTypeValue(loca != null ? loca.NETSITE_TYPE : 0)</td>
+                            </tr>
+                            <tr>
+                                <td width="15%" align="right">认证账号：</td>
+                                <td>@audit.AUTH_ACCOUNT</td>
+                                <td align="right">上网服务场所编码：</td>
+                                <td>@audit.NETBAR_WACODE</td>
+                            </tr>
+                            <tr>
+                                <td align="right">场强：</td>
+                                <td>@(!string.IsNullOrEmpty(audit.TERMINAL_FIELD_STRENGTH) ? "-" + audit.TERMINAL_FIELD_STRENGTH + "dBm" : "")</td>
+                                <td align="right">认证类型：</td>
+                                <td>@(!string.IsNullOrEmpty(audit.AUTH_TYPE) ? "手机号" : "")</td>
+                            </tr>
+                            <tr>
+                                <td align="right">证件类型：</td>
+                                <td>
+                                    @{
+                                        if (audit.CERTIFICATE_TYPE == "990")
+                                        {
+                                            @Html.Raw("其他")
+                                        }
+                                        else
+                                        {
+                                            Dictionary<string, string> dic = ChangeValue.GetCertifiCateList();
+                                            foreach (var item in dic)
+                                            {
+                                                if (item.Key == audit.CERTIFICATE_TYPE)
+                                                {
+                                                    @Html.Raw(item.Value);
+                                                }
+                                            }
+                                        }
+                                    }
+                                </td>
+                                <td align="right">证件号码：</td>
+                                <td>@audit.CERTIFICATE_CODE</td>
+                            </tr>
+                            <tr>
+                                <td align="right">AP名称：</td>
+                                <td>@apName</td>
+                                <td align="right">上线时间：</td>
+                                <td>@ChangeValue.RefAuditTime(Convert.ToInt64(audit.START_TIME))</td>
+                            </tr>
+                            <tr>
+                                <td align="right">APP厂商：</td>
+                                <td>@audit.APP_COMPANY_NAME</td>
+                                <td align="right">下线时间：</td>
+                                <td>@ChangeValue.RefAuditTime(Convert.ToInt64(audit.END_TIME))</td>
+                            </tr>
+                            <tr>
+                                <td align="right">APP应用软件名称：</td>
+                                <td>@audit.APP_SOFTWARE_NAME</td>
+                                <td align="right">上网人员姓名：</td>
+                                <td>@audit.NAME</td>
+                            </tr>
+                            <tr>
+                                <td align="right">APP版本号：</td>
+                                <td>@audit.APP_VERSION</td>
+                                <td align="right">APP终端认证码：</td>
+                                <td>@audit.APPID</td>
+                            </tr>
+                            <tr>
+                                <td align="right">场所内网IP地址：</td>
+                                <td>@ChangeValue.RefIPvlong(audit.IP_ADDRESS)</td>
+                                <td align="right">终端MAC地址：</td>
+                                <td>@audit.MAC</td>
+                            </tr>
+                            <tr>
+                                <td align="right">AP设备编号：</td>
+                                <td>@audit.COLLECTION_EQUIPMENT_ID</td>
+                                <td align="right">AP设备MAC地址：</td>
+                                <td>@audit.AP_MAC</td>
+                            </tr>
+                            <tr>
+                                <td align="right">移动AP经度：</td>
+                                <td>@(audit.LONGITUDE != "0" && audit.LONGITUDE != null ? audit.LONGITUDE : "")</td>
+                                <td align="right">移动AP纬度：</td>
+                                <td>@(audit.LATITUDE != "0" && audit.LATITUDE != null ? audit.LATITUDE : "")</td>
+                            </tr>
+                            <tr>
+                                <td align="right">终端品牌：</td>
+                                <td>@audit.BRAND</td>
+                                <td align="right">终端型号：</td>
+                                <td>@audit.MODEL</td>
+                            </tr>
+                            <tr>
+                                <td align="right">用户公网IP地址：</td>
+                                <td>@ChangeValue.RefIPvlong(audit.SRC_IP)</td>
+                                <td align="right">源外网IPv6地址：</td>
+                                <td>@audit.SRC_IPV6</td>
+                            </tr>
+                            <tr>
+                                <td align="right">源外网IPv4起始端口号：</td>
+                                <td>@(audit.SRC_PORT_START > 0 ? audit.SRC_PORT_START.ToString() : "")</td>
+                                <td align="right">源外网IPv6起始端口号：</td>
+                                <td>@(audit.SRC_PORT_START_V6 > 0 ? audit.SRC_PORT_START_V6.ToString() : "")</td>
+                            </tr>
+                            <tr>
+                                <td align="right">源外网IPv4结束端口号：</td>
+                                <td>@(audit.SRC_PORT_END > 0 ? audit.SRC_PORT_END.ToString() : "")</td>
+                                <td align="right">源外网IPv6结束端口号：</td>
+                                <td>@(audit.SRC_PORT_END_V6 > 0 ? audit.SRC_PORT_END_V6.ToString() : "")</td>
+                            </tr>
+                            <tr>
+                                <td align="right">会话ID：</td>
+                                <td>@audit.SESSIONID</td>
+                                <td align="right">X坐标：</td>
+                                <td>@audit.X_COORDINATE</td>
+                            </tr>
+                            <tr>
+                                <td align="right">Y坐标：</td>
+                                <td>@audit.Y_COORDINATE</td>
+                                <td align="right">终端IMSI：</td>
+                                <td>@audit.IMSI</td>
+                            </tr>
+                            <tr>
+                                <td align="right">终端IMEI：</td>
+                                <td>@audit.iMEI</td>
+                                <td align="right">终端系统：</td>
+                                <td>@audit.OS_NAME</td>
+                            </tr>
+                                        }
+                                        else
+                                        {
+                                            <tr>
+                                                <td colspan="4" align="center">暂无上下线日志详细信息</td>
+                                            </tr>
+                                        }
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

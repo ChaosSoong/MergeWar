@@ -1,4 +1,4 @@
-var lpyhtj = 'localhost:16950';
+var lpyhtj = 'localhost:16955';
 var strProto="http://";
 
 window.VTC = {

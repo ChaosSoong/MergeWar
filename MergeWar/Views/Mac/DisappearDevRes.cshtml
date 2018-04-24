@@ -1,0 +1,88 @@
+﻿@{
+    ViewBag.Title = "消失设备结果";
+}
+<link href="~/Content/css/MACFX.css" rel="stylesheet" />
+<link href="~/Content/css/PZFX.css" rel="stylesheet" />
+@using HCZZ.ModeDB;
+@using Webdiyer.WebControls.Mvc
+@using HCZZ.Common;
+@using HCZZ.AppCode;
+@using System.Collections.Generic
+<style>
+    #djsTable:hover {
+        background-color: #1E1F2D;
+    }
+</style>
+
+<div class="contentbody" id="contentbody">
+    @{List<MergeWar.Models.Collision> cllist = (List<MergeWar.Models.Collision>)ViewBag.pl;
+        <div class="contentTitle">
+            <span>消失设备-分析结果</span>
+            @if (cllist != null && cllist.Count > 0)
+            {
+                <input class="add" type="button" id="" value="导出表格" onclick="report()" />
+            }
+        </div>
+        <div class="contentTable">
+
+            <table border="0" cellspacing="0" cellpadding="0">
+                <tr id="djsTable">
+                    @*<th style="width: 20%;">场所名称</th>
+                    <th style="width: 20%;">设备名称</th>*@
+                    <th style="width: 30%;">最小采集时间</th>
+                    <th style="width: 30%;">Mac地址</th>
+                </tr>
+                @if (cllist != null&&cllist.Count>0)
+                {
+                    foreach (var cl in cllist)
+                    {
+                <tr>
+                    @*<td style="width: 20%;" title="@cl.PLACE_NAME">@(ChangeValue.ByteSubString(cl.PLACE_NAME, 12))</td>
+                    <td style="width: 20%;" title="@cl.APName">@(ChangeValue.ByteSubString(cl.APName, 16))</td>*@
+                    <td style="width: 30%;">@cl.CAPTURE_TIME</td>
+                    <td style="width: 30%;">@cl.MAC</td>
+                </tr>
+                    }
+                }
+            </table>
+            @if (cllist != null && cllist.Count > 0)
+            {
+            @Html.Partial("~/Views/Shared/_PartialPage.cshtml", new RouteValueDictionary { { "pageIndex", "PageIndex" }, { "model", cllist } })
+            }
+
+        </div>
+        }
+</div>
+<script type="text/javascript">
+    function closeDown() {
+        document.getElementById('divDown').style.display = 'none';
+        $("#Bk").hide();
+    }
+    function report() {
+        var maxCount = @Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["ExprotCout"]);
+        var TotalCount =parseInt($("#spTotalItem").html());
+        if(TotalCount>maxCount){
+            alert("为保证导出数据的速度，数据源不能大于"+maxCount+"条");
+            closeDown();
+        }
+        $.ajax
+         ({
+             type: "Get",
+             url: '@Url.Content("~/Public/AnalyzeExport?dataType=4")'+ '&data=' + (new Date()).getTime(),
+             dataType: "json",
+             cache: false,
+             success: function (data, status) {
+                 if (typeof (data.err) != 'undefined' && data.err != "") {
+                     alert(data.err);
+                 } else {
+                     window.location.href = '@Url.Content("~/Public/Download?name=")' + encodeURIComponent('消失设备列表报表_') + '&path=' + encodeURIComponent(data.result);
+                 }
+                 closeDown();
+             },
+             error: function (data, status, e) {
+                 alert(e);
+                 closeDown();
+             }
+         });
+    }
+</script>

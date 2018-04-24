@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "-日志详细信息";
+    ViewBag.Title = "日志详细信息";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @using HCZZ.ModeDB;
@@ -20,7 +20,7 @@
 				    <td width="15%" align="right">操作模块：</td>
 				    <td>@log.Module</td>   
 				    <td width="15%" align="right">操作描述：</td>
-				    <td>@StringFilter.Base64Str(0,log.What)</td>   
+				    <td>@log.What</td>   
 			    </tr>
             
                 <tr>

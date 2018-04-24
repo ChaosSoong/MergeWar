@@ -70,4 +70,30 @@ namespace HCZZ.Models
             set;
         }
     }
+    /// <summary>
+    /// 用于接收四类碰撞数据
+    /// </summary>
+    public class AnalyzeModel
+    {
+        /// <summary>
+        /// mac地址
+        /// </summary>
+        public string MAC { get; set; }
+        /// <summary>
+        /// 出现次数
+        /// </summary>
+        public string NUM { get; set; }
+        /// <summary>
+        /// 场所ID
+        /// </summary>
+        public string NETBAR_ID { get; set; }
+        /// <summary>
+        /// 设备ID
+        /// </summary>
+        public string DevAP_ID { get; set; }
+        /// <summary>
+        /// 时间
+        /// </summary>
+        public string CAPTURE_TIME { get; set; }
+    }
 }

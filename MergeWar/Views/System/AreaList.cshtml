@@ -3,9 +3,55 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     Dictionary<string, string> dic = (Dictionary<string, string>)ViewBag.dic;
 }
+<style>
+     .contentTable {
+    }
 
+        .contentTable table {
+            width: 100%;
+        }
+
+            .contentTable table tr {
+                border-bottom: 1px solid #181926;
+                height: 40px;
+            }
+
+                .contentTable table tr:nth-child(even) {
+                    background-color: #20212e;
+                }
+
+                .contentTable table tr:nth-child(odd) {
+                    background-color: #21222f;
+                }
+
+                .contentTable table tr:first-child {
+                    background-color: #1E1F2D;
+                }
+
+                .contentTable table tr th {
+                    text-align: left;
+                    padding-left: 15px;
+                    border-right: 2px solid rgb(24, 25, 38);
+                    color: #85858A;
+                    font-family: "微软雅黑";
+                    font-size: 13px;
+                }
+
+                .contentTable table tr td {
+                    text-align: left;
+                    padding-left: 15px;
+                    border-right: 2px solid rgb(24, 25, 38);
+                    color: #85858A;
+                    font-family: "微软雅黑";
+                    font-size: 12px;
+                }
+                .contentTable table tr:hover{background-color: #222a36;}
+                .contentTable table tr:first-child:hover {
+                    background-color: #1E1F2D;
+                }
+</style>
 @using System.Collections.Generic
-@using Common
+@using HCZZ.Common
 @using HCZZ.DAL
 @using HCZZ.ModeDB
 @using Webdiyer.WebControls.Mvc
@@ -34,7 +80,7 @@
             </ul>
         </div>
 	<div>
-		<table>
+		<table class="djsTable">
 			<tr>
 				<th>序号</th>
                 <th>市名称</th>

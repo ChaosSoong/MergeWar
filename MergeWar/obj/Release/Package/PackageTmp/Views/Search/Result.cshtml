@@ -3,170 +3,178 @@
     Layout = "~/Views/Shared/_LayoutLeft.cshtml";
 }
 @using Common;
+@using Webdiyer.WebControls.Mvc;
+@using System.Collections.Generic
+@using HCZZ.ModeDB
 @{
     Dictionary<string, string> dic = (Dictionary<string, string>)ViewBag.dic;
     string TypeVal = ChangeValue.RefRadVal(Convert.ToInt32(dic["TypeVal"]));
     string KeyWord = dic["KeyWord"];
- }
+    string message = string.Empty;
+}
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8"/> 
-	<script src="@Url.Content("~/Content/js/jquery.js")" type="text/javascript"></script>
-    <style type="text/css">
-        th,td{line-height:30px}
-        tbody tr:nth-child(odd){background-color:#21202e}
-        tbody tr:nth-child(even){background-color:#21222f}
-        thead tr th{text-align:center}
-        h2 {
-                height: 40px;
-                margin-left: 20px;
-                float: left;
-                text-align: center;
-                line-height:40px;
-                color:#616363;
-                cursor:pointer
-            }
-            
-            .tab-content {
-                width: 100%;
-                height: 100%;
-            }
-            
-            .tab-content div{
-                display: none;
-            }
-            
-            .selected {
-                color: #eaeaea;
-            }
-            
-            .tab-content .show{
-                display: block;
-                position:absolute;
-                color:#616363;
-                top:240px;
-                left:5px;
-                bottom:5px;
-                right:5px
-            }
-    </style>
+    <meta charset="utf-8" />
+    <script src="~/Content/js/jquery-1.7.1.min.js"></script>
+    <script src="@Url.Content("~/Content/js/jquery.js")" type="text/javascript"></script>
+    <link href="~/Content/css/YJCX_CXJG.css" rel="stylesheet" />
+    <script src="~/Content/layer/layer.js"></script>
 </head>
 <body>
-<div  style="width:100%;height:40px;color:#616363;line-height:40px;margin-left:20px" >查询条件 》 <span id="spRadVal">@TypeVal</span> 》 <span id="spKeyWord">@dic["KeyWord"]</span></div>
-<div class="tab-head">
-            <h2 class="selected"  onclick="tab1()">实名信息</h2>
-            <h2 onclick="tab2()">线下信息</h2>
-            <h2 onclick="tab3()">虚拟身份</h2>
-            <h2 onclick="tab4()">硬件特征</h2>
-        </div>
-        <div class="tab-content">
-            <div class="show"><table style="border:1px #1e1f2d solid;color:#616363;width:100%;text-align:center">
-          <thead>
-            <tr>
-              <th>手机号码</th>
-              <th>终端Mac地址</th>
-              <th>记录创建时间</th>
-            </tr>
-          </thead>
-          <tbody style="border:1px #1e1f2d solid;color:#616363">
-            <tr>
-              <td>13313212345</td>
-              <td>80-22-75-0B-EA-2D</td>
-              <td>@System.DateTime.Now</td>
-            </tr>
-            <tr>
-              <td>13313212345</td>
-              <td>80-22-75-0B-EA-2D</td>
-              <td>@System.DateTime.Now</td>
-            </tr>
-            <tr>
-              <td>13313212345</td>
-              <td>80-22-75-0B-EA-2D</td>
-              <td>@System.DateTime.Now</td>
-            </tr>
-          </tbody>
-        </table></div>
-            <div> <table style="border:1px #1e1f2d solid;color:#616363;width:100%;text-align:center">
-          <thead>
-            <tr>
-              <th>场所名称</th>
-              <th>认证号码</th>
-              <th>终端Mac地址</th>
-              <th>记录创建时间</th>
-              <th>场所名称</th>
-              <th>认证号码</th>
-              <th>终端Mac地址</th>
-              <th>记录创建时间</th>
-              <th>记录创建时间</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Tanmay</td>
-              <td>Bangalore</td>
-              <td>80-22-75-0B-EA-2D</td>
-              <td>@System.DateTime.Now</td>
-              <td>深圳网安</td>
-              <td>13313212345</td>
-              <td>80-22-75-0B-EA-2D</td>
-              <td>@System.DateTime.Now</td>
-              <td>@System.DateTime.Now</td>
-            </tr>
-          </tbody>
-        </table></div>
-            <div><table style="border:1px #1e1f2d solid;color:#616363;width:100%;text-align:center">
-          <thead>
-            <tr>
-              <th>场所名称</th>
-              <th>认证号码</th>
-              <th>终端Mac地址</th>
-              <th>记录创建时间</th>
-              <th>场所名称</th>
-              <th>认证号码</th>
-              <th>终端Mac地址</th>
-              <th>记录创建时间</th>
-              <th>记录创建时间</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Tanmay</td>
-              <td>Bangalore</td>
-              <td>80-22-75-0B-EA-2D</td>
-              <td>@System.DateTime.Now</td>
-              <td>深圳网安</td>
-              <td>13313212345</td>
-              <td>80-22-75-0B-EA-2D</td>
-              <td>@System.DateTime.Now</td>
-              <td>@System.DateTime.Now</td>
-            </tr>
-          </tbody>
-        </table></div>
-            <div>4444444444444</div>
-        </div>
-    <script type="text/javascript">
-        var tabs = document.getElementsByClassName('tab-head')[0].getElementsByTagName('h2'),
-            contents = document.getElementsByClassName('tab-content')[0].getElementsByTagName('div');
-
-        (function changeTab(tab) {
-            for (var i = 0, len = tabs.length; i < len; i++) {
-                tabs[i].onclick = showTab;
-            }
-        })();
-
-        function showTab() {
-            for (var i = 0, len = tabs.length; i < len; i++) {
-                if (tabs[i] === this) {
-                    tabs[i].className = 'selected';
-                    contents[i].className = 'show';
-                } else {
-                    tabs[i].className = '';
-                    contents[i].className = '';
+    <div class="content">
+        <div class="contentbody" id="contentbody">
+            <div class="contentTopNav">
+                <div class="contentYJFXLi1">
+                    <span id="sp" value="@dic["TypeVal"]">@TypeVal</span>
+                    <input class="contentYJFXLi1Down" name="" id="contentYJFXLi1Down" onclick="myFunction('contentYJFXLi1DownData')" value="" type="button">
+                    <input class="contentYJFXLi1Text" name="KeyWord" id="KeyWord" value="@KeyWord" type="text">
+                    <ul class="contentYJFXLi1DownData" id="contentYJFXLi1DownData" style="display: none;">
+                        <li onclick="myFunction2(this)" value="1"><span class="spanText1">实名信息</span></li>
+                        <li onclick="myFunction2(this)" value="2"><span class="spanText2">虚拟身份</span></li>
+                        <li onclick="myFunction2(this)" value="3"><span class="spanText3">硬件特征</span></li>
+                    </ul>
+                </div>
+                <input class="sBtn" id="selectBtn" value="搜索" type="button">
+            </div>
+            <div class="contentTable">
+                <table cellspacing="0" cellpadding="0" border="0" id="table1">
+                    <tbody>
+                        <tr>
+                            @switch (TypeVal)
+                            {
+                                case "实名信息":
+                            <th>手机号码</th>
+                                    break;
+                                case "虚拟身份":
+                            <th>Mac地址</th>
+                            <th>手机号码</th>
+                            <th>虚拟身份</th>
+                            <th>虚拟身份类型</th>
+                                    break;
+                                case "硬件特征":
+                            <th>终端MAC地址</th>
+                                    break;
+                                default:
+                                    break;
+                            }
+                            <th>详细</th>
+                        </tr>
+                        @{
+                            PagedList<DatasInfo> list = (PagedList<DatasInfo>)ViewBag.pl;
+                            if (list != null && list.Count > 0)
+                            {
+                                foreach (var item in list)
+                                {
+                                    <tr style="">
+                                        @switch (TypeVal)
+                                            {
+                                                case "实名信息":
+                                                    message = (Convert.ToInt32(dic["TypeVal"]) == 1 ? item.AUTH_ACCOUNT : item.MAC);
+                                            <td>@message</td>
+                                            <td><img onclick="TableShow('@dic["TypeVal"]','@item.AUTH_ACCOUNT');tablea(this)" title="详细" src="@Url.Content("~/Content/images/view1_icon.png")" alt="详细"></td>
+                                                    break;
+                                                case "虚拟身份":
+                                            <td>@item.MAC</td>
+                                            <td>@item.AUTH_ACCOUNT<span style="display: none">@item.MAC</span></td>
+                                            <td>@item.NETWORK_APP_VALUES</td>
+                                            <td>@ChangeValue.VidContentType(item.NETWORK_APP.ToString())</td>
+                                            <td><img onclick="TableShow('@dic["TypeVal"]','@item.MAC');tablea(this)" title="详细" src="@Url.Content("~/Content/images/view1_icon.png")" alt="详细"></td>
+                                                    break;
+                                                case "硬件特征":
+                                                    message = (Convert.ToInt32(dic["TypeVal"]) == 1 ? item.AUTH_ACCOUNT : item.MAC);
+                                            <td>@message</td>
+                                            <td><img onclick="TableShow('@dic["TypeVal"]','@item.MAC');tablea(this)" title="详细" src="@Url.Content("~/Content/images/view1_icon.png")" alt="详细"></td>
+                                                    break;
+                                                default:
+                                                    break;
+                                            }
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr><th>暂无数据</th><th></th></tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+                @if (list != null && list.Count > 0)
+                {
+                    @Html.Partial("~/Views/Shared/_PartialPage.cshtml", new RouteValueDictionary { { "model", list }, { "pageindex", "PageIndex" } })
+                    <div class="contentTitle">
+                        <ul class="ulTable">
+                            <li class="" value="1">实名信息</li>
+                            <li class="" value="2">虚拟身份</li>
+                            <li class="" value="3">硬件特征</li>
+                            <li class="" value="4">上下线信息</li>
+                        </ul>
+                    </div>
                 }
-            }
-        }
-    </script>
+                <div id="tab1">
+                    <table cellpadding="0" cellspacing="0" width="100%" class="Cx_tab">
+                        <tr>
+                            <td>数据正在加载……</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
-
+<script>
+    var val = "";
+    $(".ulTable li").click(function () {
+        //给选中的标签加上样式，同时删除其他同级元素样式。
+        $(this).addClass("active").siblings().removeClass("active");
+        var TypeVal = $(this).attr("value");
+        TableShow(TypeVal, val);
+    })
+    //向上向下反复点击伸缩
+    function myFunction(e) {
+        $('#' + e).toggle(200);
+    };
+    function myFunction2(e) {
+        $('#contentYJFXLi1DownData').toggle(100);
+        $("#sp").html($(e).find("span")[0].innerText);
+        $("#sp").attr("value", $(e).attr("value"));
+    };
+    $(function () {
+        var tr = $("#table1 tr").get(1);
+        $(tr).css("background", "#222A36");
+        OnTableShowCalss('@dic["TypeVal"]');
+        val = $("table tr td").get(0).textContent;
+        TableShow('@dic["TypeVal"]', val);
+        //$("table")
+    })
+    $("#selectBtn").click(function () {
+        var data = { Id: $("#sp").attr("value"), KeyWord: $("#input").val() };
+        window.location.href = '@Url.Content("~/Search/Result?Id=")' + $("#sp").attr("value") + "&KeyWord=" + $("#KeyWord").val();
+    })
+    function TableShow(tabtype, keyval) {
+        OnTableShowCalss(tabtype);
+        val = keyval;
+        $("#tab1").load("@Url.Content("~/Public/TableShow?dataType=")" + @dic["TypeVal"] + "&tabType=" + tabtype + "&keyWord=" + keyval);
+    }
+    function loadPage(ev) {
+        var ev = ev || window.event;
+        var target = ev.target || ev.srcElement;
+        if (target.tagName.toUpperCase() == "A" && target.getAttribute("disabled") != "disabled") {
+            var id = target.getAttribute("data-ajax-update");
+            $("#tab1").load(target.href);
+            return false;
+        }
+    }
+    function OnTableShowCalss(index) {
+        $(".ulTable li").each(function () {
+            if ($(this).val() ==index) {
+                $(this).addClass("active").siblings().removeClass("active");
+            }
+        })
+    }
+    function tablea(obj)
+    {
+        $(obj).parent().parent().css("background", "#222A36").siblings().css("background", "#1E1F2D")
+    }
+</script>

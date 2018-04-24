@@ -69,6 +69,7 @@ namespace HCZZ.ModeDB
             set;
         }
         public long PageNum { get; set; }
+        public int Num { get; set; }
 
     }
 }

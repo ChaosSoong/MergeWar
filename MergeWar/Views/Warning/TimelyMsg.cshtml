@@ -1,0 +1,204 @@
+﻿@{
+    ViewBag.Title = "布控报警-报警管理";
+    Dictionary<string, string> dic = (Dictionary<string, string>)ViewBag.dic;
+    PagedList<BKBJ.WarningInfo> pl = (PagedList<BKBJ.WarningInfo>)ViewBag.pl;
+}
+@using System.Collections.Generic
+@using HCZZ.Common
+@using HCZZ.DAL
+@using HCZZ.ModeDB
+@using Webdiyer.WebControls.Mvc
+<style>
+    .contentbody .contentTable {
+    }
+
+        .contentbody .contentTable table {
+            width: 100%;
+        }
+
+            .contentbody .contentTable table tr {
+                border-bottom: 1px solid #181926;
+                height: 40px;
+            }
+
+                .contentbody .contentTable table tr:nth-child(even) {
+                    background-color: #20212e;
+                }
+
+                .contentbody .contentTable table tr:nth-child(odd) {
+                    background-color: #21222f;
+                }
+
+                .contentbody .contentTable table tr:first-child {
+                    background-color: #1E1F2D;
+                }
+
+                .contentbody .contentTable table tr th {
+                    text-align: left;
+                    padding-left: 15px;
+                    border-right: 2px solid rgb(24, 25, 38);
+                    color: #85858A;
+                    font-family: "微软雅黑";
+                    font-size: 13px;
+                }
+
+                .contentbody .contentTable table tr td {
+                    text-align: left;
+                    padding-left: 15px;
+                    border-right: 2px solid rgb(24, 25, 38);
+                    color: #85858A;
+                    font-family: "微软雅黑";
+                    font-size: 12px;
+                }
+
+                .contentbody .contentTable table tr:hover {
+                    background-color: #222a36;
+                }
+
+            .contentbody .contentTable table.djxTable tr:first-child:hover {
+                background-color: #1E1F2D;
+            }
+
+    #djsTable:hover {
+        background-color: #1E1F2D;
+    }
+</style>
+<link href="~/Content/css/BJGL_JSTXBJ.css" rel="stylesheet" />
+<script src="@Url.Content("~/Content/DatePicker/WdatePicker.js")" type="text/javascript"></script>
+@using (Html.BeginForm("TimelyMsg", "Warning", FormMethod.Get))
+{
+    <div class="contentbody" id="contentbody">
+        <div class="contentTitle">
+            <span>管理列表</span>
+            <input class="search" type="button" id="BtnSelect" onclick="myFunction(this, 'contentConditions')" value="隐藏" />
+            <input class="" type="button" id="" value="导出Excel" onclick="report()" />
+        </div>
+        <div class="contentConditions" id="zbtnXY">
+            <ul>
+                <li class="Conditions Conditions1">
+                    <span>审计任务名称：</span>
+                    <select name="selTaskName">
+                        <option value="1">模糊</option>
+                        <option value="2">精确</option>
+                    </select>
+                    <input type="text" id="txtTaskName" name="txtTaskName" value="@dic["txtTaskName"]" />
+                </li>
+                <li class="Conditions Conditions2">
+                    <span>场所名称：</span>
+                    <select name="selName">
+                        <option value="1">模糊</option>
+                        <option value="2">精确</option>
+                    </select>
+                    <input name="txtName" id="txtName" class="_text" value="@dic["txtName"]" type="text">
+                </li>
+                <li class="Conditions Conditions3">
+                    <span>报警类型：</span>
+                    <select name="selWaringType" id="selWaringType"><option value="0">==请选择==</option><option value="1">采集报警</option><option value="2">审计报警</option></select>
+                </li>
+                <li class="Conditions Conditions4">
+                    <span>布控内容：</span>
+                    <select name="selkeyWord">
+                        <option value="1">模糊</option>
+                        <option value="2">精确</option>
+                    </select>
+                    <input type="text" name="keyWord" id="keyWord" value="@dic["keyWord"]" />
+                </li>
+                <li class="Conditions Conditions5">
+                    <span>报警时间：</span>
+                    @*<input id="d4311" class="Wdate" type="text" onFocus="WdatePicker({skin:'whyGreen',maxDate:'#F{$dp.$D(\'d4312\')||\'2020-10-01\'}'})" />
+                        <b style="color: #b1b1b1;">—</b>
+                        <input id="d4312" class="Wdate" type="text" style="margin: 0;" onFocus="WdatePicker({minDate:'#F{$dp.$D(\'d4311\')}',maxDate:'2020-10-01'})" />*@
+                    <input name="txtStartTime" id="txtStartTime" class="_time" value="@dic["txtStartTime"]" onfocus="WdatePicker({ dateFmt: 'yyyy-MM-dd HH:mm:ss', readonly: true, maxDate: '#F{$dp.$D(\'txtEndTime\')}' })" type="text"> ---
+                    <input name="txtEndTime" id="txtEndTime" class="_time" value="@dic["txtEndTime"]" onfocus="WdatePicker({ dateFmt: 'yyyy-MM-dd HH:mm:ss', readonly: true, minDate: '#F{$dp.$D(\'txtStartTime\')}' })" type="text">
+
+                </li>
+                <li class="Conditions Conditions6">
+                    <input class="selectbg" type="submit" id="" value="搜索" />
+                    <input class="resetbg" type="reset" value="重置" />
+                </li>
+            </ul>
+        </div>
+        <!--<script type="text/javascript">
+            function myFunction(){
+                $("#zbtnXY").toggle(200);
+            };
+        </script>-->
+        <div class="contentTable">
+            <table border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <th width="5%">序号</th>
+                    <th width="12%">任务名称</th>
+                    <th width="12%">场所名称</th>
+                    <th width="16">布控类型</th>
+                    <th width="10%">布控内容</th>
+                    <th width="11%">预警邮箱</th>
+                    <th width="12%">报警时间</th>
+                    <th width="5%">场所内网端口号</th>
+                    <th width="13%">目的公网IPv4地址</th>
+                    <th width="5%">操作</th>
+                </tr>
+                @if (pl != null && pl.Count > 0)
+                {
+                    foreach (var item in pl)
+                    {
+                        <tr>
+                            <td>@item.PageNum</td>
+                            <td>@item.TaskName</td>
+                            <td title="@item.PLACE_NAME">@(ChangeValue.ByteSubString(item.PLACE_NAME, 40))</td>
+                            <td>@( (int)item.CaseItem == 1 ? "手机号码" : ((int)item.CaseItem == 2 ? "上网终端MAC地址" : "IMEI"))</td>
+                            <td>@item.CaseValue</td>
+                            <td>@item.WMail</td>
+                            <td> @(item.Createtime.ToString("yyyy-MM-dd") == "0001-01-01" ? "" : item.Createtime.ToString("yyyy-MM-dd HH:mm:ss"))</td>
+                            <td>@item.PORT</td>
+                            <td>@(ChangeValue.RefIPvlong(item.DST_IP) == "0.0.0.0" ? "" : ChangeValue.RefIPvlong(item.DST_IP))</td>
+                            <td><a class="Cz_chakan" title="详细" href="@Url.Content("~/Warning/TimelyMsgModel?ID=" + item.ID)"><img title="详情" src="@Url.Content("~/Content/images/view1_icon.png")" alt="查看" /></a></td>
+                        </tr>
+
+                    }
+                }
+                else
+                {
+                    <tr><td colspan="10">暂无可显示数据</td></tr>
+                }
+            </table>
+            @if (pl != null && pl.Count > 0)
+            {
+                @Html.Partial("~/Views/Shared/_PartialPage.cshtml", new RouteValueDictionary { { "model", pl }, { "pageindex", "PageIndex" } })
+            }
+        </div>
+    </div>
+    <script>
+        function report() {
+            var maxCount = @Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["ExprotCout"]);
+            var TotalCount = parseInt($("#spTotalItem").html());
+            if (TotalCount > maxCount) {
+                alert("为了保证导出数据的速度，数据源不能大于“" + maxCount + "”行");
+                closeDown();
+            } else {
+                var str = window.location.search==""?"?":window.location.search;
+                showDown();
+                $.ajax
+                ({
+                    type: "Post",
+                    url: '@Url.Content("~/Warning/RepTimelyMsg")' + str + '&abc=' + (new Date()).getTime(),
+                    dataType: "json",
+                    cache: false,
+                    success: function(data, status) {
+                        if (typeof (data.err) != 'undefined' && data.err != "") {
+                            alert(data.err);
+                        } else {
+                            window.location.href = '@Url.Content("~/Login/Download?name=")' + encodeURIComponent('布控报表_') + '&path=' + encodeURIComponent(data.result);
+                        }
+                        closeDown();
+                    },
+                    error: function (data, status, e) {
+                        alert(e);
+                        closeDown();
+                    }
+                });
+            }
+        }
+    </script>
+}
+
+

@@ -69,7 +69,7 @@
                                             }
                                              @if (sItem.IdValues.IndexOf('6') != -1)
                                             {
-                                                 <label><input type="checkbox" onclick="QXOnclick(this)" id="pwF_@(item.Id)_@(sItem.Id)_5" name="pwFThree_@(sItem.Id)" value="6"/>数据查询</label>
+                                                 <label><input type="checkbox" onclick="QXOnclick(this)" @(twolist.Count > 0 && twolist.First().SelValues.Contains("6") ? "checked=checked" : "")id="pwF_@(item.Id)_@(sItem.Id)_6" name="pwFThree_@(sItem.Id)" value="6"/>数据查询</label>
                                             }
                                             
                                         </li>

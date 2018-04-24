@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using HCZZ.ModeDB;
-using Common;
+using HCZZ.Common;
 using Webdiyer.WebControls.Mvc;
 
 
@@ -15,6 +15,9 @@ namespace HCZZ.DAL
         #region 场所列表信息
         public PagedList<Loc_NetBarInfo> GetList(Dictionary<string, string> dic)
         {
+            int fw = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["fw"]) * 3;
+            int sj = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["sj"]);
+
             string sql = string.Empty;
             string WhereSql = " AND 1=1";
             int pageSize = Convert.ToInt32(dic["pageSize"]);
@@ -37,10 +40,10 @@ namespace HCZZ.DAL
                 WhereSql += "  AND  di.AP_MAC  LIKE  @AP_MAC";
                 listParam.Add(new SqlParameter("@AP_MAC", "%" + dic["AP_MAC"] + "%"));
             }
-            if (!string.IsNullOrEmpty(dic["txtStartTime"]))
+            if (!string.IsNullOrEmpty(dic["txtBeginTime"]))
             {
                 WhereSql += " AND nbi.createTime >=@txtStartTime";
-                listParam.Add(new SqlParameter("@txtStartTime", Convert.ToDateTime(dic["txtStartTime"])));
+                listParam.Add(new SqlParameter("@txtStartTime", Convert.ToDateTime(dic["txtBeginTime"])));
             }
             if (!string.IsNullOrEmpty(dic["txtEndTime"]))
             {
@@ -62,7 +65,17 @@ namespace HCZZ.DAL
                 WhereSql += " AND nbi.Aid=@Aid";
                 listParam.Add(new SqlParameter("@Aid", dic["selArea"]));
             }
-            sql = "SELECT * FROM (SELECT ROW_NUMBER()OVER(ORDER BY nbi.ID)PageNum,nbi.*,so.SECURITY_SOFTWARE_ORGNAME,di.AP_MAC FROM NetBarInfo AS nbi LEFT JOIN SecurityOrg AS so ON nbi.SecId=so.ID LEFT JOIN DevInfo AS di ON nbi.ID=di.NETBAR_ID  WHERE nbi.Valid=1  " + WhereSql + ")temp WHERE temp.PageNum BETWEEN  " + ((pageIndex - 1) * pageSize + 1) + " AND " + pageIndex * pageSize;
+            if (dic["selPolice"] != "0")
+            {
+                WhereSql += " AND nbi.Pid =@Pid";
+                listParam.Add(new SqlParameter("@Pid", dic["selPolice"]));
+            }
+            DateTime tempFW = DateTime.Now.AddMinutes(-fw);
+            DateTime tempSJ = DateTime.Now.AddMinutes(-sj);
+            //WhereSql += " AND di.UpdateTime>= " + tempFW;
+            //WhereSql += "  AND di.AuditTime>= " + tempSJ;
+
+           sql = "SELECT * FROM (SELECT ROW_NUMBER()OVER(ORDER BY nbi.ID)PageNum,nbi.*,(SELECT CASE WHEN COUNT(0)>0 THEN 1 ELSE 2 end FROM DevInfo di2 WHERE di2.NETBAR_ID=nbi.id AND di2.UpdateTime>=" + "'" + tempFW + "')fuwu,(SELECT CASE WHEN COUNT(0)>0 THEN 1 ELSE 2 end FROM DevInfo di2 WHERE di2.NETBAR_ID=nbi.id AND di2.AuditTime>=" + "'"+tempSJ + "') shuju,so.SECURITY_SOFTWARE_ORGNAME,di.AP_MAC FROM NetBarInfo AS nbi LEFT JOIN SecurityOrg AS so ON nbi.SecId=so.ID LEFT JOIN DevInfo AS di ON nbi.ID=di.NETBAR_ID  WHERE nbi.Valid=1  " + WhereSql + ")temp WHERE temp.PageNum BETWEEN  " + ((pageIndex - 1) * pageSize + 1) + " AND " + pageIndex * pageSize;
             //DataSet ds = SqlHelper.ExecuteDataset(SqlHelper.DBConnStr, CommandType.Text, sql, listParam.ToArray());
             List<Loc_NetBarInfo> list = SqlHelper.ExecuteListModel<Loc_NetBarInfo>(SqlHelper.DBConnStr, sql, listParam.ToArray());
             //DataSetConvert convert = new DataSetConvert(ds);
@@ -74,7 +87,8 @@ namespace HCZZ.DAL
         #endregion
 
         #region 安全厂商列表
-        public Dictionary<int,string> GetSecurityList() {
+        public Dictionary<int, string> GetSecurityList()
+        {
             string sql = String.Empty;
             List<SecurityOrg> list = new List<SecurityOrg>();
             try
@@ -90,10 +104,11 @@ namespace HCZZ.DAL
                     {"SQL",sql}
                 });
                 throw ex;
-            } 
+            }
             Dictionary<int, string> dic = new Dictionary<int, string>();
-            foreach (var item in list) {
-                dic.Add(item.ID,item.SECURITY_SOFTWARE_ORGNAME);
+            foreach (var item in list)
+            {
+                dic.Add(item.ID, item.SECURITY_SOFTWARE_ORGNAME);
             }
             return dic;
         }
@@ -112,7 +127,7 @@ namespace HCZZ.DAL
         public int InsertLocation(Loc_NetBarInfo loca)
         {
             string sql = "INSERT INTO NetBarInfo(NETBAR_WACODE,PLACE_NAME,SITE_ADDRESS,LONGITUDE,LATITUDE,NETSITE_TYPE,BUSINESS_NATURE,LAW_PRINCIPAL_NAME,LAW_PRINCIPAL_CERTIFICATE_TYPE,LAW_PRINCIPAL_CERTIFICATE_ID,RELATIONSHIP_ACCOUNT,START_TIME,END_TIME,ACCESS_TYPE,OPERATOR_NET,Statis,Valid,Createtime,Verified,Service_code,ProID,CityID,Aid,Pid,[Sid],SecId,CODE_ALLOCATION_ORGANIZATION)VALUES(@NETBAR_WACODE,@PLACE_NAME,@SITE_ADDRESS,@LONGITUDE,@LATITUDE,@NETSITE_TYPE,@BUSINESS_NATURE,@LAW_PRINCIPAL_NAME,@LAW_PRINCIPAL_CERTIFICATE_TYPE,@LAW_PRINCIPAL_CERTIFICATE_ID,@RELATIONSHIP_ACCOUNT,@START_TIME,@END_TIME,@ACCESS_TYPE,@OPERATOR_NET,@Statis,@Valid,@Createtime,@Verified,@Service_code,@ProID,@CityID,@Aid,@Pid,@Sid,@SecId,@CODE_ALLOCATION_ORGANIZATION); SELECT SCOPE_IDENTITY();";
-            SqlParameter[] para = new SqlParameter[] 
+            SqlParameter[] para = new SqlParameter[]
             {
                 new SqlParameter("@NETBAR_WACODE",loca.NETBAR_WACODE),
                 new SqlParameter("@PLACE_NAME",loca.PLACE_NAME),
@@ -165,8 +180,8 @@ namespace HCZZ.DAL
             sql += (il.Sid != 0 ? ",ProID = @ProID,CityID = @CityID,Aid = @Aid,Pid = @Pid,[Sid] = @Sid" : "");
             sql += " WHERE ID=@Id";
 
-            SqlParameter[] param = new SqlParameter[] 
-            { 
+            SqlParameter[] param = new SqlParameter[]
+            {
                 new SqlParameter("@LocaName",il.LocaName),
                 new SqlParameter("@Address",il.Address),
                 new SqlParameter("@UserName",il.UserName),
@@ -191,7 +206,7 @@ namespace HCZZ.DAL
             if (isTrue)
                 sql += "Statis = @Statis,";
             sql += "Service_code = @Service_code,ProID = @ProID,CityID = @CityID,Aid = @Aid,Pid = @Pid,[Sid] = @Sid,SecId = @SecId,Verified = @Verified,IsUpdate_NETBAR_WACODE=@IsUpdate_NETBAR_WACODE WHERE ID=@ID; update DevInfo set NETBAR_WACODE=@NETBAR_WACODE where NETBAR_ID=@ID";
-            SqlParameter[] param = new SqlParameter[] 
+            SqlParameter[] param = new SqlParameter[]
             {
                 new SqlParameter("@NETBAR_WACODE",loca.NETBAR_WACODE),
                 new SqlParameter("@PLACE_NAME",loca.PLACE_NAME),
@@ -269,12 +284,26 @@ namespace HCZZ.DAL
             string sql = "select vnbi.NETBAR_WACODE,PLACE_NAME,NETSITE_TYPE,LAW_PRINCIPAL_NAME,RELATIONSHIP_ACCOUNT,LAW_PRINCIPAL_CERTIFICATE_TYPE,LAW_PRINCIPAL_CERTIFICATE_ID,ACSSES_IP,SITE_ADDRESS,vnbi.ProID,vnbi.CityID,vnbi.Aid,vnbi.Pid,vnbi.Sid,si.SName,pi1.Name PName from Verify_NetBarInfo vnbi LEFT JOIN ScenicInfo si ON vnbi.sid=si.ID LEFT JOIN PoliceInfo pi1 ON si.PId=pi1.ID where NETBAR_ID=@NETBAR_ID";
             return SqlHelper.ExecuteDataset(SqlHelper.DBConnStr, CommandType.Text, sql, new SqlParameter("@NETBAR_ID", Lid)).Tables[0];
         }
+        public DataTable GetAddress(int Lid)
+        {
+            string sql = "select ai.Area as Pro,ai2.Area as City,ai3.Area,sci.SName,pii.Name as PName from NetBarInfo ni join AreaInfo ai on ni.ProID=ai.ID join AreaInfo ai2 on ni.CityID=ai2.ID join AreaInfo ai3 on ni.Aid=ai3.ID join ScenicInfo sci on ni.Sid=sci.ID join PoliceInfo pii on ni.Pid=pii.ID where ni.ID=@NETBAR_ID";
+            return SqlHelper.ExecuteDataset(SqlHelper.DBConnStr, CommandType.Text, sql, new SqlParameter("@NETBAR_ID", Lid)).Tables[0];
+        }
         #endregion
         #endregion
 
+        /// <summary>
+        /// 地图标记
+        /// </summary>
+        /// <param name="proId">省id</param>
+        /// <param name="cityId">市id</param>
+        /// <param name="aid">区id</param>
+        /// <param name="mapDateType">查询类别1、场所管理地图标记，2碰撞分析地图打点</param>
+        /// <returns></returns>
         #region 地图标记
-        public DataTable GetLocaMapDt(string proId, string cityId, string aid)
+        public DataTable GetLocaMapDt(string proId, string cityId, string aid, string mapDateType)
         {
+            string sql = string.Empty;
             int fw = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["fw"]) * 3;
             int sj = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["sj"]);
             fw = fw == 0 ? 30 : fw;
@@ -287,9 +316,15 @@ namespace HCZZ.DAL
             { whereSql += "  AND nbi.CityID=@CityID"; param = new SqlParameter("@CityID", cityId); }
             else if (proId != "0")
             { whereSql += "  AND nbi.ProID=@ProID"; param = new SqlParameter("@ProID", proId); }
-
+            //首页地图
+            if (mapDateType == "1")
+            {
+                sql = "SELECT nbi.Id,nbi.PLACE_NAME,nbi.APNum,nbi.LONGITUDE +','+nbi.LATITUDE Gnote,ISNULL((SELECT TOP 1 CASE when (di.UpdateTime>=DATEADD(mi,-" + fw + ",GETDATE()) OR  di.AuditTime>=DATEADD(mi,-" + sj + ",GETDATE())) THEN 1 ELSE 0 END  LocaStatis FROM DevInfo di WHERE di.NETBAR_ID=nbi.ID ORDER BY di.UpdateTime desc),0) LocaStatis FROM NetBarInfo nbi WHERE nbi.Valid=1 AND (nbi.LONGITUDE!='' AND nbi.LONGITUDE IS NOT NULL) and APNum >0 " + whereSql;
+            }
+            else {
+                sql = "SELECT di.ID,di.LONGITUDE AS J,di.LATITUDE AS W,di.APName AS N FROM DevInfo di LEFT JOIN NetBarInfo nbi ON di.NETBAR_ID = nbi.ID WHERE di.NETBAR_ID > 0" + whereSql;
+            }
             //string sql = "SELECT nbi.Id,nbi.PLACE_NAME,nbi.LONGITUDE +','+nbi.LATITUDE Gnote,(SELECT TOP 1 CASE when (di.UpdateTime>=DATEADD(mi,-" + fw + ",GETDATE()) OR  di.AuditTime>=DATEADD(mi,-" + sj + ",GETDATE())) THEN 1 ELSE 0 END LocaStatis FROM DevInfo di WHERE di.NETBAR_ID=nbi.ID ORDER BY di.UpdateTime desc ) LocaStatis FROM NetBarInfo nbi WHERE nbi.Valid=1 AND (nbi.LONGITUDE!='' AND nbi.LONGITUDE IS NOT NULL) " + whereSql;
-            string sql = "SELECT nbi.Id,nbi.PLACE_NAME,nbi.APNum,nbi.LONGITUDE +','+nbi.LATITUDE Gnote,ISNULL((SELECT TOP 1 CASE when (di.UpdateTime>=DATEADD(mi,-" + fw + ",GETDATE()) OR  di.AuditTime>=DATEADD(mi,-" + sj + ",GETDATE())) THEN 1 ELSE 0 END  LocaStatis FROM DevInfo di WHERE di.NETBAR_ID=nbi.ID ORDER BY di.UpdateTime desc),0) LocaStatis FROM NetBarInfo nbi WHERE nbi.Valid=1 AND (nbi.LONGITUDE!='' AND nbi.LONGITUDE IS NOT NULL) and APNum >0 " + whereSql;
             return SqlHelper.ExecuteDataset(SqlHelper.DBConnStr, CommandType.Text, sql, param).Tables[0];
         }
         #endregion
@@ -324,7 +359,7 @@ namespace HCZZ.DAL
                 whereSql += " AND ud.AreaName LIKE @AreaName";
                 listParam.Add(new SqlParameter("@AreaName", "%" + dic["AreaName"] + "%"));
             }
-            sql = "SELECT * FROM ( SELECT ROW_NUMBER() OVER (ORDER BY ud.Id DESC) PageNum,ud.ID,ud.AP_MAC,ud.UpdateTime,ud.CreateTime,ud.OutIpAddress,ud.AreaName FROM UnknownDevice ud " + whereSql + ") temp WHERE temp.PageNum BETWEEN " + ((pageIndex - 1) * pageSize) + " AND " + pageIndex * pageSize;
+            sql = "SELECT * FROM ( SELECT ROW_NUMBER() OVER (ORDER BY ud.UpdateTime   DESC) PageNum,ud.ID,ud.AP_MAC,ud.UpdateTime,ud.CreateTime,ud.OutIpAddress,ud.AreaName FROM UnknownDevice ud " + whereSql + ") temp WHERE temp.PageNum BETWEEN " + ((pageIndex - 1) * pageSize) + " AND " + pageIndex * pageSize;
 
             //DataSet ds = SqlHelper.ExecuteDataset(SqlHelper.DBConnStr, CommandType.Text, sql, listParam.ToArray());
             List<UnknownDevice> list = SqlHelper.ExecuteListModel<UnknownDevice>(SqlHelper.DBConnStr, sql, listParam.ToArray());
@@ -403,7 +438,7 @@ namespace HCZZ.DAL
             sql += " SELECT COUNT(0) FROM  DevInfo di " + whereSql;
 
             //DataSet ds = SqlHelper.ExecuteDataset(SqlHelper.DBConnStr, CommandType.Text, sql, new SqlParameter("@Lid", Lid));
-            List<MacInfo> list = SqlHelper.ExecuteListModel<MacInfo>(SqlHelper.DBConnStr,sql, new SqlParameter("@Lid", Lid));
+            List<MacInfo> list = SqlHelper.ExecuteListModel<MacInfo>(SqlHelper.DBConnStr, sql, new SqlParameter("@Lid", Lid));
             //DataSetConvert convert = new DataSetConvert(ds);
             //List<MacInfo> list = convert.Get_ListModel<MacInfo>();
             sql = "SELECT COUNT(*) FROM DevInfo di" + whereSql;
@@ -462,8 +497,8 @@ namespace HCZZ.DAL
         {
             string sql = "UPDATE devinfo SET APName = @APName WHERE ID=@Id";
 
-            SqlParameter[] param = new SqlParameter[] 
-            { 
+            SqlParameter[] param = new SqlParameter[]
+            {
                 new SqlParameter("@APName",il.ApName),
                 new SqlParameter("@Id",il.DveId)
             };
@@ -491,7 +526,7 @@ namespace HCZZ.DAL
         public List<Loc_NetBarInfo> GetLocationList()
         {
             //string sql = "select * FROM NetBarInfo nbi";
-            string sql = "select  nbi.ID,nbi.PLACE_NAME,(CASE WHEN EXISTS(SELECT * FROM DevInfo di WHERE di.NETBAR_ID=nbi.ID AND di.ProjectType=7) THEN 1 ELSE 0 END ) IsVoid,nbi.NETSITE_TYPE FROM NetBarInfo nbi";
+            string sql = "select  nbi.ID,nbi.PLACE_NAME,(CASE WHEN EXISTS(SELECT * FROM DevInfo di WHERE di.NETBAR_ID=nbi.ID AND di.ProjectType=7) THEN 1 ELSE 0 END ) IsVoid,nbi.NETSITE_TYPE FROM NetBarInfo nbi WHERE nbi.Valid=1";
             //DataSet ds = SqlHelper.ExecuteDataset(SqlHelper.DBConnStr, CommandType.Text, sql);
             List<Loc_NetBarInfo> list = SqlHelper.ExecuteListModel<Loc_NetBarInfo>(SqlHelper.DBConnStr, sql);
             //return new DataSetConvert(ds).Get_ListModel<Loc_NetBarInfo>();
@@ -503,7 +538,7 @@ namespace HCZZ.DAL
         /// <returns></returns>
         public List<Loc_DevInfo> GetDevList()
         {
-            string sql = "SELECT * FROM DevInfo";
+            string sql = "SELECT ID,APName,NETBAR_ID FROM DevInfo";
             //DataSet ds = SqlHelper.ExecuteDataset(SqlHelper.DBConnStr, CommandType.Text, sql);
             //return new DataSetConvert(ds).Get_ListModel<Loc_DevInfo>();
             List<Loc_DevInfo> list = SqlHelper.ExecuteListModel<Loc_DevInfo>(SqlHelper.DBConnStr, sql);
@@ -528,7 +563,7 @@ namespace HCZZ.DAL
             return nbi;
         }
 
-        
+
         /// <summary>
         /// 根据AP设备ID或者Mac地址获取AP信息
         /// </summary>
@@ -636,7 +671,7 @@ namespace HCZZ.DAL
             { whereSql += " AND id IN (SELECT di.NETBAR_ID FROM DevInfo di WHERE di.AP_MAC LIKE @AP_MAC)"; listParam.Add(new SqlParameter("@AP_MAC", "%" + dic["AP_MAC"] + "%")); }
             //if (!string.IsNullOrEmpty(dic["txtOutIpAddress"]))
             //{
-            //    PotType += " AND di.AP_ACSSES_IP LIKE @ACSSES_IP "; listParam.Add(new SqlParameter("@ACSSES_IP", "%" + dic["txtOutIpAddress"] + "%"));
+            //PotType += " AND di.AP_ACSSES_IP LIKE @ACSSES_IP "; listParam.Add(new SqlParameter("@ACSSES_IP", "%" + dic["txtOutIpAddress"] + "%"));
             //}
             DateTime tempFW = DateTime.Now.AddMinutes(-fw);
             DateTime tempSJ = DateTime.Now.AddMinutes(-sj);
@@ -652,7 +687,7 @@ namespace HCZZ.DAL
             { whereSql += " AND nbi.shuju =@sj"; listParam.Add(new SqlParameter("@sj", (sjStatus == 1 || sjStatus == 3 ? "数据在线" : "数据离线"))); }
             if (sjStatus == 3 || sjStatus == 4) tempSJ = DateTime.Now.AddDays(-Convert.ToInt32(dic["txtOtherDay"]));
             if (sjStatus == 2 || sjStatus == 4) sjOper = "<";
-            sql = "SELECT * from(  SELECT distinct nbi.id,nbi.NETBAR_WACODE,nbi.PLACE_NAME,nbi.SITE_ADDRESS,nbi.NETSITE_TYPE,nbi.LAW_PRINCIPAL_NAME,nbi.RELATIONSHIP_ACCOUNT,nbi.Statis,nbi.CODE_ALLOCATION_ORGANIZATION,nbi.LONGITUDE,nbi.LATITUDE,nbi.Verified,nbi.LAW_PRINCIPAL_CERTIFICATE_TYPE,nbi.LAW_PRINCIPAL_CERTIFICATE_ID,nbi.ACCESS_TYPE,nbi.OPERATOR_NET,nbi.START_TIME LocaSTARTTIME,nbi.END_TIME LocaENDTIME,nbi.Valid,nbi.ProID,nbi.CityID,nbi.Aid,nbi.PId,nbi.createTime,nbi.BUSINESS_NATURE,(SELECT CASE WHEN COUNT(0)>0 THEN '服务在线' ELSE '服务离线' end FROM DevInfo di2 WHERE di2.NETBAR_ID=nbi.id AND di2.UpdateTime" + fwOper + "'" + tempFW + "')fuwu,(SELECT CASE WHEN COUNT(0)>0 THEN '数据在线' ELSE '数据离线' end FROM DevInfo di2 WHERE di2.NETBAR_ID=nbi.id AND di2.AuditTime" + sjOper + "'" + tempSJ + "') shuju";
+            sql = "SELECT * from(  SELECT nbi.id,nbi.NETBAR_WACODE,nbi.PLACE_NAME,nbi.SITE_ADDRESS,nbi.NETSITE_TYPE,nbi.LAW_PRINCIPAL_NAME,nbi.RELATIONSHIP_ACCOUNT,nbi.Statis,nbi.CODE_ALLOCATION_ORGANIZATION,nbi.LONGITUDE,nbi.LATITUDE,nbi.Verified,nbi.LAW_PRINCIPAL_CERTIFICATE_TYPE,nbi.LAW_PRINCIPAL_CERTIFICATE_ID,nbi.ACCESS_TYPE,nbi.OPERATOR_NET,nbi.START_TIME LocaSTARTTIME,nbi.END_TIME LocaENDTIME,nbi.Valid,nbi.ProID,nbi.CityID,nbi.Aid,nbi.PId,nbi.createTime,nbi.BUSINESS_NATURE,(SELECT CASE WHEN COUNT(0)>0 THEN '服务在线' ELSE '服务离线' end FROM DevInfo di2 WHERE di2.NETBAR_ID=nbi.id AND di2.UpdateTime" + fwOper + "'" + tempFW + "')fuwu,(SELECT CASE WHEN COUNT(0)>0 THEN '数据在线' ELSE '数据离线' end FROM DevInfo di2 WHERE di2.NETBAR_ID=nbi.id AND di2.AuditTime" + sjOper + "'" + tempSJ + "') shuju";
             if (strExprotId.Contains("19"))
                 sql += ",ai11.Area ProName";
             if (strExprotId.Contains("20"))
@@ -705,8 +740,8 @@ namespace HCZZ.DAL
         public int ImportLoca(ImportLocation il)
         {
             string sql = "INSERT INTO NetBarInfo (NETBAR_WACODE,PLACE_NAME,SITE_ADDRESS,LONGITUDE,LATITUDE,NETSITE_TYPE,BUSINESS_NATURE,LAW_PRINCIPAL_NAME,RELATIONSHIP_ACCOUNT,CODE_ALLOCATION_ORGANIZATION,Statis,Valid,Createtime,Verified,Service_code,ProID,CityID,Aid,Pid,[Sid],APNum,SecId)VALUES(@NETBAR_WACODE,@PLACE_NAME,@SITE_ADDRESS,@LONGITUDE,@LATITUDE,@NETSITE_TYPE,1,@LAW_PRINCIPAL_NAME,@RELATIONSHIP_ACCOUNT,'" + il.SECURITY_SOFTWARE_ORGCODE + "',1,1,GETDATE(),1,@Service_code,@ProID,@CityID,@Aid,@Pid,@Sid,@APNum,@SecId); SELECT SCOPE_IDENTITY();";
-            SqlParameter[] param = new SqlParameter[] 
-            { 
+            SqlParameter[] param = new SqlParameter[]
+            {
                 new SqlParameter("@NETBAR_WACODE",il.NETBAR_WACODE),
                 new SqlParameter("@PLACE_NAME",il.LocaName),
                 new SqlParameter("@SITE_ADDRESS",il.Address),
@@ -726,12 +761,16 @@ namespace HCZZ.DAL
             };
             return Convert.ToInt32(SqlHelper.ExecuteScalar(SqlHelper.DBConnStr, CommandType.Text, sql, param));
         }
-
+        /// <summary>
+        /// 添加设备
+        /// </summary>
+        /// <param name="il"></param>
+        /// <returns></returns>
         public int ImportDev(ImportLocation il)
         {
             string sql = "INSERT INTO DevInfo (COLLECTION_EQUIPMENT_ID,AP_MAC,NETBAR_WACODE,LONGITUDE,LATITUDE,NETBAR_ID,APType,Verified,CreateTime,DevStatis,Lguid,IsTrial,ProjectType,CasesType,ModeType,LogCapture,APName,Channel,IsReboot,ForcedOfflineTime,FenceOffTime,isopen,PastTime) VALUES(@COLLECTION_EQUIPMENT_ID,@AP_MAC,@NETBAR_WACODE,@LONGITUDE,@LATITUDE,@NETBAR_ID,@APType,1,GETDATE(),2,NEWID(),0,@ProjectType,@CasesType,1,7,@APName,11,0,30,0,1,999) ";
-            SqlParameter[] param = new SqlParameter[] 
-            { 
+            SqlParameter[] param = new SqlParameter[]
+            {
                 new SqlParameter("@COLLECTION_EQUIPMENT_ID",il.SECURITY_SOFTWARE_ORGCODE+il.Mac.Replace("-","")),
                 new SqlParameter("@AP_MAC",il.Mac),
                 new SqlParameter("@NETBAR_WACODE",il.NETBAR_WACODE),
@@ -745,12 +784,16 @@ namespace HCZZ.DAL
             };
             return SqlHelper.ExecuteNonQuery(SqlHelper.DBConnStr, CommandType.Text, sql, param);
         }
-
+        /// <summary>
+        /// 修改设备
+        /// </summary>
+        /// <param name="il"></param>
+        /// <returns></returns>
         public int updateImportDev(ImportLocation il)
         {
             string sql = "UPDATE DevInfo SET NETBAR_WACODE = @NETBAR_WACODE,NETBAR_ID = @NETBAR_ID,APType = @APType,ProjectType = @ProjectType,CasesType = @CasesType,APName = @APName,LONGITUDE=@LONGITUDE,LATITUDE=@LATITUDE,Verified=1 WHERE ID=@devId";
-            SqlParameter[] param = new SqlParameter[] 
-            { 
+            SqlParameter[] param = new SqlParameter[]
+            {
                 new SqlParameter("@NETBAR_WACODE",il.NETBAR_WACODE),
                 new SqlParameter("@LONGITUDE",(il.ApType == 1 ? il.LONGITUDE : null)),
                 new SqlParameter("@LATITUDE",(il.ApType == 1 ? il.LATITUDE : null)),

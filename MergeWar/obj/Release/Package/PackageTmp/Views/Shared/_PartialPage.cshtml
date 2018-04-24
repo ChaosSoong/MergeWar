@@ -1,0 +1,77 @@
+﻿@using Webdiyer.WebControls.Mvc
+<style>
+    .liPage a {
+        color: #7bd2da;
+    }
+</style>
+<div class="page">
+    <ul class="ulPage">
+            @Ajax.Pager((IPagedList)Model["model"], new PagerOptions()
+       {
+           FirstPageText = "首页",
+           PrevPageText = "上一页",
+           NextPageText = "下一页",
+           LastPageText = "尾页",
+           PageIndexParameterName = Model["pageIndex"],
+           NavigationPagerItemTemplate = "<li class=\"liPage\" style=\"width: 42px; \">{0}</li>",
+           NumericPagerItemTemplate = "<li class=\"liPage\" >{0}</li>",
+           ShowMorePagerItems = false,
+           NumericPagerItemCount = 5,
+       }).AjaxOptions(a => a.SetUpdateTargetId("contentTable"))
+            <li class="contPage">共<span>@Model["model"].TotalPageCount</span>页/共<span>@Model["model"].TotalItemCount</span>条</li>
+            @if (Model["model"].TotalPageCount > 1)
+            {
+                <li class="jumpPage contPage"><input class="jumpPageText" type="text" style="width:50px" id="pageval" value=""><input class="jumpPageBtn" id="gotoa" value="跳转" type="button"></li>
+            }
+        
+    </ul>
+</div>
+<script>
+        $("#gotoa").click(function () {
+            var PageIndex=Number($("#pageval").val());
+            if (PageIndex <= @Model["model"].TotalPageCount && PageIndex >0) {
+                var url = window.location.search;
+                var pageval="";
+                //如果不是初始化页面
+                if (url.indexOf("=") > 0) {
+                    if(url.indexOf("@Model["PageIndex"]")>0){
+                        var len=url.split("=").pop();
+                        url=url.substring(0,url.length-len.length);
+                        pageval=url+PageIndex;
+                    }else{
+                        pageval=url+"&@Model["pageIndex"]="+PageIndex;
+                    }
+                } else {
+                    pageval = $(".ulPage a:eq(0)").attr("href");
+                    pageval = pageval.substr(0, pageval.length - 1);
+                    pageval += PageIndex;
+                }
+                window.location.href = pageval;
+            }else{
+                alert("没有这一页！");
+                $("#pageval").val("");
+            }
+        })
+        $(function () {
+            //获取浏览器地址栏参数
+            var url = window.location.search;
+            if (url.indexOf("=") > 0){
+                if(url.indexOf("@Model["PageIndex"]")>0){
+                    var len=url.split("=").pop();
+                    $("#pageval").val(len);
+                    $(".liPage").each(function(){
+                        if($(this).text()==len){
+                            $(this).addClass("active");
+                        }
+                    })
+                }else{
+                    $(".liPage:eq(2)").addClass("active");
+                    $("#pageval").val(1);
+                }
+            }else{
+                $(".liPage:eq(2)").addClass("active");
+                $(".liPage:eq(2)").css("color","#616363");
+                $("#pageval").val(1);
+            }
+        })
+</script>

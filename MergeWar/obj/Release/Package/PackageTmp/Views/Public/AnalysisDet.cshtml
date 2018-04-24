@@ -1,0 +1,45 @@
+﻿
+@{
+    Layout = null;
+}
+@using Webdiyer.WebControls.Mvc
+@using HCZZ.ModeDB;
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+</head>
+<body>
+    <div>
+        @{PagedList<MergeWar.Models.Collision> cllist = (PagedList<MergeWar.Models.Collision>)ViewBag.pl;
+            <table border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <th style="width: 30%;">序号</th>
+                    <th style="width: 40%;">出现场所名称</th>
+                    <th style="width: 30%;">采集时间</th>
+                    @*<th style="width: 25%;">最后出现场所名称</th>
+                        <th style="width: 24%;">最后出现场所时间</th>*@
+                </tr>
+                @if (cllist!=null||cllist.Count > 0)
+                {
+                    int i = 1;
+                    foreach (var cl in cllist)
+                    {
+                        Loc_NetBarInfo loca = HCZZ.AppCode.WebCommon.GetLocaInfoByNetBar_ID(Convert.ToInt32(cl.NETBAR_ID));
+                        string PLACE_NAME = (loca == null ? "" : loca.PLACE_NAME);
+                        
+                        <tr>
+                            <td style="width: 30%;">@i</td>
+                            <td style="width: 30%;" title='@PLACE_NAME'>@(Common.ChangeValue.ByteSubString(PLACE_NAME, 12))</td>
+                            <td class="addAuthority" style="width: 30%;">@(Szcert.Audit.CommonBase.ChangeValueBase.RefAuditTime(Convert.ToInt64(cl.CAPTURE_TIME)))</td>
+                        </tr>
+                        i++;
+                    }
+                }
+            </table>
+        }
+    </div>
+</body>
+</html>

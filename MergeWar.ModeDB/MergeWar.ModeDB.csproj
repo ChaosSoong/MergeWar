@@ -32,7 +32,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
@@ -42,6 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseDateModel.cs" />
+    <Compile Include="BKBJ.cs" />
+    <Compile Include="DatasInfo.cs" />
+    <Compile Include="Fench_TerminalInfo.cs" />
+    <Compile Include="Fench_TerminalPosOrbit.cs" />
     <Compile Include="ImportLocation.cs" />
     <Compile Include="IndexStatisInfo.cs" />
     <Compile Include="LocaGPSInfo.cs" />
@@ -61,10 +65,12 @@
     <Compile Include="Sys_RoleInfo.cs" />
     <Compile Include="Sys_UserPowerInfo.cs" />
     <Compile Include="TermianlAccessLog.cs" />
+    <Compile Include="TermianlNetworkLog.cs" />
     <Compile Include="UnknownDevice.cs" />
     <Compile Include="UserInfo.cs" />
     <Compile Include="Verify_NetBarInfo.cs" />
     <Compile Include="VersionInfo.cs" />
+    <Compile Include="Video3CInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

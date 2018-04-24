@@ -2,6 +2,7 @@
     ViewBag.Title = "场所信息详情";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<link href="~/Content/css/CSGL.css" rel="stylesheet" />
 @using HCZZ.DAL;
 @using HCZZ.ModeDB;
 @using HCZZ.Models;
@@ -156,7 +157,7 @@
                             安全厂商组织机构代码：
                         </td>
                         <td>
-                            @loca.CODE_ALLOCATION_ORGANIZATION
+                            @loca.SECURITY_SOFTWARE_ORGCODE
                         </td>
                     </tr>
                     <tr>
@@ -181,7 +182,7 @@
                             厂商数据来源：
                         </td>
                         <td>
-                            @ChangeValue.RefMakeTypeValue(loca.MakeType)
+                            @loca.SECURITY_SOFTWARE_ORGNAME
                         </td>
                         <td align="right">
                             @*  网络接入账号或固定IP地址：*@

@@ -1,0 +1,314 @@
+﻿@{
+    Layout = null;
+    string tabType = ViewBag.tabType;
+}
+@using HCZZ.Common;
+@using HCZZ.ModeDB
+@using Webdiyer.WebControls.Mvc;
+<script src="@Url.Content("~/Content/js/jquery-1.7.1.min.js")" type="text/javascript"></script>
+<style>
+    .content .contentbody .contentTable table tr td p {
+        display: inline-block;
+    }
+
+    .contentTable tr td p {
+        display: inline-block;
+        float: left;
+    }
+</style>
+
+<div class="content">
+    <div class="contentbody">
+        <div class="contentTable">
+            @switch (tabType)
+            {
+                case "1"://实名
+                    <table cellspacing="0" cellpadding="0" border="0">
+                        <tbody>
+                            <tr>
+                                <th width="13%">手机号码</th>
+                                <th width="10%">终端MAC地址</th>
+                                <th width="13%">记录创建时间</th>
+                            </tr>
+                            @{
+                                PagedList<DatasInfo> _molist = (PagedList<DatasInfo>)ViewBag.pl;
+                                if (_molist != null && _molist.Count > 0)
+                                {
+                                    foreach (DatasInfo item in _molist)
+                                    {
+                                        <tr>
+                                            <td width="12%">@item.Mobile</td>
+                                            <td width="12%">@item.MacAddress</td>
+                                            @*<td width="12%">@Szcert.Audit.CommonBase.ChangeValueBase.RefAuditTime(item.CreateTime / 1000)</td>*@
+                                            <td>@item.CreateTime</td>
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td style="border:none;">暂无实名信息</td>
+                                        <td style="border:none;"></td>
+                                        <td></td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                                if (_molist != null && _molist.Count > 0)
+                                {
+                                    @Html.Partial("~/Views/Shared/_PartialPage.cshtml", new RouteValueDictionary { { "model", _molist }, { "pageindex", "PageIndex" } })
+                                    }
+
+                                    break;
+                                case "2"://虚拟
+                                    {
+                                        List<DatasInfo> pl = ViewBag.pl;
+                                        <table cellpadding="0" cellspacing="1" width="100%" class="AddXxwenzi_tab">
+                                            @if (pl != null && pl.Count != 0)
+                        {
+                            Dictionary<int, string> dic = (Dictionary<int, string>)ViewBag.VidDic;
+                                                <tr>
+                                                    <td align="center" colspan="4"><b>即时通讯</b></td>
+                                                </tr>
+                                                <tr>
+                                                    <td width="15%" align="right">QQ：</td>
+                                                    <td width="35%" title="@dic[20]">@ChangeValue.ByteSubString(dic[20], 55)</td>
+                                                    <td width="15%" align="right">微信：</td>
+                                                    <td width="35%" title="@dic[22]">@ChangeValue.ByteSubString(dic[22], 55)</td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="right">阿里旺旺：</td>
+                                                    <td title="@dic[37]">@ChangeValue.ByteSubString(dic[37], 55)</td>
+                                                    <td align="right">飞信：</td>
+                                                    <td title="@dic[38]">@ChangeValue.ByteSubString(dic[38], 55)</td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="right">米聊：</td>
+                                                    <td title="@dic[39]">@ChangeValue.ByteSubString(dic[39], 55)</td>
+                                                    <td align="right">陌陌：</td>
+                                                    <td title="@dic[40]">@ChangeValue.ByteSubString(dic[40], 55)</td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="center" colspan="4"><b>邮箱</b></td>
+                                                </tr>
+                                                <tr>
+                                                    <td align="right">QQ邮箱：</td>
+                                                    <td width="35%" title="@dic[33]">@ChangeValue.ByteSubString(dic[33], 55)</td>
+                                                    <td align="right">网易邮箱：</td>
+                                                    <td width="35%" title="@dic[34]">@ChangeValue.ByteSubString(dic[34], 55)</td>
+                                                </tr>
+                                                    <tr>
+                                                        <td align="right">新浪邮箱：</td>
+                                                        <td title="@dic[41]">@ChangeValue.ByteSubString(dic[41], 55)</td>
+                                                        <td align="right">139邮箱：</td>
+                                                        <td title="@dic[42]">@ChangeValue.ByteSubString(dic[42], 55)</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td align="center" colspan="4"><b>购物</b></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td align="right">京东：</td>
+                                                        <td width="35%" title="@dic[26]">@ChangeValue.ByteSubString(dic[26], 55)</td>
+                                                        <td align="right">苏宁易购：</td>
+                                                        <td width="35%" title="@dic[27]">@ChangeValue.ByteSubString(dic[27], 55)</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td align="right">淘宝：</td>
+                                                        <td width="35%" title="@dic[21]">@ChangeValue.ByteSubString(dic[21], 55)</td>
+                                                        <td align="right">天猫：</td>
+                                                        <td width="35%" title="@dic[43]">@ChangeValue.ByteSubString(dic[43], 55)</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td align="right">唯品会：</td>
+                                                        <td width="35%" title="@dic[44]">@ChangeValue.ByteSubString(dic[44], 55)</td>
+                                                        <td align="right">美团：</td>
+                                                        <td width="35%" title="@dic[45]">@ChangeValue.ByteSubString(dic[45], 55)</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td align="right">大众点评：</td>
+                                                        <td width="35%" title="@dic[46]">@ChangeValue.ByteSubString(dic[46], 55)</td>
+                                                        <td colspan="2"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td align="center" colspan="4"><b>论坛社区</b></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td align="right">猫扑：</td>
+                                                        <td width="35%" title="@dic[30]">@ChangeValue.ByteSubString(dic[30], 55)</td>
+                                                        <td align="right">天涯：</td>
+                                                        <td width="35%" title="@dic[29]">@ChangeValue.ByteSubString(dic[29], 55)</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td align="right">新浪微博：</td>
+                                                        <td width="35%" title="@dic[23]">@ChangeValue.ByteSubString(dic[23], 55)</td>
+                                                        <td align="right">QQ微博：</td>
+                                                        <td width="35%" title="@dic[50]">@ChangeValue.ByteSubString(dic[50], 55)</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td align="center" colspan="4"><b>酒店</b></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td align="right">携程：</td>
+                                                        <td width="35%" title="@dic[35]">@ChangeValue.ByteSubString(dic[35], 55)</td>
+                                                        <td align="right">去哪儿：</td>
+                                                        <td colspan="3" title="@dic[36]">@ChangeValue.ByteSubString(dic[36], 100)</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td align="right">赶集网：</td>
+                                                        <td width="35%" title="@dic[48]">@ChangeValue.ByteSubString(dic[48], 55)</td>
+                                                        <td align="right">58同城：</td>
+                                                        <td colspan="3" title="@dic[49]">@ChangeValue.ByteSubString(dic[49], 100)</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td align="center" colspan="4"><b>搜索</b></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td align="right">百度搜索：</td>
+                                                        <td width="35%" title="@dic[52]">@ChangeValue.ByteSubString(dic[52], 55)</td>
+                                                        <td align="right">必应搜索：</td>
+                                                        <td width="35%" title="@dic[54]">@ChangeValue.ByteSubString(dic[54], 55)</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td align="right">360搜索：</td>
+                                                        <td width="35%" title="@dic[55]">@ChangeValue.ByteSubString(dic[55], 55)</td>
+                                                        <td align="right"></td>
+                                                        <td width="35%"></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td align="center" colspan="4"><b>其他</b></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td align="right">IMEI：</td>
+                                                        <td width="35%" title="@dic[24]">@ChangeValue.ByteSubString(dic[24], 55)</td>
+                                                        <td align="right">IMSI：</td>
+                                                        <td width="35%" title="@dic[25]">@ChangeValue.ByteSubString(dic[25], 55)</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td align="right">滴滴：</td>
+                                                        <td width="35%" title="@dic[32]">@ChangeValue.ByteSubString(dic[32], 55)</td>
+                                                        <td align="right">12306：</td>
+                                                        <td width="35%" title="@dic[47]">@ChangeValue.ByteSubString(dic[47], 55)</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td align="right">QQ游戏：</td>
+                                                        <td width="35%" title="@dic[51]">@ChangeValue.ByteSubString(dic[51], 55)</td>
+                                                        <td align="right">虎牙直播：</td>
+                                                        <td width="35%" title="@dic[53]">@ChangeValue.ByteSubString(dic[53], 55)</td>
+                                                    </tr>
+                                            }
+                                            else
+                                            {
+                                                <tr>
+                                                    <td colspan="4" align="center">暂无虚拟身份详细信息</td>
+                                                </tr>
+                                            }
+                                        </table>
+                                    }
+                                    break;
+                                case "3"://硬件
+                                    List<DatasInfo> _maclist = (List<DatasInfo>)ViewBag.pl;
+                                    if (_maclist != null && _maclist.Count > 0)
+                                    {
+                                        string Mac = string.Join("，", _maclist.Select(a => a.MacAddress).ToList());
+                                        <table cellspacing="0" cellpadding="0" border="0">
+                                            <caption><h1 style="color:#7bd2da;font-size: 15px;">硬件特征</h1></caption>
+                                            <tr>
+                                                <td width="100px" align="right">终端MAC地址：</td>
+                                                <td>@Mac</td>
+                                            </tr>
+                                        </table>
+                                    }
+                                    else
+                                    {
+                                        <table cellspacing="0" cellpadding="0" border="0">
+                                            <caption><h1 style="color:#7bd2da;font-size: 15px;">硬件特征</h1></caption>
+                                            <tr>
+                                                <td width="100px" align="right">终端MAC地址：</td>
+                                                <td>暂无MAC地址</td>
+                                            </tr>
+                                        </table>
+                                    }
+                                    break;
+                                default://上下线
+                                    <table cellspacing="0" cellpadding="0" border="0">
+                                        <tbody>
+                                            <tr>
+                                                <th width="13%">场所名称</th>
+                                                <th width="10%">认证号码</th>
+                                                <th width="13%">终端MAC地址</th>
+                                                <th width="10%">AP名称</th>
+                                                <th width="13%">场所内网IP地址</th>
+                                                <th width="13%">用户公网IP地址</th>
+                                                <th width="12%">上线时间</th>
+                                                <th width="12%">下线时间</th>
+                                                <th width="4%">详细</th>
+                                            </tr>
+                                            @{
+                                                PagedList<TermianlAccessLog> _talist = (PagedList<TermianlAccessLog>)ViewBag.pl;
+                                                if (_talist != null && _talist.Count > 0)
+                                                {
+                                                    foreach (TermianlAccessLog item in _talist)
+                                                    {
+                                                        Loc_DevInfo mac = HCZZ.AppCode.WebCommon.GetMacInfoByDevAP_ID(0, item.AP_MAC);
+                                                        Loc_NetBarInfo loca = HCZZ.AppCode.WebCommon.GetLocaInfoByNetBar_ID(Convert.ToInt32(item.NETBAR_ID));
+                                                        string PLACE_NAME = (loca == null ? item.NETBAR_ID.ToString() : loca.PLACE_NAME);
+                                                        string apName = (mac != null ? mac.APName : item.AP_MAC);
+                                                        <tr>
+                                                            <td width="13%" title="@PLACE_NAME">
+                                                                @(ChangeValue.ByteSubString(PLACE_NAME, 30))
+                                                            </td>
+                                                            <td width="10%" title="@item.AUTH_ACCOUNT">@item.AUTH_ACCOUNT</td>
+                                                            <td width="13%">@item.MAC</td>
+                                                            <td width="10%">@apName</td>
+                                                            <td width="13%">@ChangeValue.RefIPvlong(item.IP_ADDRESS)</td>
+                                                            <td width="13%">@ChangeValue.RefIPvlong(item.SRC_IP)</td>
+                                                            <td width="12%">@ChangeValue.RefAuditTime(Convert.ToInt64(item.START_TIME))</td>
+                                                            <td width="12%">@ChangeValue.RefAuditTime(Convert.ToInt64(item.END_TIME))</td>
+                                                            <td width="4%">
+                                                                <a target="_blank" class="Cz_chakan" href="@Url.Content("~/Public/OninfoDetail/" + item.ID)" title="详细"><img src="@Url.Content("~/Content/images/view1_icon.png")" alt="详细"></a>
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <tr>
+                                                        <td style="border:none;">暂无上下线信息</td>
+                                                        <td style="border:none;"></td>
+                                                        <td style="border:none;"></td>
+                                                        <td style="border:none;"></td>
+                                                        <td style="border:none;"></td>
+                                                        <td style="border:none;"></td>
+                                                        <td style="border:none;"></td>
+                                                        <td style="border:none;"></td>
+                                                        <td></td>
+                                                    </tr>
+                                                    @*<template>
+                                                            暂无上下线信息
+                                                        </template>*@
+                                                }
+                                            }
+                                        </tbody>
+                                    </table>
+                                                if (_talist != null && _talist.Count > 0)
+                                                {
+                                                    @Html.Partial("~/Views/Shared/_PartialPage.cshtml", new RouteValueDictionary { { "model", _talist }, { "pageindex", "PageIndex" } })
+                                                    }
+                                                    break;
+                                                }
+            <script>
+                $("#showDiv").hide();
+                $(".ulPageNo a").click(function () {
+                    var ul = $(".ulPageNo")
+                    $(this).attr("hrefs", $(this).attr("href")).removeAttr("href");
+                    loadPage(ul, $(this).attr("hrefs"));//不刷新分页
+                })
+                    @Html.Raw(ViewBag.errscript);
+            </script>
+            <script>
+                @Html.Raw(ViewBag.errscript);
+            </script>
+        </div>
+    </div>
+</div>

@@ -10,31 +10,76 @@
     <link href="@Url.Content("../../Content/css/publicHeader.css")" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("../../Content/css/YJCX.css")" rel="stylesheet" type="text/css"  />
     <script src="@Url.Content("../../Content/js/jquery-1.7.1.min.js")" type="text/javascript"></script>
-    <script src="@Url.Content("../../Content/js/publicJS.js")" type="text/javascript" charset="utf-8"></script>
-     <script src="@Url.Content("../../Content/js/OnekeySelect.js")" type="text/javascript" charset="utf-8"></script>
 </head>
 <body>
 	<div class="content">
-		<div class="contentbody" id="contentbody">
+		<div class="contentbody" id="contentbody" style="width:100%">
 			<ul class="contentYJFX">
 				<li class="contentYJFXLi1">
-					<span id="sp" value="1">实名</span>
+					<span id="sp" value="1">实名信息</span>
 					<input class="contentYJFXLi1Text" id="input" name="input"  type="text"/>
-					<input class="contentYJFXLi1Down" onclick="liisshow('contentYJFXLi1DownData')" />
+					<input class="contentYJFXLi1Down" onclick="myFunction('contentYJFXLi1DownData')" />
 					<ul class="contentYJFXLi1DownData" id="contentYJFXLi1DownData">
-					<li onclick="myFunction2(this)" value="1"><span>实名</span></li>
-					<li onclick="myFunction2(this)" value="2"><span>硬件特征</span></li>
-					<li onclick="myFunction2(this)" value="3"><span>虚拟身份</span></li>
+					<li onclick="myFunction2(this)" value="1"><span>实名信息</span></li>
+					<li onclick="myFunction2(this)" value="2"><span>虚拟身份</span></li>
+					<li onclick="myFunction2(this)" value="3"><span>硬件特征</span></li>
 					</ul>
 				</li>
 				<li class="contentYJFXLi2">
-					<input class="contentYJFXLi2Demand" type="button" onclick="onSubmintVal()" id=""  />
+					<input class="contentYJFXLi2Demand" type="button" onclick="onSubmintVal()"  />
 				</li>
 				<li class="contentYJFXLi3">
-					<p id="spSeach">“实名”如：130XXXXXXXX以上查询尽量填写完整查询条件</p>
+					<p id="spSeach">“实名信息”如：130XXXXXXXX以上查询尽量填写完整查询条件</p><br />
+                    <p style="margin-top:-15px">以上查询尽量填写完整查询条件</p>
 				</li>
 			</ul>
 		</div>
 	</div>
 </body>
 </html>
+
+<script type="text/javascript">
+    function myFunction(pe) {
+        $('.contentYJFXLi1DownData').toggle(100);
+    };
+    function myFunction2(e) {
+        $('#contentYJFXLi1DownData').toggle(100);
+        $("#sp").html($(e).find("span")[0].innerText);
+        $("#sp").attr("value", $(e).attr("value"));
+        spval();
+    };
+    function onSubmintVal() {
+        var data = { Id: $("#sp").attr("value"), KeyWord: $("#input").val() };
+        window.location.href = '@Url.Content("~/Search/Result?Id=")' + $("#sp").attr("value") + "&KeyWord=" + $("#input").val();
+        @*$.ajax({
+            type: "GET",
+            url: '@Url.Content("~/Search/Result?Id=")' + $("#sp").attr("value") + '&KeyWord=' + $("#input").val(),
+            success: function (data) {
+                if ($.trim($("#input").val()) == "") {
+                    $("#spSeach").html("请输入搜索关键字");
+                } else if ($("#input").val().length < 3) {
+                    result = false;
+                    $("#spSeach").html("查询条件最少3位数");
+                }
+                else {
+                    window.location.href = '@Url.Content("~/Search/Result?Id=")' + $("#sp").attr("value") + "&KeyWord=" + $("#input").val();
+                }
+            }
+        });*@
+    }
+    function spval() {
+        switch ($("#sp").html()) {
+            case "实名信息":
+                $("#spSeach").html("“实名信息”如：130XXXXXXXX以上查询尽量填写完整查询条件");
+                break;
+            case "硬件特征":
+                $("#spSeach").html("请输入Mac地址，如：AB-3F-01-3C-00-2F");
+                break;
+            case "虚拟身份":
+                $("#spSeach").html("请输入虚拟身份，如：45026871");
+                break;
+            default:
+                $("#spSeach").html("“实名信息”如：130XXXXXXXX以上查询尽量填写完整查询条件");
+        }
+    }
+</script>

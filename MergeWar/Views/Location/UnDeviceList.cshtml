@@ -1,149 +1,251 @@
 ﻿@using System.Collections.Generic
 @using HCZZ.ModeDB
 @using Webdiyer.WebControls.Mvc
+@using HCZZ.Common
 @{
     ViewBag.Title = "未知设备列表";
-}
-<link href="@Url.Content("../../Content/css/CSGL.css")" rel="stylesheet" type="text/css"/>
-<script src="@Url.Content("../../Content/DatePicker/WdatePicker.js")"  type="text/javascript" charset="utf-8"></script>
-<div class="contentbody" id="contentbody">
-@using (Html.BeginForm("UnDeviceList", "Location", new { @pageIndex = 1 }, FormMethod.Get))
-{
-    <div class="Cx_tt">
-		<div class="btn">
-        
-			<input class="btn_Dy" id="Excel" onclick="javascript:closeCx()" type="button" name="button" value="隐藏查询区"
-				  onmouseover="this.className='Over_Dy'"
-				  onmouseout="this.className='Onout_Dy'"/> 
-                  <input class="btn_Dy" id="Cx_xs" onclick="ExcelUn()" type="button" name="button" value="导出Excel"
-				  onmouseover="this.className='Over_Dy'"
-				  onmouseout="this.className='Onout_Dy'"/> 
-			<input class="btn_Dy" id="Cx_yc" onclick="javascript:showCx()"style="display:none;"  type="button" name="button" value="显示查询区"onmouseover="this.className='Over_Dy'"onmouseout="this.className='Onout_Dy'"/>
-            
-		</div>
-		查询条件和按钮区
-	</div>
+    string relaVal = ChangeValue.RefPageRelaByPath("Location/UnDeviceList");
     Dictionary<string, string> dic = (Dictionary<string, string>)ViewBag.dic;
-    <div class="Cx_mind" id="Cx">
-        <div class="mindLi"><span>审计终端MAC：</span><input type="text" name="txtAP_MAC" id="txtAP_MAC" maxlength="17" style="width: 180px" class="_text" value="@dic["AP_MAC"]"/>
-        </div>
-          <div class="mindLi"><span>区域名称：</span><input type="text" name="AreaName" id="AreaName" maxlength="30" style="width: 180px" class="_text" value="@dic["AreaName"]"/>
-        </div>
-
-        <div class="mindTime"><span>最近更新时间范围：</span>
-        <input type="text" name="txtStartTime" id="txtStartTime" class="_time" value="@dic["StartTime"]" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',readonly:true,maxDate:'#F{$dp.$D(\'txtEndTime\')}'})" /> --- 
-        <input type="text" name="txtEndTime" id="txtEndTime" class="_time" value="@dic["EndTime"]" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',readonly:true,minDate:'#F{$dp.$D(\'txtStartTime\')}'})" /></div> 
-        <div class="mindBtn" style=" width:auto">         
-            <input class="btn_SS" type="reset" name="button" value="重置"    onmouseover="this.className='Over_SS'"onmouseout="this.className='Onout_SS'"/>
-            <input class="btn_SS" type="submit" name="button" value="搜索"
-		onmouseover="this.className='Over_SS'"
-		onmouseout="this.className='Onout_SS'"/>   
-        </div>
-	</div>
-	<div class="contentTable">
-		<table cellpadding="0" cellspacing="0" width="100%" class="Cx_tab">
-			<tr>
-				<th width="5%">序号</th>
-                <th width="15%">审计终端MAC</th>
-			    <th width="15%">最近更新时间</th>
-				<th width="20%">公网IP地址</th>
-				<th width="20%">区域名称</th>
-			    <th width="20%">创建时间</th>
-                <th width="%5">操作</th>
-			</tr>
-		</table>
-	</div>
-    <div id="mind" style="overflow-y:scroll;" class="contentTable">
-		<table cellpadding="0" cellspacing="0" width="100%" class="Cx_tab">	
-        @{
-        PagedList<UnknownDevice> pl = (PagedList<UnknownDevice>)ViewBag.pl;
-            if (pl != null && pl.Count > 0)
-            {
-                foreach (UnknownDevice item in pl)
-                {
-			        <tr>
-				        <td width="5%">@item.PageNum</td>
-                        <td width="15%">@(!string.IsNullOrEmpty(item.AP_MAC) ? item.AP_MAC.Insert(10, "-").Insert(8, "-").Insert(6, "-").Insert(4, "-").Insert(2, "-") : "")</td>
-			            <td width="15%">@item.UpdateTime.ToString("yyyy-MM-dd HH:mm:ss")</td>
-			            <td width="20%">@item.OutIpAddress</td>
-						<td width="20%">@item.AreaName</td>
-                        <td width="20%">@item.CreateTime.ToString("yyyy-MM-dd HH:mm:ss")</td>
-					    <td width="5%"><a class="Cz_shanchu" href="javascript:void(0)" onclick="del('@item.ID')" title="删除"><img title="删除" src="@Url.Content("../../Content/images/del1_icon.png")" alt="删除"/></a></td>
-			        </tr> 
-                }
-                if (pl.TotalPageCount > 1)
-                { 
-			    <tr>
-				    <td colspan="7">
-                        <div class="pag_td">
-                        @Html.Pager(pl, new PagerOptions() { PageIndexParameterName = "pageIndex", @CssClass = "pag" })
-                        <div class="pag_all">共<font>@pl.TotalPageCount</font>页/共<font>@pl.TotalItemCount</font>条</div>
-                        </div>
-				    </td> 
-			    </tr>
-                }
-            }
-            else
-            {
-                <tr><td colspan="7">暂无可显示数据</td></tr>
-            }
-        }   
-		</table>
-    </div>  
-	 
-    <script type="text/javascript">
-        //mindasd(310);
-        $(function () {
-            $("form").submit(function () { showDown(); });
-        });
-
-        function del(obj) {
-            if (confirm("确定要删除吗？\n如果是误删，系统会自动采集。")) {
-                location.href = '@Url.Content("~/Location/DeleteUnDev/")' + obj;
-            }
-        }
-
-        function showMap(wmac) {
-            $.ajax({ type: "Get",
-                url: '@Url.Content("~/Location/ReturnUrl?path=/MapInfo/UnkonwnLocaMap/")' + wmac,
-                dataType: "json",
-                async: false,
-                cache: false,
-                success: function (data, status) {
-                    if (typeof (data.err) != 'undefined' && data.err != "") {
-                        alert(data.err);
-                    } else {
-                        var iwidth = 500;
-                        var iheight = 400;
-                        var itop = (window.screen.availHeight - 30 - iheight) / 2;
-                        var ileft = (window.screen.availWidth - 10 - iwidth) / 2;
-                        window.open(data.url, '场所标记', 'height=' + iheight + ',width=' + iwidth + ',top=' + itop + ',left=' + ileft + ',toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no');
-                    }
-                    closeDown();
-                },
-                error: function (data, status, e) {
-                    alert(e);
-                    closeDown();
-                }
-            });
-        }
-        function ExcelUn() {
-            $.ajax({
-                type: "Get",
-                url: '@Url.Content("~/Public/ExcelUnDevice")',
-                dataType: "json",
-                data: { txtAP_MAC: $("#txtAP_MAC").val(), txtStartTime: $("#txtStartTime").val(), txtEndTime: $("#txtEndTime").val(), AreaName: $("#AreaName").val() },
-                cache: false,
-                success: function (data, status) {
-                    if (typeof (data.err) != 'undefined' && data.err != "") {
-                        alert(data.err);
-                    } else {
-                        window.location.href = '@Url.Content("~/Public/Download?name=")' + encodeURIComponent('未知场所列表_') + '&path=' + encodeURIComponent(data.result);
-                    }
-                    closeDown();
-                }
-            })
-        }
-    </script>
 }
+<link href="@Url.Content("../../Content/css/CSGL.css")" rel="stylesheet" type="text/css" />
+<script src="@Url.Content("../../Content/DatePicker/WdatePicker.js")" type="text/javascript" charset="utf-8"></script>
+<style>
+      #djsTable:hover {
+        background-color: #1E1F2D;
+    }
+     .contentbody .contentTable {
+    }
+
+        .contentbody .contentTable table {
+            width: 100%;
+        }
+
+            .contentbody .contentTable table tr {
+                border-bottom: 1px solid #181926;
+                height: 40px;
+            }
+
+                .contentbody .contentTable table tr:nth-child(even) {
+                    background-color: #20212e;
+                }
+
+                .contentbody .contentTable table tr:nth-child(odd) {
+                    background-color: #21222f;
+                }
+
+                .contentbody .contentTable table tr:first-child {
+                    background-color: #1E1F2D;
+                }
+
+                .contentbody .contentTable table tr th {
+                    text-align: left;
+                    padding-left: 15px;
+                    border-right: 2px solid rgb(24, 25, 38);
+                    color: #85858A;
+                    font-family: "微软雅黑";
+                    font-size: 13px;
+                }
+
+                .contentbody .contentTable table tr td {
+                    text-align: left;
+                    padding-left: 15px;
+                    border-right: 2px solid rgb(24, 25, 38);
+                    color: #85858A;
+                    font-family: "微软雅黑";
+                    font-size: 12px;
+                }
+
+                .contentbody .contentTable table tr:hover {
+                    background-color: #222a36;
+                }
+
+            .contentbody .contentTable table.djxTable tr:first-child:hover {
+                background-color: #1E1F2D;
+            }
+                
+    #contentTable tr:hover {
+        background-color: #222a36;
+    }
+   #contentTable #djsTable:hover {
+        background-color: #1E1F2D;
+    }
+</style>
+<div class="contentbody" id="contentbody">
+    @using (Html.BeginForm("UnDeviceList", "Location", new { @pageIndex = 1 }, FormMethod.Get))
+    {
+        @*<div class="Cx_tt">
+            <div class="btn">
+                <input class="btn_Dy" id="Excel" onclick="javascript:closeCx()" type="button" name="button" value="隐藏查询区"
+                       onmouseover="this.className='Over_Dy'"
+                       onmouseout="this.className='Onout_Dy'" />
+                <input class="btn_Dy" id="Cx_xs" onclick="ExcelUn()" type="button" name="button" value="导出Excel"
+                       onmouseover="this.className='Over_Dy'"
+                       onmouseout="this.className='Onout_Dy'" />
+                <input class="btn_Dy" id="Cx_yc" onclick="javascript:showCx()" style="display:none;" type="button" name="button" value="显示查询区" onmouseover="this.className='Over_Dy'" onmouseout="this.className='Onout_Dy'" />
+            </div>
+            查询条件和按钮区
+        </div>*@
+        <div class="contentTitle">
+            <span>查询条件和按钮区</span>
+            <input class="search" id="BtnSelect" onclick="myFunction(this, 'contentConditions')" value="隐藏" type="button">
+            <input class="add" value="导出Excel" onclick="ExcelUn()" type="button">
+        </div>
+        @*<div class="Cx_mind" id="Cx">
+            <div class="mindLi">
+                <span>审计终端MAC：</span><input type="text" name="txtAP_MAC" id="txtAP_MAC" maxlength="17" style="width: 180px" class="_text" value="@dic["AP_MAC"]" />
+            </div>
+            <div class="mindLi">
+                <span>区域名称：</span><input type="text" name="AreaName" id="AreaName" maxlength="30" style="width: 180px" class="_text" value="@dic["AreaName"]" />
+            </div>
+
+            <div class="mindTime">
+                <span>最近更新时间范围：</span>
+                <input type="text" name="txtStartTime" id="txtStartTime" class="_time" value="@dic["StartTime"]" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',readonly:true,maxDate:'#F{$dp.$D(\'txtEndTime\')}'})" /> ---
+                <input type="text" name="txtEndTime" id="txtEndTime" class="_time" value="@dic["EndTime"]" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',readonly:true,minDate:'#F{$dp.$D(\'txtStartTime\')}'})" />
+            </div>
+            <div class="mindBtn" style=" width:auto">
+                <input class="btn_SS" type="reset" name="button" value="重置" onmouseover="this.className='Over_SS'" onmouseout="this.className='Onout_SS'" />
+                <input class="btn_SS" type="submit" name="button" value="搜索"
+                       onmouseover="this.className='Over_SS'"
+                       onmouseout="this.className='Onout_SS'" />
+            </div>
+        </div>*@
+        <div class="contentConditions" style="height:160px">
+            <ul>
+                <li class="Conditions Conditions1">
+                    <span>区域名称：</span>
+                    <input type="text" name="AreaName" id="AreaName" maxlength="30" style="width: 180px" class="_text" value="@dic["AreaName"]" />
+                </li>
+                <li class="Conditions Conditions2">
+                    <span>审计终端MAC：</span>
+                    <input type="text" name="txtAP_MAC" id="txtAP_MAC" maxlength="17" style="width: 180px" class="_text" value="@dic["AP_MAC"]" />
+                </li>
+                <li class="Conditions Conditions4">
+                    <span>最近更新时间范围：</span>
+                    <input type="text" name="txtStartTime" id="txtStartTime" class="_time" value="@dic["StartTime"]" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',readonly:true,maxDate:'#F{$dp.$D(\'txtEndTime\')}'})" /> ---
+                    <input type="text" name="txtEndTime" id="txtEndTime" class="_time" value="@dic["EndTime"]" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',readonly:true,minDate:'#F{$dp.$D(\'txtStartTime\')}'})" />
+                </li>
+                <li class="Conditions Conditions6">
+                    <input class="selectbg" id="but_Seek" value="搜索" type="submit">
+                    <input class="resetbg" value="重置" onclick="Reset()" type="reset">
+                </li>
+            </ul>
+        </div>
+        <div class="contentTable" id="contentTable">
+            <table cellpadding="0" cellspacing="0" width="100%" class="Cx_tab">
+                <tr id="djsTable">
+                    <th width="5%">序号</th>
+                    <th width="15%">审计终端MAC</th>
+                    <th width="15%">最近更新时间</th>
+                    <th width="20%">公网IP地址</th>
+                    <th width="20%">区域名称</th>
+                    <th width="20%">创建时间</th>
+                    <th width="%5">操作</th>
+                </tr>
+                @{
+                    PagedList<UnknownDevice> pl = (PagedList<UnknownDevice>)ViewBag.pl;
+                    if (pl != null && pl.Count > 0)
+                    {
+                        foreach (UnknownDevice item in pl)
+                        {
+                            <tr>
+                                <td width="5%">@item.PageNum</td>
+                                <td width="15%">@(!string.IsNullOrEmpty(item.AP_MAC) ? item.AP_MAC.Insert(10, "-").Insert(8, "-").Insert(6, "-").Insert(4, "-").Insert(2, "-") : "")</td>
+                                <td width="15%">@item.UpdateTime.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                                <td width="20%">@item.OutIpAddress</td>
+                                <td width="20%">@item.AreaName</td>
+                                <td width="20%">@item.CreateTime.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                                <td width="5%">
+                                @if (relaVal.Contains("3"))
+                                {
+                                    <a class="Cz_shanchu" href="javascript:void(0)" onclick="del('@item.ID')" title="删除"><img title="删除" src="@Url.Content("../../Content/images/del1_icon.png")" alt="删除" /></a>
+                                }
+                                </td>
+                            </tr>
+                        }
+                    }
+                }
+            </table>
+            @*<div class="page">
+                <ul class="ulPage">
+                    @Ajax.Pager(pl, new PagerOptions
+           {
+               FirstPageText = "首页",
+               PrevPageText = "上一页",
+               NextPageText = "下一页",
+               LastPageText = "尾页",
+               PageIndexParameterName = "pageIndex",
+               NavigationPagerItemTemplate = "<li class=\"liPage\" style=\"width: 42px; \">{0}</li>",
+               NumericPagerItemTemplate = "<li class=\"liPage\" style=\"width: 42px; \">{0}</li>",
+               ShowMorePagerItems = false,
+           }).AjaxOptions(a => a.SetUpdateTargetId("contentTable"))
+                    <li class="contPage">共<span>@pl.TotalPageCount</span>页/共<span>@pl.TotalItemCount</span>条</li>
+                </ul>
+            </div>*@
+            @Html.Partial("~/Views/Shared/_PartialPage.cshtml", new RouteValueDictionary { { "pageIndex", "pageIndex" }, { "model", pl } })
+        </div>
+
+        <script type="text/javascript">
+            function Clear() {
+                $("#AreaName").html("");
+                $("#txtAP_MAC").html("");
+                $("#txtStartTime").html("");
+                $("#txtEndTime").html("");
+
+            }
+            //mindasd(310);
+            $(function () {
+                $("form").submit(function () { showDown(); });
+            });
+
+            function del(obj) {
+                if (confirm("确定要删除吗？\n如果是误删，系统会自动采集。")) {
+                    location.href = '@Url.Content("~/Location/DeleteUnDev/")' + obj;
+                }
+            }
+
+            function showMap(wmac) {
+                $.ajax({
+                    type: "Get",
+                    url: '@Url.Content("~/Location/ReturnUrl?path=/MapInfo/UnkonwnLocaMap/")' + wmac,
+                    dataType: "json",
+                    async: false,
+                    cache: false,
+                    success: function (data, status) {
+                        if (typeof (data.err) != 'undefined' && data.err != "") {
+                            alert(data.err);
+                        } else {
+                            var iwidth = 500;
+                            var iheight = 400;
+                            var itop = (window.screen.availHeight - 30 - iheight) / 2;
+                            var ileft = (window.screen.availWidth - 10 - iwidth) / 2;
+                            window.open(data.url, '场所标记', 'height=' + iheight + ',width=' + iwidth + ',top=' + itop + ',left=' + ileft + ',toolbar=no,menubar=no,scrollbars=no,resizable=no,location=no,status=no');
+                        }
+                        closeDown();
+                    },
+                    error: function (data, status, e) {
+                        alert(e);
+                        closeDown();
+                    }
+                });
+            }
+            function ExcelUn() {
+                $.ajax({
+                    type: "Get",
+                    url: '@Url.Content("~/Public/ExcelUnDevice")',
+                    dataType: "json",
+                    data: { txtAP_MAC: $("#txtAP_MAC").val(), txtStartTime: $("#txtStartTime").val(), txtEndTime: $("#txtEndTime").val(), AreaName: $("#AreaName").val() },
+                    cache: false,
+                    success: function (data, status) {
+                        if (typeof (data.err) != 'undefined' && data.err != "") {
+                            alert(data.err);
+                        } else {
+                            window.location.href = '@Url.Content("~/Public/Download?name=")' + encodeURIComponent('未知场所列表_') + '&path=' + encodeURIComponent(data.result);
+                        }
+                        closeDown();
+                    }
+                })
+            }
+        </script>
+                    }
 </div>

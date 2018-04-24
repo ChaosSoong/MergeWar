@@ -1,13 +1,61 @@
 ﻿@using System.Collections.Generic
-@using Common
+@using HCZZ.Common
 @using HCZZ.ModeDB
 @{
     ViewBag.Title = "系统设置-系统参数配置";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <link href="@Url.Content("~/Content/css/XTGL.css")" rel="stylesheet" type="text/css" />
+<link href="~/Content/css/XTGL_XTPZCSGL.css" rel="stylesheet" />
+<style>
+     .contentTable {
+    }
+
+        .contentTable table {
+            width: 100%;
+        }
+
+            .contentTable table tr {
+                border-bottom: 1px solid #181926;
+                height: 40px;
+            }
+
+                .contentTable table tr:nth-child(even) {
+                    background-color: #20212e;
+                }
+
+                .contentTable table tr:nth-child(odd) {
+                    background-color: #21222f;
+                }
+
+                .contentTable table tr:first-child {
+                    background-color: #1E1F2D;
+                }
+
+                .contentTable table tr th {
+                    text-align: left;
+                    padding-left: 15px;
+                    border-right: 2px solid rgb(24, 25, 38);
+                    color: #85858A;
+                    font-family: "微软雅黑";
+                    font-size: 13px;
+                }
+
+                .contentTable table tr td {
+                    text-align: left;
+                    padding-left: 15px;
+                    border-right: 2px solid rgb(24, 25, 38);
+                    color: #85858A;
+                    font-family: "微软雅黑";
+                    font-size: 12px;
+                }
+                .contentTable table tr:hover{background-color: #222a36;}
+                .contentTable table tr:first-child:hover {
+                    background-color: #1E1F2D;
+                }
+</style>
 <div class="contentbody" id="contentbody">
-    <div class="contentTitle">
+    @*<div class="contentTitle">
         <input  class="search"  onclick="javascript:location.replace('@Url.Content("~/System/EditConfigInfo")')" type="button" name="button" value="修改配置信息" />
     </div>
     <div class="contentTable">
@@ -37,6 +85,35 @@
                     <tr><td>没有配置信息</td></tr>
                 }
             }
+        </table>
+    </div>*@
+    <div class="contentTitle">
+        <span>系统参数配置管理</span>
+        <input class="add" type="button" id="" value="修改配置信息" onclick="javascript:location.replace('@Url.Content("~/System/EditConfigInfo")')"/>
+    </div>
+    <div class="contentTable">
+        <table border="0" cellspacing="0" cellpadding="0">
+            <tr>
+                <th style="width: 30%;">序号</th>
+                <th style="width: 35%;">配置类型</th>
+                <th style="width: 35%;">配置值</th>
+            </tr>
+@{
+    List<SystemConfigInfo> list = (List<SystemConfigInfo>)ViewBag.pl;
+    if (list != null && list.Count > 0)
+    {
+        int i = 1;
+        foreach (SystemConfigInfo item in list)
+        {
+            <tr>
+                <td>@i</td>
+                <td>@ChangeValue.RefConfigType(item.ConfigType)</td>
+                <td>@ChangeValue.RefSysConfigVal(item.ConfigType, item.ConfigValue)</td>
+            </tr>
+            i++;
+        }
+    }
+    }
         </table>
     </div>
 </div>

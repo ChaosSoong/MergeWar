@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Webdiyer.WebControls.Mvc;
 using HCZZ.ModeDB;
-using Common;
+using HCZZ.Common;
 using System.Data;
 using System.Data.SqlClient;
 using HCZZ.DAL;
@@ -96,7 +96,7 @@ namespace HCZZ.DAL
             string sql = "";
             try
             {
-                sql = " INSERT INTO " + mac.TableKey + "DevInfo(COLLECTION_EQUIPMENT_ID,AP_MAC,CreateTime)VALUES(@COLLECTION_EQUIPMENT_ID,@AP_MAC,GETDATE());SELECT @@IDENTITY;";
+                sql = " INSERT INTO DevInfo(COLLECTION_EQUIPMENT_ID,AP_MAC,CreateTime)VALUES(@COLLECTION_EQUIPMENT_ID,@AP_MAC,GETDATE());SELECT @@IDENTITY;";
                 SqlParameter[] param = new SqlParameter[] 
                { 
                     new SqlParameter("@AP_MAC",mac.AP_MAC),
@@ -120,7 +120,7 @@ namespace HCZZ.DAL
             string sql = "";
             try
             {
-                sql = "UPDATE " + mac.TableKey + "DevInfo SET	COLLECTION_EQUIPMENT_ID = @COLLECTION_EQUIPMENT_ID,	AP_MAC = @AP_MAC WHERE ID=@ID";
+                sql = "UPDATE DevInfo SET	COLLECTION_EQUIPMENT_ID = @COLLECTION_EQUIPMENT_ID,	AP_MAC = @AP_MAC WHERE ID=@ID";
                 SqlParameter[] param = new SqlParameter[] 
                { 
                     new SqlParameter("@COLLECTION_EQUIPMENT_ID",mac.COLLECTION_EQUIPMENT_ID),
@@ -242,7 +242,8 @@ namespace HCZZ.DAL
                     new SqlParameter("@V3CID", mac.V3CID),
                     new SqlParameter("@SECURITY_SOFTWARE_ORGCODE", mac.SECURITY_SOFTWARE_ORGCODE),
                     new SqlParameter("@IsReboot", mac.IsReboot),
-                    new SqlParameter("@AP_ACSSES_IP",mac.AP_ACSSES_IP)
+                    new SqlParameter("@AP_ACSSES_IP",mac.AP_ACSSES_IP),
+
                     //new SqlParameter("@COLLECTION_EQUIPMENT_ID",mac.COLLECTION_EQUIPMENT_ID)
                 };
             return SqlHelper.ExecuteNonQuery(SqlHelper.DBConnStr, CommandType.Text, sql, param);
@@ -369,7 +370,7 @@ namespace HCZZ.DAL
             string sql = "";
             try
             {
-                sql = " SELECT ID,SName FROM ScenicInfo si WHERE si.PId=@pId AND si.Valid=1";
+                sql = " SELECT ID,SName as Name FROM ScenicInfo si WHERE si.PId=@pId AND si.Valid=1";
                 //DataSet ds = SqlHelper.ExecuteDataset(SqlHelper.DBConnStr, CommandType.Text, sql, new SqlParameter("@pId", pId));
                 //return GetScenicList(pId, "pId");
                 List<ScenicInfo> list = SqlHelper.ExecuteListModel<ScenicInfo>(SqlHelper.DBConnStr, sql, new SqlParameter("@pId", pId));

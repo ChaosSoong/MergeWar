@@ -1,0 +1,120 @@
+=============================================================
+时间：2018/4/23 10:29:29
+日志内容：
+SQL语句------SELECT * FROM ( SELECT ROW_NUMBER () OVER (ORDER BY ci.ID DESC) PageNum,ci.ID,ci.TaskName,ci.CaseValue,ci.CaseItem,ci.HeadName,ci.NETWORK_APP,ci.CreateTime,ci.EndTime,ci.IsEnabled FROM CasesInfo ci  WHERE 1=1 AND ci.CaseType=@casetype) temp WHERE temp.PageNum BETWEEN 1 AND 10
+=============================================================
+时间：2018/4/23 11:31:24
+日志内容：
+SQL语句------SELECT * FROM ( SELECT ROW_NUMBER () OVER (ORDER BY ci.ID DESC) PageNum,ci.ID,ci.TaskName,ci.CaseValue,ci.CaseItem,ci.HeadName,ci.NETWORK_APP,ci.CreateTime,ci.EndTime,ci.IsEnabled FROM CasesInfo ci  WHERE 1=1 AND ci.CaseType=@casetype) temp WHERE temp.PageNum BETWEEN 1 AND 10
+=============================================================
+时间：2018/4/23 11:42:20
+日志内容：
+SQL语句------SELECT * FROM ( SELECT ROW_NUMBER () OVER (ORDER BY ci.ID DESC) PageNum,ci.ID,ci.TaskName,ci.CaseValue,ci.CaseItem,ci.HeadName,ci.NETWORK_APP,ci.CreateTime,ci.EndTime,ci.IsEnabled FROM CasesInfo ci  WHERE 1=1 AND ci.CaseType=@casetype) temp WHERE temp.PageNum BETWEEN 1 AND 10
+=============================================================
+时间：2018/4/23 11:43:11
+日志内容：
+SQL语句------SELECT * FROM ( SELECT ROW_NUMBER () OVER (ORDER BY ci.ID DESC) PageNum,ci.ID,ci.TaskName,ci.CaseValue,ci.CaseItem,ci.HeadName,ci.NETWORK_APP,ci.CreateTime,ci.EndTime,ci.IsEnabled FROM CasesInfo ci  WHERE 1=1 AND ci.CaseType=@casetype) temp WHERE temp.PageNum BETWEEN 1 AND 10
+=============================================================
+时间：2018/4/23 11:44:03
+日志内容：
+SQL语句------SELECT * FROM ( SELECT ROW_NUMBER () OVER (ORDER BY ci.ID DESC) PageNum,ci.ID,ci.TaskName,ci.CaseValue,ci.CaseItem,ci.HeadName,ci.NETWORK_APP,ci.CreateTime,ci.EndTime,ci.IsEnabled FROM CasesInfo ci  WHERE 1=1 AND ci.CaseType=@casetype) temp WHERE temp.PageNum BETWEEN 1 AND 10
+=============================================================
+时间：2018/4/23 11:58:52
+日志内容：
+SQL语句------SELECT * FROM ( SELECT ROW_NUMBER () OVER (ORDER BY ci.ID DESC) PageNum,ci.ID,ci.TaskName,ci.CaseValue,ci.CaseItem,ci.HeadName,ci.NETWORK_APP,ci.CreateTime,ci.EndTime,ci.IsEnabled FROM CasesInfo ci  WHERE 1=1 AND ci.CaseType=@casetype) temp WHERE temp.PageNum BETWEEN 1 AND 10
+=============================================================
+时间：2018/4/23 11:58:53
+日志内容：
+SQL语句------SELECT * FROM ( SELECT ROW_NUMBER () OVER (ORDER BY ci.ID DESC) PageNum,ci.ID,ci.TaskName,ci.CaseValue,ci.CaseItem,ci.HeadName,ci.NETWORK_APP,ci.CreateTime,ci.EndTime,ci.IsEnabled FROM CasesInfo ci  WHERE 1=1 AND ci.CaseType=@casetype) temp WHERE temp.PageNum BETWEEN 1 AND 10
+=============================================================
+时间：2018/4/23 13:48:21
+日志内容：
+SQL语句------SELECT * FROM ( SELECT ROW_NUMBER () OVER (ORDER BY ci.ID DESC) PageNum,ci.ID,ci.TaskName,ci.CaseValue,ci.CaseItem,ci.HeadName,ci.NETWORK_APP,ci.CreateTime,ci.EndTime,ci.IsEnabled FROM CasesInfo ci  WHERE 1=1 AND ci.CaseType=@casetype) temp WHERE temp.PageNum BETWEEN 1 AND 10
+=============================================================
+时间：2018/4/23 13:56:18
+日志内容：
+SQL语句------SELECT * FROM ( SELECT ROW_NUMBER () OVER (ORDER BY ci.ID DESC) PageNum,ci.ID,ci.TaskName,ci.CaseValue,ci.CaseItem,ci.HeadName,ci.NETWORK_APP,ci.CreateTime,ci.EndTime,ci.IsEnabled FROM CasesInfo ci  WHERE 1=1 AND ci.CaseType=@casetype) temp WHERE temp.PageNum BETWEEN 1 AND 10
+=============================================================
+时间：2018/4/23 13:59:21
+日志内容：
+SQL语句------SELECT * FROM ( SELECT ROW_NUMBER () OVER (ORDER BY ci.ID DESC) PageNum,ci.ID,ci.TaskName,ci.CaseValue,ci.CaseItem,ci.HeadName,ci.NETWORK_APP,ci.CreateTime,ci.EndTime,ci.IsEnabled FROM CasesInfo ci  WHERE 1=1 AND ci.CaseType=@casetype) temp WHERE temp.PageNum BETWEEN 1 AND 10
+=============================================================
+时间：2018/4/23 13:59:39
+日志内容：
+SQL语句------SELECT * FROM ( SELECT ROW_NUMBER () OVER (ORDER BY ci.ID DESC) PageNum,ci.ID,ci.TaskName,ci.CaseValue,ci.CaseItem,ci.HeadName,ci.NETWORK_APP,ci.CreateTime,ci.EndTime,ci.IsEnabled FROM CasesInfo ci  WHERE 1=1 AND ci.CaseType=@casetype) temp WHERE temp.PageNum BETWEEN 1 AND 10
+=============================================================
+时间：2018/4/23 13:59:51
+日志内容：
+SQL语句------SELECT * FROM ( SELECT ROW_NUMBER () OVER (ORDER BY ci.ID DESC) PageNum,ci.ID,ci.TaskName,ci.CaseValue,ci.CaseItem,ci.HeadName,ci.NETWORK_APP,ci.CreateTime,ci.EndTime,ci.IsEnabled FROM CasesInfo ci  WHERE 1=1 AND ci.CaseType=@casetype) temp WHERE temp.PageNum BETWEEN 1 AND 10
+=============================================================
+时间：2018/4/23 14:00:02
+日志内容：
+SQL语句------SELECT * FROM ( SELECT ROW_NUMBER () OVER (ORDER BY ci.ID DESC) PageNum,ci.ID,ci.TaskName,ci.CaseValue,ci.CaseItem,ci.HeadName,ci.NETWORK_APP,ci.CreateTime,ci.EndTime,ci.IsEnabled FROM CasesInfo ci  WHERE 1=1 AND ci.CaseType=@casetype) temp WHERE temp.PageNum BETWEEN 1 AND 10
+=============================================================
+时间：2018/4/23 14:09:09
+日志内容：
+SQL语句------SELECT * FROM ( SELECT ROW_NUMBER () OVER (ORDER BY ci.ID DESC) PageNum,ci.ID,ci.TaskName,ci.CaseValue,ci.CaseItem,ci.HeadName,ci.NETWORK_APP,ci.CreateTime,ci.EndTime,ci.IsEnabled FROM CasesInfo ci  WHERE 1=1 AND ci.CaseType=@casetype) temp WHERE temp.PageNum BETWEEN 1 AND 10
+=============================================================
+时间：2018/4/23 14:11:04
+日志内容：
+SQL语句------SELECT * FROM ( SELECT ROW_NUMBER () OVER (ORDER BY ci.ID DESC) PageNum,ci.ID,ci.TaskName,ci.CaseValue,ci.CaseItem,ci.HeadName,ci.NETWORK_APP,ci.CreateTime,ci.EndTime,ci.IsEnabled FROM CasesInfo ci  WHERE 1=1 AND ci.CaseType=@casetype) temp WHERE temp.PageNum BETWEEN 1 AND 10
+=============================================================
+时间：2018/4/23 14:11:23
+日志内容：
+SQL语句------SELECT * FROM ( SELECT ROW_NUMBER () OVER (ORDER BY ci.ID DESC) PageNum,ci.ID,ci.TaskName,ci.CaseValue,ci.CaseItem,ci.HeadName,ci.NETWORK_APP,ci.CreateTime,ci.EndTime,ci.IsEnabled FROM CasesInfo ci  WHERE 1=1 AND ci.CaseType=@casetype) temp WHERE temp.PageNum BETWEEN 1 AND 10
+=============================================================
+时间：2018/4/23 14:47:27
+日志内容：
+SQL语句------SELECT * FROM ( SELECT ROW_NUMBER () OVER (ORDER BY ci.ID DESC) PageNum,ci.ID,ci.TaskName,ci.CaseValue,ci.CaseItem,ci.HeadName,ci.NETWORK_APP,ci.CreateTime,ci.EndTime,ci.IsEnabled FROM CasesInfo ci  WHERE 1=1 AND ci.CaseType=@casetype) temp WHERE temp.PageNum BETWEEN 1 AND 10
+=============================================================
+时间：2018/4/23 15:47:06
+日志内容：
+SQL语句------SELECT * FROM ( SELECT ROW_NUMBER () OVER (ORDER BY ci.ID DESC) PageNum,ci.ID,ci.TaskName,ci.CaseValue,ci.CaseItem,ci.HeadName,ci.NETWORK_APP,ci.CreateTime,ci.EndTime,ci.IsEnabled FROM CasesInfo ci  WHERE 1=1 AND ci.CaseType=@casetype) temp WHERE temp.PageNum BETWEEN 1 AND 10
+=============================================================
+时间：2018/4/23 16:01:36
+日志内容：
+SQL语句------SELECT * FROM ( SELECT ROW_NUMBER () OVER (ORDER BY ci.ID DESC) PageNum,ci.ID,ci.TaskName,ci.CaseValue,ci.CaseItem,ci.HeadName,ci.NETWORK_APP,ci.CreateTime,ci.EndTime,ci.IsEnabled FROM CasesInfo ci  WHERE 1=1 AND ci.CaseType=@casetype) temp WHERE temp.PageNum BETWEEN 1 AND 10
+=============================================================
+时间：2018/4/23 16:03:11
+日志内容：
+SQL语句------SELECT * FROM ( SELECT ROW_NUMBER () OVER (ORDER BY ci.ID DESC) PageNum,ci.ID,ci.TaskName,ci.CaseValue,ci.CaseItem,ci.HeadName,ci.NETWORK_APP,ci.CreateTime,ci.EndTime,ci.IsEnabled FROM CasesInfo ci  WHERE 1=1 AND ci.CaseType=@casetype) temp WHERE temp.PageNum BETWEEN 1 AND 10
+=============================================================
+时间：2018/4/23 16:10:30
+日志内容：
+SQL语句------SELECT * FROM ( SELECT ROW_NUMBER () OVER (ORDER BY ci.ID DESC) PageNum,ci.ID,ci.TaskName,ci.CaseValue,ci.CaseItem,ci.HeadName,ci.NETWORK_APP,ci.CreateTime,ci.EndTime,ci.IsEnabled FROM CasesInfo ci  WHERE 1=1 AND ci.CaseType=@casetype) temp WHERE temp.PageNum BETWEEN 11 AND 20
+=============================================================
+时间：2018/4/23 16:11:52
+日志内容：
+SQL语句------SELECT * FROM ( SELECT ROW_NUMBER () OVER (ORDER BY ci.ID DESC) PageNum,ci.ID,ci.TaskName,ci.CaseValue,ci.CaseItem,ci.HeadName,ci.NETWORK_APP,ci.CreateTime,ci.EndTime,ci.IsEnabled FROM CasesInfo ci  WHERE 1=1 AND ci.CaseType=@casetype) temp WHERE temp.PageNum BETWEEN 1 AND 10
+=============================================================
+时间：2018/4/23 16:11:59
+日志内容：
+SQL语句------SELECT * FROM ( SELECT ROW_NUMBER () OVER (ORDER BY ci.ID DESC) PageNum,ci.ID,ci.TaskName,ci.CaseValue,ci.CaseItem,ci.HeadName,ci.NETWORK_APP,ci.CreateTime,ci.EndTime,ci.IsEnabled FROM CasesInfo ci  WHERE 1=1 AND ci.CaseType=@casetype) temp WHERE temp.PageNum BETWEEN 1 AND 10
+=============================================================
+时间：2018/4/23 16:25:15
+日志内容：
+SQL语句------SELECT * FROM ( SELECT ROW_NUMBER () OVER (ORDER BY ci.ID DESC) PageNum,ci.ID,ci.TaskName,ci.CaseValue,ci.CaseItem,ci.HeadName,ci.NETWORK_APP,ci.CreateTime,ci.EndTime,ci.IsEnabled FROM CasesInfo ci  WHERE 1=1 AND ci.CaseType=@casetype) temp WHERE temp.PageNum BETWEEN 1 AND 10
+=============================================================
+时间：2018/4/23 16:25:27
+日志内容：
+SQL语句------SELECT * FROM ( SELECT ROW_NUMBER () OVER (ORDER BY ci.ID DESC) PageNum,ci.ID,ci.TaskName,ci.CaseValue,ci.CaseItem,ci.HeadName,ci.NETWORK_APP,ci.CreateTime,ci.EndTime,ci.IsEnabled FROM CasesInfo ci  WHERE 1=1 AND ci.CaseType=@casetype) temp WHERE temp.PageNum BETWEEN 1 AND 10
+=============================================================
+时间：2018/4/23 16:25:37
+日志内容：
+SQL语句------SELECT * FROM ( SELECT ROW_NUMBER () OVER (ORDER BY ci.ID DESC) PageNum,ci.ID,ci.TaskName,ci.CaseValue,ci.CaseItem,ci.HeadName,ci.NETWORK_APP,ci.CreateTime,ci.EndTime,ci.IsEnabled FROM CasesInfo ci  WHERE 1=1 AND ci.CaseType=@casetype) temp WHERE temp.PageNum BETWEEN 1 AND 10
+=============================================================
+时间：2018/4/23 16:40:58
+日志内容：
+SQL语句------SELECT * FROM ( SELECT ROW_NUMBER () OVER (ORDER BY ci.ID DESC) PageNum,ci.ID,ci.TaskName,ci.CaseValue,ci.CaseItem,ci.HeadName,ci.NETWORK_APP,ci.CreateTime,ci.EndTime,ci.IsEnabled FROM CasesInfo ci  WHERE 1=1 AND ci.CaseType=@casetype) temp WHERE temp.PageNum BETWEEN 1 AND 10
+=============================================================
+时间：2018/4/23 16:41:04
+日志内容：
+SQL语句------SELECT * FROM ( SELECT ROW_NUMBER () OVER (ORDER BY ci.ID DESC) PageNum,ci.ID,ci.TaskName,ci.CaseValue,ci.CaseItem,ci.HeadName,ci.NETWORK_APP,ci.CreateTime,ci.EndTime,ci.IsEnabled FROM CasesInfo ci  WHERE 1=1 AND ci.CaseType=@casetype) temp WHERE temp.PageNum BETWEEN 1 AND 10
+=============================================================
+时间：2018/4/23 16:49:02
+日志内容：
+SQL语句------SELECT * FROM ( SELECT ROW_NUMBER () OVER (ORDER BY ci.ID DESC) PageNum,ci.ID,ci.TaskName,ci.CaseValue,ci.CaseItem,ci.HeadName,ci.NETWORK_APP,ci.CreateTime,ci.EndTime,ci.IsEnabled FROM CasesInfo ci  WHERE 1=1 AND ci.CaseType=@casetype) temp WHERE temp.PageNum BETWEEN 1 AND 10
+=============================================================
+时间：2018/4/23 16:49:31
+日志内容：
+SQL语句------SELECT * FROM ( SELECT ROW_NUMBER () OVER (ORDER BY ci.ID DESC) PageNum,ci.ID,ci.TaskName,ci.CaseValue,ci.CaseItem,ci.HeadName,ci.NETWORK_APP,ci.CreateTime,ci.EndTime,ci.IsEnabled FROM CasesInfo ci  WHERE 1=1 AND ci.CaseType=@casetype) temp WHERE temp.PageNum BETWEEN 1 AND 10

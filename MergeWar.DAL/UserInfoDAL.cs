@@ -4,7 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
-using Common;
+using HCZZ.Common;
 using HCZZ.ModeDB;
 using Webdiyer.WebControls.Mvc;
 
@@ -35,7 +35,8 @@ namespace HCZZ.DAL
        public List<Sys_UserPowerInfo> GetUserShowPageByJid(int Jid)
        {
            string sql =
-               " SELECT sri.SelValues,sri2.Name TypeName,spi.*  FROM Sys_RelaInfo sri LEFT JOIN Sys_PowerInfo spi ON sri.Qid=spi.Id LEFT JOIN Sys_RoleInfo sri2 ON sri.JId=sri2.Id WHERE sri.Jid=@jid ";
+                //" SELECT sri.SelValues,sri2.Name TypeName,spi.*  FROM Sys_RelaInfo sri LEFT JOIN Sys_PowerInfo spi ON sri.Qid=spi.Id LEFT JOIN Sys_RoleInfo sri2 ON sri.JId=sri2.Id WHERE sri.Jid=@jid ";
+                "SELECT sri.SelValues,sri2.Name TypeName,spi.Name,spi.Indexs,spi.FilePath,spi.SelShowValue,spi.Pid,spi.Id SpId,spi.Class  FROM Sys_RelaInfo sri LEFT JOIN Sys_PowerInfo spi ON sri.Qid=spi.Id LEFT JOIN Sys_RoleInfo sri2 ON sri.JId=sri2.Id WHERE sri.Jid=@jid";
             List<Sys_UserPowerInfo> list = SqlHelper.ExecuteListModel<Sys_UserPowerInfo>(sql, new SqlParameter("@jid", Jid));
             return list;
         }
@@ -97,27 +98,19 @@ namespace HCZZ.DAL
                string txtMobile = dic["txtMobile"];
                string selMobile = dic["selMobile"].ToString();
 
-               //string txtIdnumber = dic["txtIdnumber"];
-               //string selIdnumber = dic["selIdnumber"].ToString();
+                string txtIdnumber = dic["txtIdnumber"];
+                string selIdnumber = dic["selIdnumber"].ToString();
 
-               string txtTrueName = dic["txtTrueName"];
+                string txtTrueName = dic["txtTrueName"];
                string selTrueName = dic["selTrueName"].ToString();
-
-                //string CreateId = dic["CreateId"].ToString();
-
-                //string UserType = dic["UserType"].ToString();//用户类型
+                string UserType = dic["UserType"].ToString();//用户类型
                 string AreaId = dic["AreaId"].ToString();//用户区域
-
                List<SqlParameter> listParam = new List<SqlParameter>();
-
                string whereSql = " WHERE 1=1 ";
-
-                //if (UserType != "0")
-                //    whereSql += " AND Type = " + UserType;
-
-                //if (CreateId == "0")
-                //    whereSql += " AND u.Valid=1 ";
-
+                if (UserType != "0")
+                    whereSql += " AND Type = " + UserType;
+                if (dic["UserType"] != "0")
+                    whereSql += " AND Type = " + dic["UserType"];
                 if (selName == "1" && !string.IsNullOrEmpty(txtName))
                    whereSql += " AND  u.UserName LIKE '%" + txtName + "%'";
                else if (selName == "2" && !string.IsNullOrEmpty(txtName))
@@ -141,25 +134,20 @@ namespace HCZZ.DAL
                    whereSql += " AND u.Mobile=@Mobile";
                    listParam.Add(new SqlParameter("@Mobile", txtMobile));
                }
+                if (selIdnumber == "1" && !string.IsNullOrEmpty(txtIdnumber))
+                    whereSql += " AND u.Idnumber LIKE '%" + txtIdnumber + "%'";
+                else if (selIdnumber == "2" && !string.IsNullOrEmpty(txtIdnumber))
+                {
+                    whereSql += " AND u.Idnumber=@Idnumber";
+                    listParam.Add(new SqlParameter("@Idnumber", txtIdnumber));
+                }
+                if (dic["Valid"] == "1")
+                    whereSql += " AND u.Valid = " + dic["Valid"];//未删除
+                if (dic["Valid"] == "0")
+                    whereSql += " AND u.Valid = " + dic["Valid"];//已删除
 
-
-               //if (selIdnumber == "1" && !string.IsNullOrEmpty(txtIdnumber))
-               //    whereSql += " AND u.Idnumber LIKE '%" + txtIdnumber + "%'";
-               //else if (selIdnumber == "2" && !string.IsNullOrEmpty(txtIdnumber))
-               //{
-               //    whereSql += " AND u.Idnumber=@Idnumber";
-               //    listParam.Add(new SqlParameter("@Idnumber", txtIdnumber));
-               //}
-
-               //if (CreateId != "0")
-               //{
-               //    whereSql += " AND u.CreateId=@CreateId";
-               //    listParam.Add(new SqlParameter("@CreateId", CreateId));
-               //}
-
-               SqlParameter[] param = listParam.ToArray();
-
-               sql = "SELECT * FROM ( SELECT ROW_NUMBER () OVER (ORDER BY u.CreateTime DESC) PageNum ,u.*,pi1.Name Pname FROM UserInfo u LEFT JOIN PoliceInfo pi1 ON u.PId=pi1.ID " + whereSql + " ) temp WHERE temp.PageNum BETWEEN " + ((pageIndex - 1) * pageSize + 1) + " AND " + pageIndex * pageSize;
+                SqlParameter[] param = listParam.ToArray();
+                sql = "SELECT * FROM ( SELECT ROW_NUMBER () OVER (ORDER BY u.CreateTime DESC) PageNum ,u.*,pi1.Name Pname FROM UserInfo u LEFT JOIN PoliceInfo pi1 ON u.PId=pi1.ID " + whereSql + " ) temp WHERE temp.PageNum BETWEEN " + ((pageIndex - 1) * pageSize + 1) + " AND " + pageIndex * pageSize;
                //sql += " SELECT COUNT(0) from UserInfo u LEFT JOIN PoliceInfo pi1 ON u.PId=pi1.ID " + whereSql;
                 //DataSet ds = SqlHelper.ExecuteDataset(SqlHelper.DBConnStr, CommandType.Text, sql, param);
                 //DataSetConvert convert = new DataSetConvert(ds);
@@ -283,27 +271,26 @@ namespace HCZZ.DAL
        /// </summary>
        /// <param name="Id"></param>
        /// <returns></returns>
-       public UserInfo GetUserInfoById(int Id)
+       public UserInfo GetUserInfoById(int Id, string Name, string pwd)
        {
            string sql = "";
            try
            {
                SqlParameter[] param = null;
                sql = "SELECT * FROM UserInfo ui WHERE Valid=1 AND  ";
-               //if (Id != 0)
-               //{
+               if (Id != 0)
+               {
                    sql += " ui.ID = @ID";
                    param = new SqlParameter[] { new SqlParameter("@ID", Id) };
-                //}
-                //else
-                //{
-                //    sql += "  ui.UserName=@UserName AND ui.[Password]=@Password";
-                //    param = new SqlParameter[] { new SqlParameter("@UserName", Name), new SqlParameter("@Password", pwd) };
-                //}
-                //DataSet ds = SqlHelper.ExecuteDataset(SqlHelper.DBConnStr, CommandType.Text, sql, param);
-                UserInfo userinfo= SqlHelper.ExecuteModel<UserInfo>(sql,param);
-                return userinfo;
-           }
+                }
+                else
+                {
+                    sql += "  ui.UserName=@UserName AND ui.[Password]=@Password";
+                    param = new SqlParameter[] { new SqlParameter("@UserName", Name), new SqlParameter("@Password", pwd) };
+                }
+                DataSet ds = SqlHelper.ExecuteDataset(SqlHelper.DBConnStr, CommandType.Text, sql, param);
+                return new DataSetConvert(ds).Get_SingleModel<UserInfo>();
+            }
            catch (Exception ex)
            {
                Logger.ErrorLog(ex, new Dictionary<string, string>()
@@ -388,6 +375,28 @@ namespace HCZZ.DAL
                throw ex;
            }
        }
+        /// <summary>
+        /// 获取角色列表
+        /// </summary>
+        /// <returns></returns>
+        public List<Sys_UserPowerInfo> GetRoleList(int userType)
+        {
+            string sql = "SELECT * FROM Sys_RoleInfo where  id IN (SELECT DISTINCT jid FROM Sys_RelaInfo) and UserType=" + userType ;
+            //if (userType == 8)
+            //    sql += " and UserType in (8,7,6,4,2,3)";
+            //else if (userType == 7)
+            //    sql += " and UserType in (7,6,4,2,3)";
+            //else if (userType == 6)
+            //    sql += " and UserType in (6,4,2,3)";
+            //else if (userType == 4)
+            //    sql += " and UserType in (4,2,3)";
+            //else if (userType == 2)
+            //    sql += " and UserType in (2,3)";
+            //else if (userType == 3)
+            //    sql += " and UserType in (3)";
+            DataSetConvert convert = new DataSetConvert(SqlHelper.ExecuteDataset(SqlHelper.DBConnStr, CommandType.Text, sql));
+            return convert.Get_ListModel<Sys_UserPowerInfo>();
+        }
 
     }
 }

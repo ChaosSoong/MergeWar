@@ -7,14 +7,15 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>@ViewBag.Title</title>
-    <script src="~/Content/js/jquery1.42.min.js"></script>
+    @*<script src="~/Content/js/jquery1.42.min.js"></script>*@
     <script src="../../Content/js/jquery.SuperSlide.2.1.1.js" type="text/javascript"></script>
     <link href="~/Content/css/SY.css" rel="stylesheet" />
+    <script src="@Url.Content("~/Content/layer/layer.js")" type="text/javascript"></script>
 </head>
 <body id="scroll-1">
     <!--首页主要内容区域content-->
     <div class="content">
-        <div class="contentbody">
+        <div class="contentbody"style="display:block;">
             <div class="contentLeft">
                 <div class="contentLeftSJTJ" id="contentLeftSJTJ">
                     <div class="contentLeftSJTJTitle">
@@ -124,81 +125,26 @@
             </div>
         </div>
     </div>
-    <!--Step:2 Import echarts-all.js-->
-    <!--Step:2 引入echarts-all.js-->
-    @*<script src="@Url.Content("~/Content/js/echarts-all.js")"  type="text/javascript"></script>*@
     <script src="@Url.Content("~/Content/js/echarts.common.min.js")" type="text/javascript" charset="utf-8"></script>
-    <script type="text/javascript">
-        //    (function($){
-        //        $(window).load(function(){
-        //            $("body").mCustomScrollbar({
-        //
-        //            });
-        //        });
-        //    })(jQuery);
-        // Step:3 echarts & zrender as a Global Interface by the echarts-plain.js.
-        // Step:3 echarts和zrender被echarts-plain.js写入为全局接口
+    <script type="text/javascript" async>
+        $("#log").hide();
+        var c = 0
+        //防止页面后退
+        history.pushState(null, null, document.URL);
+        window.addEventListener('popstate', function () {
+            history.pushState(null, null, document.URL);
+        });
+        $(function () {
+            showDown();
+            @*$("#map").load("@Url.Content("~/Map/HLocaShowMap.html")", function () {
+            });*@
+        })
         var count = echarts.init(document.getElementById('mainSJTJ'));
         var collTrend = echarts.init(document.getElementById('mainJQCJSLQST'));
         var onlineCount = echarts.init(document.getElementById('mainCSLXZXS'));
         var onlineRate = echarts.init(document.getElementById('mainCSLXZXL'));
         var deviceTrend = echarts.init(document.getElementById('mainJQSBSLQST'));
-        //    $("#mainJQSBSLQST").load("@Url.Content("~/Content/test.htm")",function(){
-        //        console.log("echarts");
-        //    });
-        //var mapPromise = ()=>{return new Promise(function(){
-        //    $("#map").load("@Url.Content("~/Map/HLocaShowMap.html")",function(){
-        //        console.log("加载地图成功");
-        //    });
-        //        });
-        //    };
-        //var DataConuntPromise = ()=>{return new Promise(function(){
-        //    $.get("@Url.Content("~/Public/DataConunt")", function(result){
-        //        count.setOption(ECCount(result));
-        //    });
-        //        });
-        //    };
-        //var DataOnlineCountPromise = ()=>{return new Promise(function(){
-        //    $.get("@Url.Content("~/Public/DataOnlineCount")", function(result){
-        //        onlineCount.setOption(OnlineCount(result));
-        //    });
-        //        });
-        //    };
-        //var DataOnlineRatePromise = ()=>{return new Promise(function(){
-        //    $.get("@Url.Content("~/Public/DataOnlineRate")", function(result){
-        //        onlineRate.setOption(opsOnlineRate(result));
-        //    });
-        //        });
-        //    };
-        //var DataCountTrendPromise = ()=>{return new Promise(function(){
-        //    $.get("@Url.Content("~/Public/DataCountTrend?TimeType=1")", function(result){
-        //        collTrend.setOption(CollectionCountTrend(result));
-        //    })
-        //        });
-        //    };
-        //var DevNumPromise = ()=>{return new Promise(function(){
-        //    $.get("@Url.Content("~/Public/DevNum")", function(result){
-        //        $("#zn").text(result.zn);
-        //        $("#dn").text(result.dn);
-        //        $("#ol").text(result.ol+"%");
-        //    });
-        //        });
-        //    };
-        //var MapInferiorPromise = ()=>{return new Promise(function(){
-        //    $.get("@Url.Content("~/Public/MapInferior")",function(result){
-        //        for(var i=0;i<result.length;i++){
-        //            $("#ulList").append("<li><span>"+result[i].Mobile+"</span><span>"+result[i].NETWORK_APP+"："+result[i].IdValue+"</span><span>"+result[i].PLACE_NAME+"</span>")
-        //        }
-        //        jQuery(".contentMiddleBottom").slide({
-        //        mainCell: "#FontScroll ul",
-        //        autoPlay: true,
-        //        effect: "topMarquee",
-        //        vis: 5,
-        //        interTime: 50
-        //    });
-        //        });
-        //    })};
-        //    Promise.all([mapPromise(),DataConuntPromise(),DataOnlineCountPromise(),DataOnlineRatePromise(),DataCountTrendPromise(),DevNumPromise(),MapInferiorPromise()]);
+        //
         $.ajax({
             type: "get",
             url: "@Url.Content("~/Public/MapInferior")",
@@ -216,37 +162,42 @@
                 });
             }
         });
-        @*$.get("@Url.Content("~/Public/MapInferior")", function (result) {
-            for (var i = 0; i < result.length; i++) {
-                $("#ulList").append("<li><span>" + result[i].Mobile + "</span><span>" + result[i].NETWORK_APP + "：" + result[i].IdValue + "</span><span>" + result[i].PLACE_NAME + "</span>")
-            }
-            $("#contentMiddleBottom").slide({
-                mainCell: "#FontScroll ul",
-                autoPlay: true,
-                effect: "topMarquee",
-                vis: 5,
-                interTime: 50
-            });
-        })*@
-        $("#map").load("@Url.Content("~/Map/HLocaShowMap.html")", function () {
-            console.log("加载地图成功");
-        });
+        //数据统计
         $.get("@Url.Content("~/Public/DataConunt")", function (result) {
             count.setOption(ECCount(result));
+            c = c + 1;
+            if (c === 5) {$("#map").load("@Url.Content("~/Map/HLocaShowMap.html")", function () {
+            }); }
         });
+        //场所类型在线数量
         $.get("@Url.Content("~/Public/DataOnlineCount")", function (result) {
             onlineCount.setOption(OnlineCount(result));
+            c = c + 1;
+            if (c === 5) {$("#map").load("@Url.Content("~/Map/HLocaShowMap.html")", function () {
+            }); }
         });
+        //场所类型在线率
         $.get("@Url.Content("~/Public/DataOnlineRate")", function (result) {
             onlineRate.setOption(opsOnlineRate(result));
+            c = c + 1;
+            if (c === 5) {$("#map").load("@Url.Content("~/Map/HLocaShowMap.html")", function () {
+            }); }
         });
+        //近期采集数量趋势图统计
         $.get("@Url.Content("~/Public/DataCountTrend?TimeType=1")", function (result) {
             collTrend.setOption(CollectionCountTrend(result));
+            c = c + 1;
+            if (c === 5) {$("#map").load("@Url.Content("~/Map/HLocaShowMap.html")", function () {
+            }); }
         });
+        //设备在线率
         $.get("@Url.Content("~/Public/DevNum")", function (result) {
             $("#zn").text(result.zn);
             $("#dn").text(result.dn);
             $("#ol").text(result.ol + "%");
+            c = c + 1;
+            if (c === 5) {$("#map").load("@Url.Content("~/Map/HLocaShowMap.html")", function () {
+            }); }
         });
         $(".contentLeftJQCJSLQSTTitle .month").click(function () {
             $(".contentLeftJQCJSLQSTTitle .week").removeClass("spanRadius");
@@ -262,6 +213,7 @@
                 collTrend.setOption(CollectionCountTrend(result));
             });
         });
+
         // 场所类型在线数
         function OnlineCount(data) {
             var datas = [];
@@ -408,52 +360,54 @@
         };
         // 场所类型在线率
         function opsOnlineRate(result) {
-            var strLegend = [];
-            for (var i = 0; i < result.namenum.length; i++) {
-                strLegend.push({ name: result.ratenum[i] + "%" + result.namenum[i], textStyle: { color: '#616363' } });
+            if (result.namenum.length > 0) {
+                var strLegend = [];
+                for (var i = 0; i < result.namenum.length; i++) {
+                    strLegend.push({ name: result.ratenum[i] + "%" + result.namenum[i], textStyle: { color: '#616363' } });
+                }
+                var series = [];
+                for (var j = 0; j < result.namenum.length; j++) {
+                    series.push({
+                        name: j,
+                        type: 'pie',
+                        clockWise: true,
+                        startAngle: 300,
+                        radius: [75 - j * 5 + "%", 76 - j * 5 + "%"],
+                        center: ["45%", "50%"],
+                        itemStyle: dataStyle,
+                        data: [{
+                            value: result.ratenum[j],
+                            name: result.ratenum[j] + "%" + result.namenum[j]
+                        }, {
+                            value: 100 - result.ratenum[j],
+                            name: 'invisible',
+                            itemStyle: placeHolderStyle
+                        }]
+                    });
+                }
+                var option = {
+                    backgroundColor: '#1e1f2d',
+                    color: [
+                        '#025AC8', '#0D7990', '#03C4A6', '#405956', '#3A402E',
+                        '#7B612A', '#A0361A', '#CE162F', '#862875', '#7E55D9',
+                        '#5A558A', '#F1314B' // , '#F4E001', '#F0805A', '#26C0C0'
+                    ],
+                    tooltip: {
+                        show: true,
+                        formatter: "{b}"
+                    },
+                    legend: {
+                        show: true,
+                        orient: 'vertical',
+                        x: "right",
+                        y: "bottom",
+                        itemGap: 1,
+                        data: strLegend
+                    },
+                    series: series
+                };
+                return option;
             }
-            var series = [];
-            for (var j = 0; j < result.namenum.length; j++) {
-                series.push({
-                    name: j,
-                    type: 'pie',
-                    clockWise: true,
-                    startAngle: 300,
-                    radius: [75 - j * 5 + "%", 76 - j * 5 + "%"],
-                    center: ["45%", "50%"],
-                    itemStyle: dataStyle,
-                    data: [{
-                        value: result.ratenum[j],
-                        name: result.ratenum[j] + "%" + result.namenum[j]
-                    }, {
-                        value: 100 - result.ratenum[j],
-                        name: 'invisible',
-                        itemStyle: placeHolderStyle
-                    }]
-                });
-            }
-            var option = {
-                backgroundColor: '#1e1f2d',
-                color: [
-                    '#025AC8', '#0D7990', '#03C4A6', '#405956', '#3A402E',
-                    '#7B612A', '#A0361A', '#CE162F', '#862875', '#7E55D9',
-                    '#5A558A', '#F1314B' // , '#F4E001', '#F0805A', '#26C0C0'
-                ],
-                tooltip: {
-                    show: true,
-                    formatter: "{b}"
-                },
-                legend: {
-                    show: true,
-                    orient: 'vertical',
-                    x: "right",
-                    y: "bottom",
-                    itemGap: 1,
-                    data: strLegend
-                },
-                series: series
-            };
-            return option;
         }
         //    onlineRate.setOption(opsOnlineRate());
         // 近期采集数量趋势图
@@ -956,27 +910,27 @@
                         name: 'invisible',
                         itemStyle: placeHolderStyle
                     }]
-                }, {
-                    name: '6',
-                    type: 'pie',
-                    clockWise: true,
-                    startAngle: 270,
-                    radius: [30, 32],
-                    itemStyle: dataStyle,
-                    data: [{
-                        value: 55,
-                        name: data[5].data + '个' + data[5].name
-                    }, {
-                        value: 45,
-                        name: 'invisible',
-                        itemStyle: placeHolderStyle
-                    }]
-                }]
+                }
+                //, {
+                //    name: '6',
+                //    type: 'pie',
+                //    clockWise: true,
+                //    startAngle: 270,
+                //    radius: [30, 32],
+                //    itemStyle: dataStyle,
+                //    data: [{
+                //        value: 55,
+                //        name: data[5].data + '个' + data[5].name
+                //    }, {
+                //        value: 45,
+                //        name: 'invisible',
+                //        itemStyle: placeHolderStyle
+                //    }]
+                //}
+                ]
             };
             return option;
         }
-        //    count.setOption(ECCount(dataCount));
-
     </script>
 </body>
 </html>

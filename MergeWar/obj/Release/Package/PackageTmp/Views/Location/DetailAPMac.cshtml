@@ -1,12 +1,11 @@
 ﻿@{
-    ViewBag.Title = "-AP设备详细信息";
+    ViewBag.Title = "AP设备详细信息";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    //Layout = null;
     MacInfo mac = (MacInfo)ViewBag.mac;
 }
+<link href="~/Content/css/CSGL.css" rel="stylesheet" />
 @using HCZZ.ModeDB;
 @using Common;
-@using HCZZ.DAL;
 @using (Html.BeginForm("DetailAPMac", "Location", FormMethod.Post))
 {
     UserInfo user = (UserInfo)Session["userInfo"];
@@ -407,7 +406,7 @@
     <div id="mapPop" style="position: absolute; background: #fff; overflow: hidden; width: 980px;
         height: 600px; margin-left: -490px; margin-top: -300px; top: 50%; left: 50%;
         border: 1px solid #333; z-index: 1000; display: none">
-        <iframe id="frame_content0" src="@Url.Content("~/Location/LoadItude")"  name="iframe1" height="100%" width="100%" scrolling="no" frameborder="0" >
+        <iframe id="frame_content0" src="@Url.Content("~/Public/LoadItude")"  name="iframe1" height="100%" width="100%" scrolling="no" frameborder="0" >
         </iframe>
         <script type="text/javascript">
             function reinitIframe() {

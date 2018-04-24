@@ -10,6 +10,7 @@ namespace HCZZ.Controllers
     [SystemAutherFilter]
     public class PlateController : Controller
     {
+        public static string PageSize = System.Configuration.ConfigurationManager.AppSettings["PageSize"];
         public ActionResult Index()
         {
             ViewBag.LfetShow = "车牌分析";

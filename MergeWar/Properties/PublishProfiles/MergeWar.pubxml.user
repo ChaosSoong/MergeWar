@@ -16,22 +16,22 @@
       <publishTime>07/11/2017 16:42:33</publishTime>
     </File>
     <File Include="bin/Common.dll">
-      <publishTime>07/12/2017 16:30:14</publishTime>
+      <publishTime>08/24/2017 09:04:23</publishTime>
     </File>
     <File Include="bin/HCZZ.DAL.dll">
-      <publishTime>07/12/2017 16:30:15</publishTime>
+      <publishTime>08/24/2017 09:04:23</publishTime>
     </File>
     <File Include="bin/HCZZ.ModeDB.dll">
-      <publishTime>07/12/2017 16:30:10</publishTime>
+      <publishTime>08/24/2017 09:04:22</publishTime>
     </File>
     <File Include="bin/HCZZt.Filter.dll">
-      <publishTime>07/12/2017 16:30:15</publishTime>
+      <publishTime>08/24/2017 09:04:23</publishTime>
     </File>
     <File Include="bin/ICSharpCode.SharpZipLib.dll">
       <publishTime>05/31/2017 09:13:23</publishTime>
     </File>
     <File Include="bin/MergeWar.dll">
-      <publishTime>07/12/2017 16:54:15</publishTime>
+      <publishTime>08/24/2017 09:06:25</publishTime>
     </File>
     <File Include="bin/Microsoft.AI.Agent.Intercept.dll">
       <publishTime>11/30/2016 16:07:42</publishTime>
@@ -129,6 +129,9 @@
     <File Include="bin/System.Web.Webpages.Razor.dll">
       <publishTime>01/28/2015 04:04:30</publishTime>
     </File>
+    <File Include="bin/Szcert.Audit.CommonBase.dll">
+      <publishTime>07/14/2017 11:04:33</publishTime>
+    </File>
     <File Include="bin/Webdiyer.MvcPager.dll">
       <publishTime>07/11/2017 16:03:49</publishTime>
     </File>
@@ -147,8 +150,17 @@
     <File Include="bin/zh-Hans/System.Web.Webpages.resources.dll">
       <publishTime>01/28/2015 04:04:32</publishTime>
     </File>
+    <File Include="Content/css/BJGL.css">
+      <publishTime>07/31/2017 11:54:05</publishTime>
+    </File>
+    <File Include="Content/css/BJGL_JSTXBJ.css">
+      <publishTime>08/02/2017 10:13:24</publishTime>
+    </File>
+    <File Include="Content/css/BJGL_JSTXBJ_SH.css">
+      <publishTime>07/31/2017 11:54:05</publishTime>
+    </File>
     <File Include="Content/css/CSGL.css">
-      <publishTime>06/28/2017 17:00:18</publishTime>
+      <publishTime>07/14/2017 13:55:14</publishTime>
     </File>
     <File Include="Content/css/index.css">
       <publishTime>06/23/2017 10:28:08</publishTime>
@@ -157,19 +169,61 @@
       <publishTime>06/21/2017 14:16:59</publishTime>
     </File>
     <File Include="Content/css/Layout.css">
-      <publishTime>07/03/2017 09:03:14</publishTime>
+      <publishTime>07/26/2017 09:03:01</publishTime>
+    </File>
+    <File Include="Content/css/MACFX.css">
+      <publishTime>07/31/2017 11:54:05</publishTime>
     </File>
     <File Include="Content/css/publicHeader.css">
-      <publishTime>07/06/2017 13:48:25</publishTime>
+      <publishTime>07/31/2017 12:45:22</publishTime>
     </File>
     <File Include="Content/css/PZFX.css">
-      <publishTime>06/27/2017 15:57:49</publishTime>
+      <publishTime>06/27/2017 15:29:08</publishTime>
     </File>
     <File Include="Content/css/reset.css">
-      <publishTime>06/19/2017 15:09:24</publishTime>
+      <publishTime>08/04/2017 14:32:55</publishTime>
+    </File>
+    <File Include="Content/css/SY.css">
+      <publishTime>07/13/2017 14:24:43</publishTime>
+    </File>
+    <File Include="Content/css/TZPZ.css">
+      <publishTime>07/31/2017 11:54:05</publishTime>
+    </File>
+    <File Include="Content/css/XTGL.css">
+      <publishTime>07/29/2017 09:09:18</publishTime>
+    </File>
+    <File Include="Content/css/XTGL_AQCSGL.css">
+      <publishTime>07/28/2017 09:55:17</publishTime>
+    </File>
+    <File Include="Content/css/XTGL_AQCSGL_JBXX.css">
+      <publishTime>07/27/2017 16:52:22</publishTime>
+    </File>
+    <File Include="Content/css/XTGL_JSGL.css">
+      <publishTime>07/29/2017 09:09:18</publishTime>
+    </File>
+    <File Include="Content/css/XTGL_QYGL.css">
+      <publishTime>07/29/2017 09:09:18</publishTime>
+    </File>
+    <File Include="Content/css/XTGL_XTPZCSGL.css">
+      <publishTime>07/27/2017 16:52:21</publishTime>
+    </File>
+    <File Include="Content/css/XTGL_XTPZCSGL_XGPZXX.css">
+      <publishTime>07/28/2017 15:03:11</publishTime>
+    </File>
+    <File Include="Content/css/XTGL_XTRZCX.css">
+      <publishTime>07/31/2017 11:54:04</publishTime>
+    </File>
+    <File Include="Content/css/XTGL_YHGL.css">
+      <publishTime>07/31/2017 11:54:04</publishTime>
+    </File>
+    <File Include="Content/css/XTGL_ZDBBGL.css">
+      <publishTime>07/27/2017 16:52:22</publishTime>
     </File>
     <File Include="Content/css/YJCX.css">
       <publishTime>06/26/2017 10:56:02</publishTime>
+    </File>
+    <File Include="Content/css/YJCX_CXJG.css">
+      <publishTime>08/03/2017 09:26:27</publishTime>
     </File>
     <File Include="Content/DatePicker/calendar.js">
       <publishTime>05/31/2017 09:13:28</publishTime>
@@ -202,7 +256,7 @@
       <publishTime>05/31/2017 09:13:34</publishTime>
     </File>
     <File Include="Content/DatePicker/skin/WdatePicker.css">
-      <publishTime>05/31/2017 09:13:34</publishTime>
+      <publishTime>07/13/2017 16:59:58</publishTime>
     </File>
     <File Include="Content/DatePicker/skin/whyGreen/bg.jpg">
       <publishTime>05/31/2017 09:13:28</publishTime>
@@ -228,6 +282,9 @@
     <File Include="Content/images/audit_icon.png">
       <publishTime>06/23/2017 10:28:08</publishTime>
     </File>
+    <File Include="Content/images/bj.png">
+      <publishTime>07/31/2017 11:54:02</publishTime>
+    </File>
     <File Include="Content/images/BJGLblue.png">
       <publishTime>06/19/2017 15:09:24</publishTime>
     </File>
@@ -248,6 +305,9 @@
     </File>
     <File Include="Content/images/btnExcelbg.png">
       <publishTime>06/23/2017 10:28:08</publishTime>
+    </File>
+    <File Include="Content/images/BUTTON.png">
+      <publishTime>07/31/2017 11:54:02</publishTime>
     </File>
     <File Include="Content/images/bxobg2_icon.png">
       <publishTime>06/23/2017 10:28:08</publishTime>
@@ -291,8 +351,14 @@
     <File Include="Content/images/fullScreen.png">
       <publishTime>06/26/2017 10:56:05</publishTime>
     </File>
+    <File Include="Content/images/header.png">
+      <publishTime>07/25/2017 14:05:23</publishTime>
+    </File>
     <File Include="Content/images/home_icon.png">
       <publishTime>06/23/2017 10:28:08</publishTime>
+    </File>
+    <File Include="Content/images/icon_close.png">
+      <publishTime>07/27/2017 16:52:26</publishTime>
     </File>
     <File Include="Content/images/INDEXblue.png">
       <publishTime>06/19/2017 15:09:24</publishTime>
@@ -300,8 +366,14 @@
     <File Include="Content/images/INDEXgray.png">
       <publishTime>06/19/2017 15:09:24</publishTime>
     </File>
+    <File Include="Content/images/L.png">
+      <publishTime>07/31/2017 11:54:00</publishTime>
+    </File>
     <File Include="Content/images/loading7.gif">
       <publishTime>05/31/2017 09:14:15</publishTime>
+    </File>
+    <File Include="Content/images/loginbg.png">
+      <publishTime>07/31/2017 11:54:01</publishTime>
     </File>
     <File Include="Content/images/MACblue.png">
       <publishTime>06/19/2017 15:09:24</publishTime>
@@ -326,6 +398,9 @@
     </File>
     <File Include="Content/images/routeSelection.png">
       <publishTime>06/26/2017 10:56:05</publishTime>
+    </File>
+    <File Include="Content/images/save_bg.png">
+      <publishTime>07/27/2017 16:52:29</publishTime>
     </File>
     <File Include="Content/images/SBSLicon.png">
       <publishTime>06/19/2017 15:09:24</publishTime>
@@ -486,8 +561,17 @@
     <File Include="Content/images/sideYellow7.png">
       <publishTime>06/23/2017 10:28:08</publishTime>
     </File>
+    <File Include="Content/images/star.png">
+      <publishTime>07/27/2017 16:52:28</publishTime>
+    </File>
+    <File Include="Content/images/star1.png">
+      <publishTime>07/28/2017 15:03:11</publishTime>
+    </File>
     <File Include="Content/images/system.png">
       <publishTime>06/19/2017 14:21:23</publishTime>
+    </File>
+    <File Include="Content/images/title_bg.png">
+      <publishTime>07/27/2017 16:52:26</publishTime>
     </File>
     <File Include="Content/images/TZPZblue.png">
       <publishTime>06/19/2017 15:09:24</publishTime>
@@ -521,6 +605,9 @@
     </File>
     <File Include="Content/images/YJCXgray.png">
       <publishTime>06/19/2017 15:09:24</publishTime>
+    </File>
+    <File Include="Content/images/YZM.png">
+      <publishTime>07/31/2017 11:54:02</publishTime>
     </File>
     <File Include="Content/images/ZXLicon.png">
       <publishTime>06/19/2017 15:09:24</publishTime>
@@ -613,10 +700,40 @@
       <publishTime>06/15/2017 14:59:07</publishTime>
     </File>
     <File Include="Content/js/publicJS.js">
-      <publishTime>07/10/2017 16:19:03</publishTime>
+      <publishTime>08/16/2017 15:19:11</publishTime>
     </File>
     <File Include="Content/js/scroll.js">
       <publishTime>06/15/2017 14:59:07</publishTime>
+    </File>
+    <File Include="Content/layer/jquery1.9.js">
+      <publishTime>07/29/2017 09:09:20</publishTime>
+    </File>
+    <File Include="Content/layer/layer.js">
+      <publishTime>07/29/2017 09:09:19</publishTime>
+    </File>
+    <File Include="Content/layer/mobile/layer.js">
+      <publishTime>07/29/2017 09:09:19</publishTime>
+    </File>
+    <File Include="Content/layer/mobile/need/layer.css">
+      <publishTime>07/29/2017 09:09:19</publishTime>
+    </File>
+    <File Include="Content/layer/skin/default/icon-ext.png">
+      <publishTime>07/29/2017 09:09:20</publishTime>
+    </File>
+    <File Include="Content/layer/skin/default/icon.png">
+      <publishTime>07/29/2017 09:09:20</publishTime>
+    </File>
+    <File Include="Content/layer/skin/default/layer.css">
+      <publishTime>07/29/2017 09:09:20</publishTime>
+    </File>
+    <File Include="Content/layer/skin/default/loading-0.gif">
+      <publishTime>07/29/2017 09:09:20</publishTime>
+    </File>
+    <File Include="Content/layer/skin/default/loading-1.gif">
+      <publishTime>07/29/2017 09:09:20</publishTime>
+    </File>
+    <File Include="Content/layer/skin/default/loading-2.gif">
+      <publishTime>07/29/2017 09:09:20</publishTime>
     </File>
     <File Include="Content/test.htm">
       <publishTime>06/22/2017 16:02:04</publishTime>
@@ -634,10 +751,10 @@
       <publishTime>05/31/2017 09:14:31</publishTime>
     </File>
     <File Include="Map/HGetItude.html">
-      <publishTime>07/05/2017 10:26:52</publishTime>
+      <publishTime>08/24/2017 08:50:43</publishTime>
     </File>
     <File Include="Map/HLocaShowMap.html">
-      <publishTime>07/12/2017 16:47:44</publishTime>
+      <publishTime>08/17/2017 11:49:32</publishTime>
     </File>
     <File Include="Map/images/1.png">
       <publishTime>05/31/2017 09:14:24</publishTime>
@@ -754,10 +871,10 @@
       <publishTime>06/08/2017 10:36:42</publishTime>
     </File>
     <File Include="Map/Index-draw.html">
-      <publishTime>06/12/2017 15:29:20</publishTime>
+      <publishTime>07/13/2017 16:11:29</publishTime>
     </File>
     <File Include="Map/js/apiv.2.0.js">
-      <publishTime>07/12/2017 15:09:50</publishTime>
+      <publishTime>08/24/2017 08:50:43</publishTime>
     </File>
     <File Include="Map/js/dis.js">
       <publishTime>05/08/2017 16:08:46</publishTime>
@@ -35254,10 +35371,10 @@
       <publishTime>06/13/2017 17:24:59</publishTime>
     </File>
     <File Include="Map/test/js/apiv.2.0.js">
-      <publishTime>06/14/2017 13:58:53</publishTime>
+      <publishTime>07/13/2017 14:31:30</publishTime>
     </File>
     <File Include="Map/test/js/apiv.2.01.js">
-      <publishTime>06/13/2017 14:32:25</publishTime>
+      <publishTime>07/13/2017 14:36:20</publishTime>
     </File>
     <File Include="Map/test/js/demo.js">
       <publishTime>04/25/2017 16:32:20</publishTime>
@@ -35272,7 +35389,7 @@
       <publishTime>06/27/2017 14:06:58</publishTime>
     </File>
     <File Include="Map/test/js/DrawingManager_min.js">
-      <publishTime>06/28/2017 16:16:25</publishTime>
+      <publishTime>08/15/2017 15:23:51</publishTime>
     </File>
     <File Include="Map/test/js/GeoUtils.js">
       <publishTime>05/04/2017 11:17:30</publishTime>
@@ -35397,6 +35514,54 @@
     <File Include="packages.config">
       <publishTime>07/11/2017 16:42:33</publishTime>
     </File>
+    <File Include="Service References/JavaServer/MergeWar.JavaServer.addTerminalManageListResponse.datasource">
+      <publishTime>08/24/2017 09:05:55</publishTime>
+    </File>
+    <File Include="Service References/JavaServer/MergeWar.JavaServer.findCaptureTimeResponse.datasource">
+      <publishTime>08/24/2017 09:05:55</publishTime>
+    </File>
+    <File Include="Service References/JavaServer/MergeWar.JavaServer.queryAccessLogAuthResponse.datasource">
+      <publishTime>08/24/2017 09:05:56</publishTime>
+    </File>
+    <File Include="Service References/JavaServer/MergeWar.JavaServer.queryAppearDevResponse.datasource">
+      <publishTime>08/24/2017 09:05:56</publishTime>
+    </File>
+    <File Include="Service References/JavaServer/MergeWar.JavaServer.queryAuthOrMacResponse.datasource">
+      <publishTime>08/24/2017 09:05:56</publishTime>
+    </File>
+    <File Include="Service References/JavaServer/MergeWar.JavaServer.queryDisappearDevResponse.datasource">
+      <publishTime>08/24/2017 09:05:55</publishTime>
+    </File>
+    <File Include="Service References/JavaServer/MergeWar.JavaServer.queryListCollisionResponse.datasource">
+      <publishTime>08/24/2017 09:05:56</publishTime>
+    </File>
+    <File Include="Service References/JavaServer/MergeWar.JavaServer.queryListFollowResponse.datasource">
+      <publishTime>08/24/2017 09:05:55</publishTime>
+    </File>
+    <File Include="Service References/JavaServer/MergeWar.JavaServer.queryMainpageInfoCountDetailResponse.datasource">
+      <publishTime>08/24/2017 09:05:56</publishTime>
+    </File>
+    <File Include="Service References/JavaServer/MergeWar.JavaServer.queryTerminaAccessListResponse.datasource">
+      <publishTime>08/24/2017 09:05:56</publishTime>
+    </File>
+    <File Include="Service References/JavaServer/MergeWar.JavaServer.queryTerminalInfoDetailResponse.datasource">
+      <publishTime>08/24/2017 09:05:56</publishTime>
+    </File>
+    <File Include="Service References/JavaServer/MergeWar.JavaServer.queryTerminalInfoMacResponse.datasource">
+      <publishTime>08/24/2017 09:05:56</publishTime>
+    </File>
+    <File Include="Service References/JavaServer/MergeWar.JavaServer.queryTerminalManageListResponse.datasource">
+      <publishTime>08/24/2017 09:05:55</publishTime>
+    </File>
+    <File Include="Service References/JavaServer/MergeWar.JavaServer.queryVirtualIdentDetailResponse.datasource">
+      <publishTime>08/24/2017 09:05:56</publishTime>
+    </File>
+    <File Include="Service References/JavaServer/MergeWar.JavaServer.queryVirtualIdentResponse.datasource">
+      <publishTime>08/24/2017 09:05:56</publishTime>
+    </File>
+    <File Include="Service References/JavaServer/MergeWar.JavaServer.updateTerminalManageListResponse.datasource">
+      <publishTime>08/24/2017 09:05:56</publishTime>
+    </File>
     <File Include="Template/MergeWar_ImprotLoca.xlsx">
       <publishTime>06/28/2017 09:27:20</publishTime>
     </File>
@@ -35422,7 +35587,7 @@
       <publishTime>01/28/2015 04:02:18</publishTime>
     </File>
     <File Include="ThirdLib/Szcert.Audit.CommonBase.dll">
-      <publishTime>07/11/2017 16:03:49</publishTime>
+      <publishTime>07/14/2017 11:04:33</publishTime>
     </File>
     <File Include="ThirdLib/Szcert.Audit.CommonBase.XML">
       <publishTime>07/11/2017 16:03:49</publishTime>
@@ -35430,8 +35595,26 @@
     <File Include="ThirdLib/Webdiyer.MvcPager.dll">
       <publishTime>07/11/2017 16:03:49</publishTime>
     </File>
+    <File Include="Views/Character/ImeiImsi.cshtml">
+      <publishTime>07/31/2017 14:57:46</publishTime>
+    </File>
+    <File Include="Views/Character/ImeiPlate.cshtml">
+      <publishTime>07/31/2017 14:57:37</publishTime>
+    </File>
     <File Include="Views/Character/Index.cshtml">
-      <publishTime>06/28/2017 15:22:00</publishTime>
+      <publishTime>07/13/2017 15:23:21</publishTime>
+    </File>
+    <File Include="Views/Character/MacImei.cshtml">
+      <publishTime>07/31/2017 14:43:44</publishTime>
+    </File>
+    <File Include="Views/Character/MacImsi.cshtml">
+      <publishTime>07/31/2017 14:57:54</publishTime>
+    </File>
+    <File Include="Views/Character/MacPlate.cshtml">
+      <publishTime>07/31/2017 14:58:02</publishTime>
+    </File>
+    <File Include="Views/Character/PlateImsi.cshtml">
+      <publishTime>07/31/2017 14:57:29</publishTime>
     </File>
     <File Include="Views/Collision/Index.cshtml">
       <publishTime>06/23/2017 10:28:02</publishTime>
@@ -35443,64 +35626,76 @@
       <publishTime>06/15/2017 14:59:03</publishTime>
     </File>
     <File Include="Views/Home/Index.cshtml">
-      <publishTime>07/12/2017 16:52:27</publishTime>
+      <publishTime>08/24/2017 08:50:45</publishTime>
     </File>
     <File Include="Views/Location/AddAPMac.cshtml">
-      <publishTime>07/05/2017 15:58:14</publishTime>
+      <publishTime>07/20/2017 10:27:33</publishTime>
     </File>
     <File Include="Views/Location/AddLocation.cshtml">
-      <publishTime>07/05/2017 11:25:19</publishTime>
+      <publishTime>08/15/2017 10:59:14</publishTime>
     </File>
     <File Include="Views/Location/Audit.cshtml">
       <publishTime>07/06/2017 15:39:06</publishTime>
     </File>
     <File Include="Views/Location/DetailAPMac.cshtml">
-      <publishTime>07/05/2017 11:25:47</publishTime>
+      <publishTime>07/18/2017 10:24:16</publishTime>
     </File>
     <File Include="Views/Location/DetailLoca.cshtml">
-      <publishTime>07/05/2017 11:25:53</publishTime>
+      <publishTime>07/14/2017 13:59:50</publishTime>
     </File>
     <File Include="Views/Location/DevInfoList.cshtml">
-      <publishTime>07/10/2017 11:38:21</publishTime>
+      <publishTime>07/31/2017 11:01:04</publishTime>
     </File>
     <File Include="Views/Location/EditAPMac.cshtml">
-      <publishTime>07/05/2017 11:24:42</publishTime>
+      <publishTime>07/18/2017 10:26:13</publishTime>
     </File>
     <File Include="Views/Location/EditLocation.cshtml">
-      <publishTime>07/06/2017 10:28:29</publishTime>
+      <publishTime>07/18/2017 10:30:08</publishTime>
     </File>
     <File Include="Views/Location/Index.cshtml">
-      <publishTime>06/15/2017 14:59:03</publishTime>
+      <publishTime>07/17/2017 16:30:49</publishTime>
     </File>
     <File Include="Views/Location/LoadItude.cshtml">
       <publishTime>07/05/2017 11:26:19</publishTime>
     </File>
     <File Include="Views/Location/LocaShowMap.cshtml">
-      <publishTime>07/06/2017 15:03:58</publishTime>
+      <publishTime>07/18/2017 10:38:57</publishTime>
     </File>
     <File Include="Views/Location/LocationList.cshtml">
-      <publishTime>07/11/2017 09:36:46</publishTime>
+      <publishTime>07/31/2017 12:51:26</publishTime>
     </File>
     <File Include="Views/Location/ShowCertifi.cshtml">
       <publishTime>07/11/2017 15:57:16</publishTime>
     </File>
     <File Include="Views/Location/UnDeviceList.cshtml">
-      <publishTime>07/10/2017 16:26:19</publishTime>
+      <publishTime>07/21/2017 09:52:53</publishTime>
     </File>
     <File Include="Views/Login/Index.cshtml">
-      <publishTime>06/15/2017 14:59:03</publishTime>
+      <publishTime>08/24/2017 08:50:45</publishTime>
+    </File>
+    <File Include="Views/Mac/Analysis.cshtml">
+      <publishTime>08/18/2017 08:53:03</publishTime>
     </File>
     <File Include="Views/Mac/AppearDevice.cshtml">
-      <publishTime>07/03/2017 09:40:41</publishTime>
+      <publishTime>08/14/2017 15:44:13</publishTime>
+    </File>
+    <File Include="Views/Mac/AppearDevRes.cshtml">
+      <publishTime>08/22/2017 14:09:21</publishTime>
     </File>
     <File Include="Views/Mac/Collision.cshtml">
-      <publishTime>07/11/2017 15:42:31</publishTime>
+      <publishTime>08/15/2017 15:23:51</publishTime>
     </File>
     <File Include="Views/Mac/DisappearDevice.cshtml">
-      <publishTime>07/03/2017 09:40:42</publishTime>
+      <publishTime>08/14/2017 16:50:38</publishTime>
+    </File>
+    <File Include="Views/Mac/DisappearDevRes.cshtml">
+      <publishTime>08/22/2017 14:09:21</publishTime>
     </File>
     <File Include="Views/Mac/Follow.cshtml">
-      <publishTime>07/03/2017 09:40:39</publishTime>
+      <publishTime>08/11/2017 11:06:09</publishTime>
+    </File>
+    <File Include="Views/Mac/GowithSwot.cshtml">
+      <publishTime>08/18/2017 08:53:03</publishTime>
     </File>
     <File Include="Views/Mac/Index.cshtml">
       <publishTime>06/15/2017 14:59:02</publishTime>
@@ -35508,80 +35703,104 @@
     <File Include="Views/Plate/Index.cshtml">
       <publishTime>06/15/2017 14:59:02</publishTime>
     </File>
+    <File Include="Views/Public/AnalysisDet.cshtml">
+      <publishTime>08/15/2017 14:24:58</publishTime>
+    </File>
+    <File Include="Views/Public/GetDataNum.cshtml">
+      <publishTime>07/26/2017 10:08:10</publishTime>
+    </File>
+    <File Include="Views/Public/Index.cshtml">
+      <publishTime>07/24/2017 16:56:54</publishTime>
+    </File>
+    <File Include="Views/Public/OninfoDetail.cshtml">
+      <publishTime>08/22/2017 14:09:21</publishTime>
+    </File>
     <File Include="Views/Public/Result.cshtml">
-      <publishTime>07/03/2017 16:42:07</publishTime>
+      <publishTime>08/14/2017 09:12:35</publishTime>
     </File>
     <File Include="Views/Public/ResultList.cshtml">
       <publishTime>07/03/2017 16:42:07</publishTime>
     </File>
+    <File Include="Views/Public/ShowCertifi.cshtml">
+      <publishTime>07/19/2017 09:23:31</publishTime>
+    </File>
+    <File Include="Views/Public/TableShow.cshtml">
+      <publishTime>08/24/2017 08:50:43</publishTime>
+    </File>
+    <File Include="Views/Public/_ResultListPaital.cshtml">
+      <publishTime>08/22/2017 14:09:21</publishTime>
+    </File>
     <File Include="Views/Search/Index.cshtml">
-      <publishTime>07/03/2017 16:42:08</publishTime>
+      <publishTime>08/22/2017 14:09:22</publishTime>
     </File>
     <File Include="Views/Search/Result.cshtml">
-      <publishTime>06/27/2017 14:43:05</publishTime>
+      <publishTime>08/24/2017 08:50:44</publishTime>
     </File>
     <File Include="Views/Shared/Error.cshtml">
       <publishTime>06/15/2017 14:59:03</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>07/11/2017 18:07:40</publishTime>
+      <publishTime>08/24/2017 08:50:45</publishTime>
     </File>
     <File Include="Views/Shared/_LayoutLeft.cshtml">
-      <publishTime>07/03/2017 16:42:08</publishTime>
+      <publishTime>08/24/2017 08:50:44</publishTime>
     </File>
     <File Include="Views/Shared/_LogOnPartial.cshtml">
       <publishTime>06/15/2017 14:59:03</publishTime>
     </File>
+    <File Include="Views/Shared/_PartialPage.cshtml">
+      <publishTime>08/22/2017 14:09:24</publishTime>
+    </File>
     <File Include="Views/System/AddArea.cshtml">
-      <publishTime>07/06/2017 10:35:05</publishTime>
+      <publishTime>08/04/2017 14:40:04</publishTime>
     </File>
     <File Include="Views/System/AddCity.cshtml">
-      <publishTime>07/06/2017 10:35:05</publishTime>
+      <publishTime>08/14/2017 09:12:38</publishTime>
     </File>
     <File Include="Views/System/AddOrg.cshtml">
-      <publishTime>07/10/2017 16:19:03</publishTime>
+      <publishTime>08/14/2017 09:12:38</publishTime>
     </File>
     <File Include="Views/System/AddPoliceInfo.cshtml">
       <publishTime>07/06/2017 10:35:05</publishTime>
     </File>
     <File Include="Views/System/AddPower.cshtml">
-      <publishTime>07/03/2017 16:42:08</publishTime>
+      <publishTime>07/14/2017 16:49:33</publishTime>
     </File>
     <File Include="Views/System/AddProArea.cshtml">
-      <publishTime>07/06/2017 10:35:05</publishTime>
+      <publishTime>08/04/2017 14:40:04</publishTime>
     </File>
     <File Include="Views/System/AddRole.cshtml">
-      <publishTime>07/11/2017 15:57:51</publishTime>
+      <publishTime>08/04/2017 14:40:04</publishTime>
     </File>
     <File Include="Views/System/AddScenicInfo.cshtml">
       <publishTime>07/06/2017 10:35:05</publishTime>
     </File>
     <File Include="Views/System/AddUser.cshtml">
-      <publishTime>07/11/2017 15:57:51</publishTime>
+      <publishTime>08/08/2017 09:49:48</publishTime>
     </File>
     <File Include="Views/System/AddVersionInfo.cshtml">
-      <publishTime>07/06/2017 15:39:17</publishTime>
+      <publishTime>08/14/2017 09:12:38</publishTime>
     </File>
     <File Include="Views/System/AreaInfoList.cshtml">
-      <publishTime>07/06/2017 15:39:17</publishTime>
+      <publishTime>08/14/2017 09:12:38</publishTime>
     </File>
     <File Include="Views/System/AreaList.cshtml">
-      <publishTime>07/03/2017 12:01:18</publishTime>
+      <publishTime>07/14/2017 16:49:22</publishTime>
     </File>
     <File Include="Views/System/AreaManage.cshtml">
       <publishTime>07/03/2017 12:01:18</publishTime>
     </File>
     <File Include="Views/System/AreaManageCity.cshtml">
-      <publishTime>07/03/2017 12:01:18</publishTime>
+      <publishTime>07/14/2017 16:49:20</publishTime>
     </File>
     <File Include="Views/System/AreaManageCityInfoList.cshtml">
-      <publishTime>07/06/2017 15:39:17</publishTime>
+      <publishTime>08/14/2017 09:12:38</publishTime>
     </File>
     <File Include="Views/System/AreaManageInfoList.cshtml">
-      <publishTime>07/06/2017 15:39:17</publishTime>
+      <publishTime>08/14/2017 09:12:38</publishTime>
     </File>
     <File Include="Views/System/ConfigInfoList.cshtml">
-      <publishTime>07/11/2017 15:55:36</publishTime>
+      <publishTime>07/27/2017 17:56:41</publishTime>
     </File>
     <File Include="Views/System/DelRole.cshtml">
       <publishTime>06/20/2017 11:03:44</publishTime>
@@ -35590,79 +35809,88 @@
       <publishTime>06/20/2017 11:03:44</publishTime>
     </File>
     <File Include="Views/System/DetailedVersion.cshtml">
-      <publishTime>07/06/2017 15:39:17</publishTime>
+      <publishTime>07/14/2017 16:49:07</publishTime>
     </File>
     <File Include="Views/System/DetailLog.cshtml">
-      <publishTime>07/11/2017 15:55:36</publishTime>
+      <publishTime>07/20/2017 16:43:04</publishTime>
     </File>
     <File Include="Views/System/DetOrg.cshtml">
-      <publishTime>07/07/2017 16:03:01</publishTime>
+      <publishTime>07/28/2017 11:48:58</publishTime>
     </File>
     <File Include="Views/System/DetRole.cshtml">
       <publishTime>06/20/2017 11:03:44</publishTime>
     </File>
     <File Include="Views/System/DetUser.cshtml">
-      <publishTime>07/11/2017 15:55:36</publishTime>
+      <publishTime>07/14/2017 16:49:03</publishTime>
     </File>
     <File Include="Views/System/EditArea.cshtml">
-      <publishTime>07/06/2017 15:39:17</publishTime>
+      <publishTime>08/04/2017 14:40:04</publishTime>
     </File>
     <File Include="Views/System/EditCity.cshtml">
-      <publishTime>07/06/2017 10:35:05</publishTime>
+      <publishTime>08/04/2017 14:40:04</publishTime>
     </File>
     <File Include="Views/System/EditConfigInfo.cshtml">
-      <publishTime>07/11/2017 15:55:36</publishTime>
+      <publishTime>07/28/2017 15:42:35</publishTime>
     </File>
     <File Include="Views/System/EditOrg.cshtml">
-      <publishTime>07/10/2017 16:19:03</publishTime>
+      <publishTime>08/14/2017 09:12:38</publishTime>
     </File>
     <File Include="Views/System/EditPoliceInfo.cshtml">
       <publishTime>07/06/2017 10:35:05</publishTime>
     </File>
     <File Include="Views/System/EditPower.cshtml">
-      <publishTime>07/03/2017 16:42:08</publishTime>
+      <publishTime>07/14/2017 11:14:03</publishTime>
     </File>
     <File Include="Views/System/EditProArea.cshtml">
-      <publishTime>07/06/2017 10:35:05</publishTime>
+      <publishTime>08/07/2017 08:59:30</publishTime>
     </File>
     <File Include="Views/System/EditRole.cshtml">
-      <publishTime>07/11/2017 15:57:51</publishTime>
+      <publishTime>07/29/2017 09:09:22</publishTime>
     </File>
     <File Include="Views/System/EditScenicInfo.cshtml">
       <publishTime>07/06/2017 10:35:05</publishTime>
     </File>
     <File Include="Views/System/EditUser.cshtml">
-      <publishTime>07/11/2017 15:57:51</publishTime>
+      <publishTime>08/08/2017 09:49:48</publishTime>
     </File>
     <File Include="Views/System/EditVersionInfo.cshtml">
-      <publishTime>07/06/2017 15:39:17</publishTime>
+      <publishTime>08/14/2017 09:12:38</publishTime>
     </File>
     <File Include="Views/System/Index.cshtml">
       <publishTime>06/15/2017 14:59:02</publishTime>
     </File>
     <File Include="Views/System/LogList.cshtml">
-      <publishTime>07/06/2017 10:35:05</publishTime>
+      <publishTime>08/15/2017 14:56:38</publishTime>
+    </File>
+    <File Include="Views/System/NumSelList.cshtml">
+      <publishTime>08/02/2017 10:13:22</publishTime>
     </File>
     <File Include="Views/System/PoliceInfoList.cshtml">
-      <publishTime>07/06/2017 15:39:17</publishTime>
+      <publishTime>08/14/2017 09:12:38</publishTime>
     </File>
     <File Include="Views/System/RoleList.cshtml">
-      <publishTime>07/11/2017 15:57:51</publishTime>
+      <publishTime>08/15/2017 09:38:30</publishTime>
     </File>
     <File Include="Views/System/ScenicInfoList.cshtml">
-      <publishTime>07/10/2017 16:19:03</publishTime>
+      <publishTime>07/31/2017 12:42:03</publishTime>
     </File>
     <File Include="Views/System/SecurityOrgList.cshtml">
-      <publishTime>07/11/2017 15:55:36</publishTime>
+      <publishTime>08/14/2017 09:12:38</publishTime>
     </File>
     <File Include="Views/System/UserList.cshtml">
-      <publishTime>07/11/2017 15:55:36</publishTime>
+      <publishTime>08/15/2017 14:56:38</publishTime>
     </File>
     <File Include="Views/System/VersionInfoList.cshtml">
-      <publishTime>07/06/2017 10:35:05</publishTime>
+      <publishTime>08/04/2017 14:40:04</publishTime>
+    </File>
+    <File Include="Views/Warning/Audit.cshtml">
+      <publishTime>07/31/2017 17:53:44</publishTime>
     </File>
     <File Include="Views/Warning/Index.cshtml">
-      <publishTime>06/19/2017 14:47:02</publishTime>
+      <publishTime>07/31/2017 17:29:15</publishTime>
+    </File>
+    <File Include="Views/Warning/TimelyMsg.cshtml">
+      <publishTime>07/31/2017 17:52:49</publishTime>
     </File>
     <File Include="Views/web.config">
       <publishTime>07/11/2017 18:07:10</publishTime>
@@ -35671,7 +35899,7 @@
       <publishTime>06/15/2017 14:59:02</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>07/12/2017 16:30:28</publishTime>
+      <publishTime>08/24/2017 09:04:37</publishTime>
     </File>
   </ItemGroup>
 </Project>

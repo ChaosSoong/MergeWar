@@ -1,6 +1,11 @@
 /*=============================================================================*/
+
+
 /*===========================头部公共样式（top、header）========================*/
+
+
 /*=============================================================================*/
+
 .clearboth {
     clear: both;
 }
@@ -9,28 +14,38 @@ body {
     background-color: #0e0d1b;
 }
 
+
 /* 设置滚动条的样式 */
+
 ::-webkit-scrollbar {
     width: 4px;
 }
+
+
 /*滚动槽*/
+
 ::-webkit-scrollbar-track {
     /*-webkit-box-shadow:inset 0 0 6px rgba(0,0,0,0.3) ;*/
     border-radius: 20px;
 }
+
+
 /* 滚动条滑块 */
+
 ::-webkit-scrollbar-thumb {
     border-radius: 10px;
-    background: rgba(38,55,56, 1);
+    background: rgba(38, 55, 56, 1);
     -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
 }
 
     ::-webkit-scrollbar-thumb:window-inactive {
-        background: rgba(0,0,0,1);
+        background: rgba(0, 0, 0, 1);
     }
 
 
+
 /*最顶部top*/
+
 .top {
     width: 100%;
     min-width: 1366px;
@@ -56,7 +71,6 @@ body {
 
         .top .toplogin .loginUser {
             display: inline-block;
-            margin-right: 15px;
             margin-left: 15px;
         }
 
@@ -64,7 +78,7 @@ body {
                 color: #aaaaaa;
             }
 
-        .top .toplogin input {
+        .top .toplogin input.loginKJCX {
             width: 90px;
             height: 30px;
             cursor: pointer;
@@ -73,7 +87,61 @@ body {
             color: #7bd2da;
             border: none;
         }
+
+.loginBtn {
+    vertical-align: middle;
+    margin-right: 15px;
+    margin-left: 5px;
+    margin-top: -2px;
+    width: 20px;
+    height: 20px;
+    -webkit-appearance: none;
+    cursor: pointer;
+    background-image: url(../images/contentYJFXLi1Down.png);
+    background-size: 8px 4.5px;
+    background-color: transparent;
+    font-family: 微软雅黑;
+    box-sizing: border-box;
+    background-repeat: no-repeat;
+    background-position: center center;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(38, 55, 56);
+    border-image: initial;
+}
+
+.loginBtnUl {
+    position: absolute;
+    display: none;
+    top: 39px;
+    right: 110px;
+    background-color: #1b202c;
+    border: 1px solid #263738;
+    width: 100px;
+    height: 65px;
+    box-sizing: border-box;
+    z-index: 99999;
+}
+
+    .loginBtnUl li {
+        font-size: 12px;
+        font-family: "微软雅黑";
+        cursor: pointer;
+        color: #7bd2da;
+        height: 30px;
+        line-height: 30px;
+        /*box-sizing: border-box;*/
+        padding-left: 15px;
+    }
+
+        .loginBtnUl li:first-child {
+            border-bottom: 1px solid #263738;
+            padding-bottom: 2px;
+        }
+
+
 /*头部导航栏header*/
+
 .header {
     position: relative;
     z-index: 3;
@@ -81,7 +149,8 @@ body {
     min-width: 1366px;
     margin: 0 auto;
     background-color: #161523;
-    box-shadow: 0px 2px 15px #000000; /*box-shadow:0px 3px 15px 1px #000000;*/
+    box-shadow: 0px 2px 15px #000000;
+    /*box-shadow:0px 3px 15px 1px #000000;*/
 }
 
     .header ul {
@@ -96,8 +165,8 @@ body {
             box-sizing: border-box;
             margin-right: 7px;
             display: inline-block;
-            width: 141px;
-            height: 95px;
+            width: 100px;
+            height: 60px;
             text-align: center;
             background-repeat: no-repeat;
             cursor: pointer;
@@ -108,11 +177,14 @@ body {
 
             .header ul li:first-child {
             }
+
+
             /*.header ul li.active a{color: #ebf5bc;}*/
+
             .header ul li a {
                 color: #616363;
                 display: inline-block;
-                padding-top: 60px;
+                padding-top: 34px;
                 font: 14px "microsoft yahei";
             }
 
@@ -125,223 +197,462 @@ body {
                 }
 
             .header ul li.SY {
-                background-image: url(../images/INDEXgray.png);
+                /*background-image: url(../images/INDEXgray.png);*/
+                background: url(../images/header.png) no-repeat;
+                background-position: -645px -142px;
+                background-color: #1c1c2a;
             }
+
+
                 /*默认状态,未选中,未划过状态*/
+
                 .header ul li.SY:hover {
-                    background-image: url(../images/INDEXblue.png);
+                    /*background-image: url(../images/INDEXblue.png);*/
+                    background: url(../images/header.png) no-repeat;
+                    background-position: -649px 5px;
+                    background-color: #1c1c2a;
                 }
 
             .header ul li.SY1 {
-                background-image: url(../images/INDEXblue.png);
+                /*background-image: url(../images/INDEXblue.png);*/
+                background: url(../images/header.png) no-repeat;
+                background-position: -649px 5px;
+                background-color: #1c1c2a;
             }
+
+
                 /*划过状态*/
+
                 .header ul li.SY1 a {
                     color: #089CB8;
                 }
 
             .header ul li.SY2 {
-                background-image: url(../images/INDEXblue.png);
+                /*background-image: url(../images/INDEXblue.png);*/
+                background: url(../images/header.png) no-repeat;
+                background-position: -649px 5px;
+                background-color: #1c1c2a;
             }
+
+
                 /*选中状态*/
+
                 .header ul li.SY2 a {
                     color: #ebf5bc;
                 }
 
             .header ul li.YJCX {
-                background-image: url(../images/YJCXgray.png);
+                /*background-image: url(../images/YJCXgray.png);*/
+                background: url(../images/header.png) no-repeat;
+                background-position: 35px -140px;
+                background-color: #1c1c2a;
             }
+
+
                 /*默认状态,未选中,未划过状态*/
+
                 .header ul li.YJCX:hover {
-                    background-image: url(../images/YJCXblue.png);
+                    /*background-image: url(../images/YJCXblue.png);*/
+                    background: url(../images/header.png) no-repeat;
+                    background-position: 35px 0px;
+                    background-color: #1c1c2a;
                 }
 
             .header ul li.YJCX1 {
-                background-image: url(../images/YJCXblue.png);
+                /*background-image: url(../images/YJCXblue.png);*/
+                background: url(../images/header.png) no-repeat;
+                background-position: 56px 13px;
+                background-color: #1c1c2a;
             }
+
+
                 /*划过状态*/
+
                 .header ul li.YJCX1 a {
                     color: #089CB8;
                 }
 
             .header ul li.YJCX2 {
-                background-image: url(../images/YJCXblue.png);
+                /*background-image: url(../images/YJCXblue.png);*/
+                background: url(../images/header.png) no-repeat;
+                background-position: 35px 0px;
+                background-color: #1c1c2a;
             }
+
+
                 /*选中状态*/
+
                 .header ul li.YJCX2 a {
                     color: #ebf5bc;
                 }
 
             .header ul li.MACFX {
-                background-image: url(../images/MACgray.png);
+                /*background-image: url(../images/MACgray.png);*/
+                background: url(../images/header.png) no-repeat;
+                background-position: -912px -144px;
+                background-color: #1c1c2a;
             }
+
+
                 /*默认状态,未选中,未划过状态*/
+
                 .header ul li.MACFX:hover {
-                    background-image: url(../images/MACblue.png);
+                    /*background-image: url(../images/MACblue.png);*/
+                    background: url(../images/header.png) no-repeat;
+                    background-position: -909px 0px;
+                    background-color: #1c1c2a;
                 }
 
             .header ul li.MACFX1 {
-                background-image: url(../images/MACblue.png);
+                /*background-image: url(../images/MACblue.png);*/
+                background: url(../images/header.png) no-repeat;
+                background-position: -889px 16px;
+                background-color: #1c1c2a;
             }
+
+
                 /*划过状态*/
+
                 .header ul li.MACFX1 a {
                     color: #089CB8;
                 }
 
             .header ul li.MACFX2 {
-                background-image: url(../images/MACblue.png);
+                /*background-image: url(../images/MACblue.png);*/
+                background: url(../images/header.png) no-repeat;
+                background-position: -909px 0px;
+                background-color: #1c1c2a;
             }
+
+
                 /*选中状态*/
+
                 .header ul li.MACFX2 a {
                     color: #ebf5bc;
                 }
 
 
             .header ul li.WLFX {
-                background-image: url(../images/WLFXgray.png);
+                /*background-image: url(../images/WLFXgray.png);*/
+                background: url(../images/header.png) no-repeat;
+                background-position:-523px -146px;
+                background-color: #1c1c2a;
             }
+
+
                 /*默认状态,未选中,未划过状态*/
+
                 .header ul li.WLFX:hover {
-                    background-image: url(../images/WLFXblue.png);
+                    /*background-image: url(../images/WLFXblue.png);*/
+                    background: url(../images/header.png) no-repeat;
+                    background-position: -527px 0px;
+                    background-color: #1c1c2a;
                 }
 
             .header ul li.WLFX1 {
-                background-image: url(../images/WLFXblue.png);
+                /*background-image: url(../images/WLFXblue.png);*/
+                background: url(../images/header.png) no-repeat;
+                background-position: -507px 15px;
+                background-color: #1c1c2a;
             }
+
+
                 /*划过状态*/
+
                 .header ul li.WLFX1 a {
                     color: #089CB8;
                 }
 
             .header ul li.WLFX2 {
-                background-image: url(../images/WLFXblue.png);
+                /*background-image: url(../images/WLFXblue.png);*/
+                background: url(../images/header.png) no-repeat;
+                background-position: -507px 15px;
+                background-color: #1c1c2a;
             }
+
+
                 /*选中状态*/
+
                 .header ul li.WLFX2 a {
                     color: #ebf5bc;
                 }
 
             .header ul li.CPFX {
-                background-image: url(../images/CPFXgray.png);
+                /*background-image: url(../images/CPFXgray.png);*/
+                background: url(../images/header.png) no-repeat;
+                background-position: -779px -143px;
+                background-color: #1c1c2a;
             }
+
+
                 /*默认状态,未选中,未划过状态*/
+
                 .header ul li.CPFX:hover {
-                    background-image: url(../images/CPFXblue.png);
+                    /*background-image: url(../images/CPFXblue.png);*/
+                    background: url(../images/header.png) no-repeat;
+                    background-position: -782px 2px;
+                    background-color: #1c1c2a;
                 }
 
             .header ul li.CPFX1 {
-                background-image: url(../images/CPFXblue.png);
+                /*background-image: url(../images/CPFXblue.png);*/
+                background: url(../images/header.png) no-repeat;
+                background-position: -762px 16px;
+                background-color: #1c1c2a;
             }
+
+
                 /*划过状态*/
+
                 .header ul li.CPFX1 a {
                     color: #089CB8;
                 }
 
             .header ul li.CPFX2 {
-                background-image: url(../images/CPFXblue.png);
+                /*background-image: url(../images/CPFXblue.png);*/
+                background: url(../images/header.png) no-repeat;
+                background-position: -762px 16px;
+                background-color: #1c1c2a;
             }
+
+
                 /*选中状态*/
+
                 .header ul li.CPFX2 a {
                     color: #ebf5bc;
                 }
 
             .header ul li.TZPZ {
-                background-image: url(../images/TZPZgray.png);
+                /*background-image: url(../images/TZPZgray.png);*/
+                background: url(../images/header.png) no-repeat;
+                background-position: -410px -148px;
+                background-color: #1c1c2a;
             }
+
+
                 /*默认状态,未选中,未划过状态*/
+
                 .header ul li.TZPZ:hover {
-                    background-image: url(../images/TZPZblue.png);
+                    /*background-image: url(../images/TZPZblue.png);*/
+                    background: url(../images/header.png) no-repeat;
+                    background-position: -411px 2px;
+                    background-color: #1c1c2a;
                 }
 
             .header ul li.TZPZ1 {
-                background-image: url(../images/TZPZblue.png);
+                /*background-image: url(../images/TZPZblue.png);*/
+                background: url(../images/header.png) no-repeat;
+                background-position: -390px 16px;
+                background-color: #1c1c2a;
             }
+
+
                 /*划过状态*/
+
                 .header ul li.TZPZ1 a {
                     color: #089CB8;
                 }
 
             .header ul li.TZPZ2 {
-                background-image: url(../images/TZPZblue.png);
+                /*background-image: url(../images/TZPZblue.png);*/
+                background: url(../images/header.png) no-repeat;
+                background-position: -390px 16px;
+                background-color: #1c1c2a;
             }
+
+
                 /*选中状态*/
+
                 .header ul li.TZPZ2 a {
                     color: #ebf5bc;
                 }
 
             .header ul li.CSGL {
-                background-image: url(../images/CSGLgray.png);
+                /*background-image: url(../images/CSGLgray.png);*/
+                background: url(../images/header.png) no-repeat;
+                background-position:-298px -145px;
+                background-color: #1c1c2a;
             }
+
+
                 /*默认状态,未选中,未划过状态*/
+
                 .header ul li.CSGL:hover {
-                    background-image: url(../images/CSGLblue.png);
+                    /*background-image: url(../images/CSGLblue.png);*/
+                    background: url(../images/header.png) no-repeat;
+                    background-position: -297px 5px;
+                    background-color: #1c1c2a;
                 }
 
             .header ul li.CSGL1 {
-                background-image: url(../images/CSGLblue.png);
+                /*background-image: url(../images/CSGLblue.png);*/
+                background: url(../images/header.png) no-repeat;
+                background-position: -277px 20px;
+                background-color: #1c1c2a;
             }
+
+
                 /*划过状态*/
+
                 .header ul li.CSGL1 a {
                     color: #089CB8;
                 }
 
             .header ul li.CSGL2 {
-                background-image: url(../images/CSGLblue.png);
+                /*background-image: url(../images/CSGLblue.png);*/
+                background: url(../images/header.png) no-repeat;
+                background-position: -297px 5px;
+                background-color: #1c1c2a;
             }
+
+
                 /*选中状态*/
+
                 .header ul li.CSGL2 a {
                     color: #ebf5bc;
                 }
 
             .header ul li.BJGL {
-                background-image: url(../images/BJGLgray.png);
+                /*background-image: url(../images/BJGLgray.png);*/
+                background: url(../images/header.png) no-repeat;
+                background-position: -68px -144px;
+                background-color: #1c1c2a;
             }
+
+
                 /*默认状态,未选中,未划过状态*/
+
                 .header ul li.BJGL:hover {
-                    background-image: url(../images/BJGLblue.png);
+                    /*background-image: url(../images/BJGLblue.png);*/
+                    background: url(../images/header.png) no-repeat;
+                    background-position: -68px 1px;
+                    background-color: #1c1c2a;
                 }
 
             .header ul li.BJGL1 {
-                background-image: url(../images/BJGLblue.png);
+                /*background-image: url(../images/BJGLblue.png);*/
+                background: url(../images/header.png) no-repeat;
+                background-position: -49px 16px;
+                background-color: #1c1c2a;
             }
+
+
                 /*划过状态*/
+
                 .header ul li.BJGL1 a {
                     color: #089CB8;
                 }
 
             .header ul li.BJGL2 {
-                background-image: url(../images/BJGLblue.png);
+                /*background-image: url(../images/BJGLblue.png);*/
+                background: url(../images/header.png) no-repeat;
+                background-position: -68PX 1px;
+                background-color: #1c1c2a;
             }
+
+
                 /*选中状态*/
+
                 .header ul li.BJGL2 a {
                     color: #ebf5bc;
                 }
 
 
-            .header ul li.XTGL {
-                background-image: url(../images/XTGLgray.png);
+
+            .header ul li.SPJS {
+                /*background-image: url(../images/BJGLgray.png);*/
+                background: url(../images/header.png) no-repeat;
+                background-position: -68px -144px;
+                background-color: #1c1c2a;
             }
+
+
                 /*默认状态,未选中,未划过状态*/
+
+                .header ul li.SPJS:hover {
+                    /*background-image: url(../images/BJGLblue.png);*/
+                    background: url(../images/header.png) no-repeat;
+                    background-position: -68px 1px;
+                    background-color: #1c1c2a;
+                }
+
+            .header ul li.SPJS1 {
+                /*background-image: url(../images/BJGLblue.png);*/
+                background: url(../images/header.png) no-repeat;
+                background-position: -49px 16px;
+                background-color: #1c1c2a;
+            }
+
+
+                /*划过状态*/
+
+                .header ul li.SPJS1 a {
+                    color: #089CB8;
+                }
+
+            .header ul li.SPJS2 {
+                /*background-image: url(../images/BJGLblue.png);*/
+                background: url(../images/header.png) no-repeat;
+                background-position:  -68px 1px;
+                background-color: #1c1c2a;
+            }
+
+
+                /*选中状态*/
+
+                .header ul li.SPJS2 a {
+                    color: #ebf5bc;
+                }
+
+
+            .header ul li.XTGL {
+                /*background-image: url(../images/XTGLgray.png);*/
+                background: url(../images/header.png) no-repeat;
+                background-position: -182px -143px;
+                background-color: #1c1c2a;
+            }
+
+
+                /*默认状态,未选中,未划过状态*/
+
                 .header ul li.XTGL:hover {
-                    background-image: url(../images/XTGLblue.png);
+                    /*background-image: url(../images/XTGLblue.png);*/
+                    background: url(../images/header.png) no-repeat;
+                    background-position: -177px 4px;
+                    background-color: #1c1c2a;
                 }
 
             .header ul li.XTGL1 {
-                background-image: url(../images/XTGLblue.png);
+                /*background-image: url(../images/XTGLblue.png);*/
+                background: url(../images/header.png) no-repeat;
+                background-position: -157px 20px;
+                background-color: #1c1c2a;
             }
+
+
                 /*划过状态*/
+
                 .header ul li.XTGL1 a {
                     color: #089CB8;
                 }
 
             .header ul li.XTGL2 {
-                background-image: url(../images/XTGLblue.png);
+                /*background-image: url(../images/XTGLblue.png);*/
+                background: url(../images/header.png) no-repeat;
+                background-position: -179px 4px;
+                background-color: #1c1c2a;
             }
+
+
                 /*选中状态*/
+
                 .header ul li.XTGL2 a {
                     color: #ebf5bc;
                 }
+
+
 /*首页主要内容区域content*/
+
 .content {
     width: 100%;
     min-width: 1366px;
@@ -351,8 +662,10 @@ body {
     margin: 0 auto;
 }
 
+
 /*分页显示样式*/
-.pag_td {
+
+/*.pag_td {
     text-align: center;
     float: right;
     padding-right: 15px;
@@ -383,11 +696,15 @@ img {
     font-size: 12px;
     overflow: hidden;
 }
+
     .ulPage div {
-        display:inline-block;
+        display: inline-block;
     }
-/*分页显示样式1*/
-    .ulPage li {
+
+
+    /*分页显示样式1*/
+
+/*.ulPage li {
         float: left;
         margin-left: 5px;
     }
@@ -407,25 +724,25 @@ img {
             border-radius: 2px;
         }
 
-        .ulPage li.active {
-            background-image: url(../Content/images/pageBg.png);
-            border: none;
-            background-size: 42px 42px;
-        }
+.ulPage li.active {
+    background-image: url(../images/pageBg.png);
+    border: none;
+    background-size: 42px 42px;
+}
 
-    .ulPage .liPage:hover {
-        background-image: url(../Content/images/pageBg.png);
-        border: none;
-        background-size: 100% 100%;
-        border: none;
-        color: #ddd;
-    }
+.ulPage .liPage:hover {
+    background-image: url(../images/pageBg.png);
+    border: none;
+    background-size: 100% 100%;
+    border: none;
+    color: #ddd;
+}
 
     .ulPage li.contPage {
         height: 28px;
         line-height: 28px;
         margin-left: 10px;
-        float:right;
+        float: right;
     }
 
     .ulPage li.jumpPage input {
@@ -451,7 +768,38 @@ img {
             cursor: pointer;
             width: 42px;
             height: 26px;
-            background-image: url(../Content/images/pageBg.png);
+            background-image: url(../images/pageBg.png);
             border: none;
             background-size: 100% 100%;
-        }
+        }*/
+
+
+
+
+
+
+#inputs {
+    background-color: transparent;
+    border: none;
+    background-size: 100% 100%;
+    line-height: 23px;
+    height: 23px;
+    padding: 0;
+    text-align: center;
+    width: 30px;
+    margin: 0 0 3px 5px;
+    vertical-align: middle;
+    color: #7bd2da;
+    border: 1px solid #7bd2da;
+    border-radius: 2px;
+}
+
+#jumpBtn {
+    cursor: pointer;
+    width: 42px;
+    height: 26px;
+    background-image: url(../images/pageBg.png);
+    border: none;
+    background-size: 100% 100%;
+    margin-left: 5px;
+}

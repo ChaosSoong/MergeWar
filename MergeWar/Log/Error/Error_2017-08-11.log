@@ -1,0 +1,69 @@
+=============================================================
+====时间：2017/8/11 10:23:03
+====IP：::1
+====异常内容：
+System.ServiceModel.EndpointNotFoundException: 没有终结点在侦听可以接受消息的 http://192.168.0.92:8989/justTest/sCPInquireService。这通常是由于不正确的地址或者 SOAP 操作导致的。如果存在此情况，请参见 InnerException 以了解详细信息。 ---> System.Net.WebException: 无法连接到远程服务器 ---> System.Net.Sockets.SocketException: 由于连接方在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。 192.168.0.92:8989
+   在 System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
+   在 System.Net.ServicePoint.ConnectSocketInternal(Boolean connectFailure, Socket s4, Socket s6, Socket& socket, IPAddress& address, ConnectSocketState state, IAsyncResult asyncResult, Exception& exception)
+   --- 内部异常堆栈跟踪的结尾 ---
+   在 System.Net.HttpWebRequest.GetRequestStream(TransportContext& context)
+   在 System.Net.HttpWebRequest.GetRequestStream()
+   在 System.ServiceModel.Channels.HttpOutput.WebRequestHttpOutput.GetOutputStream()
+   --- 内部异常堆栈跟踪的结尾 ---
+
+Server stack trace: 
+   在 System.ServiceModel.Channels.HttpOutput.WebRequestHttpOutput.GetOutputStream()
+   在 System.ServiceModel.Channels.HttpOutput.Send(TimeSpan timeout)
+   在 System.ServiceModel.Channels.HttpChannelFactory`1.HttpRequestChannel.HttpChannelRequest.SendRequest(Message message, TimeSpan timeout)
+   在 System.ServiceModel.Channels.RequestChannel.Request(Message message, TimeSpan timeout)
+   在 System.ServiceModel.Dispatcher.RequestChannelBinder.Request(Message message, TimeSpan timeout)
+   在 System.ServiceModel.Channels.ServiceChannel.Call(String action, Boolean oneway, ProxyOperationRuntime operation, Object[] ins, Object[] outs, TimeSpan timeout)
+   在 System.ServiceModel.Channels.ServiceChannelProxy.InvokeService(IMethodCallMessage methodCall, ProxyOperationRuntime operation)
+   在 System.ServiceModel.Channels.ServiceChannelProxy.Invoke(IMessage message)
+
+Exception rethrown at [0]: 
+   在 System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage(IMessage reqMsg, IMessage retMsg)
+   在 System.Runtime.Remoting.Proxies.RealProxy.PrivateInvoke(MessageData& msgData, Int32 type)
+   在 MergeWar.JavaServer.SCPInquireService.queryListCollision(queryListCollision request)
+   在 MergeWar.JavaServer.SCPInquireServiceClient.MergeWar.JavaServer.SCPInquireService.queryListCollision(queryListCollision request) 位置 D:\netweb\合成作战新版\源码\MergeWar\Service References\JavaServer\Reference.cs:行号 672
+   在 MergeWar.JavaServer.SCPInquireServiceClient.queryListCollision(String arg0) 位置 D:\netweb\合成作战新版\源码\MergeWar\Service References\JavaServer\Reference.cs:行号 679
+   在 MergeWar.AppCode.JavaServerAction.GetJavaData(String ids, String txtStartTimes, String txtEndTimes, String keys, String type) 位置 D:\netweb\合成作战新版\源码\MergeWar\AppCode\JavaServerAction.cs:行号 40
+   在 HCZZ.Controllers.MacController.Analysis(String ids, String txtStartTimes, String txtEndTimes, String size) 位置 D:\netweb\合成作战新版\源码\MergeWar\Controllers\MacController.cs:行号 60
+
+
+=============================================================
+====时间：2017/8/11 11:26:35
+====IP：::1
+====异常内容：
+System.NullReferenceException: 未将对象引用设置到对象的实例。
+   在 MergeWar.AppCode.JavaServerAction.GetJavaData(String ids, String txtStartTimes, String txtEndTimes, String keys, String type) 位置 D:\netweb\合成作战新版\源码\MergeWar\AppCode\JavaServerAction.cs:行号 63
+   在 HCZZ.Controllers.MacController.GowithSwot(String ids, String txtStartTimes, String txtEndTimes, String mac) 位置 D:\netweb\合成作战新版\源码\MergeWar\Controllers\MacController.cs:行号 109
+
+
+=============================================================
+====时间：2017/8/11 11:27:59
+====IP：::1
+====异常内容：
+System.NullReferenceException: 未将对象引用设置到对象的实例。
+   在 MergeWar.AppCode.JavaServerAction.GetJavaData(String ids, String txtStartTimes, String txtEndTimes, String keys, String type) 位置 D:\netweb\合成作战新版\源码\MergeWar\AppCode\JavaServerAction.cs:行号 63
+   在 HCZZ.Controllers.MacController.GowithSwot(String ids, String txtStartTimes, String txtEndTimes, String mac) 位置 D:\netweb\合成作战新版\源码\MergeWar\Controllers\MacController.cs:行号 109
+
+
+=============================================================
+====时间：2017/8/11 11:31:30
+====IP：::1
+====异常内容：
+System.NullReferenceException: 未将对象引用设置到对象的实例。
+   在 MergeWar.AppCode.JavaServerAction.GetJavaData(String ids, String txtStartTimes, String txtEndTimes, String keys, String type) 位置 D:\netweb\合成作战新版\源码\MergeWar\AppCode\JavaServerAction.cs:行号 63
+   在 HCZZ.Controllers.MacController.GowithSwot(String ids, String txtStartTimes, String txtEndTimes, String mac) 位置 D:\netweb\合成作战新版\源码\MergeWar\Controllers\MacController.cs:行号 109
+
+
+=============================================================
+====时间：2017/8/11 11:34:57
+====IP：::1
+====异常内容：
+System.NullReferenceException: 未将对象引用设置到对象的实例。
+   在 MergeWar.AppCode.JavaServerAction.GetJavaData(String ids, String txtStartTimes, String txtEndTimes, String keys, String type) 位置 D:\netweb\合成作战新版\源码\MergeWar\AppCode\JavaServerAction.cs:行号 63
+   在 HCZZ.Controllers.MacController.GowithSwot(String ids, String txtStartTimes, String txtEndTimes, String mac) 位置 D:\netweb\合成作战新版\源码\MergeWar\Controllers\MacController.cs:行号 109
+
+

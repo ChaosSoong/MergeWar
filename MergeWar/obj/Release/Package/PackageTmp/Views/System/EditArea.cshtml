@@ -38,7 +38,7 @@
                     <td><input type="text" class="_text" name="txtArea" id="txtArea" maxlength="25" value="@(area != null ? area.Area : "")"/><span id="spArea" class="color_ccc">*</span></td>
                 </tr>
                 <tr>
-                    <td align="right">区代码：<input type="hidden" name="oldCode" maxlength="25" value="@(area != null ? area.City_code : "")"/></td>
+                    <td align="right">区代码：<input type="hidden" name="oldCode" maxlength="6" value="@(area != null ? area.City_code : "")"/></td>
                     <td><input type="text" id="txtCity_code" name="txtCity_code" class="_text" value="@(area != null ? area.City_code : "")"/><span id="spCity_code" class="color_ccc">*例如：黄浦区，310101</span></td>
                 </tr>
                 </table>
@@ -61,10 +61,7 @@
              $("#spArea").html("");
          }
          var reg = new RegExp(/\d+$/);
-         if ($.trim($("#txtCity_code").val()) == "") {
-             result = false;
-             $("#spCity_code").html("区域代码不能为空");
-         } else if (!reg.test($.trim($("#txtCity_code").val()))) {
+      if ($.trim($("#txtCity_code").val()) != ""&& !reg.test($.trim($("#txtCity_code").val()))) {
              result = false;
              $("#spCity_code").html("区域代码格式不正确");
          } else {

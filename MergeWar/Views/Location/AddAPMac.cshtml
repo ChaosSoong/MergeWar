@@ -4,7 +4,188 @@
 }
 <link href="~/Content/css/CSGL.css" rel="stylesheet" />
 @using System.Collections.Generic
-@using Common;
+@using HCZZ.Common;
+<style type="text/css">
+    .contentbody .contentInfo table {
+        color: #b1b1b1;
+        width: 1250px;
+        border: 1px solid #2a393a;
+        margin: 0 auto;
+        background-color: #21222f;
+    }
+
+        .contentbody .contentInfo table tr {
+            height: 40px;
+        }
+
+            .contentbody .contentInfo table tr:nth-child(even) {
+                background-color: #21202E;
+            }
+
+            .contentbody .contentInfo table tr:nth-child(odd) {
+                background-color: #21222F;
+            }
+
+            .contentbody .contentInfo table tr th {
+                text-align: left;
+                padding-left: 50px;
+                background-color: #1E1F2D;
+                border-bottom: 1px solid #2A393A;
+            }
+
+            .contentbody .contentInfo table tr td {
+                border-right: 1px solid #2A393A;
+                padding-left: 50px;
+            }
+
+                .contentbody .contentInfo table tr td .spanTitle {
+                    color: #999999;
+                }
+
+                .contentbody .contentInfo table tr td .spanText {
+                    color: #CCCCCC;
+                }
+
+                .contentbody .contentInfo table tr td .spanTextHint {
+                    color: #AA301C;
+                    margin-left: 10px;
+                }
+
+        .contentbody .contentInfo table:nth-child(1) {
+            margin-top: 20px;
+        }
+
+        .contentbody .contentInfo table:last-child {
+            margin-bottom: 50px;
+            border-top: none;
+        }
+
+        .contentbody .contentInfo table tr td img {
+            vertical-align: middle;
+        }
+
+        .contentbody .contentInfo table tr td input {
+            margin-left: 5px;
+            background-color: transparent;
+            border: none;
+            background-color: #222B3B;
+            height: 25px;
+            padding-left: 5px;
+            color: #999999;
+        }
+
+        .contentbody .contentInfo table tr td select {
+            margin-left: 5px;
+            background-color: transparent;
+            border: none;
+            background-color: #222B3B;
+            height: 25px;
+            padding-left: 5px;
+            color: #999999;
+        }
+
+        .contentbody .contentInfo table tr td .SYHLXbtn {
+            border: 1px solid #222B3B;
+            cursor: pointer;
+            outline: none;
+            box-sizing: border-box;
+            /*padding-top: 3px;*/
+            margin-left: 10px;
+            padding-bottom: 3px;
+            padding-left: 15px;
+            padding-right: 15px;
+            -moz-border-radius: 15px; /* Firefox */
+            -webkit-border-radius: 15px; /* Safari 和 Chrome */
+            border-radius: 15px; /* Opera 10.5+, 以及使用了IE-CSS3的IE浏览器 */
+        }
+
+        .contentbody .contentInfo table tr td .YHLXbtnActive {
+            cursor: pointer;
+            box-sizing: border-box;
+            outline: none;
+            color: #7BD2DA;
+            border: 1px solid #7BD2DA;
+        }
+
+        .contentbody .contentInfo table tr td .SYHLXbtn1 {
+            border: 1px solid #222B3B;
+            cursor: pointer;
+            outline: none;
+            box-sizing: border-box;
+            /*padding-top: 3px;*/
+            margin-left: 10px;
+            padding-bottom: 3px;
+            padding-left: 15px;
+            padding-right: 15px;
+            -moz-border-radius: 15px; /* Firefox */
+            -webkit-border-radius: 15px; /* Safari 和 Chrome */
+            border-radius: 15px; /* Opera 10.5+, 以及使用了IE-CSS3的IE浏览器 */
+        }
+
+        .contentbody .contentInfo table tr td .YHLXbtnActive1 {
+            cursor: pointer;
+            box-sizing: border-box;
+            outline: none;
+            color: #7BD2DA;
+            border: 1px solid #7BD2DA;
+        }
+
+        .contentbody .contentInfo table tr td .SYHLXbtn2 {
+            border: 1px solid #222B3B;
+            cursor: pointer;
+            outline: none;
+            box-sizing: border-box;
+            /*padding-top: 3px;*/
+            margin-left: 10px;
+            padding-bottom: 3px;
+            padding-left: 15px;
+            padding-right: 15px;
+            -moz-border-radius: 15px; /* Firefox */
+            -webkit-border-radius: 15px; /* Safari 和 Chrome */
+            border-radius: 15px; /* Opera 10.5+, 以及使用了IE-CSS3的IE浏览器 */
+        }
+
+        .contentbody .contentInfo table tr td .YHLXbtnActive2 {
+            cursor: pointer;
+            box-sizing: border-box;
+            outline: none;
+            color: #7BD2DA;
+            border: 1px solid #7BD2DA;
+        }
+
+
+
+        .contentbody .contentInfo table tr td .ZJLX {
+            width: 80px;
+            border: 1px solid #0A7891;
+            cursor: pointer;
+            background-color: #0B2A3C;
+            color: #7BD2DA;
+        }
+
+    .autocomplete {
+        display: none;
+        position: absolute;
+        background-color: rgb(26, 42, 67);
+        padding: 5px 8px;
+        top: 95px;
+        right: 390px;
+    }
+
+    .btn_SS {
+        box-sizing: border-box;
+        cursor: pointer;
+        width: 250px;
+        height: 50px;
+        background-color: #1e1f2d;
+        color: #7bd2da;
+        border: none;
+        font: 14px "Î¢ÈíÑÅºÚ";
+        background-image: url(/Content/images/save_bg.png);
+    }
+</style>
+
+
 @using (Html.BeginForm("AddAPMac", "Location", FormMethod.Post))
 {
     <div class="contentbody" id="contentbody">
@@ -12,448 +193,405 @@
         </div>
         <div class="Tjxx" id="TJ" style="display: none">
         </div>
-        <table cellpadding="50" cellspacing="1" width="100%" class="AddCx_tab4L">
-            <tr>
-                <th colspan="2">
-                    <h1>
-                        添加AP设备</h1>
-                </th>
-            </tr>
-        </table>
-        <div id="mind" style="overflow-y: auto">
-            <table cellpadding="50" cellspacing="1" width="100%" class="AddCx_tab4L">
+        <div class="contentInfo">
+            <table border="0" cellspacing="0" cellpadding="0">
+                <tr><th colspan="3">基础信息</th></tr>
                 <tr>
-                    <td width="30%" align="right">
-                        AP设备名称：
+                    <td style="width: 50%;">
+                        <img src="@Url.Content("~/Content/images/star1.png" )" />
+                        <span class="spanTitle">AP设备名称:</span>
+                        <input style="width: 180px;" type="text" name="txtAPName" id="txtAPName" value="" />
+                        <!--<span class="spanTextHint">长度为4-18，以字母开头，可以包含数字和下划线</span>-->
                     </td>
-                    <td>
-                        <input type="text" class="_text" name="txtAPName" id="txtAPName" maxlength="64" /><span
-                            id="spAPName" class="color_ccc">*</span>
+                    <td style="width: 50%;">
+                        <img src="@Url.Content("~/Content/images/star1.png" )" />
+                        <span class="spanTitle">AP设备编码:</span>
+                        <input style="width: 180px;" type="text" onkeyup="CheckMacId()" onblur="CheckMacId()" onchange="CheckMacId()" name="txtCOLLECTION_EQUIPMENT_ID" id="txtCOLLECTION_EQUIPMENT_ID" value="" />
+                        <span class="spanTextHint">请输入设备Mac地址，例如：Mac1314520</span>
                     </td>
                 </tr>
                 <tr>
-                    <td align="right">
-                        AP设备编码：
+                    <td style="margin-top: 20px;">
+                        <img src="@Url.Content("~/Content/images/star1.png" )" />
+                        <span class="spanTitle">AP设备Mac地址:</span>
+                        <input style="width: 320px;" type="text" name="txtDeviceMac" readonly="readonly" id="txtDeviceMac" value="" />
+                        <!--<span class="spanText">17512007984</span>-->
                     </td>
                     <td>
-                        <div style="display: inline-block">
-                            <input type="text" class="_text" onkeyup="CheckMacId()" onblur="CheckMacId()" onchange="CheckMacId()"
-                                name="txtCOLLECTION_EQUIPMENT_ID" id="txtCOLLECTION_EQUIPMENT_ID" /><span id="spCOLLECTION_EQUIPMENT_ID"
-                                    class="color_ccc">*请输入设备Mac地址，例如：A1B2C3D4E5F6</span></div>
-                        <input type="hidden" value="" id="HselNum" />
-                    </td>
-                </tr>
-                <tr>
-                    <td align="right">
-                        AP设备MAC地址：
-                    </td>
-                    <td>
-                        <input type="text" class="_text" name="txtDeviceMac" readonly="readonly" id="txtDeviceMac" /><span
-                            id="spDeviceMac" class="color_ccc">*</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="right">
-                        设备模式：
-                    </td>
-                    <td>
-                        <select id="selModeType" name="selModeType" onchange="changeModel(this.value)">
-                            <option value="1">普通模式</option>
-                            <option value="2">城中村模式</option>
-                        </select><label id="lblTrial" style="margin-left: 10px; float: none; display: inline;"><input
-                            type="checkbox" id="ckIstrial" name="ckIstrial" value="1" />免费体验
-                        </label>
-                        <span id="spModeType" class="color_ccc">*</span>
-                    </td>
-                </tr>
-                @*<tr>
-				<td align="right">
-                    采集粒度：
-                </td>
-                <td>
-                    <label>
-                        <input type="checkbox" checked="checked" name="ckLogCapture" value="1" />HTTP日志</label>
-                    <label>
-                        <input type="checkbox" checked="checked" name="ckLogCapture" value="2" />电子围栏</label>
-                    <label>
-                        <input type="checkbox" checked="checked" name="ckLogCapture" value="4" />虚拟账户</label>
-                    <label>
-                        <input type="checkbox" name="ckLogCapture" value="8" />数据解密</label>
-                    <span id="spLogCapture" class="color_ccc" style="display: inline-block; margin-top: 5px;">
-                        *至少选择一项</span>
-                </td> 
-			</tr>*@
-                <tr>
-                    <td align="right">
-                        供应商：
-                    </td>
-                    <td>
-                        <select name="selsupplier" id="selsupplier">
-                            <option value="0">==请选择==</option>
-                            <option value="1">瑜商</option>
-                            <option value="2">永济</option>
-                            <option value="3">汉智星</option>
-                        </select>
-                        <span id="spsupplier" class="color_ccc"></span>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="right">
-                        硬件产品类型：
-                    </td>
-                    <td>
-                        <select name="selProjectType" id="selProjectType" onchange="projectVal(this.value)">
-                            <option value="0">==请选择==</option>
-                            @{
-    Dictionary<int, string> dicProjectType = ChangeValue.ProjectType();
-    foreach (var item in dicProjectType)
-    {
-                                <option value="@item.Key">@item.Value</option>
-    }
+                        <img src="@Url.Content("~/Content/images/star1.png" )" />
+                        <span class="spanTitle">硬件产品类型:</span><!--selProjectType-->
+
+                        @{
+                            int i = 1;
+                            Dictionary<int, string> dicProjectType = ChangeValue.ProjectType();
+                            <input type="hidden" id="selProjectType" name="selProjectType" value="1" />
+                            foreach (var item in dicProjectType)
+                            {
+                                <input class="@(i==1?"SYHLXbtn YHLXbtnActive":"SYHLXbtn")" type="button" name="ProjectType@(i)" id="ProjectType@(i)" onclick="ProjectType(@item.Key)" value="@item.Value" />
+                                i++;
                             }
-                        </select>
-                        <span id="spProjectType" class="color_ccc">*</span>
-                    </td>
-                </tr>
-                <tr id="tr3CID" style="display: none">
-                    <td align="right">
-                        视频设备标识(3CID)：
-                    </td>
-                    <td>
-                        <input type="text" class="_text" maxlength="25" name="txt3CID" value="" id="txt3CID" /><span
-                            id="sp3CID" class="color_ccc">*</span>
+                        }
                     </td>
                 </tr>
                 <tr>
-                    <td align="right">
-                        硬件方案类型：
-                    </td>
                     <td>
-                        <select name="selCasesType" id="selCasesType">
-                            <option value="0">==请选择==</option>
-                            @{
-    Dictionary<int, string> dicCasesType = ChangeValue.CasesType();
-    foreach (var item in dicCasesType)
-    {
-                                <option value="@item.Key">@item.Value</option>
-    }
+                        <img src="@Url.Content("~/Content/images/star1.png" )" />
+                        <span class="spanTitle">硬件方案类型:</span>
+                        <input type="hidden" id="selCasesType" name="selCasesType" value="1" />
+                        @{
+                            int j = 1;
+                            Dictionary<int, string> dicCasesType = ChangeValue.CasesType();
+                            foreach (var item in dicCasesType)
+                            {
+                                <input class="@(j==1?"SYHLXbtn1 YHLXbtnActive1":"SYHLXbtn1")" type="button" onclick="CasesType(@item.Key)" name="selCasesType@(j)" id="selCasesType@(j)" value="@item.Value" />
+                                j++;
                             }
-                        </select>
-                        <span id="spCasesType" class="color_ccc">*</span>
+                        }
+                    </td>
+                    <td>
+                        <div>
+
+                        </div>
+
                     </td>
                 </tr>
+            </table>
+            <table border="0" cellspacing="0" cellpadding="0">
                 <tr>
-                    <td align="right">
-                        网络接入账号或固定IP地址：
-                    </td>
-                    <td>
-                        <input type="text" class="_text" name="txtACSSES_IP" maxlength="25" id="txtACSSES_IP"
-                            value="" />
+                    <td style="border-right: none;">
+                        <img src="@Url.Content("~/Content/images/star1.png" )" />
+                        <span class="spanTitle">AP设备类型</span>
                     </td>
                 </tr>
-                <tr>
-                    <td align="right">
-                        信道：
-                    </td>
-                    <td>
-                        <input type="text" class="_text" maxlength="3" name="txtChannel" value="11" id="txtChannel" /><span
-                            id="spChannel" class="color_ccc">工作信道的范围在1~14之间</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="right">
-                        是否重启：
-                    </td>
-                    <td>
-                        <label>
-                            <input type="radio" value="0" checked="checked" name="radIsReboot" />否</label>
-                        &nbsp;<label><input type="radio" value="1" name="radIsReboot" />是</label><span id="spIsReboot"
-                            class="color_ccc">*</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="right">
-                        强制离线时间：
-                    </td>
-                    <td>
-                        <input type="text" class="_text" maxlength="3" name="txtForcedOfflineTime" id="txtForcedOfflineTime"
-                            value="0" /><span id="spForcedOfflineTime" class="color_ccc">单位分钟，0：不强制离线</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="right">
-                        电子围栏离线时间：
-                    </td>
-                    <td>
-                        <input type="text" class="_text" maxlength="3" name="txtFenceOffTime" id="txtFenceOffTime"
-                            value="0" /><span id="spFenceOffTime" class="color_ccc">单位秒，0~600秒，0表示采用系统配置</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="right">
-                        AP设备类型：
-                    </td>
-                    <td>
-                        <label>
-                            <input type="radio" checked="checked" name="radAPType" value="1" onclick="onSelect('1')"
-                                id="radAPType1" />固定AP设备</label>
-                        <label>
-                            <input type="radio" name="radAPType" id="radAPType2" value="2" onclick="onSelect('2')" />移动AP设备</label><span
-                                id="spAPType" class="color_ccc">*</span>
-                    </td>
-                </tr>
-                <tr class="tr1">
-                    <td align="right">
-                        AP设备经纬度：
-                    </td>
-                    <td>
-                        <input type="text" class="_text" name="txtItude" readonly="readonly" maxlength="23"
-                            id="txtItude" /><a href="javascript:void(0)" onclick="showItude()" style="background: #1b5579;
+                <tr style="border-top: 1px solid #2A393A;">
+                    <td style="display: inline-block;width:173%;height: 200px;border-right: none;border: 1px solid #2A393A;margin: 15px 50px;border-radius: 20px;overflow: hidden;">
+                        <div class="XXKTitle" style="height: 50px;background-color: #272839;width: 110%;margin-left: -10%;padding-left: 8%;line-height: 50px;">
+                            <label class="labelTab" style="margin-right: 20px;cursor: pointer;" for="radAPType1">
+                                <input style="vertical-align: middle;margin-right: 5px;" type="radio" name="radAPType1" id="radAPType1" value="1" checked="checked" />固定AP设备
+                            </label>
+                            <label class="labelTab" style="cursor: pointer;" for="radAPType1">
+                                <input style="vertical-align: middle;margin-right: 5px;" type="radio" name="radAPType1" id="radAPType1" value="2" />移动AP设备
+                            </label>
+                        </div>
+                        <div class="XXKContent XXKContentActive" style="">
+                            <input type="text" class="_text" name="txtItude" readonly="readonly" maxlength="23"
+                                   id="txtItude" /><a href="javascript:void(0)" onclick="AlertShow(1000, 550, '/Map/HGetItude.html')" style="background: #1b5579;
                                 border: 1px solid #000; padding: 4px 5px; margin-left: 5px; color: #fff">获取经纬度</a>
-                        <span id="spItude" class="color_ccc">*</span>
+                            <span id="spItude" class="color_ccc">*</span>
+                            <span class="XXKContentspanTitle">楼层:</span>
+                            <input style="width: 380px;" type="text" name="txtFloor" id="txtFloor" value="" />
+                        </div>
+                        <div class="XXKContent" style="display: none;">
+                            <span class="XXKContentspanTitle">站点信息:</span>
+                            <input style="width: 380px;margin-right: 50px;" type="text" name="txtStation" id="txtStation" value="" />
+                            <span class="XXKContentspanTitle">地铁线路信息:</span>
+                            <input style="width: 380px;" type="text" name="txtLine_Info" id="txtLine_Info" value="" />
+                            <span class="XXKContentspanTitle">地铁车辆信息:</span>
+                            <input style="width: 355px;" type="text" name="txtVehicle_Info" id="txtVehicle_Info" value="" />
+                            <span class="XXKContentspanTitle" style="margin-left: 51px;">地铁车厢编号:</span>
+                            <input style="width: 380px;" type="text" name="txtCompartment" id="txtCompartment" value="" />
+                            <span class="XXKContentspanTitle" style="">车牌号码:</span>
+                            <input style="width: 380px;" type="text" name="txtCar_Code" id="txtCar_Code" value="" />
+                        </div>
+                        <style type="text/css">
+                            /*.XXKContentActive{display: inline-block;}*/
+                            .XXKContentspanTitle {
+                                display: inline-block;
+                                padding: 5px 10px;
+                                margin-top: 15px;
+                            }
+                        </style>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td style="border-right: none;">
+                        <img src="@Url.Content("~/Content/images/star1.png" )" />
+                        <span class="spanTitle">设备模式</span>
+                        <label><input type="radio" value="1" checked="checked" name="selModeType" />普通模式</label>
+                        &nbsp;
+                        <label><input type="radio" value="2" name="selModeType" />城中村模式</label>
                     </td>
                 </tr>
-                <tr class="tr1">
-                    <td align="right">
-                        楼层：
-                    </td>
-                    <td>
-                        <input type="text" class="_text" name="txtFloor" id="txtFloor" maxlength="8" /><span
-                            id="spFloor" class="color_ccc"></span>
+                <tr>
+                    <td style="border-right: none;">
+                        <img src="@Url.Content("~/Content/images/star1.png" )" />
+                        <span class="spanTitle">信道</span>
+                        <input style="width: 180px;" type="text" name="txtChannel" id="txtChannel" value="" /><span id="spChannel" class="color_ccc">工作信道的范围在1~14之间</span>
                     </td>
                 </tr>
-                <tr class="tr2">
-                    <td align="right">
-                        站点信息：
-                    </td>
-                    <td>
-                        <input type="text" class="_text" name="txtStation" id="txtStation" maxlength="64" /><span
-                            id="spStation" class="color_ccc"></span>
-                    </td>
-                </tr>
-                <tr class="tr2">
-                    <td align="right">
-                        地铁线路信息：
-                    </td>
-                    <td>
-                        <input type="text" class="_text" name="txtLine_Info" id="txtLine_Info" maxlength="128" /><span
-                            id="spLine_Info" class="color_ccc"></span>
+                <tr>
+                    <td style="border-right: none;">
+                        <img src="@Url.Content("~/Content/images/star1.png" )" />
+                        <span class="spanTitle">是否重启</span>
+                        <label><input type="radio" value="0" checked="checked" name="radIsReboot" />否</label>
+                        &nbsp;
+                        <label><input type="radio" value="1" name="radIsReboot" />是</label>
+                        <span id="spIsReboot" class="color_ccc">*</span>
                     </td>
                 </tr>
-                <tr class="tr2">
-                    <td align="right">
-                        地铁车辆信息：
+                <tr style="border-top: 1px solid #2A393A;">
+                    <td style="width:50%;"></td>
+                    <td style="width:50%;"></td>
+                </tr>
+            </table>
+            <table border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td style="border-right: none;">
+                        <span class="spanTitle">附加信息</span>
                     </td>
-                    <td>
-                        <input type="text" class="_text" name="txtVehicle_Info" id="txtVehicle_Info" maxlength="128" /><span
-                            id="spVehicle_Info" class="color_ccc"></span>
+                    <td></td>
+                </tr>
+                <tr style="border-top: 1px solid #2A393A;">
+                    <td style="width:50%;">
+                        <span class="spanTitle">供应商:</span>
+                        <input type="hidden" id="selsupplier" name="selsupplier" value="1" />
+                        <input class="SYHLXbtn2 YHLXbtnActive2" type="button" onclick="supplier(1)" name="" id="" value="瑜商" />
+                        <input class="SYHLXbtn2" type="button" name="" id="" value="汉智星" onclick="supplier(2)" />
+                        <input class="SYHLXbtn2" type="button" name="" id="" value="永济" onclick="supplier(3)" />
+                    </td>
+                    <td style="width:50%;">
+                        <span class="spanTitle">网络接入账号	或固定IP地址:</span>
+                        <input style="width: 180px;" type="text" name="txtACSSES_IP" id="txtACSSES_IP" value="" />
                     </td>
                 </tr>
-                <tr class="tr2">
-                    <td align="right">
-                        地铁车厢编号：
+                <tr style="border-top: 1px solid #2A393A;">
+                    <td style="width:50%;">
+                        <span class="spanTitle">强制离线时间:</span>
+                        <input style="width: 180px;" type="text" maxlength="3" name="txtForcedOfflineTime" id="txtForcedOfflineTime" value="0" />
+                        <span class="spanTextHint">单位分钟，0：不强制下线</span>
                     </td>
-                    <td>
-                        <input type="text" class="_text" name="txtCompartment" id="txtCompartment" maxlength="128" /><span
-                            id="spCompartment" class="color_ccc"></span>
-                    </td>
-                </tr>
-                <tr class="tr2">
-                    <td align="right">
-                        车牌号码：
-                    </td>
-                    <td>
-                        <input type="text" class="_text" name="txtCar_Code" id="txtCar_Code" maxlength="64" /><span
-                            id="spCar_Code" class="color_ccc"></span>
+                    <td style="width:50%;">
+                        <span class="spanTitle">电子围栏离线时间:</span>
+                        <input style="width: 180px;" type="text" maxlength="3" name="txtFenceOffTime" id="txtFenceOffTime" value="0" />
+                        <span class="spanTextHint">单位秒，0-600秒，0表示采用系统配置</span>
                     </td>
                 </tr>
                 <tr>
                     <td align="center" colspan="2">
-                        <input class="btn_SS" type="submit" name="button" value="保存" onmouseover="this.className='Over_SS'"
-                            onmouseout="this.className='Onout_SS'" /><input type="hidden" name="HLid" value="@ViewBag.Lid" /><input
-                                type="hidden" name="HMid" id="HMid" value="" />
+                        <input class="btn_SS" type="submit" name="button" value="保存" />
+                        <input type="hidden" name="HLid" value="@ViewBag.Lid" /><input type="hidden" name="HMid" id="HMid" value="" />
                     </td>
                 </tr>
             </table>
         </div>
-    </div>   
+    </div>
     <div id="mapPop" style="position: absolute; background: #fff; overflow: hidden; width: 980px;
         height: 600px; margin-left: -490px; margin-top: -300px; top: 50%; left: 50%;
         border: 1px solid #333; z-index: 1000; display: none">
         <iframe src="../../Map/HGetItude.html" height="100%" width="100%" scrolling="no"
-            frameborder="0"></iframe>
+                frameborder="0"></iframe>
     </div>
-}
+                            }
 <script type="text/javascript">
-        var showItude=()=>{
-        $("#mapPop").css("display","block");
-        }
-        var hideItude=()=>{
-            $("#mapPop").css("display","none");
-        }
-        //mindasd(220);
-        changeModel(1);
-        $(function () {
-            onSelect(1);
-            searchLoad("txtCOLLECTION_EQUIPMENT_ID", "@Url.Content("~/Public/RefMacList")");
+    //硬件产品类型
+    function ProjectType(value) {
+        $("#selProjectType").val(value);
+    }
+    //硬件产品方案
+    function CasesType(value) {
+        $("#selCasesType").val(value);
+    }
+    //供应商
+    function supplier(value) {
+        $("#selsupplier").val(value);
+    }
+    //硬件产品类型
+    $(document).ready(function () {
+        $(".SYHLXbtn").click(function () {
+            $(".SYHLXbtn").eq($(this).index() - 3).addClass("YHLXbtnActive").siblings().removeClass('YHLXbtnActive');
+        });
+    });
+    //硬件方案类型
+    $(document).ready(function () {
+        $(".SYHLXbtn1").click(function () {
+            $(".SYHLXbtn1").eq($(this).index() - 3).addClass("YHLXbtnActive1").siblings().removeClass('YHLXbtnActive1');
 
-            $("form").submit(function () {
-                if (subVal()) {
-                    var html = document.getElementById("selModeType").options[document.getElementById("selModeType").selectedIndex].text;
-                    if (confirm("确认设备为“" + html + "”吗？")) {
-                        return true;
-                    } else {
-                        return false;
-                    }
+        });
+    });
+    //供应商
+    $(document).ready(function () {
+        $(".SYHLXbtn2").click(function () {
+            $(".SYHLXbtn2").eq($(this).index() - 2).addClass("YHLXbtnActive2").siblings().removeClass('YHLXbtnActive2');
+        });
+    });
+    $(document).ready(function () {
+        $(".labelTab").click(function () {
+            $(".labelTab").eq($(this).index()).addClass("cur").siblings().removeClass('cur');
+            $(".XXKContent").hide().eq($(this).index()).show();
+            //另一种方法: $("div").eq($(".tab li").index(this)).addClass("on").siblings().removeClass('on');
+
+        });
+    });
+
+    var showItude = () => {
+        $("#mapPop").css("display", "block");
+    }
+    var hideItude = () => {
+        $("#mapPop").css("display", "none");
+    }
+    //mindasd(220);
+    changeModel(1);
+    $(function () {
+        onSelect(1);
+        searchLoad("txtCOLLECTION_EQUIPMENT_ID", "@Url.Content("~/Public/RefMacList")");
+
+        $("form").submit(function () {
+            if (subVal()) {
+                var html = document.getElementById("selModeType").options[document.getElementById("selModeType").selectedIndex].text;
+                if (confirm("确认设备为“" + html + "”吗？")) {
+                    return true;
                 } else {
                     return false;
                 }
-            });
+            } else {
+                return false;
+            }
         });
+    });
 
-        function onSelect(val) {
-            if (val == 1) {
-                $(".tr1").show();
-                $(".tr2").hide();
-            } else {
-                $(".tr1").hide();
-                $(".tr2").show();
-            } 
+    function onSelect(val) {
+        if (val == 1) {
+            $(".tr1").show();
+            $(".tr2").hide();
+        } else {
+            $(".tr1").hide();
+            $(".tr2").show();
+        }
+    }
+
+    function projectVal(val) {
+        if (val == 7) {
+            $("#tr3CID").show();
+        } else {
+            $("#tr3CID").hide();
+        }
+    }
+
+    function subVal() {
+        var result = true;
+
+        if (!regtxt()) {
+            result = false;
         }
 
-        function projectVal(val){
-            if(val==7){
-                $("#tr3CID").show();
-            }else{
-                $("#tr3CID").hide();
-            }
+        if ($.trim($("#txtCOLLECTION_EQUIPMENT_ID").val()) == "") {
+            result = false;
+            $("#spCOLLECTION_EQUIPMENT_ID").html("AP设备编码不能为空");
+        } else if ($.trim($("#HselNum").val()) == "1") {
+            result = false;
+            $("#spCOLLECTION_EQUIPMENT_ID").html("该AP设备编码不存在或已被使用，请重新输入");
+        } else {
+            $("#spCOLLECTION_EQUIPMENT_ID").html("");
         }
 
-        function subVal() {
-            var result = true;
+        if ($.trim($("#txtAPName").val()) == "") {
+            result = false;
+            $("#spAPName").html("AP设备名称不能为空");
+        } else {
+            $("#spAPName").html("");
+        }
+        var apType = $("input[name='radAPType1']:checked").val();
 
-            if (!regtxt()) {
-                result = false;
-            }
-
-            if ($.trim($("#txtCOLLECTION_EQUIPMENT_ID").val()) == "") {
-                result = false;
-                $("#spCOLLECTION_EQUIPMENT_ID").html("AP设备编码不能为空");
-            }else if($.trim($("#HselNum").val())=="1"){
-                result = false;
-                $("#spCOLLECTION_EQUIPMENT_ID").html("该AP设备编码不存在或已被使用，请重新输入");
-            } else {
-                $("#spCOLLECTION_EQUIPMENT_ID").html("");
-            }
-
-            if ($.trim($("#txtAPName").val()) == "") {
-                result = false;
-                $("#spAPName").html("AP设备名称不能为空");
-            } else {
-                $("#spAPName").html("");
-            }
-
-            var apType = $("input[name='radAPType']:checked").val();
-
-            if (typeof (apType) != "undefined") {
-                if (apType == 1) {
-                    if ($.trim($("#txtItude").val()) == "") {
-                        result = false;
-                        $("#spItude").html("经纬度不能为空");
-                    } else {
-                        $("#spItude").html("");
-                    }
-                }
-            } else {
-                $("#APType").html("请选择AP设备类型");
-            }
-
-            var txtItude = $.trim($("#txtItude").val());
-            reg = new RegExp(/^(-?\d+)(\.\d+)?$/);
-            if (apType == 1 && txtItude != "") {
-                if (!(reg.test(txtItude.split(",")[0]) && reg.test(txtItude.split(",")[1])) || txtItude.split(",").length != 2) {
+        if (typeof (apType) != "undefined") {
+            if (apType == 1) {
+                if ($.trim($("#txtItude").val()) == "") {
                     result = false;
-                    $("#spItude").html("经纬度格式不正确，请重新输入！");
+                    $("#spItude").html("经纬度不能为空");
                 } else {
                     $("#spItude").html("");
                 }
             }
+        } else {
+            $("#APType").html("请选择AP设备类型");
+        }
+        var txtItude = $.trim($("#txtItude").val());
+        reg = new RegExp(/^(-?\d+)(\.\d+)?$/);
+        if (apType == 1 && txtItude != "") {
+            if (!(reg.test(txtItude.split(",")[0]) && reg.test(txtItude.split(",")[1])) || txtItude.split(",").length != 2) {
+                result = false;
+                $("#spItude").html("经纬度格式不正确，请重新输入！");
+            } else {
+                $("#spItude").html("");
+            }
+        }
+        if ($("#selProjectType").val() == "0") {
+            result = false;
+            $("#spProjectType").html("请选择硬件产品类型");
+        }
+        else if ($("#selProjectType").val() == "0" && $.trim($("#txt3CID").val()) == "") {
+            result = false;
+            $("#sp3CID").html("视频设备标识不能为空");
+            $("#spProjectType").html("");
+        }
+        else {
+            $("#sp3CID").html("");
+            $("#spProjectType").html("");
+        }
 
-            if ($("#selProjectType").val() == "0") {
-                result = false;
-                $("#spProjectType").html("请选择硬件产品类型");
-            }else if($("#selProjectType").val() == "7"&&$.trim($("#txt3CID").val())==""){
-                result = false;
-                $("#sp3CID").html("视频设备标识不能为空");
-                $("#spProjectType").html("");
-            } else {
-                $("#sp3CID").html("");
-                $("#spProjectType").html("");
-            }
+        if ($("#selCasesType").val() == "0") {
+            result = false;
+            $("#spCasesType").html("请选择硬件方案类型");
+        } else {
+            $("#spCasesType").html("");
+        }
 
-            if ($("#selCasesType").val() == "0") {
+        var reg2 = new RegExp(/^[1-9]*[1-9][0-9]*$/g);
+        var Channel = $.trim($("#txtChannel").val());
+        if (Channel != "") {
+            if (isNaN(Channel)) {
                 result = false;
-                $("#spCasesType").html("请选择硬件方案类型");
-            } else {
-                $("#spCasesType").html("");
-            }
-            
-            var reg2 =new RegExp(/^[1-9]*[1-9][0-9]*$/g);
-            var Channel = $.trim($("#txtChannel").val());
-            if (Channel != "") {
-                if (isNaN(Channel)) {
-                    result = false;
-                    $("#spChannel").html("工作信道必须为整数");
-                }else if(!reg2.test(Channel)){
-                    result = false;
-                    $("#spChannel").html("工作信道必须是1~14之间的整数");
-                } else if (parseInt(Channel) < 1 || parseInt(Channel) > 14) {
-                    result = false;
-                    $("#spChannel").html("工作信道的范围在1~14之间");
-                } else {
-                    $("#spChannel").html("");
-                }
-            } else {
+                $("#spChannel").html("工作信道必须为整数");
+            } else if (!reg2.test(Channel)) {
                 result = false;
-                $("#spChannel").html("工作信道不能为空");
+                $("#spChannel").html("工作信道必须是1~14之间的整数");
+            } else if (parseInt(Channel) < 1 || parseInt(Channel) > 14) {
+                result = false;
+                $("#spChannel").html("工作信道的范围在1~14之间");
+            } else {
+                $("#spChannel").html("");
             }
-            
-            reg2 =new RegExp(/^[0-9]*[0-9][0-9]*$/g);
-            if ($.trim($("#txtForcedOfflineTime").val()) != "") {
-                if (isNaN($("#txtForcedOfflineTime").val())) {
-                    result = false;
-                    $("#spForcedOfflineTime").html("强制离线时间只能为数字");
-                } else if(!reg2.test($("#txtForcedOfflineTime").val())){
-                    result = false;
-                    $("#spForcedOfflineTime").html("请输入的0~480之间的整数！");
-                }else if ($("#txtForcedOfflineTime").val() < 0 || $("#txtForcedOfflineTime").val() > 480) {
-                    result = false;
-                    $("#spForcedOfflineTime").html("输入的0~480之间的有效数字！");
-                } else {
-                    $("#spForcedOfflineTime").html("");
-                }
+        } else {
+            result = false;
+            $("#spChannel").html("工作信道不能为空");
+        }
+
+        reg2 = new RegExp(/^[0-9]*[0-9][0-9]*$/g);
+        if ($.trim($("#txtForcedOfflineTime").val()) != "") {
+            if (isNaN($("#txtForcedOfflineTime").val())) {
+                result = false;
+                $("#spForcedOfflineTime").html("强制离线时间只能为数字");
+            } else if (!reg2.test($("#txtForcedOfflineTime").val())) {
+                result = false;
+                $("#spForcedOfflineTime").html("请输入的0~480之间的整数！");
+            } else if ($("#txtForcedOfflineTime").val() < 0 || $("#txtForcedOfflineTime").val() > 480) {
+                result = false;
+                $("#spForcedOfflineTime").html("输入的0~480之间的有效数字！");
+            } else {
+                $("#spForcedOfflineTime").html("");
             }
-            reg2 =new RegExp(/^[0-9]*[0-9][0-9]*$/g);
-            if ($.trim($("#txtFenceOffTime").val()) != "") {
-                if (isNaN($("#txtFenceOffTime").val())) {
-                    result = false;
-                    $("#spFenceOffTime").html("电子围栏离线时间只能为数字");
-                }else if(!reg2.test($("#txtFenceOffTime").val())){
-                    result = false;
-                    $("#spFenceOffTime").html("请输入的0~600之间的整数！");
-                } else if ($("#txtFenceOffTime").val() < 0 || $("#txtFenceOffTime").val() > 600) {
-                    result = false;
-                    $("#spFenceOffTime").html("输入的0~600之间的有效数字！");
-                }else {
-                    $("#spFenceOffTime").html("");
-                }
+        }
+        reg2 = new RegExp(/^[0-9]*[0-9][0-9]*$/g);
+        if ($.trim($("#txtFenceOffTime").val()) != "") {
+            if (isNaN($("#txtFenceOffTime").val())) {
+                result = false;
+                $("#spFenceOffTime").html("电子围栏离线时间只能为数字");
+            } else if (!reg2.test($("#txtFenceOffTime").val())) {
+                result = false;
+                $("#spFenceOffTime").html("请输入的0~600之间的整数！");
+            } else if ($("#txtFenceOffTime").val() < 0 || $("#txtFenceOffTime").val() > 600) {
+                result = false;
+                $("#spFenceOffTime").html("输入的0~600之间的有效数字！");
             } else {
                 $("#spFenceOffTime").html("");
             }
-
-            return result;
+        } else {
+            $("#spFenceOffTime").html("");
         }
-        
+
+        return result;
+    }
+
     function changeModel(val) {
         if (val == 2) {
             $("#lblTrial").show();
@@ -461,173 +599,173 @@
             $("#lblTrial").hide();
         }
     }
-        function CheckMacId() {
-            var macId = $.trim($("#txtCOLLECTION_EQUIPMENT_ID").val());
-            if(macId!=="") {
-                $.ajax
-			    ({
-			        type: "Get",
-			        url: "/Location/CKMac?Id=" + macId,
-			        dataType: "json",
-			        async: false,
-			        cache: false,
-			        success: function (data, status) {
-			            if (typeof (data.err) != 'undefined' && data.err != "") {
-			                $("#spCOLLECTION_EQUIPMENT_ID").html(data.err);
-			            } else {
-			                if (data.result == ""&&data.Id=="") {
-			                    $("#spCOLLECTION_EQUIPMENT_ID").html("该AP设备编码不存在或已被使用，请重新输入");
-                                $("#HselNum").val("1");
-			                } else if (data.result != "") {
-			                    $("#txtDeviceMac").val(data.result);
-			                    $("#HMid").val(data.Id);
-			                    $("#spCOLLECTION_EQUIPMENT_ID").html("");
-                                $("#HselNum").val("");
-			                }
-			            }
-			        },
-			        error: function (data, status, e) {
-			            alert(e);
-			        }
-			    });
-            }
+    function CheckMacId() {
+        var macId = $.trim($("#txtCOLLECTION_EQUIPMENT_ID").val());
+        if (macId !== "" && macId.length > 10) {
+            $.ajax
+            ({
+                type: "Get",
+                url: "/Public/CKMac?Id=" + macId,
+                dataType: "json",
+                async: false,
+                cache: false,
+                success: function (data, status) {
+                    if (typeof (data.err) != 'undefined' && data.err != "") {
+                        $("#spCOLLECTION_EQUIPMENT_ID").html(data.err);
+                    } else {
+                        if (data.result == "" && data.Id == "") {
+                            $("#spCOLLECTION_EQUIPMENT_ID").html("该AP设备编码不存在或已被使用，请重新输入");
+                            $("#HselNum").val("1");
+                        } else if (data.result != "") {
+                            $("#txtDeviceMac").val(data.result);
+                            $("#HMid").val(data.Id);
+                            $("#spCOLLECTION_EQUIPMENT_ID").html("");
+                            $("#HselNum").val("");
+                        }
+                    }
+                },
+                error: function (data, status, e) {
+                    alert(e);
+                }
+            });
         }
-function searchLoad(searchID, url, ResultID) {
-    var selectedItem = null; //定义全局变量
-    var old_searchtext = null;
-    var $autoComplete = $('<ul class="autocomplete"></ul>').hide().insertAfter('#' + searchID);
-    //定义函数获取鼠标显示颜色
-    var setSelectedItem = function (item, eventKeyCode) {
-        selectedItem = item;
-        if (selectedItem == null || $('ul[class="autocomplete"]').find("li").length <= 0) {
-            //没有选择值则移除ul
-            $('ul[class="autocomplete"]').empty().hide();
-            return false;
-        }
-
-        if (selectedItem < 0) { //向上移出界
-            $autoComplete.find("li").removeClass("selected");
-            $("#" + searchID).val($("#" + ResultID).val());
-            selectedItem = null;
-            return false;
-        }
-
-        if (selectedItem >= $autoComplete.find("li").length) {  //向下移出界
-            $autoComplete.find("li").removeClass("selected");
-            $("#" + searchID).val($("#" + ResultID).val());
-            selectedItem = null;
-            return false;
-        }
-
-        //移动上下键获取文本值
-        $("#" + searchID).val($autoComplete.find("li").removeClass("selected").eq(selectedItem).addClass("selected").text());
-        $autoComplete.show();
-    };
-
-    //按回车键获取值，但不能获取==>这里改为直接提交
-    var populateSearchField = function () {
-        $("#" + searchID).val($autoComplete.find("li").eq(selectedItem).text());
-
-        //移除ul
-        $('ul[class="autocomplete"]').empty().hide();
-    };
-
-    //        var searchLabel = $("#search_title").remove().text();
-    //        $("#form1").submit(function () {
-    //            if ($("#"+searchID).val() == searchLabel) {
-    //                $("#"+searchID).val('');
-    //            }
-    //        });
-    var searchLabel = "";
-
-    $("#" + searchID).addClass("placeholder")
-         .val(searchLabel)
-         .focus(function () {
-             if (this.value == searchLabel) {
-                 $(this).removeClass("placeholder").val('');
-             }
-         })
-        .blur(function () {
-            if (this.value == "") {
-                $(this).addClass("placeholder").val(searchLabel);
-            }
-        })
-        .attr("autocomplete", "off")                  //关闭search_text文本框（即浏览器）自带的自动完成功能   
-        .keydown(function () {
-            old_searchtext = $(this).val();           //按下时获取文本值
-        })
-        .keyup(function (event) {
-            var InComeDescription = $.trim($(this).val());    //按键释放时触发                           
-            //没有值直接返回,提高性能
-            if (InComeDescription == null || InComeDescription.length <= 0) {
+    }
+    function searchLoad(searchID, url, ResultID) {
+        var selectedItem = null; //定义全局变量
+        var old_searchtext = null;
+        var $autoComplete = $('<ul class="autocomplete"></ul>').hide().insertAfter('#' + searchID);
+        //定义函数获取鼠标显示颜色
+        var setSelectedItem = function (item, eventKeyCode) {
+            selectedItem = item;
+            if (selectedItem == null || $('ul[class="autocomplete"]').find("li").length <= 0) {
+                //没有选择值则移除ul
+                $('ul[class="autocomplete"]').empty().hide();
                 return false;
             }
 
-            //代码为40及以下的为特殊键（回车、方向、退出键等），为8backspace键,32空格键,13 回车
-            if (event.keyCode > 40 || event.keyCode == 8 || event.keyCode == 32) {
-                selectedItem = null; //每次输入新的数据时清空，以使下拉列表显示正常
-                //有数据(可加个判断InComeDescritption不为空才取值)
-                $searchtextvalue = $('#' + ResultID).val(InComeDescription);
-                //var jsonData = ["张三", "李四", "1科比", "罗晋", "张娜", "张芳", "123", "allen lverson", "bob dylan", "bob1", "bob2", "1nba"];
-                var jsonData;
-                $.ajax({
-                    type: "Get",
-                    url: url + '/' + encodeURIComponent(InComeDescription),
-                    async: false,
-                    cache: false,
-                    success: function (data, status) {
-                        jsonData = eval(data);
-                    }
-                });
+            if (selectedItem < 0) { //向上移出界
+                $autoComplete.find("li").removeClass("selected");
+                $("#" + searchID).val($("#" + ResultID).val());
+                selectedItem = null;
+                return false;
+            }
 
-                if (jsonData.length) {
-                    //var objData = jQuery.parseJSON(jsonData);
-                    var objData = jsonData;
-                    //先把以前的记录清空，不然下拉列表会重复
-                    $('ul[class="autocomplete"]').empty();
-                    $.each(objData, function (index, term) {
-                        if (term.toLowerCase().indexOf(InComeDescription.toLowerCase()) > -1) {
-                            $('<li></li>').text(term)
-              .appendTo($autoComplete)
-              .mouseover(function () {
-                  setSelectedItem(index, null);
-              })
-              .click(function () {//实现选择值到文本框
-                  $("#" + searchID).val(term);
-                  $('ul[class="autocomplete"]').hide();
-                  $("#" + ResultID).val("");
-              });
+            if (selectedItem >= $autoComplete.find("li").length) {  //向下移出界
+                $autoComplete.find("li").removeClass("selected");
+                $("#" + searchID).val($("#" + ResultID).val());
+                selectedItem = null;
+                return false;
+            }
+
+            //移动上下键获取文本值
+            $("#" + searchID).val($autoComplete.find("li").removeClass("selected").eq(selectedItem).addClass("selected").text());
+            $autoComplete.show();
+        };
+
+        //按回车键获取值，但不能获取==>这里改为直接提交
+        var populateSearchField = function () {
+            $("#" + searchID).val($autoComplete.find("li").eq(selectedItem).text());
+
+            //移除ul
+            $('ul[class="autocomplete"]').empty().hide();
+        };
+
+        //        var searchLabel = $("#search_title").remove().text();
+        //        $("#form1").submit(function () {
+        //            if ($("#"+searchID).val() == searchLabel) {
+        //                $("#"+searchID).val('');
+        //            }
+        //        });
+        var searchLabel = "";
+
+        $("#" + searchID).addClass("placeholder")
+             .val(searchLabel)
+             .focus(function () {
+                 if (this.value == searchLabel) {
+                     $(this).removeClass("placeholder").val('');
+                 }
+             })
+            .blur(function () {
+                if (this.value == "") {
+                    $(this).addClass("placeholder").val(searchLabel);
+                }
+            })
+            .attr("autocomplete", "off")                  //关闭search_text文本框（即浏览器）自带的自动完成功能
+            .keydown(function () {
+                old_searchtext = $(this).val();           //按下时获取文本值
+            })
+            .keyup(function (event) {
+                var InComeDescription = $.trim($(this).val());    //按键释放时触发
+                //没有值直接返回,提高性能
+                if (InComeDescription == null || InComeDescription.length <= 0) {
+                    return false;
+                }
+
+                //代码为40及以下的为特殊键（回车、方向、退出键等），为8backspace键,32空格键,13 回车
+                if (event.keyCode > 40 || event.keyCode == 8 || event.keyCode == 32) {
+                    selectedItem = null; //每次输入新的数据时清空，以使下拉列表显示正常
+                    //有数据(可加个判断InComeDescritption不为空才取值)
+                    $searchtextvalue = $('#' + ResultID).val(InComeDescription);
+                    //var jsonData = ["张三", "李四", "1科比", "罗晋", "张娜", "张芳", "123", "allen lverson", "bob dylan", "bob1", "bob2", "1nba"];
+                    var jsonData;
+                    $.ajax({
+                        type: "Get",
+                        url: url + '/' + encodeURIComponent(InComeDescription),
+                        async: false,
+                        cache: false,
+                        success: function (data, status) {
+                            jsonData = eval(data);
                         }
                     });
 
-                    $autoComplete.show(); //按百度默认不选择第一行
-                    // setSelectedItem(0);//默认选中第一行,不然这时不显示
-                } else {
-                    //没有数据就不显示
-                    setSelectedItem(null, null);
-                }
-            } else if (event.keyCode == 38) {
-                //用户按了上方向键
-                if (selectedItem == null) { return false; } //不选
-                setSelectedItem(selectedItem - 1, 38);
+                    if (jsonData.length) {
+                        //var objData = jQuery.parseJSON(jsonData);
+                        var objData = jsonData;
+                        //先把以前的记录清空，不然下拉列表会重复
+                        $('ul[class="autocomplete"]').empty();
+                        $.each(objData, function (index, term) {
+                            if (term.toLowerCase().indexOf(InComeDescription.toLowerCase()) > -1) {
+                                $('<li></li>').text(term)
+                  .appendTo($autoComplete)
+                  .mouseover(function () {
+                      setSelectedItem(index, null);
+                  })
+                  .click(function () {//实现选择值到文本框
+                      $("#" + searchID).val(term);
+                      $('ul[class="autocomplete"]').hide();
+                      $("#" + ResultID).val("");
+                  });
+                            }
+                        });
 
-            } else if (event.keyCode == 40) {
-                //用户按了向下方向键
-                if (selectedItem == null) { selectedItem = -1; } //选择第一行
-                setSelectedItem(selectedItem + 1, 40);
-            }
-        })
-        .keypress(function (event) {
-            if (event.keyCode == 13 && selectedItem != null) {
-                populateSearchField();
-                event.preventDefault();
-            }
-        })
-    //失去焦点关闭下拉列表,因为blur先于click事件调用，所以这时在延迟以使当click事件执行时能执行
-       .blur(function (event) {
-           setTimeout(function () {
-               setSelectedItem(null);
-           }, 250);
-       });
-}
+                        $autoComplete.show(); //按百度默认不选择第一行
+                        // setSelectedItem(0);//默认选中第一行,不然这时不显示
+                    } else {
+                        //没有数据就不显示
+                        setSelectedItem(null, null);
+                    }
+                } else if (event.keyCode == 38) {
+                    //用户按了上方向键
+                    if (selectedItem == null) { return false; } //不选
+                    setSelectedItem(selectedItem - 1, 38);
+
+                } else if (event.keyCode == 40) {
+                    //用户按了向下方向键
+                    if (selectedItem == null) { selectedItem = -1; } //选择第一行
+                    setSelectedItem(selectedItem + 1, 40);
+                }
+            })
+            .keypress(function (event) {
+                if (event.keyCode == 13 && selectedItem != null) {
+                    populateSearchField();
+                    event.preventDefault();
+                }
+            })
+        //失去焦点关闭下拉列表,因为blur先于click事件调用，所以这时在延迟以使当click事件执行时能执行
+           .blur(function (event) {
+               setTimeout(function () {
+                   setSelectedItem(null);
+               }, 250);
+           });
+    }
 </script>

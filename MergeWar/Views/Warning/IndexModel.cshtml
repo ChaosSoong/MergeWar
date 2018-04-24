@@ -1,0 +1,373 @@
+﻿@using HCZZ.ModeDB
+@{
+    ViewBag.Title = "布控报警-布控项详情";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    UserInfo user = (UserInfo)Session["userInfo"];
+    BKBJ.AuditInfo audit = (BKBJ.AuditInfo)ViewBag.deploy;
+}
+<link href="~/Content/css/BJGL_JSTXBJ.css" rel="stylesheet" />
+<link href="@Url.Content("~/Content/css/publicHeader.css")" rel="stylesheet" type="text/css" />
+<script src="@Url.Content("~/Content/DatePicker/WdatePicker.js")" type="text/javascript"></script>
+<style type="text/css">
+    #seltype .checkedboxType li {
+        float:left
+    }
+    .contentbody .contentInfo table {
+        color: #b1b1b1;
+        width: 1250px;
+        border: 1px solid #2a393a;
+        margin: 0 auto;
+        background-color: #21222f;
+    }
+
+        .contentbody .contentInfo table tr {
+            height: 40px;
+        }
+
+            .contentbody .contentInfo table tr:nth-child(even) {
+                background-color: #21202E;
+            }
+
+            .contentbody .contentInfo table tr:nth-child(odd) {
+                background-color: #21222F;
+            }
+
+            .contentbody .contentInfo table tr th {
+                text-align: left;
+                padding-left: 50px;
+                background-color: #1E1F2D;
+                border-bottom: 1px solid #2A393A;
+            }
+
+            .contentbody .contentInfo table tr td {
+                border-right: 1px solid #2A393A;
+                padding-left: 50px;
+            }
+
+                .contentbody .contentInfo table tr td .spanTitle {
+                    color: #999999;
+                }
+
+                .contentbody .contentInfo table tr td .spanText {
+                    color: #CCCCCC;
+                }
+
+                .contentbody .contentInfo table tr td .spanTextHint {
+                    color: #AA301C;
+                }
+
+        .contentbody .contentInfo table:nth-child(1) {
+            margin-top: 20px;
+        }
+
+        .contentbody .contentInfo table:nth-child(2) {
+            margin-bottom: 50px;
+            border-top: none;
+        }
+
+        .contentbody .contentInfo table tr td img {
+            vertical-align: middle;
+        }
+
+        .contentbody .contentInfo table tr td input {
+            margin-left: 5px;
+            background-color: transparent;
+            border: none;
+            background-color: #222B3B;
+            height: 25px;
+            padding-left: 5px;
+            color: #999999;
+        }
+
+        .contentbody .contentInfo table tr td select {
+            margin-left: 5px;
+            background-color: transparent;
+            border: none;
+            background-color: #222B3B;
+            height: 25px;
+            padding-left: 5px;
+            color: #999999;
+        }
+
+        .contentbody .contentInfo table tr td .SYHLXbtn {
+            border: 1px solid #222B3B;
+            cursor: pointer;
+            outline: none;
+            box-sizing: border-box;
+            /*padding-top: 3px;*/
+            margin-left: 10px;
+            padding-bottom: 3px;
+            padding-left: 15px;
+            padding-right: 15px;
+            -moz-border-radius: 15px; /* Firefox */
+            -webkit-border-radius: 15px; /* Safari 和 Chrome */
+            border-radius: 15px; /* Opera 10.5+, 以及使用了IE-CSS3的IE浏览器 */
+        }
+
+        .contentbody .contentInfo table tr td .YHLXbtnActive {
+            cursor: pointer;
+            box-sizing: border-box;
+            outline: none;
+            color: #7BD2DA;
+            border: 1px solid #7BD2DA;
+        }
+
+        .contentbody .contentInfo table tr td .ZJLX {
+            width: 80px;
+            border: 1px solid #0A7891;
+            cursor: pointer;
+            background-color: #0B2A3C;
+            color: #7BD2DA;
+        }
+
+    .footerAdd {
+        width: 100%;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+        .footerAdd .add {
+            box-sizing: border-box;
+            cursor: pointer;
+            width: 250px;
+            height: 50px;
+            background-color: #1e1f2d;
+            color: #7bd2da;
+            border: none;
+            font: 14px "Î¢ÈíÑÅºÚ";
+            background-image: url(/Content/images/save_bg.png);
+        }
+</style>
+@using (Html.BeginForm("EditIndex", "Warning", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="contentbody" id="contentbody">
+        <div class="contentTopNav">
+        </div>
+        <div class="contentInfo">
+            <table cellspacing="0" cellpadding="0" border="0">
+                <tbody>
+                    <tr><th colspan="3">布控信息详细</th></tr>
+                    <tr>
+                        <td style="width: 50%;">
+                            <span class="spanTitle" id="selTaskName">任务名称:</span>
+                            @audit.TaskName
+                        </td>
+                        <td style="width: 50%;">
+                            <span class="spanTitle">布控类型:</span>
+                            @*<select id="txtCaseItem" name="txtCaseItem" style="width: 100px;color: #7BD2DA;" class="ZJLX" onchange="SetCaseItem(this)">
+                                <option value="1">手机号码</option>
+                                <option value="2">上网终端MAC地址</option>
+                                <option value="3">批量导入黑名单</option>
+                            </select>*@
+                            @(HCZZ.Common.ChangeValue.pwItemvalue(audit.CaseItem))
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div id="txt">
+                                <span class="spanTitle">布控内容:</span>
+                               @audit.CaseValue
+                            </div>
+                        </td>
+                        <td>
+                            <span class="spanTitle">布控有效时间至:</span>
+                          @audit.EndTime
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="margin-top: 20px;">
+                            <span class="spanTitle">负责人：</span>
+                           @audit.HeadName
+                            <span class="spanTitle">负责人电话：</span>
+                           @audit.HeadMobile
+                        </td>
+                        <td>
+                            <span class="spanTitle">邮件报警:</span>
+                            @*<select id="txtMailWarn" name="txtMailWarn" style="width: 100px;color: #7BD2DA;" class="ZJLX" onchange="SetMailWarn(this)">
+                                <option value="1">启动</option>
+                                <option value="2">不启动</option>
+                            </select>*@
+                            @(audit.MailWarn==1?"启动":"不启动")
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            <span class="spanTitle">报警邮箱:</span>
+                            @audit.WMail
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table cellspacing="0" cellpadding="0" border="0">
+                <tbody>
+                    <tr>
+                        <th colspan="3">案件说明</th>
+                    </tr>
+                    <tr style="border-top: 1px solid #2A393A;">
+                        <td style="width: 50%;">
+                            <textarea style=" background-color: #222B3B;  color: #999999;    width: 1150px;
+    height: 100px;" name="txtRemark" id="txtRemark" maxlength="256"> @audit.Remark.Trim().Replace(" ", "")</textarea>
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+            <table>
+                <tr>
+                    <td width="20%" align="right">
+                        布控范围：
+                    </td>
+                    <td>
+                        <input type="checkbox" id="ckAll" name="ckAll" class="BMap_checkbox" value="0" style="margin-left: 5px;" onclick="ckall()" />全选<span id="sparea" style="color:red"></span>
+                        <div id="selarea">
+                            <ul class="province" aid="0">
+                                @{
+                                    List<AreaInfo> arealist = ViewBag.DSArea;
+                                    foreach (AreaInfo Pitem in arealist.Where(a => a.CityType == 2))
+                                    {
+                                        <li>
+                                            <a onclick="$(this).next().slideToggle();"><input type="checkbox" aid="@Pitem.ID" pid="0" onclick="ckone(this,event);" value="" />@Pitem.Area</a>
+                                            @if (arealist.Where(a => a.CityType == 1 && a.Pid == Pitem.ID).Count() > 0)
+                                            {
+                                                <ul class="City" style="display: none;" aid="@Pitem.ID">
+                                                    @foreach (AreaInfo Citem in arealist.Where(a => a.CityType == 1 && a.Pid == Pitem.ID))
+                                                    {
+                                                        <li>
+                                                            <a onclick="$(this).next().slideToggle();"><input aid="@Citem.ID" type="checkbox" pid="@Pitem.ID" onclick="ckone(this,event)" value="" />@Citem.Area</a>
+                                                            @if (arealist.Where(a => a.CityType == 0 && a.Pid == Citem.ID).Count() > 0)
+                                                            {
+                                                                <ul class="area" style="display: none;" aid="@Citem.ID">
+                                                                    @foreach (AreaInfo Aitem in arealist.Where(a => a.CityType == 0 && a.Pid == Citem.ID))
+                                                                    {
+                                                                        <li><a><input type="checkbox" onclick="ckone(this,event)" pid="@Citem.ID" value="@Aitem.ID" />@Aitem.Area</a></li>
+                                                                    }
+                                                                </ul>
+                                                            }
+                                                        </li>
+                                                    }
+                                                </ul>
+                                            }
+
+                                        </li>
+                                    }
+                                }
+                            </ul>
+                        </div>
+                        <input type="hidden" name="txtDeployArea" id="txtDeployArea" maxlength="250" value="" />
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">布控场所类别:</td>
+                    <td>
+                        <input type="checkbox" id="ckAll" name="ckAll" class="BMap_checkbox" value="0" style="margin-left: 5px;" onclick="ckall()" />全选<span id="sptype" style="color:red"></span>
+                        <div id="seltype">
+                            <ul class="checkedboxType" aid="0">
+                                @{
+                                    Dictionary<int, string> dic = ViewBag.NetbarType;
+                                    foreach (var d in dic)
+                                    {
+                                        string check = "";
+                                        if (audit.NetbarType.IndexOf(Convert.ToString(d.Key)) > -1)
+                                        {
+                                            check = "checked='checked'";
+                                        }
+                                        <li>
+                                            <input type="checkbox" value="@d.Key" name="cbtype" @check />@d.Value
+                                        </li>
+                                    }
+                                }
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <script>
+        $(function () {
+            if ('@audit.MailWarn==2') {
+                $("#isShowEmail").css("display", "none");
+                $("#txtWMail").css("display", "none");
+            }
+            $("@audit.DeployArea".split(",")).each(function () {
+                var one = $("#selarea input[value='" + this + "']");
+                one.attr("checked", true);
+                ckone(one[0]);
+            });
+            if ("@audit.DeployArea" == "0") {
+                $("#ckAll").attr("checked", true);
+                $('#selarea').find('input').attr('checked', "checked");
+            };
+            $("#txtCaseItem").val(@audit.CaseItem);
+            $("#txtMailWarn").val(@audit.MailWarn);
+        })
+        function SetMailWarn(obj) {
+            if ($(obj).val() == "2") {
+                $("#isShowEmail").css("display", "none");
+                $("#txtWMail").css("display", "none");
+            } else {
+                $("#isShowEmail").css("display", "inline");
+                $("#txtWMail").css("display", "inline");
+            }
+        }
+        function ckall() {
+            if ($("#ckAll").attr('checked') == undefined || $("#ckAll").attr('checked') == "") {
+                $('#selarea').find('input').attr('checked', false);
+            } else {
+                $('#selarea').find('input').attr('checked', "checked");
+            }
+        }
+        function ckone(area, event) {
+            if ($(area).attr("checked") == undefined) {
+                if ($("ul[aid='" + $(area).attr("aid") + "']").length != 0) {//本级
+                    $("ul[aid='" + $(area).attr("aid") + "']").find("input").attr("checked", false);
+                }
+                var parea = $("input[aid='" + $(area).attr("pid") + "']"); //父级
+                if (parea.length != 0) {
+                    parea.attr("checked", false);
+                    var pparea = $("input[aid='" + parea.attr("pid") + "']"); //爷爷级
+                    if (pparea.length != 0) {
+                        pparea.attr("checked", false);
+                    }
+                }
+                $("#ckAll").attr("checked", false); //祖宗级
+            } else {
+                if ($("ul[aid='" + $(area).attr("aid") + "']").length != 0) {//本级
+                    $("ul[aid='" + $(area).attr("aid") + "']").find("input").attr("checked", "checked");
+                }
+                var parea = $("input[aid='" + $(area).attr("pid") + "']"); //父级
+                if (parea.length != 0) {
+                    if ($("ul[aid='" + $(area).attr("pid") + "']").find("input").length == $("ul[aid='" + $(area).attr("pid") + "']").find("input:checked").length) { parea.attr("checked", "checked"); }
+                    var pparea = $("input[aid='" + parea.attr("pid") + "']"); //爷爷级
+                    if (pparea.length != 0) {
+                        if ($("ul[aid='" + parea.attr("pid") + "']").find("input").length == $("ul[aid='" + parea.attr("pid") + "']").find("input:checked").length) { pparea.attr("checked", "checked"); }
+                    }
+                }
+                if ($("#selarea input:checked").length == $("#selarea input").length) {
+                    $("#ckAll").attr("checked", "checked"); //祖宗级
+                }
+            }
+            if (event != "" && event != undefined) {
+                event.stopPropagation();
+            }
+        }
+        $("form").submit(function () {
+            if (subVal()) {
+                var a = "";
+                if ($("#selarea input:checked").length > 0) {
+                    $($("#selarea input:checked")).each(function () {
+                        if (this.value != "") {
+                            a += this.value + ",";
+                        }
+                    });
+                    $("#txtDeployArea").val(a.substring(0, a.length - 1));
+                } else {
+                    $("#txtDeployArea").val("");
+                }
+                return true;
+            } else {
+                return false;
+            }
+        });
+        function subVal() {
+            return true;
+        }
+    </script>
+                                    }

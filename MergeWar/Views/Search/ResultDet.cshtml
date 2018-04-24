@@ -1,0 +1,479 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<script src="~/Content/js/jquery-1.7.1.min.js"></script>
+<script src="~/Content/js/publicJS.js"></script>
+<script src="~/Content/layer/layer.js"></script>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>一键查询详细</title>
+    <style type="text/css">
+        body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, dl, dt, dd, ul, ol, li, pre, form, fieldset, legend, button, input, textarea, th, td {
+            margin: 0;
+            padding: 0;
+        }
+
+        body, button, input, select, textarea {
+            font: 12px/1.5 tahoma,arial,\5b8b\4f53;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-size: 100%;
+        }
+
+        address, cite, dfn, em, var {
+            font-style: normal;
+        }
+
+        code, kbd, pre, samp {
+            font-family: courier new,courier,monospace;
+        }
+
+        small {
+            font-size: 12px;
+        }
+
+        ul, ol {
+            list-style: none;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        sup {
+            vertical-align: text-top;
+        }
+
+        sub {
+            vertical-align: text-bottom;
+        }
+
+        legend {
+            color: #000;
+        }
+
+        fieldset, img {
+            border: 0;
+        }
+
+        button, input, select, textarea {
+            font-size: 100%;
+        }
+
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        .clear {
+            clear: both;
+            float: none;
+            height: 0;
+            overflow: hidden;
+        }
+
+        html .hide {
+            display: none;
+        }
+
+
+        /* 设置滚动条的样式 */
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        /*滚动槽*/
+        ::-webkit-scrollbar-track {
+            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+            border-radius: 20px;
+        }
+        /* 滚动条滑块 */
+        ::-webkit-scrollbar-thumb {
+            border-radius: 10px;
+            background: rgba(38,55,56, 1);
+            -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+        }
+
+            ::-webkit-scrollbar-thumb:window-inactive {
+                background: rgba(0,0,0,1);
+            }
+
+        .pupMain {
+            width: 1015px;
+            height: 500px;
+            background-color: #161523;
+            margin: 0 auto;
+            overflow: auto;
+        }
+
+        .title {
+            width: 995px;
+            height: 65px;
+            background-image: url(../Content/images/title_bg.png);
+            background-size: 100%;
+            line-height: 65px;
+        }
+
+            .title span:first-child {
+                float: left;
+                color: #b1b1b1;
+                font: 20px "微软雅黑";
+                margin-left: 20px;
+                margin-top: 19.5px;
+            }
+
+            .title span:last-child {
+                float: right;
+                margin-right: 20px;
+                cursor: pointer;
+            }
+
+            .title span img {
+                width: 15px;
+                height: 15px;
+            }
+
+        .pupMain ul li:nth-child(2) {
+            margin-top: 50px;
+            text-align: center;
+        }
+
+            .pupMain ul li:nth-child(2) input {
+                box-sizing: border-box;
+                padding-left: 15px;
+                width: 360px;
+                height: 50px;
+                background-color: #1e1f2d;
+                border: 1px solid #263738;
+                color: #7bd2da;
+                font: 14px "微软雅黑";
+            }
+
+            .pupMain ul li:nth-child(2) span {
+                position: absolute;
+                top: 131px;
+                right: 50px;
+            }
+
+        .pupMain ul li:nth-child(3) {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+            .pupMain ul li:nth-child(3) input {
+                box-sizing: border-box;
+                cursor: pointer;
+                width: 360px;
+                height: 50px;
+                background-color: #1e1f2d;
+                color: #7bd2da;
+                border: none;
+                font: 14px "微软雅黑";
+                background-image: url(../Content/images/save_bg.png);
+            }
+
+
+        .pupMain .contentInfo {
+            margin-bottom: 20px;
+        }
+
+            .pupMain .contentInfo ul:first-child {
+                margin-top: 20px;
+                background-color: #21222f;
+            }
+
+            .pupMain .contentInfo ul {
+                width: 1250px;
+                height: 245px;
+                border: 1px solid #2a393a;
+                margin: 0 auto;
+                background-color: #21222f;
+            }
+
+                .pupMain .contentInfo ul li:first-child {
+                    height: 45px;
+                    background-color: #1e1f2d;
+                }
+
+                    .pupMain .contentInfo ul li:first-child span:last-child {
+                        font: 12px "微软雅黑";
+                        color: #007be2;
+                        float: right;
+                        margin-top: 15px;
+                        margin-right: 50px;
+                        text-decoration: underline;
+                        cursor: pointer;
+                    }
+
+                    .pupMain .contentInfo ul li:first-child span:first-child {
+                        font: 13px "微软雅黑";
+                        color: #b1b1b1;
+                        float: left;
+                        margin-top: 13px;
+                        margin-left: 65px;
+                        text-decoration: none;
+                    }
+
+                .pupMain .contentInfo ul li.liText {
+                }
+
+                    .pupMain .contentInfo ul li.liText span {
+                        font: 13px "微软雅黑";
+                        color: #b1b1b1;
+                    }
+
+                        .pupMain .contentInfo ul li.liText span.spanTitle {
+                            display: inline-block;
+                            width: 120px;
+                            text-align: right;
+                        }
+
+                        .pupMain .contentInfo ul li.liText span.spanText {
+                            display: inline-block;
+                            width: 435px;
+                            text-align: left;
+                            padding-left: 15px;
+                        }
+
+                    .pupMain .contentInfo ul li.liText .liTextLeft {
+                        float: left;
+                        width: 49%;
+                        height: 200px;
+                        border-right: 1px solid #293739;
+                    }
+
+                    .pupMain .contentInfo ul li.liText .liTextRight {
+                        float: left;
+                        width: 50%;
+                        height: 200px;
+                    }
+
+
+                    .pupMain .contentInfo ul li.liText input {
+                        background-color: #1E1F2D;
+                        border: 1px solid #2a393a;
+                        height: 30px;
+                        width: 100%;
+                        padding-left: 10px;
+                        color: #b1b1b1;
+                    }
+
+
+                .pupMain .contentInfo ul li.liBtn {
+                    text-align: center;
+                    margin-top: 65px;
+                }
+
+                    .pupMain .contentInfo ul li.liBtn input {
+                        background-color: transparent;
+                        border: 1px solid #263738;
+                        color: #548C94;
+                        padding-left: 5px;
+                        padding-right: 5px;
+                        box-sizing: border-box;
+                        margin-left: 16px;
+                        width: 88px;
+                        height: 30px;
+                        font-size: 14px;
+                        font-family: "微软雅黑";
+                        border: none;
+                    }
+
+                        .pupMain .contentInfo ul li.liBtn input.selectbg {
+                            background-image: url(../Content/images/selectbg.png);
+                            border-radius: 3px;
+                            box-shadow: 0px 0px 8px #111111;
+                            cursor: pointer;
+                        }
+
+                        .pupMain .contentInfo ul li.liBtn input.resetbg {
+                            background-image: url(../Content/images/resetbg.png);
+                            border-radius: 3px;
+                            box-shadow: 0px 0px 8px #111111;
+                            cursor: pointer;
+                        }
+
+
+            .pupMain .contentInfo table {
+                color: #b1b1b1;
+                width: 930px;
+                height: 245px;
+                border: 1px solid #2a393a;
+                margin: 0 auto;
+                background-color: #21222f;
+            }
+
+                .pupMain .contentInfo table tr:nth-child(even) {
+                    background-color: #21202E;
+                }
+
+                .pupMain .contentInfo table tr:nth-child(odd) {
+                    background-color: #21222F;
+                }
+
+                .pupMain .contentInfo table tr th {
+                    text-align: left;
+                    padding-left: 50px;
+                    background-color: #1E1F2D;
+                    border-bottom: 1px solid #2A393A;
+                }
+
+                .pupMain .contentInfo table tr td {
+                    border-right: 1px solid #2A393A;
+                    padding-left: 50px;
+                }
+
+                .pupMain .contentInfo table:nth-child(1) {
+                    margin-top: 20px;
+                }
+
+                .pupMain .contentInfo table:nth-child(2) {
+                    border-top: none;
+                }
+    </style>
+</head>
+<body>
+    <div class="pupMain">
+        <ul>
+            <li class="title">
+                <span>一键查询详细页面</span>
+                <span onclick="layerClose()"><img src="../Content/images/icon_close.png" /></span>
+            </li>
+        </ul>
+        <div class="contentInfo">
+            <table border="0" cellspacing="0" cellpadding="0">
+                <tr><th colspan="2">场所设备基础信息</th></tr>
+                <tr>
+                    <td style="width: 50%;">
+                        <span class="spanTitle">场所名称:</span>
+                        <span class="spanText">御景假日酒店有限公司8层8805房</span>
+                    </td>
+                    <td style="width: 50%;">
+                        <span class="spanTitle">场所类型:</span>
+                        <span class="spanText">旅店宾馆类</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="spanTitle">AP名称:</span>
+                        <span class="spanText">广宁县御景假日酒店有限公司</span>
+                    </td>
+                    <td>
+                        <span class="spanTitle">上网服务场所编码:</span>
+                        <span class="spanText">44122321050328</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="spanTitle">AP设备编号:</span>
+                        <span class="spanText">77985285588CC452680D8</span>
+                    </td>
+                    <td>
+                        <span class="spanTitle">AP设备MAC地址:</span>
+                        <span class="spanText">88-CC-45-26-80-D8</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="spanTitle">移动AP经度:</span>
+                        <span class="spanText">112.452567</span>
+                    </td>
+                    <td>
+                        <span class="spanTitle">移动AP纬度:</span>
+                        <span class="spanText">23.640839</span>
+                    </td>
+                </tr>
+            </table>
+            <table border="0" cellspacing="0" cellpadding="0">
+                <tr><th colspan="2">审计信息</th></tr>
+                <tr>
+                    <td style="width: 50%;">
+                        <span class="spanTitle">认证账号:</span>
+                        <span class="spanText">13602348284</span>
+                    </td>
+                    <td style="width: 50%;">
+                        <span class="spanTitle">认证类型:</span>
+                        <span class="spanText">手机</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="spanTitle">证件类型:</span>
+                        <span class="spanText">其他</span>
+                    </td>
+                    <td>
+                        <span class="spanTitle">证件号码:</span>
+                        <span class="spanText">13602348284</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="spanTitle">上线时间:</span>
+                        <span class="spanText">77985285588CC452680D8</span>
+                    </td>
+                    <td>
+                        <span class="spanTitle">下线时间:</span>
+                        <span class="spanText">N/A</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span class="spanTitle">场所内网IP地址:</span>
+                        <span class="spanText">192.168.3.144</span>
+                    </td>
+                    <td>
+                        <span class="spanTitle">终端MAC地址:</span>
+                        <span class="spanText">50-7A-55-56-87-30</span>
+                    </td>
+
+                </tr>
+            </table>
+            <!--<ul>
+                <li>
+                    <span>审计详细信息</span>
+                </li>
+                <li class="liText">
+                    <div class="liTextLeft">
+                        <span class="spanTitle">审计条件-微信:</span>
+                        <span class="spanText">50-A7-C3-33-44</span>
+                        <span class="spanTitle">邮箱:</span>
+                        <span class="spanText">625968931@qq.com</span>
+                    </div>
+                    <div class="liTextRight">
+                        <span class="spanTitle">机构代码:</span>
+                        <span class="spanText">60-32-88-4C-6F</span>
+                        <span class="spanTitle">创建时间:</span>
+                    <span class="spanText">2017/07/27 14:35:31</span>
+                    </div>
+                </li>
+            </ul>
+            <ul>
+                <li>
+                    <span>报警详细信息</span>
+                </li>
+                <li class="liText">
+                    <span class="spanTitle">IMSI:</span>
+                    <span class="spanText">1314/个</span>
+                    <span class="spanTitle">IMEI:</span>
+                    <span class="spanText">520/个</span>
+                    <span class="spanTitle">虚拟身份:</span>
+                    <span class="spanText">1,314,520/个</span>
+                    <span class="spanTitle">MAC:</span>
+                    <span class="spanText">12345/个</span>
+                </li>
+            </ul>-->
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    //点击弹窗中的某个元素关闭自身（弹窗）
+    function layerClose() {
+        var index = parent.layer.getFrameIndex(window.name);
+        parent.layer.close(index);
+    }
+</script>

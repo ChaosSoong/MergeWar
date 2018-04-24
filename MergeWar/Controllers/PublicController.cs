@@ -14,7 +14,12 @@ using HCZZ.Models;
 using Webdiyer.WebControls.Mvc;
 using HCZZ.ModeDB;
 using HCZZ.DAL;
-using Common;
+using MergeWar.Models;
+using Newtonsoft.Json.Linq;
+using System.Net;
+using System.Configuration;
+using Newtonsoft.Json;
+using System.Text;
 
 namespace HCZZ.Controllers
 {
@@ -23,6 +28,11 @@ namespace HCZZ.Controllers
     {
         OPLog log = new OPLog();
         HomeCountDAL home = new HomeCountDAL();
+        public static string PageSize = System.Configuration.ConfigurationManager.AppSettings["PageSize"];
+        SolrShowModel solrmodel = new SolrShowModel();
+        MergeWar.JavaServer.BigDataServiceClient java = new MergeWar.JavaServer.BigDataServiceClient();
+
+        Index_Json json = new Index_Json();
         //创建人：邓佳训
         //时  间：2017-6-12
         //公用控制器，用来创建不在权限控制范围内的页面
@@ -32,14 +42,31 @@ namespace HCZZ.Controllers
         [HttpGet]
         public ActionResult ExcelUnDevice(string txtAP_MAC, string txtStartTime, string txtEndTime, string AreaName)
         {
-            Dictionary<string, string> dic = new Dictionary<string, string>() 
-            { 
+            Dictionary<string, string> dic = new Dictionary<string, string>()
+            {
                 {"AP_MAC",txtAP_MAC},
                 {"StartTime",txtStartTime},
                 {"EndTime",txtEndTime},
                 {"AreaName",AreaName}
             };
             DataTable dt = new LocationDAL().GetDeviceExcel(dic);
+            if (dt != null && dt.Rows.Count > 0)
+            {
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    StringBuilder New_APMAC = new StringBuilder();
+                    char[] AP_MAC = dt.Rows[i]["AP_MAC"].ToString().ToCharArray();
+                    for (int J = 0; J < AP_MAC.Length; J++)
+                    {
+                        New_APMAC.Append(AP_MAC[J]);
+                        if (J % 2 != 0)
+                        {
+                            New_APMAC.Append("-");
+                        }
+                    }
+                    dt.Rows[i]["AP_MAC"] = New_APMAC.ToString().Substring(0, New_APMAC.Length - 1);
+                }
+            }
             if (dt == null || dt.Rows.Count == 0)
             {
                 return Content("{\"err\":\"对不起，没有要导出的数据\"}");
@@ -92,8 +119,8 @@ namespace HCZZ.Controllers
                 if (userType[0] != 1 && userType[0] != 7)
                     proId = user.ProID.ToString();
 
-                Dictionary<string, string> dic = new Dictionary<string, string>() 
-                { 
+                Dictionary<string, string> dic = new Dictionary<string, string>()
+                {
                     {"txtNetbar_Wacode",txtNetbar_Wacode},
                     {"txtPlace_Name",txtPlace_Name},
                     {"txtSite_Address",txtSite_Address},
@@ -123,6 +150,7 @@ namespace HCZZ.Controllers
                     {"ProjectAccessNum",txtProjectAccessNum}
                 };
                 DataTable dt = new LocationDAL().GetLocaDT(dic);
+
                 if (dt == null || dt.Rows.Count == 0)
                 {
                     return Content("{\"err\":\"对不起，没有要导出的数据\"}");
@@ -144,7 +172,7 @@ namespace HCZZ.Controllers
                     if (selStatus != "0") Head_Dic.Add("场所状态", (selStatus == "1" ? "场所营业" : "场所停业"));
                     if (selAccess_Type != "0") Head_Dic.Add("场所网络接入方式", ChangeValue.GetConnectTypeValue(Convert.ToInt32(selAccess_Type)));
                     if (selOperator_Net != "0") Head_Dic.Add("场所网络接入服务商：", ChangeValue.GetServiceBusinesValue(selOperator_Net));
-                    if (selVerified != "0") Head_Dic.Add("场所审核状态：", ChangeValue.RefVerifiedStrExcel(Convert.ToInt32(selVerified)));
+                    //if (selVerified != "0") Head_Dic.Add("场所审核状态：", ChangeValue.RefVerifiedStrExcel(Convert.ToInt32(selVerified)));
                     if (selProvince != "0") Head_Dic.Add("省Id：", selProvince);
                     if (selCity != "0") Head_Dic.Add("市Id：", selCity);
                     if (selArea != "0") Head_Dic.Add("区Id：", selArea);
@@ -161,7 +189,6 @@ namespace HCZZ.Controllers
                         if (!string.IsNullOrEmpty(spExprotId[i]) && Title_Dic_Statc.ContainsKey(spExprotId[i]))
                             Title_Dic.Add(Title_Dic_Statc[spExprotId[i]].Key, Title_Dic_Statc[spExprotId[i]].Value);
                     }
-
                     NPOISheetModel sheet = new NPOISheetModel();
                     sheet.dt = dt;
                     sheet.ExcelTitle = "场所列表";
@@ -205,7 +232,6 @@ namespace HCZZ.Controllers
             }
             else
             {
-
                 switch (status)
                 {
                     case "1": return "数据在线";
@@ -217,8 +243,8 @@ namespace HCZZ.Controllers
             }
         }
         //要导出的列
-        static Dictionary<string, KeyValuePair<string, string>> Title_Dic_Statc = new Dictionary<string, KeyValuePair<string, string>>() 
-        { 
+        static Dictionary<string, KeyValuePair<string, string>> Title_Dic_Statc = new Dictionary<string, KeyValuePair<string, string>>()
+        {
             {"1", new KeyValuePair<string,string>("上网服务场所编码","NETBAR_WACODE")},
             {"2", new KeyValuePair<string,string>("上网服务场所名称","PLACE_NAME")},
             {"3", new KeyValuePair<string,string>("场所详细地址","SITE_ADDRESS")},
@@ -254,8 +280,6 @@ namespace HCZZ.Controllers
             {"33", new KeyValuePair<string,string>("拆换机状态","PotType")},
             {"34", new KeyValuePair<string,string>("拆换机审核时间","CheckTime")}
         };
-
-
         [HttpGet]
         public ActionResult Download(string name, string path)
         {
@@ -276,6 +300,101 @@ namespace HCZZ.Controllers
             return View();
         }
         #endregion
+
+        /// <summary>
+        ///Mac分析四类导出
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult AnalyzeExport(string dataType)
+        {
+            try
+            {
+                string CacheType = string.Empty;
+                UserInfo dbUser = (UserInfo)Session["userinfo"];
+                List<Collision> clList = null;
+                Dictionary<string, string> Head_Dic = new Dictionary<string, string>();
+                switch (dataType)
+                {
+                    case "1":
+                        clList = (List<Collision>)System.Web.HttpContext.Current.Cache["collisionAnalysisMACResult" + dbUser.ID];
+                        CacheType = "pz";
+                        Head_Dic.Add("碰撞次数", System.Web.HttpContext.Current.Cache[CacheType + "keys" + dbUser.ID].ToString() + "次");
+                        break;
+                    case "2":
+                        clList = (List<Collision>)System.Web.HttpContext.Current.Cache["accompanyAnalysisMACResult" + dbUser.ID];
+                        CacheType = "bs";
+                        Head_Dic.Add("MAC地址", System.Web.HttpContext.Current.Cache[CacheType + "keys" + dbUser.ID].ToString());
+                        break;
+                    case "3":
+                        clList = (List<Collision>)System.Web.HttpContext.Current.Cache["appearDevMACResult" + dbUser.ID];
+                        CacheType = "cx";
+                        break;
+                    case "4":
+                        clList = (List<Collision>)System.Web.HttpContext.Current.Cache["disappearDevMACResult" + dbUser.ID];
+                        CacheType = "xs";
+                        break;
+                    default:
+                        break;
+                }
+                DataTable dt = Szcert.Audit.CommonBase.DataSetConvert.ToDataTable(clList);
+                if (dt == null || dt.Rows.Count == 0)
+                {
+                    return Content("{\"err\":\"对不起，没有要导出的数据\"}");
+                }
+                Dictionary<string, string> Table = new Dictionary<string, string>() { };
+                if (dataType == "1" || dataType == "2")
+                {
+                    Table = new Dictionary<string, string> {
+                     {"MAC地址","MAC"},
+                     {"出现次数","c"}
+                    };
+                }
+                else if (dataType == "3" || dataType == "4")
+                {
+                    Table = new Dictionary<string, string> {
+                        {"场所名称","PLACE_NAME"},
+                        {"设备名称","APName"},
+                        {"最小采集时间","CAPTURE_TIME"},
+                        {"Mac地址","MAC"}
+                    };
+                }
+                NPOISheetModel sheel = new NPOISheetModel();
+                sheel.dt = dt;
+                switch (dataType)
+                {
+                    case "1":
+                        sheel.ExcelTitle = "碰撞分析结果";
+                        break;
+                    case "2":
+                        sheel.ExcelTitle = "伴随分析结果";
+                        break;
+                    case "3":
+                        sheel.ExcelTitle = "出现设备结果";
+                        break;
+                    case "4":
+                        sheel.ExcelTitle = "消失设备结果";
+                        break;
+                    default:
+                        break;
+                }
+
+                Head_Dic.Add("设备ID", System.Web.HttpContext.Current.Cache[CacheType + "ids" + dbUser.ID].ToString());
+                Head_Dic.Add("开始时间段", System.Web.HttpContext.Current.Cache[CacheType + "txtStartTimes" + dbUser.ID].ToString());
+                Head_Dic.Add("结束时间段", System.Web.HttpContext.Current.Cache[CacheType + "txtEndTimes" + dbUser.ID].ToString());
+                sheel.TableSearch = Head_Dic;
+                sheel.TableTitle = Table;
+                string path = new ComNPOIExcel().Export(sheel, Server.MapPath("~/") + "UserData/EXP/Analyze/");
+                return Content("{\"result\":\"" + path + "\"}");
+            }
+            catch (Exception ex)
+            {
+                Logger.ErrorLog(ex, new Dictionary<string, string>()
+                {
+                    {"Function","PublicController.AnalyzeExport(string dataType)[HttpGet]"}
+                });
+                return Content("{\"err\":\"导出文件出错，请稍后重试\"}");
+            }
+        }
 
         #region 导入数据
         public ActionResult BatchAddLocation(int importType)
@@ -310,7 +429,15 @@ namespace HCZZ.Controllers
                      * 1、添加和编辑使用同一个页面，但使用不同的模版
                      * 2、在此处添加编辑的代码，尝试将下面的代码进行提取封装
                      */
-                    DataTable dt = new ComNPOIExcel().ComXLSXOrXLSToTable(wholePath);
+                    DataTable dt = new DataTable();
+                    try
+                    {
+                        dt = new ComNPOIExcel().ComXLSXOrXLSToTable(wholePath);
+                    }
+                    catch
+                    {
+                        return Json(new { result = 0, message = "请先下载模板" }, JsonRequestBehavior.AllowGet);
+                    }
                     if (dt != null && dt.Rows.Count > 0)
                     {
                         LocationDAL LocaDal = new LocationDAL();
@@ -320,7 +447,6 @@ namespace HCZZ.Controllers
                         int LocaType = ChangeValue.GetLocaTypeList().OrderBy(m => m.Key).Last().Key;
                         int count = 0;
                         int APCount = 0;
-
                         if (importType == 2)
                         {
                             if (!dt.Columns.Contains("ID"))
@@ -489,10 +615,8 @@ namespace HCZZ.Controllers
                                 new OPLogDAL().InsertLog(log);
                                 return Json(new { result = 0, message = "数据源中“设备MAC”有数据重复" }, JsonRequestBehavior.AllowGet);
                             }
-
                             List<Json_DevInfo> importList = new List<Json_DevInfo>();
                             Dictionary<string, int> dicLoca = new Dictionary<string, int>();
-
                             for (int i = 0; i < dt.Rows.Count; i++)
                             {
                                 DataRow dr = dt.Rows[i];
@@ -516,7 +640,6 @@ namespace HCZZ.Controllers
                                 {
                                     errIDs += (i + 2).ToString() + "--字段Sid应该为正整数\r\n"; continue;
                                 }
-
                                 string deviceMac = dr["Mac"].ToString().Replace(":", "-").Trim();
                                 if (deviceMac.Length != 17)
                                 { errIDs += (i + 2).ToString() + "--字段Mac应该为17位\r\n"; continue; }
@@ -591,9 +714,7 @@ namespace HCZZ.Controllers
                                     if (devId > 0)
                                         count += 1;
                                 }
-
                                 importList.Add(new Json_DevInfo { APName = il.ApName, MAC = il.Mac });
-
                                 //将添加成功的场所ID加入到字典中
                                 if (!dicLoca.Keys.Contains(il.LocaName)) dicLoca.Add(il.LocaName, il.NetBarId);
                             }
@@ -605,7 +726,6 @@ namespace HCZZ.Controllers
                                 JavaScriptSerializer ser = new JavaScriptSerializer();
                                 new HttpHelps().PostSend(1, 1, ser.Serialize(importList));
                             }
-
                             if (errIDs.Length > 5)
                                 errIDs = errIDs.Substring(1, errIDs.Length - 3);
                             isSuccess = 1;
@@ -675,10 +795,7 @@ namespace HCZZ.Controllers
         {
             try
             {
-                DateTime timenow = DateTime.Now;
-                TimeType = string.IsNullOrEmpty(TimeType) ? "2" : TimeType;
-                TimeType = TimeType == "1" ? timenow.AddDays(-30).ToString("yyyy-MM-dd") : timenow.AddDays(-7).ToString("yyyy-MM-dd");
-                DataTable dt = home.DataCountTrendDal(TimeType, "1");
+                DataTable dt = GetCollectCountByType(TimeType, "1");
                 JsonResult jsondata = new JsonResult();
                 jsondata.Data = RrsJson(dt);
                 jsondata.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
@@ -706,10 +823,7 @@ namespace HCZZ.Controllers
         {
             try
             {
-                DateTime timenow = DateTime.Now;
-                TimeType = string.IsNullOrEmpty(TimeType) ? "2" : TimeType;
-                TimeType = TimeType == "1" ? timenow.AddDays(-30).ToString("yyyy-MM-dd") : timenow.AddDays(-7).ToString("yyyy-MM-dd");
-                DataTable dt = home.DataCountTrendDal(TimeType, "2");
+                DataTable dt = GetCollectCountByType(TimeType, "2");
                 JsonResult jsondata = new JsonResult();
                 jsondata.Data = RrsJson(dt);
                 jsondata.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
@@ -726,6 +840,15 @@ namespace HCZZ.Controllers
                 throw;
             }
         }
+
+        public DataTable GetCollectCountByType(string TimeType, string SumType)
+        {
+            DateTime timenow = DateTime.Now;
+            TimeType = string.IsNullOrEmpty(TimeType) ? "2" : TimeType;
+            TimeType = TimeType == "1" ? timenow.AddDays(-30).ToString("yyyyMMdd") : timenow.AddDays(-7).ToString("yyyyMMdd");
+            DataTable dt = home.DataCountTrendDal(TimeType, SumType);
+            return dt;
+        }
         /// <summary>
         /// 创建人：张团勃
         /// 创建时间：2017-06-16
@@ -738,9 +861,10 @@ namespace HCZZ.Controllers
             try
             {
                 DataTable dt = home.DataOnline();
-                double Online1 = Convert.ToDouble(dt.Rows[0]["DataNum"].ToString());
-                double Online2 = Convert.ToDouble(dt.Rows[0]["ZoomNum"].ToString());
-                double Online = Convert.ToDouble(((Online1 / Online2) * 100).ToString("f2"));
+                double Online1 = string.IsNullOrEmpty(dt.Rows[0]["DataNum"].ToString()) ? 0.00 : Convert.ToDouble(dt.Rows[0]["DataNum"].ToString());
+                double Online2 = string.IsNullOrEmpty(dt.Rows[0]["ZoomNum"].ToString()) ? 0.00 : Convert.ToDouble(dt.Rows[0]["ZoomNum"].ToString());
+                string Online = (((Online1 / Online2) * 100).ToString("f2"));
+
                 var num = new
                 {
                     dn = dt.Rows[0]["DataNum"],
@@ -771,10 +895,10 @@ namespace HCZZ.Controllers
             try
             {
                 DataTable dt = home.DataMapInferior();
-                List<JSON> jsonlist = new List<JSON>();
+                List<Index_Json> jsonlist = new List<Index_Json>();
                 for (int i = 0; i < dt.Rows.Count; i++)
                 {
-                    JSON json = new JSON();
+                    Index_Json json = new Index_Json();
                     json.Mobile = dt.Rows[i]["Mobile"].ToString();
                     json.NETWORK_APP = ChangeValue.NetworkServe(dt.Rows[i]["NETWORK_APP"].ToString());
                     json.IdValue = dt.Rows[i]["IdValue"].ToString();
@@ -802,17 +926,28 @@ namespace HCZZ.Controllers
         public ActionResult DataOnlineCount()
         {
             JsonResult jsondata = new JsonResult();
-            JSON json = new JSON();
+            //Index_Json json = new Index_Json();
             try
             {
                 DataTable dt = home.DataOnlineCount();
 
-                string[] name = new string[13];
-                int[] datanum = new int[13];
-                for (int i = 0; i < dt.Rows.Count; i++)
+                string[] name = new string[dt.Rows.Count];
+                int[] datanum = new int[dt.Rows.Count];
+                if (dt.Rows.Count != 0)
                 {
-                    name[i] = ChangeValue.ChangeLevelWord(dt.Rows[i][0].ToString());
-                    datanum[i] = Convert.ToInt32(dt.Rows[i][1].ToString());
+                    for (int i = 0; i < dt.Rows.Count; i++)
+                    {
+                        name[i] = ChangeValue.ChangeLevelWord(dt.Rows[i][0].ToString());
+                        datanum[i] = Convert.ToInt32(dt.Rows[i][1].ToString());
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < name.Length; i++)
+                    {
+                        name[i] = "暂无数据";
+                        datanum[i] = 0;
+                    }
                 }
                 json.namenum = name;
                 json.datanum = datanum;
@@ -837,26 +972,27 @@ namespace HCZZ.Controllers
         public ActionResult DataOnlineRate()
         {
             JsonResult jsondata = new JsonResult();
-            JSON json = new JSON();
+            //Index_Json json = new Index_Json();
             try
             {
                 DataTable dt = new DataTable();
                 dt = home.DataOnlineRate();//获取数据
-                dt.Columns.Add("Rate", typeof(double));//在线率
-                string[] name = new string[13];//场所名称
-                double[] datanum = new double[13];//场所在线率
-                double data;
+                dt.Columns.Add("Rate", typeof(string));//在线率
+                string[] name = new string[dt.Rows.Count];//场所名称
+                string[] datanum = new string[dt.Rows.Count];//场所在线率
                 for (int i = 0; i < dt.Rows.Count; i++)
                 {
-                    data = (Convert.ToDouble(dt.Rows[i][2]) / Convert.ToDouble(dt.Rows[i][1])) * 100;
-                    dt.Rows[i][3] = Convert.ToDouble(data.ToString("f2"));
+                    //data = (Convert.ToDouble(dt.Rows[i][2]) / Convert.ToDouble(dt.Rows[i][1])) * 100;
+                    dt.Rows[i][3] = (Convert.ToDouble(dt.Rows[i][2]) / Convert.ToDouble(dt.Rows[i][1])).ToString("f2");
+                    name[i] = ChangeValue.ChangeLevelWord(dt.Rows[i][0].ToString());
+                    datanum[i] = dt.Rows[i][3].ToString();
                 }
                 dt.DefaultView.Sort = "Rate DESC";//从大到小排序
                 dt = dt.DefaultView.ToTable();
                 for (int i = 0; i < dt.Rows.Count; i++)
                 {
                     name[i] = ChangeValue.ChangeLevelWord(dt.Rows[i][0].ToString());
-                    datanum[i] = Convert.ToDouble(dt.Rows[i][3]);
+                    datanum[i] = dt.Rows[i][3].ToString();
                 }
                 json.namenum = name;//场所名称 
                 json.ratenum = datanum;//场所在线率
@@ -878,35 +1014,18 @@ namespace HCZZ.Controllers
         /// </summary>
         /// <param name="dt"></param>
         /// <returns></returns>
-        public JSON RrsJson(DataTable dt)
+        public Index_Json RrsJson(DataTable dt)
         {
-            JSON Calssjson = new JSON();
-            int length = dt.Rows.Count;
-            long[] phone = new long[length],
-                mac = new long[length],
-                virtuals = new long[length],
-                imei = new long[length],
-                carNum = new long[length];
-
-            string[] times = new string[length];
-            for (int j = 0; j < dt.Columns.Count; j++)
+            Index_Json Calssjson = new Index_Json(dt.Rows.Count);
+            for (int a = 0; a < dt.Rows.Count; a++)
             {
-                for (int a = 0; a < dt.Rows.Count; a++)
-                {
-                    times[a] = dt.Rows[a][0].ToString();
-                    phone[a] = Convert.ToInt64(dt.Rows[a][1]);
-                    mac[a] = Convert.ToInt64(dt.Rows[a][2]);
-                    virtuals[a] = Convert.ToInt64(dt.Rows[a][3]);
-                    imei[a] = Convert.ToInt64(dt.Rows[a][4]);
-                    carNum[a] = Convert.ToInt64(dt.Rows[a][5]);
-                }
+                Calssjson.times[a] += dt.Rows[a][0].ToString();
+                Calssjson.phone[a] += Convert.ToInt64(dt.Rows[a][1]);
+                Calssjson.mac[a] += Convert.ToInt64(dt.Rows[a][2]);
+                Calssjson.virtuals[a] += Convert.ToInt64(dt.Rows[a][3]);
+                Calssjson.imei[a] += Convert.ToInt64(dt.Rows[a][4]);
+                Calssjson.carNum[a] += Convert.ToInt64(dt.Rows[a][5]);
             }
-            Calssjson.times = times;
-            Calssjson.phone = phone;
-            Calssjson.mac = mac;
-            Calssjson.virtuals = virtuals;
-            Calssjson.imei = imei;
-            Calssjson.carNum = carNum;
             return Calssjson;
         }
         /// <summary>
@@ -922,10 +1041,20 @@ namespace HCZZ.Controllers
             try
             {
                 DataTable dt = home.DataCount();
-                List<JSON> jsonlist = new List<JSON>();
+                if (dt.Select("name='30'").Length == 0)
+                    dt.Rows.Add("30", "0");
+                if (dt.Select("name='31'").Length == 0)
+                    dt.Rows.Add("31", "0");
+                if (dt.Select("name='32'").Length == 0)
+                    dt.Rows.Add("32", "0");
+                if (dt.Select("name='33'").Length == 0)
+                    dt.Rows.Add("33", "0");
+                if (dt.Select("name='34'").Length == 0)
+                    dt.Rows.Add("34", "0");
+                List<Index_Json> jsonlist = new List<Index_Json>();
                 for (int i = 0; i < dt.Rows.Count; i++)
                 {
-                    JSON json = new JSON();
+                    Index_Json json = new Index_Json();
                     json.name = ChangeValue.ChangeLevelWord(dt.Rows[i]["name"].ToString());
                     json.data = dt.Rows[i]["data"].ToString();
                     jsonlist.Add(json);
@@ -950,107 +1079,6 @@ namespace HCZZ.Controllers
         #endregion
 
         #region 一键查询方法
-        /// <summary>
-        /// 数据查询总界面
-        /// </summary>
-        /// <param name="Id"></param>
-        /// <param name="KeyWord"></param>
-        /// <returns></returns>
-        [HttpGet]
-        public ActionResult Result(int? pageIndex, int? TypeVal, string KeyWord)
-        {
-            try
-            {
-                List<DatasInfo> list = new List<DatasInfo>();
-                pageIndex = string.IsNullOrEmpty(pageIndex.ToString()) ? 1 : pageIndex;
-                TypeVal = string.IsNullOrEmpty(TypeVal.ToString()) ? 1 : TypeVal;
-                ViewBag.dic = new Dictionary<string, string> { { "TypeVal", TypeVal.ToString() }, { "KeyWord", KeyWord } };
-                Dictionary<string, string> dic = new Dictionary<string, string>();
-                dic.Add("pageIndex", pageIndex.ToString());
-                dic.Add("PageSize", "10");
-                switch (TypeVal)
-                {
-                    case 1:
-                        for (int i = 0; i < 20; i++)
-                        {
-                            DatasInfo mo = new DatasInfo();
-                            mo.AUTH_ACCOUNT = "1561653179" + i;
-                            list.Add(mo);
-                        }
-                        break;
-                    case 2:
-                        for (int i = 0; i < 20; i++)
-                        {
-                            DatasInfo mo = new DatasInfo();
-                            mo.MAC = "A1-B2-C3-E4-D5";
-                            list.Add(mo);
-                        }
-                        break;
-                    case 3:
-                        for (int i = 0; i < 20; i++)
-                        {
-                            DatasInfo mo = new DatasInfo();
-                            mo.Mobile = "1561653179" + i;
-                            mo.MAC = "A1-B2-C3-E4-D5";
-                            mo.NETWORK_APP_VALUES = "123.qq.com";
-                            mo.NETWORK_APP = 20;
-                            list.Add(mo);
-                        }
-                        break;
-                }
-                ViewBag.pl = new PagedList<DatasInfo>(list, (pageIndex ?? 1), 10, list.Count);
-            }
-            catch (Exception ex)
-            {
-                Logger.ErrorLog(ex, null);
-            }
-
-            return View();
-        }
-        public class DatasInfo
-        {
-            /// <summary>
-            /// 手机号码
-            /// </summary>
-            public string Mobile { get; set; }
-
-            /// <summary>
-            /// 关系表Mac地址
-            /// </summary>
-            public string MacAddress { get; set; }
-
-            /// <summary>
-            /// Mac地址
-            /// </summary>
-            public string MAC { get; set; }
-
-            /// <summary>
-            /// 创建时间
-            /// </summary>
-            public DateTime CreateTime { get; set; }
-
-            /// <summary>
-            /// 修改时间
-            /// </summary>
-            public DateTime OperDate { get; set; }
-
-            /// <summary>
-            /// 心跳时间
-            /// </summary>
-            public DateTime HeartTime { get; set; }
-            /// <summary>
-            ///虚拟身份类型
-            /// </summary>
-            public int NETWORK_APP { get; set; }
-            /// <summary>
-            /// 虚拟身份值
-            /// </summary>
-            public string NETWORK_APP_VALUES { get; set; }
-            /// <summary>
-            /// 虚拟身份值
-            /// </summary>
-            public string AUTH_ACCOUNT { get; set; }
-        }
 
         /// <summary>
         /// 数据查询结果
@@ -1135,7 +1163,7 @@ namespace HCZZ.Controllers
         }
         #endregion
 
-        #region 其他
+        #region 场所管理中所用
         [HttpGet]
         public ActionResult LoadItude()
         {
@@ -1181,6 +1209,7 @@ namespace HCZZ.Controllers
         {
             try
             {
+
                 List<MacInfo> list = WebCommon.GetMacList(Id);
                 if (list != null && list.Count > 0)
                 {
@@ -1306,34 +1335,49 @@ namespace HCZZ.Controllers
             string mapJs = "[]";
             string jsAlter = "";
             string centerGnote = "114.031716,22.545583";
-            ProId = ProId ?? "0"; CityId = CityId ?? "0"; Aid = Aid ?? "0";
+            UserInfo user = (UserInfo)Session["userinfo"];
+            if (user != null && (user.Type == 4 || user.Type == 2 || user.Type == 3 || user.Type == 5 || user.Type == 6 || user.Type == 8))
+            {
+                ProId = user.ProID.ToString();
+                CityId = user.CityID.ToString();
+                //Aid = user.Type == 2 ? user.AId.ToString() : Aid;
+                Aid = user.AId.ToString();
+            }
+            else
+            {
+                ProId = ProId == "0" || ProId == "undefined" ? "0" : ProId;
+                CityId = CityId == "0" || CityId == "undefined" ? "0" : CityId;
+                Aid = Aid == "0" || Aid == "undefined" ? "0" : Aid;
+            }
             try
             {
-                if (ProId != "0" || CityId != "0" || Aid != "0")
+                ProId = "5";
+                CityId = "6";
+                Aid = "32";
+                //为了测试方便。先加载深圳市南山的场所
+                DataTable dt = new LocationDAL().GetLocaMapDt(ProId, CityId, Aid, "1");
+                List<Json_LocaMap> listMap = new List<Json_LocaMap>();
+                if (dt != null && dt.Rows.Count > 0)
                 {
-                    DataTable dt = new LocationDAL().GetLocaMapDt(ProId, CityId, Aid);
-                    List<Json_LocaMap> listMap = new List<Json_LocaMap>();
-                    if (dt != null && dt.Rows.Count > 0)
+                    centerGnote = dt.Rows[0]["Gnote"].ToString();
+                    for (int i = 0; i < dt.Rows.Count; i++)
                     {
-                        centerGnote = dt.Rows[0]["Gnote"].ToString();
-                        for (int i = 0; i < dt.Rows.Count; i++)
-                        {
-                            Json_LocaMap jlm = new Json_LocaMap();
-                            jlm.statis = Convert.ToInt32(dt.Rows[i]["LocaStatis"]);
-                            jlm.loadMessage = "场所名称：" + dt.Rows[i]["PLACE_NAME"].ToString() + "<br>场所状态：" + RefLocaStatisHtml(jlm.statis) + "<br>采集设备数量：" + dt.Rows[i]["APNum"];
-                            string tempGnote = dt.Rows[i]["Gnote"].ToString();
-                            jlm.lng = tempGnote.Split(',')[0];
-                            jlm.lat = tempGnote.Split(',')[1];
-                            listMap.Add(jlm);
-                        }
-                        if (listMap != null && listMap.Count > 0)
-                        {
-                            mapJs = Newtonsoft.Json.JsonConvert.SerializeObject(listMap);
-                        }
+                        Json_LocaMap jlm = new Json_LocaMap();
+                        jlm.ID = Convert.ToInt32(dt.Rows[i]["ID"]);
+                        jlm.statis = Convert.ToInt32(dt.Rows[i]["LocaStatis"]);
+                        jlm.loadMessage = "场所名称：" + dt.Rows[i]["PLACE_NAME"].ToString() + "<br>场所状态：" + RefLocaStatisHtml(jlm.statis) + "<br>采集设备数量：" + dt.Rows[i]["APNum"];
+                        string tempGnote = dt.Rows[i]["Gnote"].ToString();
+                        jlm.lng = tempGnote.Split(',')[0];
+                        jlm.lat = tempGnote.Split(',')[1];
+                        listMap.Add(jlm);
                     }
-                    else
-                        jsAlter = "null";
+                    if (listMap != null && listMap.Count > 0)
+                    {
+                        mapJs = Newtonsoft.Json.JsonConvert.SerializeObject(listMap);
+                    }
                 }
+                else
+                    jsAlter = "null";
             }
             catch (Exception ex)
             {
@@ -1343,7 +1387,7 @@ namespace HCZZ.Controllers
                 });
                 jsAlter = "err";
             }
-            return Content("{\"jsAlter\":\"" + jsAlter + "\",\"mapJs\":" + mapJs + ",\"pointLng\":" + centerGnote.Split(',')[0] + ",\"pointLat\":" + centerGnote.Split(',')[1] + "}");
+            return Content("{\"jsAlter\":\"" + jsAlter + "\",\"mapJs\":" + mapJs + ",\"Lng\":" + centerGnote.Split(',')[0] + ",\"Lat\":" + centerGnote.Split(',')[1] + "}");
         }
 
         [HttpGet]
@@ -1390,5 +1434,534 @@ namespace HCZZ.Controllers
                 return "<font color='green'>在线</font>";
         }
         #endregion
+
+        #region 系统数据查询方法
+        /// <summary>
+        /// 数据查询
+        /// </summary>
+        /// <param name="pageIndex">页码</param>
+        /// <param name="id">厂商Id</param>
+        /// <param name="startTime">开始时间</param>
+        /// <param name="endTime">结束时间</param>
+        /// <param name="dataType">数据类型</param>
+        /// <param name="authType">上网日志数据类别 1、虚拟身份，2、HTTP协议</param>
+        /// <returns></returns>
+        //public ActionResult GetDataNum(string id, string startTime, string endTime, string dataType, string authType, int pageIndex = 1)
+        //{
+        //    try
+        //    {
+        //        if (!string.IsNullOrEmpty(id))
+        //            Session["factoryId"] = id;
+        //        id = string.IsNullOrEmpty(id) ? Session["factoryId"].ToString():id;
+        //        SolrShowModel solrmodel = new SolrShowModel();
+        //        var javaResJson = string.Empty;
+        //        dataType = "3";
+        //        if (!string.IsNullOrEmpty(dataType))
+        //        {
+        //            dataType = ChangeValue.RefauthTypeStr(dataType);
+        //            MergeWar.JavaServer.SCPInquireServiceClient java = new MergeWar.JavaServer.SCPInquireServiceClient();
+        //            var parameter = new
+        //            {
+        //                curPage = pageIndex - 1,
+        //                factoryId = 1,
+        //                startTime = startTime,
+        //                endTime = endTime,
+        //                dataType = dataType,
+        //                networkApp = authType
+        //            };
+        //            try
+        //            {
+        //                javaResJson = Newtonsoft.Json.JsonConvert.SerializeObject(parameter);
+        //                javaResJson = java.queryTerminalManageList(javaResJson);
+        //                var Json = Newtonsoft.Json.Linq.JObject.Parse(javaResJson);
+        //                if (Convert.ToInt32(Json["state"]) == 0)
+        //                {
+        //                    Logger.writeLog(Json.ToString());
+        //                    return Content("<script>alert('暂无数据可查!');</script>");
+        //                }
+        //                solrmodel.numFound = Convert.ToInt32(Json["numFound"].ToString());
+        //                switch (dataType)
+        //                {
+        //                    case "AuditLog":
+        //                        solrmodel._taLog = Newtonsoft.Json.JsonConvert.DeserializeObject<List<TermianlAccessLog>>(Json["terminalList"].ToString());
+        //                        ViewBag.pl = new PagedList<TermianlAccessLog>(solrmodel._taLog, pageIndex, 10, solrmodel.numFound);
+        //                        break;
+        //                    case "NetLog":
+        //                        solrmodel._tnkLog = Newtonsoft.Json.JsonConvert.DeserializeObject<List<TermianlNetworkLog>>(Json["terminalList"].ToString());
+        //                        ViewBag.pl = new PagedList<TermianlNetworkLog>(solrmodel._tnkLog, pageIndex, 10, solrmodel.numFound);
+        //                        break;
+        //                    case "Termianl":
+        //                        solrmodel._ftInfo = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Fench_TerminalInfo>>(Json["terminalList"].ToString());
+        //                        ViewBag.pl = new PagedList<Fench_TerminalInfo>(solrmodel._ftInfo, pageIndex, 10, solrmodel.numFound);
+        //                        break;
+        //                    default:
+        //                        break;
+        //                }
+        //            }
+        //            catch (Exception solr)
+        //            {
+        //                Logger.ErrorLog(solr, null);
+        //                return Content("<script>alert('服务器开小差啦!');</script>");
+        //            }
+        //        }
+        //        ViewBag.dataType = dataType;
+        //        return View();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Logger.ErrorLog(ex, null);
+        //        throw;
+        //    }
+        //}
+        public ActionResult GetFirmName()
+        {
+            try
+            {
+                List<SecurityOrg> list = new SystemDAL().GetFirmNameDal();
+                return Json(list, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        #endregion
+        /// <summary>
+        /// 加载地图
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult Generate()
+        {
+            try
+            {
+                var entity = new { ID = 0, LONGITDE = "", LATITUDE = "", APName = "", NETBAR_ID = "" };
+                DataTable dt = new DataTable();
+                string ProId = "0", CityId = "0", Aid = "0";
+                UserInfo user = (UserInfo)Session["userInfo"];
+                if (user != null && (user.Type == 4 || user.Type == 2 || user.Type == 3 || user.Type == 5 || user.Type == 6 || user.Type == 8))
+                {
+                    ProId = user.ProID.ToString();
+                    CityId = user.CityID.ToString();
+                    //Aid = user.Type == 2 ? user.AId.ToString() : Aid;
+                    Aid = user.AId.ToString();
+                }
+                JsonResult result = new JsonResult();
+                //result.Data = Enumerable.Range(1, 100000);
+                dt = new LocationDAL().GetLocaMapDt(ProId, CityId, Aid, "2");
+                DataRow[] drArr = dt.Select(" J NOT IN(NULL) and W NOT IN (NULL) AND J NOT IN('') and W NOT IN ('') AND J NOT IN(0.00) and W NOT IN (0.00) AND J NOT IN(0.000000) and W NOT IN (0.000000) ");
+                DataTable dtNew = dt.Clone();
+                for (int i = 0; i < drArr.Length; i++)
+                {
+                    dtNew.Rows.Add(drArr[i].ItemArray);  // 将DataRow添加到DataTable中
+                }
+                TempData["dtlength"] = dtNew.Rows.Count;
+                var list = Newtonsoft.Json.JsonConvert.SerializeObject(dtNew);
+                return Json(list, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception EX)
+            {
+
+                throw;
+            }
+
+        }
+        /// <summary>
+        /// 设置最大maxJsonLength值
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="contentType"></param>
+        /// <param name="contentEncoding"></param>
+        /// <param name="behavior"></param>
+        /// <returns></returns>
+        protected override JsonResult Json(object data, string contentType, System.Text.Encoding contentEncoding, JsonRequestBehavior behavior)
+        {
+            return new JsonResult()
+            {
+                Data = data,
+                ContentType = contentType,
+                ContentEncoding = contentEncoding,
+                JsonRequestBehavior = behavior,
+                MaxJsonLength = Int32.MaxValue
+            };
+        }
+        /// <summary>
+        /// 碰撞分析出现次数显示
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult AnalysisDet(string analyType, string mac)
+        {
+            UserInfo dbUser = (UserInfo)Session["userinfo"];
+            try
+            {
+                string Seltype = analyType == "1" ? "pz" : "bs";
+                string relList = string.Empty;
+                var argjson = "";
+                try
+                {
+                    java.InnerChannel.OperationTimeout = new TimeSpan(0, 10, 0);
+                    if (analyType == "1")
+                    {
+                        var arg = new
+                        {
+                            queryMac = mac,
+                            devIds = HttpContext.Cache[Seltype + "ids" + dbUser.ID],
+                            startTime = HttpContext.Cache[Seltype + "txtStartTimes" + dbUser.ID],
+                            endTime = HttpContext.Cache[Seltype + "txtEndTimes" + dbUser.ID],
+                        };
+                        argjson = JsonConvert.SerializeObject(arg);
+                        argjson = java.collisionAnalysisDetailMAC(argjson);
+                        relList = "collisionAnalysisDetailMACResult";
+                    }
+                    else
+                    {
+                        var arg = new
+                        {
+                            queryMac = mac,
+                            devIds = HttpContext.Cache[Seltype + "ids" + dbUser.ID],
+                            startTime = HttpContext.Cache[Seltype + "txtStartTimes" + dbUser.ID],
+                            endTime = HttpContext.Cache[Seltype + "txtEndTimes" + dbUser.ID],
+                            mac = HttpContext.Cache[Seltype + "keys" + dbUser.ID],
+                        };
+                        argjson = JsonConvert.SerializeObject(arg);
+                        argjson = java.accompanyAnalysisDetailMAC(argjson);
+                        relList = "accompanyAnalysisDetailMACResult";
+                    }
+
+                    var Json = Newtonsoft.Json.Linq.JObject.Parse(argjson);
+                    if (Json["state"].ToString() == "1")
+                    {
+                        return Content("<script>alert('暂无数据!');history.go(-1);</script>");
+                    }
+                    else
+                    {
+                        solrmodel._cl = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Collision>>(Json[relList].ToString());
+                        ////获取场所缓存
+                        if ((List<Loc_NetBarInfo>)System.Web.HttpContext.Current.Cache["ShowCacheLoca"] == null)
+                            WebCommon.GetCacheLoca();
+                        List<Loc_NetBarInfo> netlist = (List<Loc_NetBarInfo>)System.Web.HttpContext.Current.Cache["ShowCacheLoca"];
+                        Logger.writeLog("缓存场所的个数：" + netlist.Count());
+                        //获取设备缓存
+                        if ((List<Loc_DevInfo>)System.Web.HttpContext.Current.Cache["CacheMacAll"] == null)
+                            WebCommon.GetCacheMacAllList();
+                        List<Loc_DevInfo> delist = (List<Loc_DevInfo>)System.Web.HttpContext.Current.Cache["CacheMacAll"];
+                        Logger.writeLog("缓存设备的个数：" + delist.Count());
+                        for (int i = 0; i < solrmodel._cl.Count; i++)
+                        {
+                            Loc_DevInfo dev = delist.Find(a => a.ID.Equals(solrmodel._cl[i].DevAP_ID));
+                            if (dev != null)
+                            {
+                                Loc_NetBarInfo loc = netlist.Find(a => a.ID == (dev.NETBAR_ID));
+                                if (loc != null)
+                                {
+                                    solrmodel._cl[i].PLACE_NAME = loc.PLACE_NAME;
+                                    solrmodel._cl[i].APName = dev.APName;
+                                }
+                            }
+                        }
+                        ViewBag.pl = new PagedList<Collision>(solrmodel._cl, 1, Convert.ToInt32(PageSize), 10);
+                    }
+                }
+                catch (Exception solr)
+                {
+                    Logger.ErrorLog(solr, null);
+                    return Content("<script>alert('网络错误!');history.go(-1);</script>");
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+            return View();
+        }
+
+
+        public ActionResult Demo()
+        {
+            JsonResult result = new JsonResult();
+            List<Collision> clList = new MergeWar.AppCode.JavaServerAction().GetJavaData("", "", "", "", "1");
+            result.Data = clList;
+            result.JsonRequestBehavior = JsonRequestBehavior.AllowGet;
+            return result;
+        }
+
+        #region 一键查询数据处理
+        #region 实名/上下线
+        /// <summary>
+        /// 实名/上下线
+        /// </summary>
+        /// <param name="keyWord">手机号/MAC</param>
+        /// tabType:1实名、2虚拟身份、3硬件、4上下线
+        /// dataType 区分参数是mac还是手机号以及分页
+        /// <returns></returns>
+        public ActionResult TableShow(string dataType, string tabType, string keyWord, int pageIndex = 1)
+        {
+            try
+            {
+                ViewBag.tabType = tabType;
+                if (!keyWord.Equals("数据正在加载……"))
+                {
+                    List<DatasInfo> list = null;
+                    string result = string.Empty;
+                    int[] userType = ChangeValue.GetUserType();
+                    Dictionary<string, string> dic = new Dictionary<string, string>();
+                    if (tabType == "1" || tabType == "4")
+                        dic.Add("pageIndex", pageIndex.ToString());
+                    dic.Add("authAccountOrMac", keyWord);
+                    try
+                    {
+                        switch (tabType)
+                        {
+                            case "1"://实名
+
+                                result = java.queryRealname(Newtonsoft.Json.JsonConvert.SerializeObject(dic));
+                                var real = JObject.Parse(result);
+                                if (real["state"].ToString() == "0")
+                                {
+                                    list = Newtonsoft.Json.JsonConvert.DeserializeObject<List<DatasInfo>>(JObject.Parse(result)["realnameResult"].ToString());
+                                    list = new PagedList<DatasInfo>(list, pageIndex, Convert.ToInt32(PageSize), Convert.ToInt32(real["totalNumber"].ToString()));
+                                }
+                                ViewBag.pl = list;
+                                break;
+                            case "2"://虚拟身份
+                                dic.Add("proID", string.IsNullOrEmpty(RefFilterUserAreaValue0(6)) ? "0" : RefFilterUserAreaValue0(6));//省
+                                dic.Add("cityID", string.IsNullOrEmpty(RefFilterUserAreaValue0(4)) ? "0" : RefFilterUserAreaValue0(4));//市
+                                dic.Add("aid", string.IsNullOrEmpty(RefFilterUserAreaValue0(2)) ? "0" : RefFilterUserAreaValue0(2));//区
+                                result = java.queryVirtualIdentDetail(Newtonsoft.Json.JsonConvert.SerializeObject(dic));
+                                var virtualval = JObject.Parse(result);
+                                if (virtualval["state"].ToString() == "0")
+                                {
+                                    list = Newtonsoft.Json.JsonConvert.DeserializeObject<List<DatasInfo>>(JObject.Parse(result)["virtualIdentDetailResult"].ToString());
+                                    ViewBag.VidDic = new ChangeValue().RefVidDetailDic(list);
+                                }
+                                ViewBag.pl = list;
+                                break;
+                            case "3"://硬件特征
+                                result = java.queryHardware(Newtonsoft.Json.JsonConvert.SerializeObject(dic));
+                                var mac = JObject.Parse(result);
+                                if (mac["state"].ToString() == "0")
+                                    list = Newtonsoft.Json.JsonConvert.DeserializeObject<List<DatasInfo>>(JObject.Parse(result)["hardwareResult"].ToString());
+                                ViewBag.pl = list;
+                                break;
+                            default:
+                                List<TermianlAccessLog> talist = null;
+                                dic.Add("UserType", userType[0].ToString());
+                                dic.Add("AreaId", userType[1].ToString());
+                                result = java.queryTermianlAccessLogList(Newtonsoft.Json.JsonConvert.SerializeObject(dic));
+                                var logval = JObject.Parse(result);
+                                if (logval["state"].ToString() == "0")
+                                {
+                                    talist = Newtonsoft.Json.JsonConvert.DeserializeObject<List<TermianlAccessLog>>(JObject.Parse(result)["termianlAccessLogListResult"].ToString());
+                                    var jsonval = Newtonsoft.Json.Linq.JObject.Parse(result);
+                                    talist = new PagedList<TermianlAccessLog>(talist, pageIndex, Convert.ToInt32(PageSize), Convert.ToInt32(jsonval["totalNumber"].ToString()));
+                                }
+                                ViewBag.pl = talist;
+                                break;
+                        }
+                        Logger.writeLog("-----------------一键查询返回结果正常：" + result + "------------请求参数类型：" + tabType);
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger.ErrorLog(ex, null);
+                        Logger.writeLog("-----------------一键查询返回结果错误：" + result + "------------请求参数类型：" + tabType);
+                        ViewBag.errscript = "alert('请求超时，请稍后再试')";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.ErrorLog(ex, null);
+                ViewBag.errscript = "alert('未知错误，请联系管理员')";
+            }
+            return View();
+        }
+        #endregion
+        #region 上下线信息
+        [HttpGet]
+        public ActionResult OninfoDetail(string ID)
+        {
+            try
+            {
+                string jsonval = "{ \"ID\":" + ID + "}";
+                string relust = java.queryTermianlAccessLogDetail(jsonval);
+                var logjson = JObject.Parse(relust);
+                if (logjson["state"].ToString() == "0")
+                {
+                    solrmodel._taLog = Newtonsoft.Json.JsonConvert.DeserializeObject<List<TermianlAccessLog>>(logjson["termianlAccessLogDetailResult"].ToString());
+                    ViewBag.talog = solrmodel._taLog.First();
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.ErrorLog(ex, null);
+                return Content("<script> alert('服务器异常'); history.go(-1);</ script > ");
+                throw;
+            }
+            return View();
+        }
+        #endregion
+        //#region 硬件特征/虚拟身份
+        //public ActionResult HardwareDetail(string dataType, string tabType, string keyWord)
+        //{
+        //    try
+        //    {
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Logger.ErrorLog(ex, null);
+        //        ViewBag.errscript = "alert('未知错误，请联系管理员')";
+        //    }
+        //    return View();
+        //}
+
+        //#endregion
+        //#region 虚拟身份
+        //public ActionResult TipVidDetail()
+        //{
+        //    return View();
+        //}
+        //#endregion
+        #endregion
+        public string RefFilterUserAreaValue0(int Type)
+        {
+            int[] userType = ChangeValue.GetUserType();
+            return ((userType[0] == Type || userType[0] == 8) && userType[1] != 0) ? userType[1].ToString() : null;
+        }
+
+        public ActionResult RefAddressToVal(string Address)
+        {
+            string returnVal = "";
+            if (!string.IsNullOrEmpty(Address))
+            {
+                WebRequest myrequest = WebRequest.Create("http://www.baidu.com");
+                WebResponse myres = null;
+                bool isWeb = false;
+                try
+                {
+                    myres = myrequest.GetResponse();
+                    myres.Close();
+                    isWeb = true;
+                }
+                catch (Exception)
+                {
+                    returnVal = "{\"status\":1,\"message\":\"无法连接网络，请手动确定经纬度。\"}";
+                }
+                if (string.IsNullOrEmpty(returnVal))
+                {
+                    string result = "";
+                    if (isWeb)
+                    {
+                        result = ChangeValue.SendRequest("http://api.map.baidu.com/geocoder/v2/?address=" + HttpUtility.UrlEncode(Address) + "&output=json&ak=" + ConfigurationManager.AppSettings["baiduAk"]);
+                    }
+                    if (result == "-1")
+                        returnVal = "{\"status\":1,\"message\":\"获取经纬度失败，请稍后重试。\"}";
+                    else
+                    {
+                        JObject str = (JObject)JsonConvert.DeserializeObject(result);
+                        string status = str["status"].ToString();
+                        if (status == "0")
+                        {
+                            returnVal = "{\"status\":0,\"lng\":\"" + string.Format("{0:0.000000}", Convert.ToDouble(str["result"]["location"]["lng"].ToString())) + "\",\"lat\":\"" + string.Format("{0:0.000000}", Convert.ToDouble(str["result"]["location"]["lat"].ToString())) + "\"}";
+                        }
+                        else
+                            returnVal = "{\"status\":1,\"message\":\"无法确定该地址经纬度，请检查地址是否正确。\"}";
+                    }
+                }
+            }
+            else
+                returnVal = "{\"status\":1,\"message\":\"请输入地址。\"}";
+            return Content(returnVal);
+        }
+
+        public ActionResult EditUser()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult EditUser(FormCollection form)
+        {
+            try
+            {
+                UserInfo user = (UserInfo)Session["userInfo"];
+                UserInfoDAL userDal = new UserInfoDAL();
+                string oldPwd = form["txtOldPwd"].ToString();
+                string newPwd = form["txtNewPwd"].ToString();
+                if (oldPwd != "" && StringFilter.getSHA1Code(oldPwd) != user.Password)
+                {
+                    return Content("<script>alert('原密码错误，请重新输入');history.go(-1);</script>");
+                }
+                user.TrueName = form["txtTrueName"].ToString();
+                user.Mobile = form["txtMobile"].ToString();
+                user.idType = Convert.ToInt32(form["txtCertifiID"]);
+                user.idNumber = form["txtIdnumber"].ToString();
+                user.Email = form["txtEmail"].ToString();
+                if (newPwd != "")
+                    user.Password = StringFilter.getSHA1Code(newPwd);
+                user.ID = Convert.ToInt32(form["HId"]);
+                int num = userDal.UPdateUser(user);
+                if (num > 0)
+                {
+                    log.Module = "修改用户信息";
+                    ChangeValue.AddOpLog(log);
+                    log.What = "修改用户信息成功";
+                    new OPLogDAL().InsertLog(log);
+                    Session["userInfo"] = user;
+                    if (oldPwd != "")
+                    {
+                        Session.Abandon();
+                        Session.RemoveAll();
+                        return Content("<script>alert('修改成功，请重新登录');parent.window.location.replace('" + Url.Content("~/login/index") + "');</script>");
+                    }
+                    else
+                        return Content("<script>alert('修改成功'); history.go(0)</script>");
+                }
+                else
+                {
+                    return Content("<script>alert('修改失败');history.go(-1);</script>");
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        public ActionResult Exit()
+        {
+            log.Module = "登录管理";
+            ChangeValue.AddOpLog(log);
+            log.What = "退出登录";
+            new OPLogDAL().InsertLog(log);
+            UserInfo user = (UserInfo)Session["userInfo"];
+
+            Session.Abandon();
+            Session.RemoveAll();
+
+            return Redirect(Url.Content("~/Login/Index"));
+        }
+        public ActionResult GetRoleList(string Id)
+        {
+            try
+            {
+                List<Sys_UserPowerInfo> list = new UserInfoDAL().GetRoleList(Convert.ToInt32(Id));
+                if (list != null && list.Count > 0)
+                {
+                    JavaScriptSerializer ser = new JavaScriptSerializer();
+                    return Content(ser.Serialize(list));
+                }
+                else
+                    return Content("[]");
+            }
+            catch (Exception ex)
+            {
+                Logger.ErrorLog(ex, new Dictionary<string, string>()
+                {
+                    {"Function","CommonMapController.GetRoleList(string Id)[HttpGet]"}
+                });
+                return Content("{\"err\":\"获取角色列表失败，请稍后重试\"}");
+            }
+        }
     }
 }

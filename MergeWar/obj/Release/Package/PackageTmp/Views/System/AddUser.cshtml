@@ -1,14 +1,14 @@
 ﻿@{
-    ViewBag.Title = "-添加用户";
+    ViewBag.Title = "添加用户";
     Layout = "~/Views/Shared/_Layout.cshtml";
-   
+
 }
-@using Common;
 @using HCZZ.ModeDB;
+@model List<Sys_UserPowerInfo>
 @using (Html.BeginForm("AddUser", "System", FormMethod.Post))
 {
     <div id="Cx" style="display: none">
-    </div> 
+    </div>
     <div>
     </div>
     <table>
@@ -34,8 +34,7 @@
                     用户密码：
                 </td>
                 <td colspan="3">
-                    <input type="password" id="txtPassword" name="txtPassword" class="_text" maxlength="18" /><span
-                        id="spPassword" class="color_ccc">*</span>
+                    <input type="password" id="txtPassword" name="txtPassword" class="_text" maxlength="18" /><span id="spPassword" class="color_ccc">*</span>
                 </td>
             </tr>
             <tr>
@@ -43,8 +42,7 @@
                     真实姓名：
                 </td>
                 <td colspan="3">
-                    <input type="text" id="txtTrueName" name="txtTrueName" class="_text" maxlength="13" /><span
-                        id="spTrueName" class="color_ccc">*</span>
+                    <input type="text" id="txtTrueName" name="txtTrueName" class="_text" maxlength="16" /><span id="spTrueName" class="color_ccc">*</span>
                 </td>
             </tr>
             <tr>
@@ -52,8 +50,7 @@
                     手机号码：
                 </td>
                 <td colspan="3">
-                    <input type="text" id="txtMobile" name="txtMobile" class="_text" maxlength="11" /><span
-                        id="spMobile" class="color_ccc">*</span>
+                    <input type="text" id="txtMobile" name="txtMobile" class="_text" maxlength="13" /><span id="spMobile" class="color_ccc">*</span>
                 </td>
             </tr>
             <tr>
@@ -61,8 +58,7 @@
                     Email：
                 </td>
                 <td colspan="3">
-                    <input type="text" id="txtEmail" name="txtEmail" maxlength="250" class="_text" /><span
-                        id="spEmail" class="color_ccc">*</span>
+                    <input type="text" id="txtEmail" name="txtEmail" maxlength="64" class="_text" /><span id="spEmail" class="color_ccc">*</span>
                 </td>
             </tr>
             <tr>
@@ -70,15 +66,16 @@
                     用户类型：
                 </td>
                 <td colspan="3">
-                    <select id="selUserType" name="selUserType" onchange="SelectType();">
+                    <select id="selUserType" name="selUserType" onclick="SelectType()">
                         <option value="0">==请选择==</option>
-                        @{
-                            Dictionary<int, string> UserType_dic = ChangeValue.UserListDIC();
-                            foreach (var item in UserType_dic)
-                            {
-                            <option value="@item.Key" >@item.Value</option>
-                            }
-                        }
+                        <option value="1">管理员</option>
+                        <option value="2">分局用户</option>
+                        <option value="3">派出所用户</option>
+                        <option value="4">市局用户</option>
+                        <option value="5">分中心用户</option>
+                        <option value="6">省用户</option>
+                        <option value="7">全国用户</option>
+                        <option value="8">运营用户</option>
                     </select>
                     <span id="spUserType" class="color_ccc">*</span>
                 </td>
@@ -99,7 +96,7 @@
                         </select>
                         区：
                         <select id="SelArea" name="SelArea" onchange="changeValue('SelArea','selPolice','police')"
-                            style="width: 160px">
+                                style="width: 160px">
                             <option value="0">==请选择==</option>
                         </select>
                         派出所：
@@ -107,7 +104,7 @@
                             <option value="0">==请选择==</option>
                         </select>
                         <span id="sppolice" class="color_ccc">*</span>
-                       </p>
+                    </p>
                 </td>
             </tr>
             <tr>
@@ -115,78 +112,63 @@
                     证件类型：
                 </td>
                 <td>
-                   <select name="selIdType" id="selIdType">
-                       <option value="0">=请选择=</option>
-                       <option value="1">身份证</option>
-                       <option value="2">军官证</option>
-                       <option value="3">港澳通行证</option>
-                       <option value="4">护照</option>
-                       <option value="5">驾驶证</option>
-                   </select><span id="SIdType"></span>
-                 </td>
-               @* <td colspan="3">
-                        <input type="text" id="txtCERTIFICATE_TYPE" name="txtCERTIFICATE_TYPE" maxlength="11" class="_text" value="" /><input type="hidden" value="" id="txtCertifiID" name="txtCertifiID" />
-                        <a href="javascript:void(0)" onclick="javascript:showIdentify()"  style="background: #1b5579; border: 1px solid #000;padding: 4px 5px; margin-left: 5px; color: #fff">选择证件类型</a>
-                    <span id="spIdType" class="color_ccc">*</span>
-                </td>*@
+                    <select name="selIdType" id="selIdType">
+                        <option value="0">=请选择=</option>
+                        <option value="1">身份证</option>
+                        <option value="2">军官证</option>
+                        <option value="3">港澳通行证</option>
+                        <option value="4">护照</option>
+                        <option value="5">驾驶证</option>
+                    </select><span id="SIdType"></span>
+                </td>
             </tr>
             <tr>
                 <td width="15%" align="right">
                     证件号码：
                 </td>
                 <td colspan="3">
-                    <input type="text" id="txtIdnumber" name="txtIdnumber" class="_text" maxlength="18" />
+                    <input type="text" id="txtIdnumber" name="txtIdnumber" class="_text" maxlength="25" />
                     <span id="spIdnumber" class="color_ccc">*</span>
                 </td>
             </tr>
             <tr>
-                <td width="15%" align="right">
-                    USBKey串号：
-                </td>
+                <td width="15%" align="right">角色：</td>
                 <td colspan="3">
-                    <input type="text" id="txtUSBKey" name="txtUSBKey" class="_text" maxlength="16" />
-                    <span id="spUSBKey" class="color_ccc">*</span>
+                    <select id="Sys_RID" name="Sys_RID">
+                        <option value="0">==请选择==</option>
+                        @foreach (Sys_UserPowerInfo item in Model)
+                        {
+                            <option value="@item.Id">@item.Name</option>
+                        }
+                    </select><span id="spSys_RID" class="color_ccc">*</span>
                 </td>
             </tr>
             <tr>
                 <td align="center" colspan="4">
-                    <input class="btn_SS" type="submit" name="button" value="保存" onmouseover="this.className='Over_SS'"
-                        onmouseout="this.className='Onout_SS'" />
+                    <input class="btn_SS" type="submit" name="button" value="保存" />
                 </td>
             </tr>
         </table>
     </div>
-     @*<div id="identify" style="position: absolute; background: #fff; overflow: hidden;
-            width: 980px; height: 600px; margin-left: -490px; margin-top: -300px; top: 50%;
-            left: 50%; border: 1px solid #333; z-index: 1000; display: none">
-            <iframe src="/Location/ShowCertifi" style="height: 100%; width: 100%"></iframe>
-        </div>*@
+
 }
 <script type="text/javascript">
-//   var showIdentify=()=>{
-//        $("#identify").css("display","block");
-//    }
-//     var hideIdentify=()=>{
-//        $("#identify").css("display","none");
-//    }
-
-
     $(function () {
-           changeValue("selProvince", "selProvince", "Province")
-            $("form").submit(function () {
-                if (subVal()) {
-                    return true;
-                }
-                return false;
-            });
+        changeValue("selProvince", "selProvince", "Province")
+        $("form").submit(function () {
+            if (subVal()) {
+                return true;
+            }
+            return false;
         });
+    });
     function changeValue(fname, sname, key) {
         var id = parseInt($("#" + fname).val());
         if (id != 0 || key == "Province") {
             $.ajax
 			    ({
 			        type: "Get",
-			        url: "/Location/AreaValue?Id=" + id + "&key= " + key,
+			        url: "/Public/AreaValue?Id=" + id + "&key= " + key,
 			        dataType: "json",
 			        async: false,
 			        cache: false,
@@ -229,9 +211,6 @@
 
     function subVal() {
         var result = true;
-//        if (!regtxt()) {
-//            result = false;
-//        }
         var regName = new RegExp(/^[a-zA-Z]\w{3,15}$/ig);
         if ($.trim($("#txtName").val()) == "") {
             result = false;
@@ -316,14 +295,12 @@
         } else {
             $("#spIdnumber").html("");
         }
-
-//        if ($.trim($("#txtUSBKey").val()) == "") {
-//            result = false;
-//            $("#spUSBKey").html("USBKey号不能为空");
-//        } else {
-//            $("#spUSBKey").html("");
-//        }
-
+        if ($("#Sys_RID").val() == "0") {
+            result = false;
+            $("#spSys_RID").html("请选择角色");
+        } else {
+            $("#spSys_RID").html("");
+        }
         return result;
     }
 
@@ -335,7 +312,7 @@
             $("#SelArea").removeAttr("disabled", "disabled");
             $("#selPolice").attr("disabled", "disabled");
             $("#sppolice").hide();
-        } else if (type == "7") {
+        } else if (type == "7" || type == "1") {
             $("#selProvince").attr("disabled", "disabled");
             $("#selCity").attr("disabled", "disabled");
             $("#SelArea").attr("disabled", "disabled");

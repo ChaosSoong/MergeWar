@@ -3,10 +3,361 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <link href="~/Content/css/CSGL.css" rel="stylesheet" />
+<link href="~/Content/css/reset.css" rel="stylesheet" />
+<link href="~/Content/css/publicHeader.css" rel="stylesheet" />
+<link href="~/Content/css/page.css" rel="stylesheet" />
+<style type="text/css">
+    .content .contentbody .contentTable {
+    }
+
+        .content .contentbody .contentTable table {
+            width: 100%;
+        }
+
+            .content .contentbody .contentTable table tr {
+                border-bottom: 1px solid #181926;
+                height: 40px;
+            }
+
+                .content .contentbody .contentTable table tr:nth-child(odd) {
+                    background-color: #20212e;
+                }
+
+                .content .contentbody .contentTable table tr:nth-child(even) {
+                    background-color: #21222f;
+                }
+
+                .content .contentbody .contentTable table tr:first-child {
+                    background-color: #1E1F2D;
+                }
+
+                .content .contentbody .contentTable table tr th {
+                    text-align: left;
+                    padding-left: 15px;
+                    border-right: 2px solid rgb(24, 25, 38);
+                    color: #85858A;
+                    font-family: "微软雅黑";
+                    font-size: 13px;
+                }
+
+                .content .contentbody .contentTable table tr td {
+                    text-align: left;
+                    padding-left: 15px;
+                    border-right: 2px solid rgb(24, 25, 38);
+                    color: #85858A;
+                    font-family: "微软雅黑";
+                    font-size: 12px;
+                }
+
+                    .content .contentbody .contentTable table tr td img {
+                        cursor: pointer;
+                        display: inline-block;
+                        margin-left: 8px;
+                        margin-right: 8px;
+                    }
+
+                        .content .contentbody .contentTable table tr td img:first-child {
+                            margin-left: 0px;
+                        }
+
+                    .content .contentbody .contentTable table tr td:nth-child(12) a {
+                        color: #007be2;
+                        text-decoration: underline;
+                        cursor: pointer;
+                    }
+
+                .content .contentbody .contentTable table tr:hover {
+                    background-color: #222a36;
+                }
+
+                .content .contentbody .contentTable table tr:first-child:hover {
+                    background-color: #1E1F2D;
+                }
+
+                .content .contentbody .contentTable table tr td.wzyz {
+                    color: #3A953F;
+                }
+
+                .content .contentbody .contentTable table tr td.yzgs {
+                    color: #85858A;
+                }
+
+    .pupMain {
+        width: 632px;
+        height: 434px;
+        background-color: #161523;
+        margin: 0 auto;
+    }
+
+        .pupMain ul li.title {
+            width: 632px;
+            height: 65px;
+            background-image: url(/Content/images/title_bg.png);
+            line-height: 65px;
+            background-size: 100% 100%;
+        }
+
+            .pupMain ul li.title span:first-child {
+                float: left;
+                color: #b1b1b1;
+                font: 20px "微软雅黑";
+                margin-left: 20px;
+                margin-top: 19.5px;
+            }
+
+            .pupMain ul li.title span:last-child {
+                float: right;
+                margin-right: 20px;
+                cursor: pointer;
+            }
+
+            .pupMain ul li.title span img {
+                width: 18px;
+                height: 18px;
+                margin-top: -12px;
+            }
+
+        .pupMain ul li {
+            width: 632px;
+            height: 40px;
+            text-align: left;
+            line-height: 40px;
+            margin: 0 auto;
+        }
+
+            .pupMain ul li input[type="radio"] {
+                width: 20px;
+                height: 20px;
+                vertical-align: middle;
+                margin-right: 12px;
+                margin-top: -3px;
+            }
+
+            .pupMain ul li span {
+                color: #b1b1b1;
+                font: 16px "微软雅黑";
+            }
+
+            .pupMain ul li img {
+                vertical-align: middle;
+                margin-left: 35px;
+            }
+
+            .pupMain ul li span.close1 {
+                margin-left: 18px;
+                margin-right: 14px;
+            }
+
+            .pupMain ul li input[type="radio"]:last-child {
+                margin-left: 30px;
+            }
+
+            .pupMain ul li input[type="file"] {
+                position: relative;
+                width: 115px;
+                height: 40px;
+                opacity: 0;
+                cursor: pointer;
+                overflow: hidden;
+                z-index: 99;
+                margin-left: 18px;
+            }
+
+            .pupMain ul li.upfilebox {
+                height: 285px;
+                overflow: auto;
+            }
+
+                .pupMain ul li.upfilebox span {
+                    display: inline-block;
+                    width: 45%;
+                    font-size: 16px;
+                }
+
+                    .pupMain ul li.upfilebox span:nth-child(odd) {
+                        margin-left: 35px;
+                    }
+
+                .pupMain ul li.upfilebox input[type="checkbox"] {
+                    vertical-align: middle;
+                    width: 18px;
+                    height: 18px;
+                }
+
+                .pupMain ul li.upfilebox label {
+                    color: #b1b1b1;
+                    text-align: center;
+                    font-size: 16px;
+                    margin-left: 14px;
+                    display: inline-block;
+                    width: 250px;
+                }
+
+            .pupMain ul li:nth-child(2) {
+                margin-top: 20px;
+            }
+
+                .pupMain ul li:nth-child(2) input {
+                    vertical-align: middle;
+                    width: 18px;
+                    height: 18px;
+                    margin-left: 35px;
+                    margin-top: -6px;
+                }
+
+                .pupMain ul li:nth-child(2) label {
+                    color: #b1b1b1;
+                    text-align: center;
+                    font-size: 16px;
+                    margin-left: 14px;
+                    width: 125px;
+                    display: inline-block;
+                    text-align: left;
+                }
+
+            .pupMain ul li input.yesBtn {
+                cursor: pointer;
+                width: 265px;
+                height: 40px;
+                background-image: url(/Content/images/yesBtn.png);
+                border: none;
+                border-radius: 2px;
+                color: #7bd2da;
+            }
+
+            .pupMain ul li:last-child {
+                text-align: center;
+                font-size: 16px;
+                margin-top: 240px;
+            }
+
+
+    .pupMain1 {
+        width: 632px;
+        height: 434px;
+        background-color: #161523;
+        margin: 0 auto;
+    }
+
+    .title1 {
+        width: 632px;
+        height: 65px;
+        background-image: url(/Content/images/title_bg.png);
+        line-height: 65px;
+        background-size: 100% 100%;
+    }
+
+        .title1 span:first-child {
+            float: left;
+            color: #b1b1b1;
+            font: 20px "微软雅黑";
+            margin-left: 20px;
+            margin-top: 19.5px;
+        }
+
+        .title1 span:last-child {
+            float: right;
+            margin-right: 20px;
+            cursor: pointer;
+        }
+
+        .title1 span img {
+            width: 18px;
+            height: 18px;
+            margin-top: 15px;
+        }
+
+    .pupMain1 ul li {
+        width: 632px;
+        height: 50px;
+        text-align: left;
+        line-height: 50px;
+        margin: 0 auto;
+    }
+
+        .pupMain1 ul li input[type="radio"] {
+            width: 20px;
+            height: 20px;
+            vertical-align: middle;
+            margin-right: 12px;
+            margin-top: -3px;
+        }
+
+        .pupMain1 ul li label {
+            color: #b1b1b1;
+            font: 16px "微软雅黑";
+        }
+
+        .pupMain1 ul li img {
+            vertical-align: middle;
+            margin-left: 35px;
+        }
+
+        .pupMain1 ul li label:nth-child(2) {
+            margin-left: 0px;
+            margin-right: 14px;
+        }
+
+        .pupMain1 ul li input[type="radio"]:last-child {
+            margin-left: 30px;
+        }
+
+        .pupMain1 ul li input[type="file"] {
+            position: relative;
+            width: 115px;
+            height: 40px;
+            opacity: 0;
+            cursor: pointer;
+            overflow: hidden;
+            z-index: 99;
+            margin-left: 18px;
+        }
+
+        .pupMain1 ul li.upfilebox {
+            position: relative;
+        }
+
+            .pupMain1 ul li.upfilebox label {
+                position: absolute;
+                border: 1px solid #089CB8;
+                width: 115px;
+                height: 40px;
+                color: #7BD2DA;
+                border-radius: 10px;
+                text-align: center;
+                line-height: 40px;
+                font-size: 16px;
+                left: 74px;
+            }
+
+        .pupMain1 ul li:nth-child(2) {
+            margin-top: 20px;
+        }
+
+        .pupMain1 ul li:nth-child(3) {
+            margin-top: 15px;
+        }
+
+        .pupMain1 ul li input.yesBtn {
+            cursor: pointer;
+            width: 265px;
+            height: 40px;
+            background-image: url(/Content/images/yesBtn.png);
+            border: none;
+            border-radius: 2px;
+            color: #7bd2da;
+        }
+
+        .pupMain1 ul li:last-child {
+            text-align: center;
+            margin-top: 155px;
+            font-size: 16px;
+        }
+</style>
 @using System
 @using System.Collections.Generic
 @using HCZZ.ModeDB;
-@using Common;
+@using HCZZ.Common;
 @using HCZZ.DAL;
 @using Webdiyer.WebControls.Mvc;
 @using (Html.BeginForm("DevInfoList", "Location", new { @key = 1 }, FormMethod.Get))
@@ -16,43 +367,72 @@
     int Id = Convert.ToInt32(dic["Lid"]);
     int fw = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["fw"]) * 3;
     int sj = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["sj"]);
+    string relaVal = ChangeValue.RefPageRelaByPath("Location/LocationList");
     <div class="contentbody" id="contentbody">
-        <div class="Cx_tt">
-            <div class="btn">
-                <input class="btn_Dy" type="button" name="button" value="用户重新认证" onclick="showSelDiv('mapPopRec')"
-                    onmouseover="this.className='Over_Dy'" onmouseout="this.className='Onout_Dy'" />
-                <input class="btn_Dy" type="button" name="button" value="修改身份认证" onclick="showSelDiv('mapPop')"
-                    onmouseover="this.className='Over_Dy'" onmouseout="this.className='Onout_Dy'" />
-                <input class="btn_Dy" id="Cx_xs" onclick="javascript:closeCx()" type="button" name="button"
-                    value="隐藏查询区" onmouseover="this.className='Over_Dy'" onmouseout="this.className='Onout_Dy'" />
-                <input class="btn_Dy" id="Cx_yc" onclick="javascript:showCx()" style="display: none;"
-                    type="button" name="button" value="显示查询区" onmouseover="this.className='Over_Dy'"
-                    onmouseout="this.className='Onout_Dy'" />
-                <input class="btn_Dy" onclick="javascript:location.href='@Url.Content("~/Location/AddAPMac?Id=" + Id)'" type="button" name="button" value="添加AP设备"
-				  onmouseover="this.className='Over_Dy'"
-				  onmouseout="this.className='Onout_Dy'"/>
-            </div>
-            查询条件和按钮区
+        <div class="contentTitle">
+            <span>设备列表</span>
+            @*<div class="btn">
+                    <input class="btn_Dy" type="button" name="button" value="用户重新认证" onclick="showSelDiv('mapPopRec')"
+                           onmouseover="this.className='Over_Dy'" onmouseout="this.className='Onout_Dy'" />
+                    <input class="btn_Dy" type="button" name="button" value="修改身份认证" onclick="showSelDiv('mapPop')"
+                           onmouseover="this.className='Over_Dy'" onmouseout="this.className='Onout_Dy'" />
+                    <input class="btn_Dy" id="Cx_xs" onclick="javascript:closeCx()" type="button" name="button"
+                           value="隐藏查询区" onmouseover="this.className='Over_Dy'" onmouseout="this.className='Onout_Dy'" />
+                    <input class="btn_Dy" id="Cx_yc" onclick="javascript:showCx()" style="display: none;"
+                           type="button" name="button" value="显示查询区" onmouseover="this.className='Over_Dy'"
+                           onmouseout="this.className='Onout_Dy'" />
+                    <input class="btn_Dy" onclick="javascript:location.href='@Url.Content("~/Location/AddAPMac?Id=" + Id)'" type="button" name="button" value="添加AP设备"
+                           onmouseover="this.className='Over_Dy'"
+                           onmouseout="this.className='Onout_Dy'" />
+                </div>*@
+            <input class="search" type="button" id="btnXY" value="查询" onclick="myFunction()" />
+            @if (relaVal.Contains("2"))
+            {
+                <input class="" type="button" id="" value="+ 添加" onclick="javascript:location.href='@Url.Content("~/Location/AddAPMac?Id=" + Id)'" />
+            }
+            @if (relaVal.Contains("7"))
+            {
+                <input class="" type="button" id="" value="用户重新认证" onclick="showSelDiv('mapPopRec')" />
+                <input class="" type="button" id="" value="修改身份认证" onclick="showSelDiv('mapPop')" />
+            }
         </div>
-        <div class="Cx_mind" id="Cx">
-            <div class="mindLi">
-                <span>AP设备编码：</span><input type="text" name="txtAP_MAC_ID" id="txtAP_MAC_ID" maxlength="21" class="_text" value="@dic["txtAP_MAC_ID"]" /></div>
-            <div class="mindLi">
-                <span>AP设备MAC地址：</span><input type="text" name="txtAP_MAC" id="txtAP_MAC" class="_text" maxlength="17" value="@dic["txtAP_MAC"]"/>
-            </div>
-            <input type="hidden" name="Id" value="@dic["Lid"]"/>
-            <div class="mindBtn" style="width: auto">
-                <input class="btn_SS" type="reset" name="button" value="重置" onmouseover="this.className='Over_SS'"
-                    onmouseout="this.className='Onout_SS'" />
-                <input class="btn_SS" type="submit" name="button" value="搜索" onmouseover="this.className='Over_SS'"
-                    onmouseout="this.className='Onout_SS'" />
-            </div>
+        @*<div class="contentConditions" id="Cx">
+                <div class="mindLi">
+                    <span>AP设备编码：</span><input type="text" name="txtAP_MAC_ID" id="txtAP_MAC_ID" maxlength="21" class="_text" value="@dic["txtAP_MAC_ID"]" />
+                </div>
+                <div class="mindLi">
+                    <span>AP设备MAC地址：</span><input type="text" name="txtAP_MAC" id="txtAP_MAC" class="_text" maxlength="17" value="@dic["txtAP_MAC"]" />
+                </div>
+                <input type="hidden" name="Id" value="@dic["Lid"]" />
+                <div class="mindBtn" style="width: auto">
+                    <input class="resetbg" type="reset" name="button" value="重置" onmouseover="this.className='Over_SS'"
+                           onmouseout="this.className='Onout_SS'" />
+                    <input class="selectbg" type="submit" name="button" value="搜索" onmouseover="this.className='Over_SS'"
+                           onmouseout="this.className='Onout_SS'" />
+                </div>
+            </div>*@
+        <input type="hidden" name="Id" value="@dic["Lid"]" />
+        <div class="contentConditions" id="zbtnXY" style="display: block;">
+            <ul>
+                <li class="Conditions Conditions2">
+                    <span>AP设备编码：</span>
+                    <input id="txtAP_MAC_ID" value="@dic["txtAP_MAC_ID"]" type="text" name="txtAP_MAC_ID">
+                </li>
+                <li class="Conditions Conditions3">
+                    <span>AP设备MAC地址：</span>
+                    <input id="txtAP_MAC" value="@dic["txtAP_MAC"]" type="text" name="txtAP_MAC">
+                </li>
+                <li class="Conditions Conditions6">
+                    <input class="selectbg" id="" value="搜索" type="submit">
+                    <input class="resetbg" value="重置" type="reset" onclick="Reset()">
+                </li>
+            </ul>
         </div>
-        <div class="contentTable">
+        <div class="contentTable" id="contentTable">
             <table cellpadding="0" cellspacing="0" width="100%" class="Cx_tab">
                 <tr>
                     <th width="2%">
-                        <input type="checkbox" title="全选" onclick="select_all(this, 'ckLId')"/>
+                        <input type="checkbox" title="全选" onclick="select_all(this, 'ckLId')" />
                     </th>
                     <th width="4%">
                         序号
@@ -75,7 +455,7 @@
                         3CID
                     </th>
                     @*<th width="10%">站点信息</th>
-                <th width="7%">车牌号码</th>*@
+                        <th width="7%">车牌号码</th>*@
                     <th width="5%">
                         认证状态
                     </th>
@@ -88,195 +468,234 @@
                     <th width="5%">
                         设备状态
                     </th>
-                    <th width="7%">
-                        拆换机审核状态
-                    </th>
+                    @*<th width="7%">
+                            拆换机审核状态
+                        </th>*@
                     @if (user.Type == 1 || user.Type == 8)
                     {
-                        <th width="3%">
-                            审核
-                        </th>
+                        @*<th width="3%">
+                                审核
+                            </th>*@
                     }
                     <th width="5%">
                         操作
                     </th>
                 </tr>
-            </table>
-            <table cellpadding="0" cellspacing="0" width="100%" class="Cx_tab">
                 @{
-            PagedList<MacInfo> list = (PagedList<MacInfo>)ViewBag.pl;
-            if (list != null && list.Count > 0)
-            {
-                MacDAL mdal=new  MacDAL();
-                foreach (MacInfo item in list)
-                {
-                    <tr>
-                        <td width="2%">
-                            <input type="checkbox" name="ckLId" value="@item.ID" />
-                        </td>
-                        <td width="4%">@item.PageNum
-                        </td>
-                        <td width="11%" title='@item.APName'>@(ChangeValue.ByteSubString(@item.APName,16))
-                        </td>
-                        <td width="9%">@item.AP_MAC
-                        </td>
-                        @*<td width="10%">@item.NETBAR_WACODE</td>*@
-                        <td width="6%">@(item.APType == 1 ? "固定AP设备" : "移动AP设备")
-                        </td>
-                        @* <td width="14%">
-                        @{
-                            if(item.APType==1){
-                                @Html.Raw(item.LATITUDE != "0" && item.LONGITUDE != "0" ? (item.LONGITUDE + "," + item.LATITUDE) : "")   
-                            }else{
-                                LocaGPSInfo lgps = mdal.GetLocaGPSInfo(item.ID);
-                                if (lgps != null)
-                                {
-                                    @Html.Raw(lgps.LONGITUDE + "," + lgps.LATITUDE)
-                                }
-                            }
-                        }
-                        </td>*@
-                        <td width="11%">@item.ProjectAccessNum
-                        </td>
-                        <td width="5%" title="视频设备标识">@item.V3CID
-                        </td>
-                        @*<td width="10%">@item.SUBWAY_STATION</td>
-                        <td width="7%">@item.CAR_CODE</td>*@
-                        <td width="5%">@Html.Raw(item.isopen == 0 ? "<font color='red'>关闭</font>" : "<font color='green'>" + ChangeValue.GetLocaCheckValue(item.isopen) + "</font>")
-                        </td>
-                        <td width="5%" title="@item.UpdateTime">@Html.Raw(item.UpdateTime >= DateTime.Now.AddMinutes(-fw) ? "<font color='green'>在线</font>" : "<font color='red'>离线</font>")
-                        </td>
-                        <td width="5%" title="@item.AuditTime">@Html.Raw(item.AuditTime >= DateTime.Now.AddMinutes(-sj) ? "<font color='green'>在线</font>" : "<font color='red'>离线</font>")
-                        </td>
-                        <td width="5%">
-                            @if (item.DevStatis == 1)
+                    PagedList<MacInfo> list = (PagedList<MacInfo>)ViewBag.pl;
+                    if (list != null && list.Count > 0)
+                    {
+                        MacDAL mdal = new MacDAL();
+                        foreach (MacInfo item in list)
                         {
-                                @Html.Raw("<font color='green'>设备工作</font>");
+                            <tr>
+                                <td width="2%">
+                                    <input type="checkbox" name="ckLId" value="@item.ID" />
+                                </td>
+                                <td width="4%">
+                                    @item.PageNum
+                                </td>
+                                <td width="11%" title='@item.APName'>
+                                    @(ChangeValue.ByteSubString(@item.APName, 16))
+                                </td>
+                                <td width="9%">
+                                    @item.AP_MAC
+                                </td>
+                                @*<td width="10%">@item.NETBAR_WACODE</td>*@
+                                <td width="6%">
+                                    @(item.APType == 1 ? "固定AP设备" : "移动AP设备")
+                                </td>
+                                @* <td width="14%">
+                                    @{
+                                        if(item.APType==1){
+                                            @Html.Raw(item.LATITUDE != "0" && item.LONGITUDE != "0" ? (item.LONGITUDE + "," + item.LATITUDE) : "")
+                                        }else{
+                                            LocaGPSInfo lgps = mdal.GetLocaGPSInfo(item.ID);
+                                            if (lgps != null)
+                                            {
+                                                @Html.Raw(lgps.LONGITUDE + "," + lgps.LATITUDE)
+                                            }
+                                        }
+                                    }
+                                    </td>*@
+                                <td width="11%">
+                                    @item.ProjectAccessNum
+                                </td>
+                                <td width="5%" title="视频设备标识">
+                                    @item.V3CID
+                                </td>
+                                @*<td width="10%">@item.SUBWAY_STATION</td>
+                                    <td width="7%">@item.CAR_CODE</td>*@
+                                <td width="5%">
+                                    @Html.Raw(item.isopen == 0 ? "<font color='#ff4b38'>关闭</font>" : "<font color='#3A953F'>" + ChangeValue.GetLocaCheckValue(item.isopen) + "</font>")
+                                </td>
+                                <td width="5%" title="@item.UpdateTime">
+                                    @Html.Raw(item.UpdateTime >= DateTime.Now.AddMinutes(-fw) ? "<font color='#3A953F'>在线</font>" : "<font color='#ff4b38'>离线</font>")
+                                </td>
+                                <td width="5%" title="@item.AuditTime">
+                                    @Html.Raw(item.AuditTime >= DateTime.Now.AddMinutes(-sj) ? "<font color='#3A953F'>在线</font>" : "<font color='#ff4b38'>离线</font>")
+                                </td>
+                                <td width="5%">
+                                    @if (item.DevStatis == 1)
+                        {
+                                        @Html.Raw("<font color='#3A953F'>设备工作</font>");
                         }
                         else if (item.DevStatis == 2)
                         {
-                                @Html.Raw("<font color='blue'>设备维护</font>");
+                                        @Html.Raw("<font color='#85858A'>设备维护</font>");
                         }
                         else if (item.DevStatis == 3)
                         {
-                                @Html.Raw("<font color='red'>设备异常</font>");
+                                        @Html.Raw("<font color='#ff4b38'>设备异常</font>");
                         }
-                        </td>
-                        <td width="7%">@Html.Raw(ChangeValue.RefPotTypeStr(item.PotType))
-                        </td>
-                        @if (user.Type == 1 || user.Type == 8)
+                                </td>
+                                @*<td width="7%">
+                                        @Html.Raw(ChangeValue.RefPotTypeStr(item.PotType))
+                                    </td>*@
+                                @if (user.Type == 1 || user.Type == 8)
                         {
-                            <td width="3%">
-                                <a class="Cz_chakan" href="javascript:void(0)" onclick="APAudit('@item.ID','@item.PotType')" title="审核">
-                                    审核</a>
-                            </td>
+                                    @*<td width="3%">
+                                            <a class="Cz_chakan" href="javascript:void(0)" onclick="APAudit('@item.ID','@item.PotType')" title="审核">
+                                                <img title="审核" src="/Content/images/audit_icon.png" alt="审核">
+                                            </a>
+                                        </td>*@
+                                }
+                                <td width="5%">
+                                    @if (relaVal.Contains("2"))
+                                    {
+                                        <a class="Cz_bianji" href="@Url.Content("~/Location/EditAPMac/" + item.ID)" title="编辑">
+                                            <img title="编辑" src="/Content/images/edit1_icon.png" alt="编辑">
+                                            </a>
+                                       
+                                    }
+                                    @if (relaVal.Contains("3"))
+                                    {
+                                        <a class="Cz_shanchu" href="javascript:void(0)" onclick="del('@item.ID')" title="删除">
+                                            <img title="删除" src="/Content/images/del1_icon.png" onclick="Del(7,5)" alt="删除">
+                                        </a>
+                                    }
+                                </td>
+                            </tr>
                         }
-                        <td width="5%">
-                            <a class="Cz_bianji" href="@Url.Content("~/Location/EditAPMac/" + item.ID)" title="编辑">
-                                编辑</a> <a class="Cz_shanchu" href="javascript:void(0)" onclick="del('@item.ID')" title="删除">
-                                    删除</a>
-                        </td>
-                    </tr>   
-        }
-        if (list.TotalPageCount > 1)
-        { 
-                    <tr>
-                        <td colspan="@(user.Type == 1 ? 15 : 14)">
-                            <div class="pag_td">
-                                @Html.Pager(list, new PagerOptions() { PageIndexParameterName = "key", @CssClass = "pag" })
-                                <div class="pag_all">
-                                    共<font>@list.TotalPageCount</font>页/共<font>@list.TotalItemCount</font>条</div>
-                            </div>
-                        </td>
-                    </tr>
-        }
-    }
-    else
-    {
-                    <tr>
-                        <td colspan="@(user.Type == 1 ? 16 : 15)">
-                            暂无可显示数据
-                        </td>
-                    </tr>
-    }
-                
+                    }
+
                 }
+
             </table>
-        </div>
-        <div id="mapPop" style="position: absolute; top: 50%; left: 50%; margin-left: -150px;
-            margin-top: -80px; z-index: 1000; display: none;">
-            <div class="Pop_layer" style="float: left; border: 1px solid #666">
-                <form action="" method="post">
-                <div class="aq_title">
-                    <div class="TT_left">
-                    </div>
-                    <div class="TT_right">
-                    </div>
-                    <div class="img_close" onclick="javascript:parent.closeSelDiv('mapPop')">
-                    </div>
-                    选择验证方式
-                </div>
-                <div class="aq_tab aq_overflow2" style="height: 110px;">
-                    <ul style="width: 250px;">
-                        <li>
-                            <label>
-                                <input type="radio" name="radCheck" value="0" />关闭验证</label></li>
-                        <li>
-                            <label>
-                                <input type="radio" name="radCheck" value="1" />网站验证</label></li>
-                        <li>
-                            <label>
-                                <input type="radio" name="radCheck" value="2" />第三方验证</label></li>
-                        <li>
-                            <label>
-                                <input type="radio" name="radCheck" value="3" />微信验证</label></li>
-                        <li>
-                            <label>
-                                <input type="radio" name="radCheck" value="4" />WIFIDOG验证</label></li>
-                        <li>
-                            <label>
-                                <input type="radio" name="radCheck" value="5" />下行短信</label></li>
+            @*<div class="page">
+                    <ul class="ulPage">
+                        @Ajax.Pager(list, new PagerOptions
+                   {
+                       FirstPageText = "首页",
+                       PrevPageText = "上一页",
+                       NextPageText = "下一页",
+                       LastPageText = "尾页",
+                       PageIndexParameterName = "Id",
+                       NavigationPagerItemTemplate = "<li class=\"liPage\" style=\"width: 42px; \">{0}</li>",
+                       NumericPagerItemTemplate = "<li class=\"liPage\" style=\"width: 42px; \">{0}</li>",
+                       ShowMorePagerItems = false,
+                   }).AjaxOptions(a => a.SetUpdateTargetId("contentTable"))
+                        <li class="contPage">共<span>@list.TotalPageCount</span>页/共<span>@list.TotalItemCount</span>条</li>
                     </ul>
-                </div>
-                <div class="aq_foot">
-                    <input class="btn_SS" type="button" name="button" value="确定" onclick="SelCheckVal()"
-                        onmouseover="this.className='Over_SS'" onmouseout="this.className='Onout_SS'" />
-                </div>
+                </div>*@
+            @Html.Partial("~/Views/Shared/_PartialPage.cshtml", new RouteValueDictionary { { "pageIndex", "PageIndex" }, { "model", list } })
+        </div>
+        <div id="mapPop" style="position: absolute; top: 15%; left: 37%; margin-left: -150px;
+            margin-top: -80px; z-index: 1000; display: none;">
+            @*<div class="pupMain">
+                    <form action="" method="post">
+                        <ul>
+                            <li class="title">
+                                <span>修改验证方式</span>
+                                <span class="close1" onclick="closeSelDiv('mapPop')"><img src="~/Content/images/icon_close1.png" /></span>
+                            </li>
+                            <li>
+                                    <input type="radio" name="radCheck" value="0" />关闭验证
+                                    <input type="radio" name="radCheck" value="1" />网站验证
+                                    <input type="radio" name="radCheck" value="2" />第三方验证
+                                    <input type="radio" name="radCheck" value="3" />微信验证
+                                    <input type="radio" name="radCheck" value="4" />WIFIDOG验证
+                                    <input type="radio" name="radCheck" value="5" />下行短信
+                            </li>
+                        </ul>
+                        <div class="aq_foot">
+                            <input class="yesBtn" type="button" name="button" value="确定" onclick="SelCheckVal()"
+                                   onmouseover="this.className='Over_SS'" onmouseout="this.className='Onout_SS'" />
+                        </div>
+                    </form>
+                </div>*@
+            <div class="pupMain">
+                <form action="" method="post">
+                    <ul>
+                        <li class="title">
+                            <span>修改验证方式</span>
+                            <span class="close1" onclick="closeSelDiv('mapPop')"><img src="~/Content/images/icon_close1.png"></span>
+                        </li>
+                        <li>
+                            <input name="radCheck" id="0" value="0" type="radio"><label for="0">关闭验证</label>
+                            <input name="radCheck" id="1" value="1" type="radio"><label for="1">网站验证</label>
+                            <input name="radCheck" id="3" value="3" type="radio"><label for="3">微信验证</label>
+                            <input name="radCheck" id="2" value="2" type="radio"><label for="2">第三方验证</label>
+                            <input name="radCheck" id="5" value="5" type="radio"><label for="5">下行验证</label>
+                            @*<input name="radCheck" id="4" value="4" type="radio"><label for="4">WIFIDOG验证</label>*@
+                        </li>
+                        <li>
+                            <input class="yesBtn" name="" id="" value="确定" type="button" onclick="SelCheckVal()">
+                        </li>
+                    </ul>
                 </form>
             </div>
         </div>
-        <div id="mapPopRec" style="position: absolute; top: 50%; left: 50%; margin-left: -150px;
+        <div id="mapPopRec" style="position: absolute; top: 15%; left: 37%; margin-left: -150px;
             margin-top: -80px; z-index: 1000; display: none;">
-            <div class="Pop_layer" style="float: left; border: 1px solid #666">
+            <div class="pupMain1" style="float: left; border: 1px solid #666">
                 <form action="" method="post">
-                <div class="aq_title">
-                    <div class="TT_left">
-                    </div>
-                    <div class="TT_right">
-                    </div>
-                    <div class="img_close" onclick="javascript:parent.closeSelDiv('mapPopRec')">
-                    </div>
-                    选择重新认证范围
-                </div>
-                <div class="aq_tab aq_overflow2" style="height: 100px;">
-                    <ul style="width: 300px;">
+                    @*<div class="aq_title">
+                            <div class="TT_left">
+                            </div>
+                            <div class="TT_right">
+                            </div>
+                            <div class="img_close" onclick="javascript:parent.closeSelDiv('mapPopRec')">
+                            </div>
+                            选择重新认证范围
+                        </div>
+                        <div class="aq_tab aq_overflow2" style="height: 100px;">
+                            <ul style="width: 300px;">
+                                <li>
+                                    <label>
+                                        <input type="radio" name="radRecCheck" value="1" />重新验证
+                                    </label>
+                                </li>
+                                <li>
+                                    <label>
+                                        <input type="radio" name="radRecCheck" value="3" />设置验证周期
+                                    </label><input type="text"
+                                                   maxlength="3" style="width: 25px; height: 15px; border: 1px solid #9ba0a6;" name="txtPastTime3"
+                                                   id="txtPastTime3" />
+                                    <span id="lblPastTime3" style="color: Red">单位：天</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="aq_foot">
+                            <input class="btn_SS" type="button" name="button" value="确定" onclick="SelRecVal()"
+                                   onmouseover="this.className='Over_SS'" onmouseout="this.className='Onout_SS'" />
+                        </div>*@
+                    <ul>
+                        <li class="title1">
+                            <span>选择重新认证范围</span>
+                            <span onclick="closeSelDiv('mapPopRec')"><img src="~/Content/images/icon_close1.png"></span>
+                        </li>
                         <li>
-                            <label>
-                                <input type="radio" name="radRecCheck" value="1" />重新验证</label></li>
-                        @*<li><label><input type="radio" name="radRecCheck" value="2" />查询结果全部重新验证</label></li>*@
+                            <input style="margin-left: 45px;" id="10" name="radRecCheck" type="radio" value="1"><label for="10">重新验证</label>
+                        </li>
                         <li>
-                            <label>
-                                <input type="radio" name="radRecCheck" value="3" />设置验证周期</label><input type="text"
-                                    maxlength="3" style="width: 25px; height: 15px; border: 1px solid #9ba0a6;" name="txtPastTime3"
-                                    id="txtPastTime3" />
-                            <span id="lblPastTime3" style="color: Red">单位：天</span></li>
-                        @*<li><label><input type="radio" name="radRecCheck" value="4" />查询结果设置验证周期</label><input type="text" maxlength="3"  style="width:25px; height:15px; border:1px solid #9ba0a6;" name="txtPastTime4" id="txtPastTime4" /> <span id="lblPastTime4" style="color:Red">单位：天</span></li>*@
+                            <input style="margin-left: 45px;" id="11" name="radRecCheck" type="radio" value="3">
+                            <label for="11">设置验证周期 <input style="width: 50px;background-color: #1E1F2D;border: 1px solid #243135;color: #b1b1b1;padding-left: 5px;padding-right: 5px;margin-left: 10px;margin-right: 4px;" name="txtPastTime3" id="txtPastTime3" value="" type="text" maxlength="3"><span id="lblPastTime3" style="color: #8A1515;">单位:天</span></label>
+                        </li>
+                        <li>
+                            <input class="yesBtn" name="" id="" value="确定" type="button" onclick="SelRecVal()">
+                        </li>
                     </ul>
-                </div>
-                <div class="aq_foot">
-                    <input class="btn_SS" type="button" name="button" value="确定" onclick="SelRecVal()"
-                        onmouseover="this.className='Over_SS'" onmouseout="this.className='Onout_SS'" />
-                </div>
                 </form>
             </div>
         </div>
@@ -288,6 +707,9 @@
         <img src="@Url.Content("~/Content/images/loading7.gif")" width="124" height="124" />
     </div>
     <script type="text/javascript">
+        function myFunction() {
+            $("#zbtnXY").toggle(100);
+        }
         //    mindasd(295);
         function showDown() {
             document.getElementById('divDown').style.display = 'block';
@@ -494,5 +916,5 @@
             }
 
         }
-    </script> 
-}
+    </script>
+                    }

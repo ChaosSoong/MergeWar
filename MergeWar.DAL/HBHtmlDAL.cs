@@ -6,7 +6,7 @@ using Webdiyer.WebControls.Mvc;
 using HCZZ.ModeDB;
 using System.Data.SqlClient;
 using System.Data;
-using Common;
+using HCZZ.Common;
 
 namespace HCZZ.DAL
 {
@@ -25,7 +25,7 @@ namespace HCZZ.DAL
             {
                 int pageIndex = Convert.ToInt32(dic["pageIndex"]);
                 int pageSize = Convert.ToInt32(dic["pageSize"]);
-                
+
                 string txtUserId = dic["UserId"];
                 string txtContact = dic["Contact"];
                 string txtQQ = dic["QQ"];
@@ -92,8 +92,8 @@ namespace HCZZ.DAL
             try
             {
                 sql = "INSERT INTO OutPutInfo(Address,UserId,UserPwd,Contact,Email,Phone,QQ,Pattern,Destination,EstablishTime)VALUES(@Address,@UserId,@UserPwd,@Contact,@Email,@Phone,@QQ,@Pattern,@Destination,GETDATE())";
-                SqlParameter[] param = new SqlParameter[] 
-                { 
+                SqlParameter[] param = new SqlParameter[]
+                {
                     new SqlParameter("@Address",info.Address),
                     new SqlParameter("@UserId",info.UserId),
                     new SqlParameter("@UserPwd",info.UserPwd),
@@ -180,8 +180,8 @@ namespace HCZZ.DAL
             try
             {
                 sql = "UPDATE OutPutInfo SET Address = @Address,Contact = @Contact,UserId = @UserId,UserPwd = @UserPwd,Email = @Email,Phone = @Phone ,QQ = @QQ,Pattern = @Pattern,Destination = @Destination WHERE ID = @Id ";
-                SqlParameter[] param = new SqlParameter[] 
-                { 
+                SqlParameter[] param = new SqlParameter[]
+                {
                     new SqlParameter("@Address",info.Address),
                     new SqlParameter("@Contact",info.Contact),
                     new SqlParameter("@UserId",info.UserId),
@@ -206,7 +206,7 @@ namespace HCZZ.DAL
             }
         }
 
-        
+
 
         /// <summary>
         /// 删除数据输出管理信息
@@ -352,9 +352,11 @@ namespace HCZZ.DAL
             string sql = "";
             try
             {
-                sql = "SELECT * FROM SecurityOrg WHERE @ID = Id ";
-                DataSet ds = SqlHelper.ExecuteDataset(SqlHelper.DBConnStr, CommandType.Text, sql, new SqlParameter("@Id", Id));
-                return new DataSetConvert(ds).Get_SingleModel<SecurityOrg>();
+                sql = "SELECT *,(SELECT count(0) FROM TermianlNetworkLog tnl WHERE tnl.SecId = so.id AND tnl.NETWORK_APP = '24' GROUP BY tnl.SecId) IMEINum,(SELECT count(0) FROM TermianlNetworkLog tnl WHERE tnl.SecId = so.id AND tnl.NETWORK_APP = '25' GROUP BY tnl.SecId) IMSINum,(SELECT COUNT(0) FROM TermianlNetworkLog tnl WHERE tnl.SecId = so.ID AND tnl.NETWORK_APP NOT IN(24, 25)) virtualNum,(SELECT count(0) FROM TermianlNetworkLog tnl WHERE tnl.SecId = so.id GROUP BY tnl.SecId) MACNum FROM SecurityOrg so WHERE SO.ID = @Id";
+                //DataSet ds = SqlHelper.ExecuteDataset(SqlHelper.DBConnStr, CommandType.Text, sql, new SqlParameter("@Id", Id));
+                SecurityOrg model = SqlHelper.ExecuteModel<SecurityOrg>(sql, new SqlParameter("@Id", Id));
+                //return new DataSetConvert(ds).Get_SingleModel<SecurityOrg>();
+                return model;
             }
             catch (Exception ex)
             {
@@ -367,7 +369,7 @@ namespace HCZZ.DAL
             }
         }
 
-       
+
 
         /// <summary>
         /// 修改安全厂商管理信息
@@ -402,16 +404,16 @@ namespace HCZZ.DAL
                 throw ex;
             }
         }
-        ///<summary>
-        ///根据安全厂商管理ID统计场所信息 
-        /// </summary>
-        /// <param name="ID"></param>
-        /// <returns></returns>
-        public int GetOrgCountByID(int ID)
-        {
-            string sql = "SELECT COUNT(0) FROM NetBarInfo WHERE SecId=@ID AND Valid=1";
-            return Convert.ToInt32(SqlHelper.ExecuteScalar(SqlHelper.DBConnStr, CommandType.Text, sql, new SqlParameter("@ID", ID)));
-        }
+        /////<summary>
+        /////根据安全厂商管理ID统计场所信息 
+        ///// </summary>
+        ///// <param name="ID"></param>
+        ///// <returns></returns>
+        //public int GetOrgCountByID(int ID)
+        //{
+        //    string sql = "SELECT COUNT(0) FROM NetBarInfo WHERE SecId=@ID AND Valid=1";
+        //    return Convert.ToInt32(SqlHelper.ExecuteScalar(SqlHelper.DBConnStr, CommandType.Text, sql, new SqlParameter("@ID", ID)));
+        //}
         /// <summary>
         /// 删除安全厂商管理信息
         /// </summary>

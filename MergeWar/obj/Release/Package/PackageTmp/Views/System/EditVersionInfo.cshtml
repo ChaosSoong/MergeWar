@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "-编辑终端版本信息";
+    ViewBag.Title = "编辑终端版本信息";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -114,15 +114,15 @@
 			</tr>
             <tr>
 				<td width="15%" align="right">外部版本：</td>
-				<td colspan="3"><input type="text" id="txtOutVersion" name="txtOutVersion" class="_text" value="@version.OutVersion"  maxlength="30"/><span id="spOutVersion" class="color_ccc">*</span></td>  
+				<td colspan="3"><input type="text" id="txtOutVersion" name="txtOutVersion" class="_text" value="@version.OutVersion"  maxlength="32"/><span id="spOutVersion" class="color_ccc">*</span></td>  
 			</tr>
 			<tr>
 				<td width="15%" align="right">内部版本：</td>
-				<td colspan="3"><input type="text" id="txtVersion" name="txtVersion" class="_text" value="@version.Version" maxlength="30"/><span id="spVersion" class="color_ccc">*</span></td>  
+				<td colspan="3"><input type="text" id="txtVersion" name="txtVersion" class="_text" value="@version.Version" maxlength="32"/><span id="spVersion" class="color_ccc">*</span></td>  
 			</tr>
 			<tr id="trDownloadUrl">
 				<td width="15%" align="right">更新包下载地址：</td>
-				<td colspan="3"><input type="text" id="txtDownloadUrl" name="txtDownloadUrl" style="width:400px" class="_text" value="@version.DownloadUrl"  maxlength="100"/><span id="spDownloadUrl" class="color_ccc">*</span></td>  
+				<td colspan="3"><input type="text" id="txtDownloadUrl" name="txtDownloadUrl" style="width:400px" class="_text" value="@version.DownloadUrl"  maxlength="50"/><span id="spDownloadUrl" class="color_ccc">*</span></td>  
 			</tr>
 			<tr>
 				<td width="15%" align="right">更新说明：</td>
@@ -180,7 +180,7 @@
                 $.ajax
 			    ({
 			        type: "Get",
-			        url: "/Location/AreaValue?Id=" + id + "&key= " + key,
+			        url: "/Public/AreaValue?Id=" + id + "&key= " + key,
 			        dataType: "json",
 			        async: false,
 			        success: function (data, status) {

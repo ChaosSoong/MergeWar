@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="b2832cb3-ccf6-4f30-a05a-30714977775f" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="e07c0e1e-51b5-404d-ac36-5e1dc4584453" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -19,10 +19,11 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://192.168.0.92:8989/mytest/myInterface?wsdl" Protocol="http" SourceId="1" />
+    <MetadataSource Address="http://192.168.2.150:8081/bigdataserver/bigdataserver?wsdl" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="SCPInquireServiceImplService.wsdl" MetadataType="Wsdl" ID="90e0ff7b-8555-4ab5-8336-0b39cfb5142d" SourceId="1" SourceUrl="http://192.168.0.92:8989/mytest/myInterface?wsdl" />
+    <MetadataFile FileName="bigdataserver1.xsd" MetadataType="Schema" ID="00b27b01-e82b-42a6-88e9-7436d4cb065d" SourceId="1" SourceUrl="http://192.168.2.150:8081/bigdataserver/bigdataserver?xsd=1" />
+    <MetadataFile FileName="BigDataService1.wsdl" MetadataType="Wsdl" ID="85cbfae1-3304-4890-90bc-cd2a69509352" SourceId="1" SourceUrl="http://192.168.2.150:8081/bigdataserver/bigdataserver?wsdl" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

@@ -34,6 +34,7 @@
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -44,6 +45,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AuditDAL.cs" />
     <Compile Include="HBHtmlDAL.cs" />
     <Compile Include="HomeCountDAL.cs" />
     <Compile Include="LocationDAL.cs" />
@@ -55,6 +57,8 @@
     <Compile Include="SystemDAL.cs" />
     <Compile Include="UserInfoDAL.cs" />
     <Compile Include="VersionDAL.cs" />
+    <Compile Include="Video3CDAL.cs" />
+    <Compile Include="WarningDAL.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MergeWar.Common\MergeWar.Common.csproj">

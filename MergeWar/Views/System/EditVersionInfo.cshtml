@@ -2,368 +2,600 @@
     ViewBag.Title = "编辑终端版本信息";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 @using HCZZ.DAL;
 @using HCZZ.ModeDB;
 @using HCZZ.Models;
-@using Common;
+@using HCZZ.Common;
 @using Webdiyer.WebControls.Mvc;
+<link href="~/Content/css/reset.css" rel="stylesheet" />
+<link href="~/Content/css/publicHeader.css" rel="stylesheet" />
+<link href="~/Content/css/page.css" rel="stylesheet" />
+<link href="~/Content/css/XTGL_YHGLXXXX.css" rel="stylesheet" />
+<style>
+    .contentbody .contentInfo table {
+        color: #b1b1b1;
+        width: 1250px;
+        border: 1px solid #2a393a;
+        margin: 0 auto;
+        background-color: #21222f;
+    }
+
+        .contentbody .contentInfo table tr {
+            height: 40px;
+        }
+
+            .contentbody .contentInfo table tr:nth-child(even) {
+                background-color: #21202E;
+            }
+
+            .contentbody .contentInfo table tr:nth-child(odd) {
+                background-color: #21222F;
+            }
+
+            .contentbody .contentInfo table tr th {
+                text-align: left;
+                padding-left: 50px;
+                background-color: #1E1F2D;
+                border-bottom: 1px solid #2A393A;
+            }
+
+            .contentbody .contentInfo table tr td {
+                border-right: 1px solid #2A393A;
+                padding-left: 50px;
+            }
+
+                .contentbody .contentInfo table tr td .spanTitle {
+                    color: #999999;
+                }
+
+                .contentbody .contentInfo table tr td .spanText {
+                    color: #CCCCCC;
+                }
+
+                .contentbody .contentInfo table tr td .spanTextHint {
+                    color: #AA301C;
+                }
+
+        .contentbody .contentInfo table:nth-child(1) {
+            margin-top: 20px;
+        }
+
+        .contentbody .contentInfo table:nth-child(2) {
+            margin-bottom: 50px;
+            border-top: none;
+        }
+
+        .contentbody .contentInfo table tr td img {
+            vertical-align: middle;
+        }
+
+        .contentbody .contentInfo table tr td input {
+            margin-left: 5px;
+            background-color: transparent;
+            border: none;
+            background-color: #222B3B;
+            height: 25px;
+            padding-left: 5px;
+            color: #999999;
+        }
+
+        .contentbody .contentInfo table tr td select {
+            margin-left: 5px;
+            background-color: transparent;
+            border: none;
+            background-color: #222B3B;
+            height: 25px;
+            padding-left: 5px;
+            color: #999999;
+        }
+
+        .contentbody .contentInfo table tr td .SYHLXbtn {
+            border: 1px solid #222B3B;
+            cursor: pointer;
+            outline: none;
+            box-sizing: border-box;
+            /*padding-top: 3px;*/
+            margin-left: 10px;
+            padding-bottom: 3px;
+            padding-left: 15px;
+            padding-right: 15px;
+            -moz-border-radius: 15px; /* Firefox */
+            -webkit-border-radius: 15px; /* Safari 和 Chrome */
+            border-radius: 15px; /* Opera 10.5+, 以及使用了IE-CSS3的IE浏览器 */
+        }
+
+        .contentbody .contentInfo table tr td .YHLXbtnActive {
+            cursor: pointer;
+            box-sizing: border-box;
+            outline: none;
+            color: #7BD2DA;
+            border: 1px solid #7BD2DA;
+        }
+
+        .contentbody .contentInfo table tr td .ZJLX {
+            width: 80px;
+            border: 1px solid #0A7891;
+            cursor: pointer;
+            background-color: #0B2A3C;
+            color: #7BD2DA;
+        }
+
+    .GXCXLX {
+        margin-left: 10px;
+        width: 100px;
+        border: 1px solid #0A7891;
+        cursor: pointer;
+        background-color: #0B2A3C;
+        color: #7BD2DA;
+        padding: 2px 5px;
+    }
+
+    .contentbody .contentInfo table tr td textarea {
+        ;
+        margin-left: 5px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        padding: 3px 5px;
+        background-color: transparent;
+        border: none;
+        background-color: #222B3B;
+        height: 90px;
+        width: 944px;
+        padding-left: 5px;
+        color: #999999;
+    }
+
+    .footerAdd {
+        width: 100%;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+        .footerAdd .add {
+            box-sizing: border-box;
+            cursor: pointer;
+            width: 250px;
+            height: 50px;
+            background-color: #1e1f2d;
+            color: #7bd2da;
+            border: none;
+            font: 14px "Î¢ÈíÑÅºÚ";
+            background-image: url(/Content/images/save_bg.png);
+        }
+</style>
 @using (Html.BeginForm("EditVersionInfo", "System", FormMethod.Post))
 {
     VersionInfo version = (VersionInfo)ViewBag.detail;
-<div id="Cx" style="display: none"></div> 
-	<div class="Tjxx" id="TJ" style="display: none"></div>
-	<table>	
-			<tr>
-				<th colspan="4"><h1>编辑终端版本信息</h1></th>
-			</tr>
-	</table>
-	<div>
-	<table>
-    @{
     if (version != null)
     {
-       
-			<tr>
-				<td width="15%" align="right">更新程序类型：</td>
-				<td colspan="3">
-                <select  id="selType" name="selType" onchange="select(this.value);">
-                <option value="0">==请选择==</option>
-                <option value="1">验证程序</option> 
-                <option value="2">审计程序</option> 
-                <option value="3">APP监管版</option> 
-                <option value="4">APP商户版</option> 
-                 <option value="5">WEB网站</option> 
-                </select>
-                <span id="spType" class="color_ccc">*</span></td>  
-			</tr>
-            <tr id="trVerify" style="display:none">
-                <td align="right">验证类型：</td>
-                <td>
-                    <label><input type="checkbox" name="ckVerify" @(version.VerifyType != null && version.VerifyType.IndexOf("00") > -1 ? "checked=checked" : "")  value="00" />关闭审计</label>&nbsp;
-                    <label><input type="checkbox" name="ckVerify" @(version.VerifyType != null && version.VerifyType.IndexOf("01") > -1 ? "checked=checked" : "") value="01" />开启审计</label>&nbsp;
-                    <label><input type="checkbox" name="ckVerify" @(version.VerifyType != null && version.VerifyType.IndexOf("02") > -1 ? "checked=checked" : "") value="02" />第三方验证</label>&nbsp;
-                    <label><input type="checkbox" name="ckVerify" @(version.VerifyType != null && version.VerifyType.IndexOf("03") > -1 ? "checked=checked" : "") value="03" />微信验证</label>&nbsp;
-                    <label><input type="checkbox" name="ckVerify" @(version.VerifyType != null && version.VerifyType.IndexOf("04") > -1 ? "checked=checked" : "") value="04" />WIFIDOG验证</label>
-                    <span id="spVerify" class="color_ccc">*</span>
-                </td>
-            </tr>
-			<tr id="trCasesType" style="display:none">
-				<td align="right">程序类型：</td>
-				<td colspan="3">
-                    <select  id="selCasesType" name="selCasesType">
-                        <option value="0">==请选择==</option>
-                        <option value="1">Atheros</option> 
-                        <option value="2">MTK</option> 
-                        <option value="3">X86</option> 
-                    </select>
-                <span id="spCasesType" class="color_ccc">*</span></td>  
-			</tr>
-			<tr class="CType" style="display:none">
-				<td align="right">升级类型：</td>
-				<td colspan="3">
-                    <select  id="selUpdateType" name="selUpdateType" onchange="SelectType(this.value)">
-                        <option value="0">==请选择==</option>
-                        <option value="1" selected="selected">全部升级</option> 
-                        <option value="2">指定省升级</option> 
-                        <option value="3">指定市升级</option> 
-                        <option value="4">指定区升级</option> 
-                    </select>
-                <span id="spUpdateType" class="color_ccc">*</span></td>  
-			</tr>
-			<tr class="CType" style="display:none">
-				<td align="right">区域：</td>
-				<td colspan="3">
-                    <p style="padding-left: 5px">
-                        省：
-                        <select id="selProvince" name="selProvince" onchange="changeValue('selProvince','selCity','City')">
-                            <option value="0">==请选择==</option>
-                        </select>
-                        市：
-                        <select id="selCity" name="selCity" onchange="changeValue('selCity','SelArea','Area')">
-                            <option value="0">==请选择==</option>
-                        </select>
-                        区：
-                        <select id="SelArea" name="SelArea"
-                            style="width: 160px">
-                            <option value="0">==请选择==</option>
-                        </select>
-                        <span id="sparea" class="color_ccc">*</span></p></td>  
-			</tr>
-			<tr class="CType" style="display:none">
-				<td align="right">升级范围：</td>
-				<td colspan="3">
-                    <select  id="selotherType" name="selotherType">
-                        <option value="0">==请选择==</option>
-                        <option value="1" selected="selected">全部</option> 
-                        <option value="2">除城中村升级</option> 
-                        <option value="3">除旁路升级</option> 
-                        <option value="4">除城中村和旁路升级</option> 
-                    </select>
-                <span id="spotherType" class="color_ccc">*</span></td>  
-			</tr>
-			<tr id="trFocusUpdate">
-				<td width="15%" align="right">是否强制升级：</td>
-				<td colspan="3">
-                <select  id="selFocusUpdate" name="selFocusUpdate">
-                <option value="0">==请选择==</option>
-                <option value="1">是</option> 
-                <option value="2">否</option> 
-                </select>
-                <span id="spFocusUpdate" class="color_ccc">*</span></td>  
-			</tr>
-            <tr>
-				<td width="15%" align="right">外部版本：</td>
-				<td colspan="3"><input type="text" id="txtOutVersion" name="txtOutVersion" class="_text" value="@version.OutVersion"  maxlength="30"/><span id="spOutVersion" class="color_ccc">*</span></td>  
-			</tr>
-			<tr>
-				<td width="15%" align="right">内部版本：</td>
-				<td colspan="3"><input type="text" id="txtVersion" name="txtVersion" class="_text" value="@version.Version" maxlength="30"/><span id="spVersion" class="color_ccc">*</span></td>  
-			</tr>
-			<tr id="trDownloadUrl">
-				<td width="15%" align="right">更新包下载地址：</td>
-				<td colspan="3"><input type="text" id="txtDownloadUrl" name="txtDownloadUrl" style="width:400px" class="_text" value="@version.DownloadUrl"  maxlength="100"/><span id="spDownloadUrl" class="color_ccc">*</span></td>  
-			</tr>
-			<tr>
-				<td width="15%" align="right">更新说明：</td>
-				<td colspan="3">
-                <textarea id="txtChangeLog" name="txtChangeLog" class="_textarea">@version.ChangeLog</textarea>
-                <span id="spChangeLog" class="color_ccc"></span></td>  
-			</tr>
-			<tr>
-				<td align="center" colspan="4">
-				<input class="btn_SS" type="submit" name="button" value="保存"
-				  onmouseover="this.className='Over_SS'"
-				  onmouseout="this.className='Onout_SS'"/> <input type="hidden" name="Hid" value="@version.ID" />
-			    </td> 
-			</tr> 
+        <div id="contentbody" class="contentbody">
+            <div class="contentInfo">
+                <table cellspacing="0" cellpadding="0" border="0" id="table">
+                    <tbody>
+                        <tr>
+                            <th colspan="3">
+                                <img src="/Content/images/star1.png" />
+                                更新程序类型:
+                                <select name="selType" id="selType" class="GXCXLX" onchange="ISshowTR(this.value);">
+                                    <option value="0">请选择</option>
+                                    <option value="1">验证程序</option>
+                                    <option value="2">审计程序</option>
+                                    <option value="3">APP监管版</option>
+                                    <option value="4">APP商户版</option>
+                                    <option value="5">WEB网站</option>
+                                </select>
+                            </th>
+                        </tr>
+                        <!--============类型一=============-->
+                        <tr class="tr1">
+                            <td style="width: 50%;">
+                                <img src="/Content/images/star1.png" />
+                                <span class="spanTitle">是否强制升级:</span>
+                                <label for="wrxwrx"><input style="vertical-align: middle;margin-right: 3px;" type="radio" name="selFocusUpdate" id="wrxwrx" value="1" />是</label>
+                                <label for="wrxwrx1"><input style="vertical-align: middle;margin-left: 30px;margin-right: 3px;" type="radio" name="selFocusUpdate" id="wrxwrx1" value="2" />否</label>
+                            </td>
+                            <td style="width: 50%;">
+                                <img src="/Content/images/star1.png" />
+                                <span class="spanTitle">外部版本:</span>
+                                <input style="width: 320px;" type="text"  value="@version.OutVersion" wbbb="tr1" />
+                            </td>
+                        </tr>
+                        <tr class="tr1">
+                            <td>
+                                <img src="/Content/images/star1.png" />
+                                <span class="spanTitle">更新包下载地址:</span>
+                                <input style="width: 320px;" type="text" value="@version.DownloadUrl" gxurl="tr1" />
+                            </td>
+                            <td>
+                                <img src="/Content/images/star1.png" />
+                                <span class="spanTitle">内部版本:</span>
+                                <input style="width: 320px;" type="text" value="@version.Version" nbbb="tr1" />
+                            </td>
+                        </tr>
+                        <!--============类型一 end=============-->
+                        <!--===========类型二=================-->
+                        <tr class="tr2_1">
+                            <th colspan="3">
+                                <img src="/Content/images/star1.png" />
+                                <span class="spanTitle">验证类型:</span>
+                                <label><input type="checkbox" name="ckVerify" @(version.VerifyType != null && version.VerifyType.IndexOf("01") > -1 ? "checked=checked" : "") value="01" />网站验证</label>&nbsp;
+                                <label><input type="checkbox" name="ckVerify" @(version.VerifyType != null && version.VerifyType.IndexOf("02") > -1 ? "checked=checked" : "") value="02" />第三方验证</label>&nbsp;
+                                <label><input type="checkbox" name="ckVerify" @(version.VerifyType != null && version.VerifyType.IndexOf("03") > -1 ? "checked=checked" : "") value="03" />微信验证</label>&nbsp;
+                                <label><input type="checkbox" name="ckVerify" @(version.VerifyType != null && version.VerifyType.IndexOf("04") > -1 ? "checked=checked" : "") value="04" />WIFIDOG验证</label>&nbsp;
+                                <label><input type="checkbox" name="ckVerify" @(version.VerifyType != null && version.VerifyType.IndexOf("05") > -1 ? "checked=checked" : "") value="05" />下行短信</label>
+                            </th>
+                        </tr>
+                        <tr class="tr2">
+                            <td style="width: 50%;">
+                                <img src="/Content/images/star1.png" />
+                                <span class="spanTitle">程序类型:</span>
+                                <input class="SYHLXbtn" type="button" name="" id="" value="Atheros" onclick="butClass(this,'1','1')" cx="1" />
+                                <input class="SYHLXbtn" type="button" name="" id="" value="MTK" onclick="butClass(this,'1','2')" cx="2" />
+                                <input class="SYHLXbtn" type="button" name="" id="" value="X86" onclick="butClass(this,'1','3')" cx="3" />
+                                <input class="SYHLXbtn" type="button" name="" id="qb" value="全部" onclick="butClass(this,'1','99')" cx="99" />
+                            </td>
+                            <td style="width: 50%;">
+                                <img src="/Content/images/star1.png" />
+                                <span class="spanTitle">升级类型:</span>
+                                <input class="SYHLXbtn" type="button" name="" id="" value="全部升级" onclick="butClass(this,'2','1')" lv="1" />
+                                <input class="SYHLXbtn" type="button" name="" id="" value="指定省升级" onclick="butClass(this,'2','2')" lv="2" />
+                                <input class="SYHLXbtn" type="button" name="" id="" value="指定市升级" onclick="butClass(this,'2','3')" lv="3" />
+                                <input class="SYHLXbtn" type="button" name="" id="" value="指定区升级" onclick="butClass(this,'2','4')" lv="4" />
+                            </td>
+                        </tr>
+                        <tr class="tr2">
+                            <td>
+                                <img src="/Content/images/star1.png" />
+                                <span class="spanTitle">升级范围:</span>
+                                <input class="SYHLXbtn" type="button" name="" id="" value="全部" onclick="butClass(this,'3','1')" fw="1" />
+                                <input class="SYHLXbtn" type="button" name="" id="" value="除城中村升级" onclick="butClass(this,'3','2')" fw="2" />
+                                <input class="SYHLXbtn" type="button" name="" id="" value="除旁路升级" onclick="butClass(this,'3','3')" fw="3" />
+                                <input class="SYHLXbtn" type="button" name="" id="" value="除城中村和旁路升级" onclick="butClass(this,'3','4')" fw="4" />
+                            </td>
+                            <td>
+
+                                <span class="spanTitle">区域:</span>
+                                <select style="width: 120px;margin-top: 10px;" name="selProvince" id="selProvince" onchange="changeValue('selProvince','selCity','City')">
+                                    <option value="0">省</option>
+                                </select>
+                                <select style="width: 120px;" name="selCity" id="selCity" onchange="changeValue('selCity','SelArea','Area')">
+                                    <option value="0">市</option>
+                                </select>
+                                <select style="width: 120px;" name="SelArea" id="SelArea">
+                                    <option value="0">区</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr class="tr2">
+                            <td style="width: 50%;">
+                                <img src="/Content/images/star1.png" />
+                                <span class="spanTitle">是否强制升级:</span>
+                                <label for="wrxwrx"><input style="vertical-align: middle;margin-right: 3px;" type="radio" name="wrxwrx" checked="checked" id="wrxwrx" value="" />是</label>
+                                <label for="wrxwrx1"><input style="vertical-align: middle;margin-left: 30px;margin-right: 3px;" type="radio" name="wrxwrx" id="wrxwrx1" value="" />否</label>
+                            </td>
+                            <td style="width: 50%;">
+                                <img src="/Content/images/star1.png" />
+                                <span class="spanTitle">外部版本:</span>
+                                <input style="width: 320px;" type="text" value="@version.OutVersion" wbbb="tr2" />
+                            </td>
+                        </tr>
+                        <tr class="tr2">
+                            <td>
+                                <img src="/Content/images/star1.png" />
+                                <span class="spanTitle">更新包下载地址:</span>
+                                <input style="width: 320px;" type="text"  value="@version.DownloadUrl" gxurl="tr2" />
+                            </td>
+                            <td>
+                                <img src="/Content/images/star1.png" />
+                                <span class="spanTitle">内部版本:</span>
+                                <input style="width: 320px;" type="text" value="@version.Version" nbbb="tr2" />
+                            </td>
+                        </tr>
+                        <!--===========类型二 end==============-->
+                        <!--===========类型三==============-->
+                        <tr class="tr3">
+                            <td>
+                                <img src="/Content/images/star1.png" />
+                                <span class="spanTitle">外部版本:</span>
+                                <input style="width: 320px;" type="text" value="@version.OutVersion" wbbb="tr3" />
+                            </td>
+                            <td>
+                                <img src="/Content/images/star1.png" />
+                                <span class="spanTitle">内部版本:</span>
+                                <input style="width: 320px;" type="text" value="@version.Version" nbbb="tr3" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!--===========类型三 end==============
+
+
+                <!--============类型一=============-->
+                <table cellspacing="0" cellpadding="0" border="0">
+                    <tbody>
+                        <tr>
+                            <td style="border-right: none;">
+                                <span class="spanTitle" style="padding-top: 10px;padding-left: 15px;display: inline-block;float: left;">更新说明:</span>
+                                <textarea name="txtChangeLog" rows="" cols="" style="width: 908px; height: 116px;">@version.ChangeLog</textarea>
+                            </td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!--============类型一 end=============-->
+            </div>
+            <div class="footerAdd">
+                <input class="add" name="button" value="保存" type="submit">
+                <input type="hidden" id="Hid" name="Hid" value="@version.ID" />
+            </div>
+            <input type="hidden" id="selCasesType" name="selCasesType" value="0" />
+            <input type="hidden" id="selUpdateType" name="selUpdateType" value="0" />
+            <input type="hidden" id="selotherType" name="selotherType" value="0" />
+        </div>
+            <script type="text/javascript">
+                $(function () {
+                    var updateType = '@(version == null ? 0 : version.UpdateType)';
+                    ISshowTR('@(version == null ? 0 : version.Type)');
+                    changeValue("selProvince", "selProvince", "Province");
+                    if (updateType > 1) {
+                        $("#selProvince").val('@ViewBag.proId');
+                        changeValue('selProvince', 'selCity', 'City');
+                        $("#selCity").val('@ViewBag.cid');
+                        changeValue('selCity', 'SelArea', 'Area');
+                        $("#SelArea").val('@ViewBag.aid');
+                    }
+                    if ($("#selType").val() == "5") {
+                        $("#selType").change();
+                    }
+                    $("form").submit(function () {
+                        if (subVal()) {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    });
+                    $("#selType").val('@(version == null ? 0 : version.Type)');
+                    $("#selCasesType").val('@(version == null ? 0 : version.CasesType)');
+                    $("#selUpdateType").val('@(version == null ? 0 : version.UpdateType)');
+                    $("#selotherType").val('@(version == null ? 0 : version.otherType)');
+                    $('input[cx="@version.CasesType"]').addClass("YHLXbtnActive").siblings().removeClass('YHLXbtnActive');
+                    $('input[lv="@version.UpdateType"]').addClass("YHLXbtnActive").siblings().removeClass('YHLXbtnActive');
+                    $('input[fw="@version.otherType"]').addClass("YHLXbtnActive").siblings().removeClass('YHLXbtnActive');
+                    SelectType('@version.UpdateType');
+                    $(':radio[name="selFocusUpdate"]').attr("checked", '@version');
+                    
+                })
+                function ISshowTR(type) {
+
+                    //$(":button").removeClass('YHLXbtnActive');
+                    //$("#selCasesType").val(0);
+                    //$("#selUpdateType").val(0);
+                    //$("#selotherType").val(0);
+                    switch (type) {
+                        case "0":
+                            $(".tr1").css('display', 'inline');
+                            $(".tr2").css('display', 'none');
+                            $(".tr2_1").css('display', 'none');
+                            $(".tr3").css('display', 'none');
+                            UpdateIdorName(1)
+                            break;
+                        case "1":
+                            $(".tr1").css('display', 'none');
+                            $(".tr2").css('display', 'inline');
+                            $(".tr2_1").css('display', 'inline');
+                            $("#qb").css('display', 'inline');
+                            $(".tr3").css('display', 'none');
+                            UpdateIdorName(2)
+                            SelectType('1');
+                            break;
+                        case "2":
+                            $(".tr1").css('display', 'none');
+                            $(".tr2").css('display', 'inline');
+                            $(".tr2_1").css('display', 'none');
+                            $(".tr3").css('display', 'none');
+                            $("#qb").css('display', 'none');
+                            SelectType('1');
+                            UpdateIdorName(2)
+                            break
+                        case "5":
+                            $(".tr1").css('display', 'none');
+                            $(".tr2").css('display', 'none');
+                            $(".tr2_1").css('display', 'none');
+                            $(".tr3").css('display', 'inline');
+                            UpdateIdorName(3);
+                            break;
+                        default:
+                            $(".tr1").css('display', 'inline');
+                            $(".tr2").css('display', 'none');
+                            $(".tr2_1").css('display', 'none');
+                            $(".tr3").css('display', 'none');
+                            UpdateIdorName(1);
+                    }
+                }
+                function UpdateIdorName(istype)
+                {
+                    if (istype == 1)
+                    {
+                        $('input[wbbb="tr1"]').attr("id", "txtOutVersion").attr("name", "txtOutVersion");
+                        $('input[nbbb="tr1"]').attr("id", "txtVersion").attr("name", "txtVersion");
+                        $('input[gxurl="tr1"]').attr("id", "txtDownloadUrl").attr("name", "txtDownloadUrl");
+
+                        $('input[wbbb="tr2"]').attr("id", "").attr("name", "");
+                        $('input[nbbb="tr2"]').attr("id", "").attr("name", "");
+                        $('input[gxurl="tr2"]').attr("id", "").attr("name", "");
+
+                        $('input[wbbb="tr3"]').attr("id", "").attr("name", "");
+                        $('input[nbbb="tr3"]').attr("id", "").attr("name", "");
+                    } else if (istype == 2) {
+                        $('input[wbbb="tr1"]').attr("id", "").attr("name", "");
+                        $('input[nbbb="tr1"]').attr("id", "").attr("name", "");
+                        $('input[gxurl="tr1"]').attr("id", "").attr("name", "");
+
+                        $('input[wbbb="tr2"]').attr("id", "txtOutVersion").attr("name", "txtOutVersion");
+                        $('input[nbbb="tr2"]').attr("id", "txtVersion").attr("name", "txtVersion");
+                        $('input[gxurl="tr2"]').attr("id", "txtDownloadUrl").attr("name", "txtDownloadUrl");
+
+                        $('input[wbbb="tr3"]').attr("id", "").attr("name", "");
+                        $('input[nbbb="tr3"]').attr("id", "").attr("name", "");
+                    } else {
+                        $('input[wbbb="tr1"]').attr("id", "").attr("name", "");
+                        $('input[nbbb="tr1"]').attr("id", "").attr("name", "");
+                        $('input[gxurl="tr1"]').attr("id", "").attr("name", "");
+
+                        $('input[wbbb="tr2"]').attr("id", "").attr("name", "");
+                        $('input[nbbb="tr2"]').attr("id", "").attr("name", "");
+                        $('input[gxurl="tr2"]').attr("id", "").attr("name", "");
+
+                        $('input[wbbb="tr3"]').attr("id", "txtOutVersion").attr("name", "txtOutVersion");
+                        $('input[nbbb="tr3"]').attr("id", "txtVersion").attr("name", "txtVersion");
+                    }
+                }
+                function changeValue(fname, sname, key) {
+                    var id = parseInt($("#" + fname).val());
+                    if (id != 0 || key == "Province") {
+                        $.ajax
+                        ({
+                            type: "Get",
+                            url: "/Public/AreaValue?Id=" + id + "&key= " + key,
+                            dataType: "json",
+                            async: false,
+                            cache: false,
+                            success: function (data, status) {
+                                if (typeof (data.err) != 'undefined' && data.err != "") {
+                                    alert(data.err);
+                                } else {
+                                    SelClear(key);
+                                    if (key != "Scenic") {
+                                        for (var i = 0; i < data.length; i++) {
+                                            $("#" + sname).append("<option value='" + data[i].ID + "'>" + data[i].Name + "</option>");
+                                        }
+                                    } else {
+                                        for (var i = 0; i < data.length; i++) {
+                                            $("#" + sname).append("<option value='" + data[i].ID + "'>" + data[i].SName + "</option>");
+                                        }
+                                    }
+                                }
+                            },
+                            error: function (data, status, e) {
+                                alert(e);
+                            }
+                        });
+                    } else {
+                        SelClear(key);
+                    }
+                }
+                function SelectType(val) {
+                    if (val == "1") {
+                        $("#selProvince").attr("disabled", "disabled");
+                        $("#selCity").attr("disabled", "disabled");
+                        $("#SelArea").attr("disabled", "disabled");
+                    } else if (val == "2") {
+                        $("#selProvince").removeAttr("disabled", "disabled");
+                        $("#selCity").attr("disabled", "disabled");
+                        $("#SelArea").attr("disabled", "disabled");
+                        //changeValue('selProvince', 'selCity', 'City');
+                    } else if (val == "3") {
+                        $("#selProvince").removeAttr("disabled", "disabled");
+                        $("#selCity").removeAttr("disabled", "disabled");
+                        $("#SelArea").attr("disabled", "disabled");
+                        //changeValue('selCity', 'SelArea', 'Area');
+                    } else if (val == "4") {
+                        $("#selProvince").removeAttr("disabled", "disabled");
+                        $("#selCity").removeAttr("disabled", "disabled");
+                        $("#SelArea").removeAttr("disabled", "disabled");
+                    }
+                }
+                function butClass(obj, type, val) {
+                    $(obj).addClass("YHLXbtnActive").siblings().removeClass('YHLXbtnActive');
+                    switch (type) {
+                        case "1":
+                            $("#selCasesType").val(val);
+                            break;
+                        case "2":
+                            SelectType(val);
+                            $("#selUpdateType").val(val);
+                            break;
+                        case "3":
+                            $("#selotherType").val(val);
+                            break;
+                        default:
+                    }
+                }
+                function SelClear(key) {
+                    if (key == "City") {
+                        $("#selCity").html("<option value='0'>==市==</option>");
+                        $("#SelArea").html("<option value='0'>==区==</option>");
+                    } else if (key == "Area") {
+                        $("#SelArea").html("<option value='0'>==区==</option>");
+                    }
+                }
+                function subVal() {
+                    var result = true;
+                    if ($("#selType").val() == "0") {
+                        result = false;
+                        alert("请选择更新程序类型");
+                    }
+                    else if (($("#selType").val() == "2" || $("#selType").val() == "1") && $("#selCasesType").val() == "0") {
+                        result = false;
+                        alert("请选择程序类型");
+                    }
+                    else if ($("#selType").val() == "1" && $("input[name='ckVerify']:checked").length == 0) {
+                        result = false;
+                        alert("请选择验证类型");
+                    }
+                        else if ($.trim($("#txtOutVersion").val()) == "") {
+                             result = false;
+                             alert("外部版本不能为空");
+                         }
+                        else if ($.trim($("#txtVersion").val()) == "") {
+                             result = false;
+                             alert("内部版本不能为空");
+                        } else {
+                            var downloadUrl = $.trim($("#txtDownloadUrl").val());
+                            if (downloadUrl == "" && $("#selType").val() != "5") {
+                                result = false;
+                                alert("更新包下载地址不能为空");
+                            } else if ($("#selType").val() == "2" && $("#selCasesType").val() != "0" && downloadUrl != "") {
+                                if (($("#selCasesType").val() == "1" && downloadUrl.indexOf('ar71xx') == -1)) {
+                                    result = false;
+                                    alert("更新包下载地址不正确，请重新输入");
+                                } else if (($("#selCasesType").val() == "2" && downloadUrl.indexOf('ramips') == -1)) {
+                                    result = false;
+                                    alert("更新包下载地址不正确，请重新输入");
+                                } else if (($("#selCasesType").val() == "3" && downloadUrl.indexOf('x86') == -1)) {
+                                    result = false;
+                                    alert("更新包下载地址不正确，请重新输入");
+                                }
+                            }
+                            else if ($.trim($("#txtChangeLog").val()) != "" && $.trim($("#txtChangeLog").val()).length > 250) {
+                                result = false;
+                                alert("更新说明长度不能超过250个字");
+                            }
+                            else if ($("#selType").val() == "1" || $("#selType").val() == "2") {
+                                if ($("#selUpdateType").val() == "0") {
+                                    result = false;
+                                    alert("请选择升级类型");
+                                }
+                                if ($("#selUpdateType").val() == "2" && $("#selProvince").val() == "0") {
+                                    result = false;
+                                    alert("请选择升级区域");
+                                } else if ($("#selUpdateType").val() == "3" && $("#selCity").val() == "0") {
+                                    result = false;
+                                    alert("请选择升级区域");
+                                } else if ($("#selUpdateType").val() == "4" && $("#SelArea").val() == "0") {
+                                    result = false;
+                                    alert("请选择升级区域");
+                                }
+                                else if ($("#selotherType").val() == "0") {
+                                    result = false;
+                                    alert("请选择升级范围");
+                                }
+                            }
+                        }
+                    return result;
+                }
+            </script>
     }
-    }
-	</table>
-	</div>
-    <script type="text/javascript">
-        $(function () {
-            changeValue('selProvince', 'selProvince', 'Province');
-            var updateType = '@(version == null ? 0 : version.UpdateType)';
-            select('@(version == null ? 0 : version.Type)');
-            $("#selType").val('@(version == null ? 0 : version.Type)');
-            $("#selFocusUpdate").val('@(version == null ? 0 : version.FocusUpdate)');
-            $("#selCasesType").val('@(version == null ? 0 : version.CasesType)');
-            $("#selUpdateType").val('@(version == null ? 0 : version.UpdateType)');
-            $("#selotherType").val('@(version == null ? 0 : version.otherType)');
-            SelectType(updateType);
-
-            if (updateType > 1) {
-                $("#selProvince").val('@ViewBag.proId');
-                changeValue('selProvince', 'selCity', 'City');
-                $("#selCity").val('@ViewBag.cid');
-                changeValue('selCity', 'SelArea', 'Area');
-                $("#SelArea").val('@ViewBag.aid');
-            }
-
-            if ($("#selType").val() == "5") {
-                $("#selType").change();
-            }
-
-            $("form").submit(function () {
-                if (subVal()) {
-                    return true;
-                } else {
-                    return false;
-                }
-            });
-        });
-
-        function changeValue(fname, sname, key) {
-            var id = parseInt($("#" + fname).val());
-            if (id != 0 || key == "Province") {
-                $.ajax
-			    ({
-			        type: "Get",
-			        url: "/Public/AreaValue?Id=" + id + "&key= " + key,
-			        dataType: "json",
-			        async: false,
-			        success: function (data, status) {
-			            if (typeof (data.err) != 'undefined' && data.err != "") {
-			                alert(data.err);
-			            } else {
-			                SelClear(key);
-			                for (var i = 0; i < data.length; i++) {
-			                    $("#" + sname).append("<option value='" + data[i].ID + "'>" + data[i].Name + "</option>");
-			                }
-			            }
-			        },
-			        error: function (data, status, e) {
-			            alert(e);
-			        }
-			    });
-            } else {
-                SelClear(key);
-            }
-        }
-        function SelClear(key) {
-            if (key == "City") {
-                $("#selCity").html("<option value='0'>==请选择==</option>");
-                $("#SelArea").html("<option value='0'>==请选择==</option>");
-            } else if (key == "Area") {
-                $("#SelArea").html("<option value='0'>==请选择==</option>");
-            }
-        }
-        function select(val) {
-            if (val == 5) {
-                $("#trFocusUpdate").hide();
-                $("#trDownloadUrl").hide();
-                $("#trCasesType").hide();
-                $(".CType").hide();
-                $("#trVerify").hide();
-            } else if (val == 2) {
-                $("#trCasesType").show();
-                $(".CType").show();
-                $("#trVerify").hide();
-                $("#selCasesType option[value='99']").remove();
-            } else if (val == 1) {
-                $(".CType").show();
-                $("#trCasesType").show();
-                $("#trVerify").show();
-                $("#selCasesType").append("<option value=\"99\">全部</option>");
-            } else {
-                $("#trFocusUpdate").show();
-                $("#trDownloadUrl").show();
-                $("#trCasesType").hide();
-                $("#trVerify").hide();
-                $(".CType").hide();
-            }
-        }
-
-        function SelectType(val) {
-            if (val == "1") {
-                $("#selProvince").attr("disabled", "disabled");
-                $("#selCity").attr("disabled", "disabled");
-                $("#SelArea").attr("disabled", "disabled");
-                $("#sppolice").hide();
-            } else if (val == "2") {
-                $("#selProvince").removeAttr("disabled", "disabled");
-                $("#selCity").attr("disabled", "disabled");
-                $("#SelArea").attr("disabled", "disabled");
-                $("#sppolice").show();
-            } else if (val == "3") {
-                $("#selProvince").removeAttr("disabled", "disabled");
-                $("#selCity").removeAttr("disabled", "disabled");
-                $("#SelArea").attr("disabled", "disabled");
-                $("#sppolice").show();
-            } else if (val == "4") {
-                $("#selProvince").removeAttr("disabled", "disabled");
-                $("#selCity").removeAttr("disabled", "disabled");
-                $("#SelArea").removeAttr("disabled", "disabled");
-                $("#sppolice").show();
-            }
-        }
-
-        function subVal() {
-            var result = true;
-
-            if ($("#selType").val() == "0") {
-                result = false;
-                $("#spType").html("请选择更新程序类型");
-            } else {
-                $("#spType").html("");
-            }
-
-            if (($("#selType").val() == "2" || $("#selType").val() == "1") && $("#selCasesType").val() == "0") {
-                result = false;
-                $("#spCasesType").html("请选择程序类型");
-            } else {
-                $("#spCasesType").html("");
-            }
-
-            if ($("#selType").val() == "1" && $("input[name='ckVerify']:checked").length == 0) {
-                result = false;
-                $("#spVerify").html("请选择验证类型");
-            } else {
-                $("#spVerify").html("");
-            }
-
-            if ($("#selFocusUpdate").val() == "0" && $("#selType").val() != "5") {
-                result = false;
-                $("#spFocusUpdate").html("请选择是否强制升级");
-            } else {
-                $("#spFocusUpdate").html("");
-            }
-
-            if ($.trim($("#txtOutVersion").val()) == "") {
-                result = false;
-                $("#spOutVersion").html("外部版本不能为空");
-            } else {
-                $("#spOutVersion").html("");
-            }
-
-            if ($.trim($("#txtVersion").val()) == "") {
-                result = false;
-                $("#spVersion").html("内部版本不能为空");
-            } else {
-                $("#spVersion").html("");
-            }
-
-            var downloadUrl = $.trim($("#txtDownloadUrl").val());
-            if (downloadUrl == "" && $("#selType").val() != "5") {
-                result = false;
-                $("#spDownloadUrl").html("更新包下载地址不能为空");
-            } else if ($("#selType").val() == "2" && $("#selCasesType").val() != "0" && downloadUrl != "") {
-                if (($("#selCasesType").val() == "1" && downloadUrl.indexOf('ar71xx') == -1)) {
-                    result = false;
-                    $("#spDownloadUrl").html("更新包下载地址不正确，请重新输入");
-                } else if (($("#selCasesType").val() == "2" && downloadUrl.indexOf('ramips') == -1)) {
-                    result = false;
-                    $("#spDownloadUrl").html("更新包下载地址不正确，请重新输入");
-                } else if (($("#selCasesType").val() == "3" && downloadUrl.indexOf('x86') == -1)) {
-                    result = false;
-                    $("#spDownloadUrl").html("更新包下载地址不正确，请重新输入");
-                } else {
-                    $("#spDownloadUrl").html("");
-                }
-            } else {
-                $("#spDownloadUrl").html("");
-            }
-
-            if ($.trim($("#txtChangeLog").val()) != "" && $.trim($("#txtChangeLog").val()).length > 250) {
-                result = false;
-                $("#spChangeLog").html("更新说明长度不能超过250个字");
-            } else {
-                $("#spChangeLog").html("");
-            }
-
-            if ($("#selType").val() == "1" || $("#selType").val() == "2") {
-                if ($("#selUpdateType").val() == "0") {
-                    result = false;
-                    $("#spUpdateType").html("请选择升级类型");
-                } else {
-                    $("#spUpdateType").html("");
-                }
-
-                if ($("#selUpdateType").val() == "2" && $("#selProvince").val() == "0") {
-                    result = false;
-                    $("#sparea").html("请选择升级区域");
-                } else if ($("#selUpdateType").val() == "3" && $("#selCity").val() == "0") {
-                    result = false;
-                    $("#sparea").html("请选择升级区域");
-                } else if ($("#selUpdateType").val() == "4" && $("#SelArea").val() == "0") {
-                    result = false;
-                    $("#sparea").html("请选择升级区域");
-                } else {
-                    $("#sparea").html("");
-                }
-
-                if ($("#selotherType").val() == "0") {
-                    result = false;
-                    $("#spotherType").html("请选择升级范围");
-                } else {
-                    $("#spotherType").html("");
-                }
-            }
-
-            return result;
-        }
-    </script>
 }
 
 

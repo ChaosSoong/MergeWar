@@ -1,16 +1,171 @@
 ﻿@{
-    Layout = null;
+    ViewBag.Title = "添加安全厂商信息";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<!DOCTYPE html>
-
-<html>
-<head>
-    <title>AddOrg</title>
-</head>
-<body>
-    <div>
-        
+<link href="~/Content/css/XTGL_AQCSGL_JBXX.css" rel="stylesheet" />
+@using Common;
+@using HCZZ.ModeDB;
+@using (Html.BeginForm("AddOrg", "System", FormMethod.Post))
+{
+    <div class="contentbody" id="contentbody">
+        <div class="contentInfo">
+            <ul style="height: 300px;">
+                <li>
+                    <span>基本信息</span>
+                </li>
+                <li class="liText">
+                    <span class="spanTitle">厂商名称:</span>
+                    <span class="spanText"><input type="text" id="txtName" name="txtName" maxlength="64"/></span>
+                    <span class="spanTitle">机构代码:</span>
+                    <span class="spanText"><input type="text" id="txtOrgcode" name="txtOrgcode" maxlength="6"/></span>
+                    <span class="spanTitle">联系人:</span>
+                    <span class="spanText"><input type="text" id="txtContact" name="txtContact" maxlength="64"/></span>
+                    <span class="spanTitle" style="width: 70px;">联系电话:</span>
+                    <span class="spanText"><input type="text" id="txtPhone" name="txtPhone" maxlength="13"/></span>
+                </li>
+                <li class="liText">
+                    <span class="spanTitle">邮箱:</span>
+                    <span class="spanText"><input type="text" id="txtEmail" name="txtEmail" maxlength="64"/></span>
+                    <span class="spanTitle">厂商地址:</span>
+                    <span class="spanText" style="width: 393px;"><input type="text" id="txtAddress" name="txtAddress" maxlength="64"/></span>
+                </li>
+                <li class="liBtn">
+                    <input class="selectbg" type="submit" id="" value="保存" />
+                    @*<input class="resetbg" type="reset" value="重置" />*@
+                </li>
+            </ul>
+        </div>
     </div>
-</body>
-</html>
+
+@*@{
+    ViewBag.Title = "添加安全厂商信息";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using Common;
+@using HCZZ.ModeDB;
+@using (Html.BeginForm("AddOrg", "System", FormMethod.Post))
+{
+    <div id="Cx" style="display: none">
+    </div>
+    <div class="Tjxx" id="TJ" style="display: none">
+    </div>
+    <table>
+        <tr>
+            <th colspan="4">
+                <h1>添加安全厂商信息</h1>
+            </th>
+        </tr>
+    </table>
+    <div id="mind" style="overflow-y: auto">
+        <table>
+            <tr>
+                <td width="30%" align="right">
+                    厂商名称：
+                </td>
+                <td colspan="3">
+                    <input type="text" id="txtName" name="txtName" class="_text" maxlength="64" /><span id="spName" class="color_ccc">*</span>
+                </td>
+            </tr>
+            <tr>
+                <td width="15%" align="right">
+                    厂商组织机构代码：
+                </td>
+                <td colspan="3">
+                    <input type="text" id="txtOrgcode" name="txtOrgcode" class="_text" maxlength="6" /><span id="spOrgcode" class="color_ccc">*</span>
+                </td>
+            </tr>
+            <tr>
+                <td width="15%" align="right">
+                    厂商地址：
+                </td>
+                <td colspan="3">
+                    <input type="text" id="txtAddress" name="txtAddress" class="_text" maxlength="64" /><span id="spAddress" class="color_ccc">*</span>
+                </td>
+            </tr>
+            <tr>
+                <td width="15%" align="right">
+                    联系人：
+                </td>
+                <td colspan="3">
+                    <input type="text" id="txtContact" name="txtContact" class="_text" maxlength="64" /><span id="spContact" class="color_ccc">*</span>
+                </td>
+            </tr>
+            <tr>
+                <td width="15%" align="right">
+                    联系人电话：
+                </td>
+                <td colspan="3">
+                    <input type="text" id="txtPhone" name="txtPhone" class="_text" maxlength="13" /><span id="spPhone" class="color_ccc">*</span>
+                </td>
+            </tr>
+            <tr>
+                <td width="15%" align="right">
+                    联系人邮件：
+                </td>
+                <td colspan="3">
+                    <input type="text" id="txtEmail" name="txtEmail" maxlength="64" class="_text" /><span id="spEmail" class="color_ccc">*</span>
+                </td>
+            </tr>
+            <tr>
+                <td align="center" colspan="4">
+                    <input class="btn_SS" type="submit" name="button" value="保存" />
+                </td>
+            </tr>
+        </table>
+    </div>*@
+}
+<script type="text/javascript">
+    $(function () {
+        $("form").submit(function () {
+            return subVal();
+        });
+    });
+
+    function subVal() {
+        var result = true;
+        if ($.trim($("#txtName").val()) == "") {
+            result = false;
+            $("#spName").html("厂商名称不能为空");
+        } else {
+            $("#spName").html("");
+        }
+
+        if ($.trim($("#txtOrgcode").val()) == "") {
+            result = false;
+            $("#spOrgcode").html("厂商组织机构代码不能为空");
+        } else {
+            $("#spOrgcode").html("");
+        }
+
+        if ($.trim($("#txtAddress").val()) == "") {
+            result = false;
+            $("#spAddress").html("厂商地址不能为空");
+        } else {
+            $("#spAddress").html("");
+        }
+
+        if ($.trim($("#txtContact").val()) == "") {
+            result = false;
+            $("#spContact").html("联系人不能为空");
+        } else {
+            $("#spContact").html("");
+        }
+
+        if ($.trim($("#txtPhone").val()) == "") {
+            result = false;
+            $("#spPhone").html("联系人电话不能为空");
+        } else {
+            $("#spPhone").html("");
+        }
+
+        if ($.trim($("#txtEmail").val()) == "") {
+            result = false;
+            $("#spEmail").html("联系人邮件不能为空");
+        } else {
+            $("#spEmail").html("");
+        }
+
+        return result;
+    }
+</script>
+

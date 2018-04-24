@@ -43,5 +43,12 @@ namespace HCZZ.ModeDB
         /// 创建时间
         /// </summary>
         public DateTime CreateTime { get; set; }
+        public int Num { get; set; }
+
+        public int IMEINum { get; set; }
+        public int IMSINum { get; set; }
+        public int MACNum { get; set; }
+
+        public int virtualNum { get; set; }
     }
 }

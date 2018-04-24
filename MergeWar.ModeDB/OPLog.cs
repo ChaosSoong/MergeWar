@@ -26,10 +26,9 @@ namespace HCZZ.ModeDB
        }
        public string IpAddress { get; set; }
        public DateTime CreateTime { get; set; }
-       public  long PageNum { get; set; }
-       public  string UserName { get; set; }
-
-        public OPLog()
+       public long PageNum { get; set; }
+       public string UserName { get; set; }
+       public OPLog()
         {
             IpAddress =HttpContext.Current.Request.UserHostAddress;
             IpAddress=IpAddress == "::1" ? "127.0.0.1" : IpAddress;
@@ -39,6 +38,19 @@ namespace HCZZ.ModeDB
                  UserName = ((UserInfo)HttpContext.Current.Session["userInfo"]).UserName;
                  UID = ((UserInfo) HttpContext.Current.Session["userInfo"]).ID;
             }
+        }
+        public OPLog(string module)
+        {
+            this.Module = module;
+            IpAddress = HttpContext.Current.Request.UserHostAddress;
+            IpAddress = IpAddress == "::1" ? "127.0.0.1" : IpAddress;
+            CreateTime = DateTime.Now;
+            if (((UserInfo)HttpContext.Current.Session["userInfo"]) != null)
+            {
+                UserName = ((UserInfo)HttpContext.Current.Session["userInfo"]).UserName;
+                UID = ((UserInfo)HttpContext.Current.Session["userInfo"]).ID;
+            }
+
         }
     }
 }

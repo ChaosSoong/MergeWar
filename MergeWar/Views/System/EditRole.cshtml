@@ -1,38 +1,121 @@
 ﻿@{
     ViewBag.Title = "编辑角色";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = null;
 }
 @using HCZZ.ModeDB
-<div id="Cx" style="display: none">
-</div>
-<div class="Tjxx" id="TJ" style="display: none">
-</div>
-<table>
-    <tr>
-        <th colspan="4">
-            <h1>
-                编辑角色
-            </h1>
-        </th>
-    </tr>
-</table>
-<div id="mind" style="overflow-y: auto">
-    <table>
+<style>
+    .But_css{
+        box-sizing: border-box;
+    cursor: pointer;
+    width: 360px;
+    height: 50px;
+    background-color: #1e1f2d;
+    color: #7bd2da;
+    border: none;
+    font: 14px "微软雅黑";
+    background-image: url(/Content/images/save_bg.png);
+    }
+</style>
+@*<table>
         <tr>
-            <td align="right" width="150px">角色名称：</td>
-            <td><input type="text" class="_text" name="txtName" maxlength="30" id="txtName" value="@Model.Name" /><span class="color_ccc" id="spName">*</span></td>
-        </tr>
-        <tr>
-            <td align="center" colspan="4">
-                <input class="btn_SS" type="button" onclick="SaveVal()" name="button" value="保存" onmouseover="this.className='Over_SS'"
-                       onmouseout="this.className='Onout_SS'" />
-            </td>
+            <th colspan="4">
+                <h1>
+                    编辑角色
+                </h1>
+            </th>
         </tr>
     </table>
-</div>
+    <div id="mind" style="overflow-y: auto">
+        <table>
+            <tr>
+                <td align="right" width="150px">角色名称：</td>
+                <td><input type="text" class="_text" name="txtName" maxlength="30" id="txtName" value="@Model.Name" /><span class="color_ccc" id="spName">*</span></td>
+            </tr>
+            <tr>
+                <td align="center" colspan="4">
+                    <input class="btn_SS" type="button" onclick="SaveVal()" name="button" value="保存" onmouseover="this.className='Over_SS'"
+                           onmouseout="this.className='Onout_SS'" />
+                </td>
+            </tr>
+        </table>
+    </div>
 
+    <script type="text/javascript">
+
+        function SaveVal() {
+            if (ckVal()) {
+                $.ajax
+                ({
+                    type: "post",
+                    url: '@Url.Content("~/System/EditRole")',
+                    dataType: "json",
+                    data: {Jid:@Model.Jid,Name:$("#txtName").val()},
+                    success: function (data, status) {
+                        if (typeof (data.err) != 'undefined' && data.err != "") {
+                            alert(data.err);
+                        } else {
+                            if (data.result == "OK") {
+                                alert("修改成功");
+                                parent.window.location.href='@Url.Content("~/System/RoleList")';
+                            } else if (data.result == "NULL") {
+                                alert("修改失败");
+                            }
+                        }
+                    },
+                    error: function (data, status, e) {
+                        alert(e);
+                    }
+                });
+            }
+        }
+
+        function ckVal() {
+            var result = true;
+
+            if ($("#txtName").val() == "") {
+                $("#spName").html("角色名称不能为空");result = false;
+            } else {
+                $("#spName").html("&nbsp;");
+            }
+            return result;
+        }
+    </script>*@
+<link href="~/Content/css/reset.css" rel="stylesheet" />
+<script src="~/Content/js/jquery-1.7.1.min.js"></script>
+<body>
+    <div class="pupMain" style="height:350px">
+        <ul>
+            <li class="title">
+                <span>编辑角色</span>
+                <span><img src="/Content/images/icon_close.png" onclick="layerClose()"></span>
+            </li>
+            <li>
+                <input type="text" class="_text" name="txtName" maxlength="30" id="txtName" value="@Model.Name" />@*<span><img src="images/star.png" /></span>*@
+            </li>
+            @*<li><span class="color_ccc" id="spName">*</span></li>*@
+            <li>
+                <select style="box-sizing: border-box;padding-left: 15px;background-image: url(../images/fhasjklfghhjko.png);width: 360px;height: 50px;background-color: #1e1f2d;border: 1px solid #263738;color: #7bd2da;font: 14px " 微软雅黑";"="" id="selUserType" name="selUserType">
+                    <option value="0">==请选择==</option>
+                    @{
+                        Dictionary<int, string> UserType_dic =HCZZ.Common.ChangeValue.UserListDIC();
+                        foreach (var item in UserType_dic)
+                        {
+                            <option value="@item.Key">@item.Value</option>
+                        }
+                    }
+                </select>
+            </li>
+            <li style="text-align: center;margin-top:30px;">
+                <input class="But_css" type="button" onclick="SaveVal()" name="button" value="保存" />
+            </li>
+        </ul>
+    </div>
+
+</body>
 <script type="text/javascript">
-   
+    $(function(){
+        $("#selUserType").val('@Model.UserType')
+    })
     function SaveVal() {
         if (ckVal()) {
             $.ajax
@@ -40,7 +123,11 @@
                 type: "post",
                 url: '@Url.Content("~/System/EditRole")',
                 dataType: "json",
-                data: {Jid:@Model.Jid,Name:$("#txtName").val()},
+                data: {
+                    Jid:@Model.Jid,
+                    Name:$("#txtName").val(),
+                    UserType: $("#selUserType").val()
+                },
                 success: function (data, status) {
                     if (typeof (data.err) != 'undefined' && data.err != "") {
                         alert(data.err);
@@ -59,15 +146,29 @@
             });
         }
     }
-
     function ckVal() {
         var result = true;
 
-        if ($("#txtName").val() == "") {
-            $("#spName").html("角色名称不能为空");result = false;
+        if ($("#txtName").val() == "" || $("#txtName").val() == "角色名称不能为空") {
+            $("#txtName").val("角色名称不能为空"); result = false;
         } else {
             $("#spName").html("&nbsp;");
         }
         return result;
+    }
+    $("#txtName").focus(function () {
+        if ($(this).val() == '角色名称不能为空') {
+            $(this).val("")
+        }
+    });
+    $("#txtName").blur(function () {
+        if ($(this).val() == "") {
+            $(this).val("@Model.Name")
+        }
+    });
+    //点击弹窗中的某个元素关闭自身（弹窗）
+    function layerClose() {
+        var index = parent.layer.getFrameIndex(window.name);
+        parent.layer.close(index);
     }
 </script>

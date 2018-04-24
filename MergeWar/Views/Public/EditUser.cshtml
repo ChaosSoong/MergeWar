@@ -1,0 +1,301 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<link href="~/Content/css/reset1.css" rel="stylesheet" />
+<script src="~/Content/js/jquery-1.7.1.min.js"></script>
+<style type="text/css">
+    .pupMain {
+        width: 800px;
+        height: 520px;
+        background-color: #161523;
+        margin: 0 auto;
+    }
+
+    .title {
+        width: 800px;
+        height: 65px;
+        background-image: url(/Content/images/title_bg.png);
+        background-size: 100% 100%;
+        line-height: 65px;
+    }
+
+        .title span:first-child {
+            float: left;
+            color: #b1b1b1;
+            font: 20px "微软雅黑";
+            margin-left: 20px;
+            margin-top: 19.5px;
+        }
+
+        .title span:last-child {
+            float: right;
+            margin-right: 20px;
+            cursor: pointer;
+        }
+
+        .title span img {
+            width: 15px;
+            height: 15px;
+        }
+
+    .pupMain ul li:last-child {
+        text-align: center;
+        margin-top: 30px;
+    }
+
+        .pupMain ul li:last-child input {
+            box-sizing: border-box;
+            cursor: pointer;
+            width: 360px;
+            height: 50px;
+            background-color: #1e1f2d;
+            color: #7bd2da;
+            border: none;
+            font: 14px "微软雅黑";
+        }
+
+            .pupMain ul li:last-child input.BCTJbtn {
+                width: 290px;
+                background-image: url(/Content/images/save_bg.png);
+            }
+
+            .pupMain ul li:last-child input.resetBtn {
+                width: 290px;
+                margin-left: 25px;
+                background-color: #21252F;
+                border: 1px solid #263738;
+            }
+
+    .spanTextHint {
+        margin-top: 8px;
+        margin-bottom: 12px;
+        color: #AA301C;
+        display: inline-block;
+        width: 100%;
+        text-align: left;
+        padding-left: 77px;
+    }
+
+    .XGXXTable {
+        width: 740px;
+        border: 1px solid #232C32;
+        margin: 20px auto;
+    }
+
+        .XGXXTable tr.XGXXTableTitle {
+            color: #b1b1b1;
+            font: 15px "微软雅黑";
+            height: 45px;
+            border-bottom: 1px solid #232C32;
+            background-color: #1B1D28;
+        }
+
+            .XGXXTable tr.XGXXTableTitle td {
+                padding-left: 35px;
+            }
+
+        .XGXXTable tr td input {
+            box-sizing: border-box;
+            margin-top: 20px;
+            padding-left: 15px;
+            width: 360px;
+            height: 45px;
+            background-color: #1e1f2d;
+            border: 1px solid #263738;
+            color: #4D7681;
+            font: 14px "微软雅黑";
+        }
+
+    .spanImg {
+        margin-left: 15px;
+    }
+
+    .spanImg1 {
+        margin-left: 10px;
+    }
+
+    .selectZJLX {
+        width: 205px;
+        height: 40px;
+        border: 1px solid #0A7891;
+        cursor: pointer;
+        background-color: #0B2A3C;
+        color: #7BD2DA;
+        margin-top: 20px;
+        padding-left: 15px;
+    }
+</style>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>EditUser</title>
+    @using System.Collections.Generic
+    @using System.Linq
+    @using HCZZ.Common
+    @using HCZZ.ModeDB
+    @{ UserInfo DBuser = (UserInfo)Session["userInfo"] as UserInfo;}
+</head>
+<body>
+    @using (Html.BeginForm("EditUser", "Public", FormMethod.Post))
+    {
+        <div>
+
+            <div class="pupMain">
+                <ul>
+                    <li class="title">
+                        <span>修改用户信息----<strong>@DBuser.UserName</strong></span>
+                        <span onclick="layerClose()"><img src="~/Content/images/icon_close.png" /></span>
+                    </li>
+                    <li>
+                        <table class="XGXXTable" border="0" cellspacing="0" cellpadding="0">
+                            <tr class="XGXXTableTitle">
+                                <td>基础信息 </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <span class="spanImg"><img src="~/Content/images/star.png" /></span>
+                                    <input style="width: 200px;" type="text" name="txtTrueName" id="txtTrueName" value="@DBuser.TrueName" placeholder="真实姓名" />
+                                    <span class="spanImg1"><img src="/Content/images/star.png" /></span>
+                                    <input style="width: 200px;" type="text" name="txtEmail" id="txtEmail" value="@DBuser.Email" placeholder="邮箱号码" />
+                                    <span class="spanImg1"><img src="/Content/images/star.png" /></span>
+                                    <input style="width: 200px;" type="text" name="txtMobile" id="txtMobile" value="@DBuser.Mobile" placeholder="手机号码" />
+                                </td>
+                            </tr>
+                            <tr>
+                                @*<td style="padding-bottom: 20px;">
+                                        <select name="" class="selectZJLX">
+                                            <option value="">证件类型</option>
+                                        </select>
+                                        <input style="width: 323px;margin-left: 20px;" name="" id="" value="" placeholder="证件号码" type="text">
+                                    </td>*@
+                                <td style="padding-bottom: 20px;">
+                                    <select name="txtCertifiID" id="txtCertifiID" class="selectZJLX" style="width: 323px;margin-left: 37px;">
+                                        <option value="0">证件类型</option>
+                                        <option value="1">身份证</option>
+                                        <option value="2">军官证</option>
+                                        <option value="3">港澳通行证</option>
+                                        <option value="4">护照</option>
+                                        <option value="5">驾驶证</option>
+                                    </select>
+                                    <input style="width: 323px;margin-left: 20px;" name="txtIdnumber" id="txtIdnumber" value="@DBuser.idNumber" placeholder="证件号码" type="text">
+                                </td>
+                            </tr>
+                            <tr class="XGXXTableTitle">
+                                <td>修改密码</td>
+                            </tr>
+                            <tr>
+                                <td style="padding-bottom: 20px;">
+                                    <span class="spanImg"><img src="/Content/images/star.png" /></span>
+                                    <input style="width: 200px;" type="password" name="txtOldPwd" id="txtOldPwd" value="" placeholder="原密码" />
+                                    <span class="spanImg1"><img src="/Content/images/star.png" /></span>
+                                    <input style="width: 200px;" type="password" name="txtNewPwd" id="txtNewPwd" value="" placeholder="新密码" />
+                                    <span class="spanImg1"><img src="/Content/images/star.png" /></span>
+                                    <input style="width: 200px;" type="password" name="txtPwd" id="txtPwd" value="" placeholder="确认密码" />
+                                </td>
+                            </tr>
+                        </table>
+                    </li>
+                    <li>
+                        <input class="BCTJbtn" type="submit" name="" id="" value="保存添加" />
+                        <input class="resetBtn" type="reset" name="" id="" value="重置" />
+                        <input type="hidden" id="HId" name="HId" value="@DBuser.ID" />
+                    </li>
+                </ul>
+            </div>
+        </div>
+    }
+    <script>
+        $(function () {
+            $("#txtCertifiID").val('@DBuser.idType')
+        })
+        //点击弹窗中的某个元素关闭自身（弹窗）
+        function layerClose() {
+            var index = parent.layer.getFrameIndex(window.name);
+            parent.layer.close(index);
+        }
+        $(function () {
+            $("form").submit(function () {
+                if (subVal()) {
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+        });
+        function subVal() {
+            var result = true;
+            var oldPwd = $.trim($("#txtOldPwd").val());
+            var NewPwd = $.trim($("#txtNewPwd").val());
+            var pwd = $.trim($("#txtPwd").val());
+
+            if (oldPwd != "" || NewPwd != "" || pwd != "") {
+                if (oldPwd == "") {
+                    result = false;
+                   alert("原密码不能为空");
+                } else {
+                    $("#spOldPwd").html("");
+                }
+                if (NewPwd == "") {
+                    result = false;
+                    alert("新密码不能为空");
+                } else if (NewPwd.length > 18 || NewPwd.length < 6) {
+                    result = false;
+                    alert("新密码长度在6-18位之间");
+                } else {
+                    $("#spNewPwd").html("");
+                }
+
+                if (pwd != NewPwd) {
+                    result = false;
+                    alert("两次密码不一致");
+                } else {
+                    $("#spPwd").html("");
+                }
+            }
+            if ($.trim($("#txtTrueName").val()) == "") {
+                result = false;
+                alert("真实姓名不能为空");
+            } else {
+                $("#spTrueName").html("");
+            }
+            if ($("#txtCertifiID").val() == "0") {
+                result = false;
+                alert("证件类型不能为空")
+            }
+            if ($.trim($("#txtIdnumber").val()) == "") {
+                result = false;
+                alert("证件号码不能为空");
+            } else {
+                $("#spIdnumber").html("");
+            }
+
+            if ($.trim($("#txtMobile").val()) == "") {
+                result = false;
+                alert("手机号码不能为空");
+            } else if (isNaN($.trim($("#txtMobile").val()))) {
+                result = false;
+                alert("手机号码只能是11或12位数字");
+            } else if ($.trim($("#txtMobile").val()).length != 11 && $.trim($("#txtMobile").val()).length != 12) {
+                result = false;
+                alert("手机号码的长度为11或12位");
+            } else {
+                $("#spMobile").html("");
+            }
+            var reg = new RegExp(/^\w+([-+.']\w+)*@@\w+([-.]\w+)*\.\w+([-.]\w+)*$/g);
+            if ($.trim($("#txtEmail").val()) == "") {
+                result = false;
+                $("#spEmail").html("邮箱不能为空");
+            } else if (!reg.test($.trim($("#txtEmail").val()))) {
+                result = false;
+                $("#spEmail").html("邮箱格式不正确");
+            } else {
+                $("#spEmail").html("");
+            }
+            return result;
+        }
+    </script>
+</body>
+</html>

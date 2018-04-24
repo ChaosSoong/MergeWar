@@ -1,84 +1,193 @@
 ﻿@using System.Collections.Generic
 @using System.Linq
-@using Common
+@using HCZZ.Common
 @using HCZZ.ModeDB
 <!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>@ViewBag.Title</title>
     @*<link rel="icon" href="@Url.Content("~/Content/images/f.ico")" type="image/x-icon"/>  *@
-    <link href="@Url.Content("~/Content/css/reset.css")" rel="stylesheet" type="text/css"/>
-    <link href="@Url.Content("~/Content/css/Layout.css")" rel="stylesheet" type="text/css"/>
-    <link href="@Url.Content("~/Content/css/publicHeader.css")" rel="stylesheet" type="text/css"/>
+    <link href="@Url.Content("~/Content/css/reset.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/css/Layout.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/css/publicHeader.css")" rel="stylesheet" type="text/css" />
     <script src="@Url.Content("~/Content/js/jquery-1.7.1.min.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Content/js/publicJS.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Content/layer/layer.js")" type="text/javascript"></script>
+    <style>
+        /* 定义模态对话框外面的覆盖层样式 */
+        #modal-overlay {
+            visibility: hidden;
+            position: absolute; /* 使用绝对定位或固定定位  */
+            left: 0px;
+            top: 0px;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            z-index: 1000;
+            background-color: #333;
+            opacity: 0.5; /* 背景半透明 */
+        }
+        /* 模态框样式 */
+        .modal-data {
+            width: 300px;
+            margin: 165px 500px;
+            background-color: #fff;
+            border: 1px solid #000;
+            padding: 15px;
+            text-align: center;
+            font-size: 15px;
+        }
+        .navList {
+             color:#616363;
+        }
+            .navList img {
+                vertical-align:middle;
+                margin-top:-3px;
+                padding-right:3px;
+            }
+        .navList a{
+            color:#616363;
+            padding-left:3px;
+            padding-right:3px;
+
+        }
+    </style>
 </head>
 @{
-    UserInfo DBuser = (UserInfo) Session["userInfo"];
-    IEnumerable<Sys_UserPowerInfo>TopIElist = DBuser._UserShowPage;
-    IEnumerable<Sys_UserPowerInfo>LeftIElist = DBuser._UserShowPage;
-    TopIElist = TopIElist.Where(a => a.PageType == 0 && !string.IsNullOrEmpty(a.FilePath)).OrderBy(a => a.Indexs);
+    int SpId = 0;
+    UserInfo DBuser = (UserInfo)Session["userInfo"];
+    IEnumerable<Sys_UserPowerInfo> TopIElist = DBuser.PowerList;
+    IEnumerable<Sys_UserPowerInfo> LeftIElist = DBuser.PowerList;
+    //TopIElist = TopIElist.Where(a => a.PageType == 0 && !string.IsNullOrEmpty(a.FilePath)).OrderBy(a => a.Indexs);
+    TopIElist = DBuser.PowerList.Where(m => m.Pid == 0).OrderBy(m => m.Indexs);
     List<Sys_UserPowerInfo> topList = TopIElist.ToList();
 
-    List<Sys_UserPowerInfo> LeftList=new List<Sys_UserPowerInfo>();
-    LeftIElist = LeftIElist.Where(a => a.Name == ViewBag.LfetShow && !string.IsNullOrEmpty(a.FilePath)).OrderBy(a => a.Indexs);
-    LeftList = LeftIElist.ToList();
+    //List<Sys_UserPowerInfo> LeftList = new List<Sys_UserPowerInfo>();
+    //LeftIElist = LeftIElist.Where(a => a.Name == ViewBag.LfetShow && !string.IsNullOrEmpty(a.FilePath)).OrderBy(a => a.Indexs);
+    //LeftList = LeftIElist.ToList();
 
-    IEnumerable<Sys_UserPowerInfo> ZleftIElist = DBuser._UserShowPage;
-    ZleftIElist = ZleftIElist.Where(a => a.Pid == LeftList[0].Id && !string.IsNullOrEmpty(a.FilePath)).OrderBy(a => a.Indexs);
-    LeftList = ZleftIElist.ToList();
- }
-     
+    //IEnumerable<Sys_UserPowerInfo> ZleftIElist = DBuser.PowerList;
+    //ZleftIElist = ZleftIElist.Where(a => a.Pid == LeftList[0].Id && !string.IsNullOrEmpty(a.FilePath)).OrderBy(a => a.Indexs);
+    //LeftList = ZleftIElist.ToList();
+}
+
 <body style="min-width:1366px">
-<!--最顶部top-->
-	<div class="top">
-		<div class="toplogo">
-			<img src=""/>
-		</div>
-		<div class="toplogin">
-			<span id="time"></span>
-			<span class="loginUser">欢迎<a href="#" style="color: #aaaaaa;display: inline-block;margin: 0px 3px;">@DBuser.UserName</a>登录</span>
-			<input type="button" name="" id="" value="快捷查询"/>
-		</div>
-	</div>
-<!--头部导航栏header-->
-<div class="header">
-    <ul>
-        @for (int i = 0; i < topList.Count; i++)
-        {
-            <li class="@( ViewBag.lishow == topList[i].Class ? topList[i].Class+"2" : topList[i].Class)">
-                <a href="@Url.Content("~/" + topList[i].FilePath + "")">@topList[i].Name</a>
-            </li>
-        }
-    </ul>
-</div>
-<div style="color: #616363; margin-right: 25px; height: 30px; line-height: 30px; float: right">
-    <ul>
-        <li><img src="@Url.Content("~/Content/images/home_icon.png")"/>@Html.Raw(ViewBag.location)</li>
-    </ul>
-</div>
-<!--左边子级页面-->
-<div class="content">
-    <div class="contentLeftNav">
-        <div class="sideNav" id="box">
-            <div class="sideNavLeft" id="left" style="height: 642px; left: 0px; display: inline-block;">
-                <div class="sideNavBtn" id="btn">收缩</div>
-                <ul>
-                    @for (int i = 0; i < LeftList.Count; i++)
-                    {
-                       <a href="@Url.Content("~/" + LeftList[i].FilePath + "")"> <li class="@(ViewBag.ashow == LeftList[i].SelShowValue ? LeftList[i].Class + "" + LeftList[i].Class.Substring(LeftList[i].Class.Length-1,1) + "" : LeftList[i].Class)" title="@LeftList[i].Name"></li></a>
-                    }
-                </ul>
-            </div>
+    <!--最顶部top-->
+    <div class="top">
+        <div class="toplogo">
+            <img src="" />
         </div>
-        <div class="sideNavBtnb" id="btnb" style="left: -66px;">
-            显示
+        <div class="toplogin">
+            <span id="time"></span>
+            <span class="loginUser">欢迎<a href="#" style="color: #aaaaaa;display: inline-block;margin: 0px 3px;">@DBuser.UserName</a>登录</span>
+            <input class="loginBtn" type="button" name="" id="" value="" onclick="myFunctionLogin()" />
+            <ul class="loginBtnUl" id="loginBtnUl">
+                <li onclick="myFunctionLogin(); AlertShow(800, 520, '/Public/EditUser')">修改用户信息</li>
+                <li onclick="myFunctionLogin()" id="Exit">安全退出</li>
+            </ul>
+            <input class="loginKJCX" type="button" name="" value="快捷查询" />
         </div>
     </div>
-            @RenderBody()
-	</div>
+    <!--头部导航栏header-->
+    <div class="header">
+        <ul>
+            @for (int i = 0; i < topList.Count; i++)
+            {
+                if (ViewBag.liShow == @topList[i].Class)
+                {
+                    SpId = topList[i].SpId;
+                }
+                    <li class="@(ViewBag.lishow == topList[i].Class ? topList[i].Class + "2" : topList[i].Class)">
+                        <a href="@Url.Content("~/" + DBuser.PowerList.Where(a => a.Pid == topList[i].SpId).OrderBy(m => m.Indexs).First().FilePath)">@topList[i].Name</a>
+                    </li>
+            }
+        </ul>
+    </div>
+    <div style="color: #616363; margin-right: 25px; height: 30px; line-height: 30px; float: right">
+        <ul>
+            <li class="navList"><img src="@Url.Content("~/Content/images/home_icon.png")" />@Html.Raw(ViewBag.location)</li>
+        </ul>
+    </div>
+    <!--左边子级页面-->
+    <div class="content">
+        <div class="contentLeftNav">
+            <div class="sideNav" id="box">
+                <div class="sideNavLeft" id="left" style="height: 770px; left: 0px; display: inline-block;">
+                    <div class="sideNavBtn" id="btn"><img src="@Url.Content("~/Content/images/shousuo.png")" /></div>
+                    <ul>
+                        @{
+                            IEnumerable<Sys_UserPowerInfo> IESlist = DBuser.PowerList.Where(m => m.Pid == SpId).OrderBy(m => m.Indexs);
+                            List<Sys_UserPowerInfo> Slist = IESlist.ToList();
+                        }
+                        @for (int i = 0; i < Slist.Count; i++)
+                        {
+                            <a href="@Url.Content("~/"+Slist[i].FilePath)">
+                                <li class="@(ViewBag.ashow == Slist[i].SelShowValue ? Slist[i].Class +  Slist[i].Class.Substring(Slist[i].Class.Length-1,1) + "" : Slist[i].Class)" title="@Slist[i].Name"></li>
+                            </a>
+                        }
+
+                    </ul>
+                </div>
+            </div>
+            <div class="sideNavBtnb" id="btnb" style="left: -66px;">
+                <img src="@Url.Content("~/Content/images/zhangkai.png")" />
+            </div>
+        </div>
+        @RenderBody()
+    </div>
+    <div id="modal-overlay">
+        <div class="modal-data">
+            <p id="msg">正在拼命加载中... </p>
+            <img src="~/Content/images/loading7.gif" />
+            <p>点击<a onclick="hideOverlay()" href="">这里</a>关闭</p>
+        </div>
+    </div>
+    <div id="showDiv" style="width: 100%; height: 100%; position: absolute; top: 0px; left: 0px;
+        background-color: #7C7C7C; z-index: 5000; opacity: 0.2; display: none;
+        background-position: initial initial; background-repeat: initial initial;">
+        <div id="imgdiv" style="width:100px;align-content: center;"><img src="@Url.Content("~/Content/images/loading7.gif")" /></div>
+    </div>
     <script type="text/javascript">
+        function showOverlay(msg) {
+            var e1 = document.getElementById('modal-overlay');
+            e1.style.visibility = "visible";
+            $("#msg").html(msg);
+        }
+        function hideOverlay() {
+            var e1 = document.getElementById('modal-overlay');
+            e1.style.visibility = "hidden";
+        }
+        @Html.Raw(ViewBag.errscript);
+        $(function () {
+            $(".WLFX").click(function () { a(this) })
+            $(".CPFX").click(function () { a(this) })
+            $(".TZPZ").click(function () { a(this) })
+            //$(".BJGL").click(function () { a(this) })
+        })
+        function a(obj) {
+            $("."+obj.attributes[0].value + " a").attr("href","#");
+            alert("此功能正在开发。。。");
+        }
+        function regtxt() {
+            var regInput = new RegExp(/^[\u4e00-\u9fa5A-Za-z\d_( ).,—@@:-]*$/);
+            var varInput = $("input[type='text'][value!='']");
+            for (var i = 0; i < varInput.length; i++) {
+                if (!regInput.test(varInput[i].value)) {
+                    alert("文本输入不能存在特殊字符");
+                    return false;
+                }
+            }
+            return true;
+        }
+        $("#Exit").click(function () {
+            if (confirm("确定退出系统吗？")) {
+                location.href = "/Public/Exit";
+            }
+        })
+        ; function myFunctionLogin(pe) {
+            $('.loginBtnUl').toggle(100);
+        };
     </script>
 </body>
 </html>

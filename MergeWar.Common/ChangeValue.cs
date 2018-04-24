@@ -8,11 +8,62 @@ using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using HCZZ.ModeDB;
+using System.Net;
+using System.IO;
 
-namespace Common
+namespace HCZZ.Common
 {
     public class ChangeValue
     {
+        /// <summary>
+        /// 对字符串进行Base64编码/解码  1：编码 其他：解码
+        /// </summary>
+        /// <param name="strType">1：编码 其他：解码</param>
+        /// <param name="content">编码/解码 内容</param>
+        /// <returns></returns>
+        public static string Base64Str(int strType, string content)
+        {
+            if (strType == 1)
+            {
+                byte[] bytes = Encoding.UTF8.GetBytes(content);
+                return Convert.ToBase64String(bytes);
+            }
+            else
+            {
+                byte[] outpub = Convert.FromBase64String(content);
+                return Encoding.UTF8.GetString(outpub);
+            }
+        }
+        /// <summary>
+        /// 通讯函数
+        /// </summary>
+        /// <param name="url">请求Url</param>
+        /// <returns></returns>
+        public static string SendRequest(string url)
+        {
+            string httpUrl = url;
+            try
+            {
+                string stringResponse = string.Empty;
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(httpUrl);
+                request.Method = "GET";
+                request.Timeout = 30 * 1000;//连接超时 Timeout 默认 100 秒
+                request.ReadWriteTimeout = 30 * 1000; //读取数据超时 ReadWriteTimeout 默认为 300 秒
+                //request.ContentType = "text/html;charset=UTF-8";
+
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                Stream myResponseStream = response.GetResponseStream();
+                StreamReader myStreamReader = new StreamReader(myResponseStream, Encoding.UTF8);
+                stringResponse = myStreamReader.ReadToEnd();
+                myStreamReader.Close();
+                myResponseStream.Close();
+                return stringResponse;
+            }
+            catch (Exception ex)
+            {
+                return "-1";
+            }
+        }
         /// <summary>
         /// 转换场所审计状态
         /// </summary>
@@ -47,10 +98,14 @@ namespace Common
         {
             switch (authType)
             {
-                case "1": return "AuditLog";
-                case "2": return "NetLog";
-                case "3": return "Termianl";
+                case "1": return "AuditLog";//上下线日志信息
+                case "2": return "NetLog";//上网日志信息
+                case "3": return "Termianl";//终端特征
                 case "4": return "";
+                case "AuditLog": return "上下线日志信息";
+                case "NetLog": return "上网日志信息";
+                case "Termianl": return "终端特征信息";
+                case "": return "";
                 default: return "";
             }
         }
@@ -92,9 +147,28 @@ namespace Common
                     return level;
             }
         }
+        public static string StrUrlHtml(string url, int num)
+        {
+            string result = "";
+            if (url != null)
+            {
+                int length = url.Length / num;
+                length = url.Length % num == 0 ? length : (length + 1);
+                for (int i = 0; i < length; i++)
+                {
+                    if (i + 1 != length)
+                        result += "<p>" + url.Substring(i * num, num) + "</p>";
+                    else
+                        result += "<p>" + url.Substring(i * num) + "</p>";
+                }
+            }
+
+            return result;
+        }
+
         public static Dictionary<int, string> GetLocaTypeList()
         {
-            Dictionary<int, string> dic = new Dictionary<int, string> 
+            Dictionary<int, string> dic = new Dictionary<int, string>
             {
                 {1,"旅店宾馆类"},
                 {2,"图书馆阅览室"},
@@ -153,7 +227,7 @@ namespace Common
                 case 0: return "关闭";
                 case 1: return "网站验证";
                 case 2: return "第三方验证";
-                case 3: return "微信验证";
+                case 3: return "微信";
                 case 4: return "WIFIDOG验证";
                 case 5: return "下行短信";
                 case 99: return "其他";
@@ -164,7 +238,7 @@ namespace Common
 
         public static Dictionary<int, string> GetConnectTypeList()
         {
-            Dictionary<int, string> dic = new Dictionary<int, string> 
+            Dictionary<int, string> dic = new Dictionary<int, string>
             {
                 {1,"专网"},
                 {2,"专线"},
@@ -181,7 +255,7 @@ namespace Common
 
         public static Dictionary<string, string> GetServiceBusinesList()
         {
-            Dictionary<string, string> dic = new Dictionary<string, string> 
+            Dictionary<string, string> dic = new Dictionary<string, string>
             {
                 {"01","中国电信"},
                 {"02","中国网通"},
@@ -406,59 +480,61 @@ namespace Common
             return userType;
         }
 
-        public static UserInfo GteUserVal(FormCollection form)
+        public static UserInfo GteUserVal(FormCollection form, string UserNameType)
         {
-           UserInfo DBuser=new UserInfo();
-           DBuser.UserName = form["txtName"];
-           DBuser.TrueName = form["txtTrueName"];
-           DBuser.idNumber = form["txtidNumber"];
-           DBuser.idType = Convert.ToInt32(form["selIdType"]);
-           DBuser.Mobile = form["txtMobile"];
-           DBuser.Email = form["txtEmail"];
-           DBuser.Type = Convert.ToInt32(form["selUserType"]);
-           switch (DBuser.Type)
-           {
-               case 8:
-                   DBuser.ProID = (string.IsNullOrEmpty(form["selProvince"]) ? 0 : Convert.ToInt32(form["selProvince"]));
-                   DBuser.CityID = (string.IsNullOrEmpty(form["selCity"]) ? 0 : Convert.ToInt32(form["selCity"]));
-                   DBuser.AId = (string.IsNullOrEmpty(form["SelArea"]) ? 0 : Convert.ToInt32(form["SelArea"]));
-                   DBuser.PId = 0;
-                   break;
-               case 7:
-                   DBuser.ProID = 0;
-                   DBuser.CityID = 0;
-                   DBuser.AId = 0;
-                   DBuser.PId = 0;
-                   break;
-               case 6:
-                   DBuser.ProID = Convert.ToInt32(form["selProvince"]);
-                   DBuser.CityID = 0;
-                   DBuser.AId = 0;
-                   DBuser.PId = 0;
-                   break;
-               case 4:
-                   DBuser.ProID = Convert.ToInt32(form["selProvince"]);
-                   DBuser.CityID = Convert.ToInt32(form["selCity"]);
-                   DBuser.AId = 0;
-                   DBuser.PId = 0;
-                   break;
-               case 2:
-                   DBuser.ProID = Convert.ToInt32(form["selProvince"]);
-                   DBuser.CityID = Convert.ToInt32(form["selCity"]);
-                   DBuser.AId = Convert.ToInt32(form["SelArea"]);
-                   DBuser.PId = 0;
-                   break;
-               default:
-                   DBuser.ProID = Convert.ToInt32(form["selProvince"]);
-                   DBuser.CityID = Convert.ToInt32(form["selCity"]);
-                   DBuser.AId = Convert.ToInt32(form["SelArea"]);
-                   DBuser.PId = Convert.ToInt32(form["selPolice"]);
-                   break;
-           }
-           DBuser.CreateTime = DateTime.Now;
-           DBuser.JId = Convert.ToInt32(form["Txtpart"]);
-           if (!string.IsNullOrEmpty(form["txtPassword"]))
-           DBuser.Password = StringFilter.getSHA1Code(form["txtPassword"]);
+            UserInfo DBuser = new UserInfo();
+            if (UserNameType == "1")
+                DBuser.UserName = form["txtName"];
+            DBuser.Password = string.IsNullOrEmpty(form["newpwd"]) ? "" : StringFilter.getSHA1Code(form["newpwd"]);
+            DBuser.TrueName = form["txtTrueName"];
+            DBuser.idNumber = form["txtidNumber"];
+            DBuser.idType = Convert.ToInt32(form["selIdType"]);
+            DBuser.Mobile = form["txtMobile"];
+            DBuser.Email = form["txtEmail"];
+            DBuser.Type = Convert.ToInt32(form["selUserType"]);
+            switch (DBuser.Type)
+            {
+                case 8:
+                    DBuser.ProID = (string.IsNullOrEmpty(form["selProvince"]) ? 0 : Convert.ToInt32(form["selProvince"]));
+                    DBuser.CityID = (string.IsNullOrEmpty(form["selCity"]) ? 0 : Convert.ToInt32(form["selCity"]));
+                    DBuser.AId = (string.IsNullOrEmpty(form["SelArea"]) ? 0 : Convert.ToInt32(form["SelArea"]));
+                    DBuser.PId = 0;
+                    break;
+                case 7:
+                    DBuser.ProID = 0;
+                    DBuser.CityID = 0;
+                    DBuser.AId = 0;
+                    DBuser.PId = 0;
+                    break;
+                case 6:
+                    DBuser.ProID = Convert.ToInt32(form["selProvince"]);
+                    DBuser.CityID = 0;
+                    DBuser.AId = 0;
+                    DBuser.PId = 0;
+                    break;
+                case 4:
+                    DBuser.ProID = Convert.ToInt32(form["selProvince"]);
+                    DBuser.CityID = Convert.ToInt32(form["selCity"]);
+                    DBuser.AId = 0;
+                    DBuser.PId = 0;
+                    break;
+                case 2:
+                    DBuser.ProID = Convert.ToInt32(form["selProvince"]);
+                    DBuser.CityID = Convert.ToInt32(form["selCity"]);
+                    DBuser.AId = Convert.ToInt32(form["SelArea"]);
+                    DBuser.PId = 0;
+                    break;
+                default:
+                    DBuser.ProID = Convert.ToInt32(form["selProvince"]);
+                    DBuser.CityID = Convert.ToInt32(form["selCity"]);
+                    DBuser.AId = Convert.ToInt32(form["SelArea"]);
+                    DBuser.PId = Convert.ToInt32(form["selPolice"]);
+                    break;
+            }
+            DBuser.CreateTime = DateTime.Now;
+            DBuser.JId = Convert.ToInt32(form["Txtpart"]);
+            if (!string.IsNullOrEmpty(form["txtPassword"]))
+                DBuser.Password = StringFilter.getSHA1Code(form["txtPassword"]);
             return DBuser;
         }
         /// <summary>
@@ -532,9 +608,9 @@ namespace Common
         {
             switch (Verified)
             {
-                case 1: return "待审核";
-                case 3: return "审核成功";
-                case 4: return "审核失败";
+                case 1: return "<font color='#85858A'>待审核</font>";
+                case 3: return "<font color='#3A953F'>审核成功</font>";
+                case 4: return "<font color='#ff4b38'>审核失败</font>";
                 default: return "";
             }
         }
@@ -573,13 +649,13 @@ namespace Common
             switch (val)
             {
                 case 1:
-                    return "实  名";
+                    return "实名信息";
                 case 2:
-                    return "硬件特征";
-                case 3:
                     return "虚拟身份";
+                case 3:
+                    return "硬件特征";
                 default:
-                    return "实  名";
+                    return "实名信息";
             }
         }
         /// <summary>
@@ -609,7 +685,7 @@ namespace Common
             UserInfo user = (UserInfo)current.Session["userinfo"];
             if (user != null)
             {
-                IEnumerable<Sys_UserPowerInfo> list = user._UserShowPage.Where(m => m.Pid > 0 && m.FilePath.ToUpper().Equals(path.ToUpper()));
+                IEnumerable<Sys_UserPowerInfo> list = user.PowerList.Where(m => m.Pid > 0 && m.FilePath.ToUpper().Equals(path.ToUpper()));
                 if (list != null && list.ToList().Count > 0)
                     return list.First().SelValues;
             }
@@ -703,7 +779,7 @@ namespace Common
             {
                 case 1: return "手机号码";
                 case 2: return "设备MAC地址";
-                case 3: return "IMEI";
+                case 3: return "批量导入黑名单";
                 default: return "";
             }
         }
@@ -745,6 +821,25 @@ namespace Common
                 case "赶集网": return "48";
                 case "58同城": return "49";
                 case "QQ微博": return "50";
+                case "01": return "HTTP协议";
+                case "02": return "WAP协议";
+                case "03": return "SMTP协议";
+                case "04": return "POP3协议";
+                case "05": return "IMAP协议";
+                case "06": return "NNTP协议";
+                case "07": return "FTP协议";
+                case "08": return "SFTP协议";
+                case "09": return "TELNET协议";
+                case "10": return "HTTPS协议";
+                case "11": return "RSTP协议";
+                case "12": return "MMS协议";
+                case "13": return "WEP协议";
+                case "14": return "WPA协议";
+                case "15": return "PPTP协议";
+                case "16": return "L2TP协议";
+                case "17": return "SOCKS代理协议";
+                case "18": return "Compo协议";
+                case "19": return "Cmsmtp协议";
                 case "20": return "QQ";
                 case "21": return "淘宝";
                 case "22": return "微信";
@@ -778,6 +873,30 @@ namespace Common
             }
         }
         /// <summary>
+        /// 对虚拟身份类型值进行处理
+        /// </summary>
+        /// <param name="pl"></param>
+        /// <returns></returns>
+        public Dictionary<int, string> RefVidDetailDic(List<DatasInfo> pl)
+        {
+            pl = pl.FindAll(a => !string.IsNullOrEmpty(a.NETWORK_APP) && !a.NETWORK_APP.Contains("01"));
+
+            List<int> list = new List<int>() { 20, 21, 22, 23, 24, 25, 26, 27, 29, 30, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55 };
+            Dictionary<int, string> dic = new Dictionary<int, string>();
+            if (pl != null && pl.Count > 0)
+            {
+                for (int i = 0; i < list.Count; i++)
+                {
+                    var tempList = pl.Where(a => a.NETWORK_APP.Contains(list[i].ToString()) && !string.IsNullOrEmpty(a.NETWORK_APP_VALUES));
+                    if (tempList != null&& tempList.ToList()!=null && tempList.ToList().Count > 0)
+                        dic.Add(list[i], pl.Find(a => a.NETWORK_APP.Contains(list[i].ToString())) == null ? "" : String.Join(",", tempList.ToList().Select(a => a.NETWORK_APP_VALUES)));
+                    else
+                        dic.Add(list[i], "");
+                }
+            }
+            return dic;
+        }
+        /// <summary>
         /// 将数值型IP转换为String型
         /// </summary>
         /// <param name="value"></param>
@@ -796,7 +915,7 @@ namespace Common
             }
             return ipInfo.ToString();
         }
-                /// <summary>
+        /// <summary>
         /// 上网日志协议信息
         /// </summary>
         /// <returns></returns>
@@ -814,7 +933,7 @@ namespace Common
         /// <returns></returns>
         public static Dictionary<string, string> GetNetworkAppList()
         {
-            Dictionary<string, string> dic = new Dictionary<string, string>() 
+            Dictionary<string, string> dic = new Dictionary<string, string>()
             {
                 {"-1","所有虚拟身份"},{"01","HTTP协议"},{"02","WAP协议"},{"03","SMTP协议"},{"04","POP3协议"},
                 {"05","IMAP协议"},{"06","NNTP协议"},{"07","FTP协议"},{"08","SFTP协议"},{"09","TELNET协议"},{"10","HTTPS协议"},
@@ -847,8 +966,8 @@ namespace Common
         /// <returns></returns>
         public static Dictionary<int, string> ProjectType()
         {
-            Dictionary<int, string> dic = new Dictionary<int, string>() 
-            { 
+            Dictionary<int, string> dic = new Dictionary<int, string>()
+            {
                 {1,"户外（全向）"},
                 {2,"户外（定向）"},
                 {3,"车载"},
@@ -866,8 +985,8 @@ namespace Common
         /// <returns></returns>
         public static Dictionary<int, string> CasesType()
         {
-            Dictionary<int, string> dic = new Dictionary<int, string>() 
-            { 
+            Dictionary<int, string> dic = new Dictionary<int, string>()
+            {
                 {1,"Atheros"},
                 {2,"7620N"},
                 {3,"X86"},
@@ -881,8 +1000,8 @@ namespace Common
         /// <returns></returns>
         public static Dictionary<string, string> GetCertifiCateList()
         {
-            Dictionary<string, string> dic = new Dictionary<string, string>() 
-            { 
+            Dictionary<string, string> dic = new Dictionary<string, string>()
+            {
                 {"111","居民身份证"},
                 {"112","临时居民身份证"},
                 {"113","户口薄"},
@@ -1036,8 +1155,8 @@ namespace Common
         /// <returns></returns>
         public static Dictionary<int, string> ConfigType()
         {
-            Dictionary<int, string> dic = new Dictionary<int, string>() 
-            { 
+            Dictionary<int, string> dic = new Dictionary<int, string>()
+            {
                 {1,"心跳包间隔时间"},
                 {2,"配置信息查询间隔时间"},
                 {3,"电子围栏信息发送时间"},
@@ -1078,6 +1197,7 @@ namespace Common
                 case 11: return "时间窗口内采集数据去重";
                 case 12: return "密钥";
                 case 13: return "初始向量";
+                case 14: return "分析碰撞匹配次数";
                 default: return "";
             }
         }
@@ -1120,6 +1240,8 @@ namespace Common
                 return val + "小时";
             else if (type == 12 || type == 13)
                 return val;
+            else if (type == 14)
+                return val + "次";
             else
                 return val + "分钟";
         }
@@ -1218,10 +1340,10 @@ namespace Common
         /// <returns></returns>
         public static Dictionary<int, string> UserListDIC()
         {
-            Dictionary<int, string> dic = null;
+            Dictionary<int, string> dic = new Dictionary<int, string>();
             int userType = GetUserType()[0];
             if (userType == 1)
-                dic = new Dictionary<int, string> { { 7, "全国用户" }, { 6, "省用户" }, { 4, "市局用户" }, { 2, "分局用户" }, { 3, "派出所用户" }, { 8, "运营用户" } };
+                dic = new Dictionary<int, string> { { 1, "管理员" }, { 7, "全国用户" }, { 6, "省用户" }, { 4, "市局用户" }, { 2, "分局用户" }, { 3, "派出所用户" }, { 8, "运营用户" } };
             else if (userType == 2)
                 dic = new Dictionary<int, string> { { 3, "派出所用户" } };
             else if (userType == 4)
@@ -1230,6 +1352,8 @@ namespace Common
                 dic = new Dictionary<int, string> { { 4, "市局用户" }, { 2, "分局用户" }, { 3, "派出所用户" } };
             else if (userType == 7)
                 dic = new Dictionary<int, string> { { 6, "省用户" }, { 4, "市局用户" }, { 2, "分局用户" }, { 3, "派出所用户" } };
+            else if (userType == 8)
+                dic = new Dictionary<int, string> { { 7, "全国用户" }, { 6, "省用户" }, { 4, "市局用户" }, { 2, "分局用户" }, { 3, "派出所用户" }, { 8, "运营用户" } };
             return dic;
         }
     }

@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:tns="http://server.bigdata.com/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsp1_2="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" name="BigDataService" targetNamespace="http://server.bigdata.com/" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <xsd:schema>
+      <xsd:import schemaLocation="http://192.168.0.80:8080/bigdataserver/bigdataserver?xsd=1" namespace="http://server.bigdata.com/" />
+    </xsd:schema>
+  </types>
+  <message name="appearDevMAC">
+    <part name="parameters" element="tns:appearDevMAC" />
+  </message>
+  <message name="appearDevMACResponse">
+    <part name="parameters" element="tns:appearDevMACResponse" />
+  </message>
+  <message name="disappearDevMAC">
+    <part name="parameters" element="tns:disappearDevMAC" />
+  </message>
+  <message name="disappearDevMACResponse">
+    <part name="parameters" element="tns:disappearDevMACResponse" />
+  </message>
+  <message name="collisionAnalysisMAC">
+    <part name="parameters" element="tns:collisionAnalysisMAC" />
+  </message>
+  <message name="collisionAnalysisMACResponse">
+    <part name="parameters" element="tns:collisionAnalysisMACResponse" />
+  </message>
+  <message name="accompanyAnalysisDetailMAC">
+    <part name="parameters" element="tns:accompanyAnalysisDetailMAC" />
+  </message>
+  <message name="accompanyAnalysisDetailMACResponse">
+    <part name="parameters" element="tns:accompanyAnalysisDetailMACResponse" />
+  </message>
+  <message name="queryFenchTerminalInfo">
+    <part name="parameters" element="tns:queryFenchTerminalInfo" />
+  </message>
+  <message name="queryFenchTerminalInfoResponse">
+    <part name="parameters" element="tns:queryFenchTerminalInfoResponse" />
+  </message>
+  <message name="accompanyAnalysisMAC">
+    <part name="parameters" element="tns:accompanyAnalysisMAC" />
+  </message>
+  <message name="accompanyAnalysisMACResponse">
+    <part name="parameters" element="tns:accompanyAnalysisMACResponse" />
+  </message>
+  <message name="collisionAnalysisDetailMAC">
+    <part name="parameters" element="tns:collisionAnalysisDetailMAC" />
+  </message>
+  <message name="collisionAnalysisDetailMACResponse">
+    <part name="parameters" element="tns:collisionAnalysisDetailMACResponse" />
+  </message>
+  <message name="queryTermianlNetworkLog">
+    <part name="parameters" element="tns:queryTermianlNetworkLog" />
+  </message>
+  <message name="queryTermianlNetworkLogResponse">
+    <part name="parameters" element="tns:queryTermianlNetworkLogResponse" />
+  </message>
+  <message name="queryTermianlAccessLog">
+    <part name="parameters" element="tns:queryTermianlAccessLog" />
+  </message>
+  <message name="queryTermianlAccessLogResponse">
+    <part name="parameters" element="tns:queryTermianlAccessLogResponse" />
+  </message>
+  <portType name="BigDataService">
+    <operation name="appearDevMAC">
+      <input wsam:Action="http://server.bigdata.com/BigDataService/appearDevMACRequest" message="tns:appearDevMAC" />
+      <output wsam:Action="http://server.bigdata.com/BigDataService/appearDevMACResponse" message="tns:appearDevMACResponse" />
+    </operation>
+    <operation name="disappearDevMAC">
+      <input wsam:Action="http://server.bigdata.com/BigDataService/disappearDevMACRequest" message="tns:disappearDevMAC" />
+      <output wsam:Action="http://server.bigdata.com/BigDataService/disappearDevMACResponse" message="tns:disappearDevMACResponse" />
+    </operation>
+    <operation name="collisionAnalysisMAC">
+      <input wsam:Action="http://server.bigdata.com/BigDataService/collisionAnalysisMACRequest" message="tns:collisionAnalysisMAC" />
+      <output wsam:Action="http://server.bigdata.com/BigDataService/collisionAnalysisMACResponse" message="tns:collisionAnalysisMACResponse" />
+    </operation>
+    <operation name="accompanyAnalysisDetailMAC">
+      <input wsam:Action="http://server.bigdata.com/BigDataService/accompanyAnalysisDetailMACRequest" message="tns:accompanyAnalysisDetailMAC" />
+      <output wsam:Action="http://server.bigdata.com/BigDataService/accompanyAnalysisDetailMACResponse" message="tns:accompanyAnalysisDetailMACResponse" />
+    </operation>
+    <operation name="queryFenchTerminalInfo">
+      <input wsam:Action="http://server.bigdata.com/BigDataService/queryFenchTerminalInfoRequest" message="tns:queryFenchTerminalInfo" />
+      <output wsam:Action="http://server.bigdata.com/BigDataService/queryFenchTerminalInfoResponse" message="tns:queryFenchTerminalInfoResponse" />
+    </operation>
+    <operation name="accompanyAnalysisMAC">
+      <input wsam:Action="http://server.bigdata.com/BigDataService/accompanyAnalysisMACRequest" message="tns:accompanyAnalysisMAC" />
+      <output wsam:Action="http://server.bigdata.com/BigDataService/accompanyAnalysisMACResponse" message="tns:accompanyAnalysisMACResponse" />
+    </operation>
+    <operation name="collisionAnalysisDetailMAC">
+      <input wsam:Action="http://server.bigdata.com/BigDataService/collisionAnalysisDetailMACRequest" message="tns:collisionAnalysisDetailMAC" />
+      <output wsam:Action="http://server.bigdata.com/BigDataService/collisionAnalysisDetailMACResponse" message="tns:collisionAnalysisDetailMACResponse" />
+    </operation>
+    <operation name="queryTermianlNetworkLog">
+      <input wsam:Action="http://server.bigdata.com/BigDataService/queryTermianlNetworkLogRequest" message="tns:queryTermianlNetworkLog" />
+      <output wsam:Action="http://server.bigdata.com/BigDataService/queryTermianlNetworkLogResponse" message="tns:queryTermianlNetworkLogResponse" />
+    </operation>
+    <operation name="queryTermianlAccessLog">
+      <input wsam:Action="http://server.bigdata.com/BigDataService/queryTermianlAccessLogRequest" message="tns:queryTermianlAccessLog" />
+      <output wsam:Action="http://server.bigdata.com/BigDataService/queryTermianlAccessLogResponse" message="tns:queryTermianlAccessLogResponse" />
+    </operation>
+  </portType>
+  <binding name="BigDataServiceImplPortBinding" type="tns:BigDataService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="appearDevMAC">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="disappearDevMAC">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="collisionAnalysisMAC">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="accompanyAnalysisDetailMAC">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="queryFenchTerminalInfo">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="accompanyAnalysisMAC">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="collisionAnalysisDetailMAC">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="queryTermianlNetworkLog">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="queryTermianlAccessLog">
+      <soap:operation soapAction="" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <service name="BigDataService">
+    <port name="BigDataServiceImplPort" binding="tns:BigDataServiceImplPortBinding">
+      <soap:address location="http://192.168.0.80:8080/bigdataserver/bigdataserver" />
+    </port>
+  </service>
+</definitions>

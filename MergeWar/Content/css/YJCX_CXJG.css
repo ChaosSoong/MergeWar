@@ -1,0 +1,109 @@
+
+		
+		
+		
+		
+		
+		
+		.content .contentbody{display: inline-block;width:100%;min-width: 1297.7px;background-color: #1e1f2d;}
+		.content .contentbody .contentTopNav{z-index: 3;height: 60px;padding-right: 20px;background-color: #1E1F2D;overflow: hidden;}
+		.content .contentbody .contentTopNav ul{display: inline-block;float: right;}
+		.content .contentbody .contentTopNav ul li{display: inline-block;color:#616363;height: 43px;line-height: 43px;}
+		.content .contentbody .contentTopNav ul li img{vertical-align: middle;}
+		/*.content .contentbody .contentTopNav a{color: #616363;display: inline-block;height: 43px;line-height: 43px;}*/
+		
+		.content .contentbody .contentTitle{height: 50px;border-bottom: 1px solid #181926;width: 98%;margin-left: 1%;margin-top: 10px;}
+		/*.content .contentbody .contentTitle span{font: 20px "microsoft yahei";margin-top: 17px;color: #b1b1b1;display: inline-block;padding-left: 15px;}
+		.content .contentbody .contentTitle input{float: right;margin-top: 14px;border-radius: 3px;color: #5D9BA3;font: 13px "微软雅黑";cursor: pointer;}
+		.content .contentbody .contentTitle input.add{margin-right:12px;width: 95px;height: 33px;border: 1px solid #25576D;background-color: transparent;}
+		.content .contentbody .contentTitle input.search{margin-right:18px;width: 75px;height: 33px;border: none;background-image: url(../images/boxbg_icon1.png);padding-right: 13px;}*/
+		.content .contentbody  .contentTitle ul li{float: left;cursor: pointer;font-size: 12px;color: #b8b8b8;background-color: #222139;padding: 8px 15px;border: 1px solid #2C2D47;border-left: none;}
+		.content .contentbody  .contentTitle ul li:first-child{border-left: 1px solid #2C2D47;}
+		.content .contentbody  .contentTitle ul li.active{background-color: #202130;border-bottom: none;}
+	
+	
+		.content .contentbody .contentConditions{height: 140px;border-bottom: 1px solid #181926;}
+		.content .contentbody .contentConditions ul li {display: inline-block;margin-top: 20px;margin-left: 45px;}
+		.content .contentbody .contentConditions ul li span{display: inline-block;text-align: right;width: 65px;height: 30px;line-height: 30px;color: #b1b1b1;font-size: 13px;font-family: "微软雅黑";}
+		.content .contentbody .contentConditions ul li select{
+			/*Chrome和Firefox里面的边框是不一样的，所以复写了一下*/
+			margin-left:5px;border: solid 1px #263738;width: 90px;height: 30px;color: #548C94;font-size: 13px;font-family: "微软雅黑"; padding-right: 14px;padding-left: 8px;
+			
+			/*很关键：将默认的select选择框样式清除*/
+			appearance:none;
+			-moz-appearance:none;
+			-webkit-appearance:none;
+			
+			/*在选择框的最右侧中间显示小箭头图片*/
+			background: url("../images/select_icon2.png") no-repeat scroll right center transparent;
+			}
+		.content .contentbody .contentConditions ul li input{width: 188px;height: 30px;background-color: transparent;border:1px solid #263738;color: #548C94;padding-left: 5px;padding-right: 5px;box-sizing: border-box;margin-left: 16px;}	
+		.content .contentbody .contentConditions ul li.Conditions6{}
+		.content .contentbody .contentConditions ul li.Conditions6 input{width: 88px;height: 30px;font-size: 14px;font-family: "微软雅黑";}
+		.content .contentbody .contentConditions ul li.Conditions6 input.selectbg{background-image: url(../images/selectbg.png);border-radius: 3px;box-shadow: 0px 0px 8px #111111;cursor: pointer;}
+		.content .contentbody .contentConditions ul li.Conditions6 input.resetbg{background-image: url(../images/resetbg.png);border-radius: 3px;box-shadow: 0px 0px 8px #111111;cursor: pointer;}
+	
+		.content .contentbody .contentTable{border: 1px solid #2A383A;width: 96%;margin-left: 2%;margin-top: 10px;}
+		.content .contentbody .contentTable table{width: 100%;}
+		.content .contentbody .contentTable table tr{border-bottom: 1px solid #181926;height: 40px;}
+		.content .contentbody .contentTable table tr:nth-child(odd){background-color: #20212e;}
+		.content .contentbody .contentTable table tr:nth-child(even){background-color: #21222f;}
+		.content .contentbody .contentTable table tr:first-child{background-color: #1E1F2D;}
+		.content .contentbody .contentTable table tr th{text-align: left;padding-left: 15px;border-right: 2px solid rgb(24, 25, 38);color: #85858A;font-family: "微软雅黑";font-size: 13px;}
+		.content .contentbody .contentTable table tr td{text-align: left;padding-left: 15px;border-right: 2px solid rgb(24, 25, 38);color: #85858A;font-family: "微软雅黑";font-size: 12px;}
+		.content .contentbody .contentTable table tr td img{cursor: pointer;display: inline-block;margin-left: 8px;margin-right: 8px;}
+		.content .contentbody .contentTable table tr td img:first-child{margin-left: 0px;}
+		.content .contentbody .contentTable table tr td:last-child{border-right: none;}
+		.content .contentbody .contentTable table tr:hover{background-color: #222a36;}
+		.content .contentbody .contentTable table tr:first-child:hover{background-color: #1E1F2D;}
+		
+
+
+
+
+.contentYJFXLi1{position: absolute;top: 16px;float: left;width: 310px;margin-left: 28px;height: 35px;border: 1px solid #263738;box-sizing: border-box;}
+.contentYJFXLi1 span{float: left;font-size: 14px;width: 56px;font-family: "微软雅黑";color: #7bd2da;margin-left:10px;display: inline-block;height: 30px;line-height: 30px;}
+.contentYJFXLi1 input.contentYJFXLi1Text{
+	margin-left: 10px;
+	appearance:none;
+	-moz-appearance:none;
+	-webkit-appearance:none;
+	width: 198px;
+	/*border-radius: 3px;*/
+	border:none;
+	background-color: transparent;
+	outline:none;
+	font-size: 14px;
+	font-family: "微软雅黑";
+	color: #548c94;
+	box-sizing: border-box;
+	height: 30px;
+	}
+.contentYJFXLi1 input.contentYJFXLi1Down{
+	float: left;
+    margin-top: 5px;
+    margin-left: 5px;
+	width: 20px;
+	height: 20px;
+	appearance:none;
+	-moz-appearance:none;
+	-webkit-appearance:none;
+	cursor: pointer;
+	/*在选择框的最右侧中间显示小箭头图片*/
+	background-image: url(../images/contentYJFXLi1Down.png);
+	background-repeat: no-repeat;
+	background-position: center;
+	border:none;
+	background-color: transparent;
+	/*outline:none;*/
+	font-family: "微软雅黑";
+	box-sizing: border-box;
+	
+	}
+	.contentYJFXLi1 input.contentYJFXLi1Down:hover{border: 1px solid #263738;}
+	.content .contentbody .contentTopNav .contentYJFXLi1DownData{position: absolute;z-index: 999999;display: none;top: 34px;left: 0px;background-color: #1b202c;border: 1px solid #263738;width: 100px;height: 92px;box-sizing: border-box;}
+	.content .contentbody .contentTopNav .contentYJFXLi1DownData li{z-index: 999999;font-size: 12px;display: block;font-family: "微软雅黑";cursor: pointer;color: #7bd2da;height: 30px;line-height: 30px;box-sizing: border-box;width: 100px;}
+	.contentYJFXLi1DownData li:nth-child(1){border-bottom: 1px solid #263738;}
+	.contentYJFXLi1DownData li:nth-child(3){border-top: 1px solid #263738;}
+	.contentYJFXLi1DownData li:hover{background-color: #1d2732;}
+	.sBtn{cursor: pointer;width: 85px;height: 30px;border: 1px solid #065AA0;background-color: #0B2A3C;color: #7bd2da;font-size: 14px;border-radius: 2px;float: left;margin-left: 355px;margin-top: 19px;}

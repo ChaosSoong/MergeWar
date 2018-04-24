@@ -1,0 +1,75 @@
+=============================================================
+====时间：2017/8/14 15:15:48
+====IP：::1
+====异常内容：
+System.ServiceModel.CommunicationException: 已超过传入消息(65536)的最大消息大小配额。若要增加配额，请使用相应绑定元素上的 MaxReceivedMessageSize 属性。 ---> System.ServiceModel.QuotaExceededException: 已超过传入消息(65536)的最大消息大小配额。若要增加配额，请使用相应绑定元素上的 MaxReceivedMessageSize 属性。
+   --- 内部异常堆栈跟踪的结尾 ---
+
+Server stack trace: 
+   在 System.ServiceModel.Channels.MessageEncoder.BufferMessageStream(Stream stream, BufferManager bufferManager, Int32 maxBufferSize)
+   在 System.ServiceModel.Channels.MessageEncoder.ReadMessage(Stream stream, BufferManager bufferManager, Int32 maxBufferSize, String contentType)
+   在 System.ServiceModel.Channels.HttpInput.ReadChunkedBufferedMessage(Stream inputStream)
+   在 System.ServiceModel.Channels.HttpInput.ParseIncomingMessage(HttpRequestMessage httpRequestMessage, Exception& requestException)
+   在 System.ServiceModel.Channels.HttpChannelFactory`1.HttpRequestChannel.HttpChannelRequest.WaitForReply(TimeSpan timeout)
+   在 System.ServiceModel.Channels.RequestChannel.Request(Message message, TimeSpan timeout)
+   在 System.ServiceModel.Dispatcher.RequestChannelBinder.Request(Message message, TimeSpan timeout)
+   在 System.ServiceModel.Channels.ServiceChannel.Call(String action, Boolean oneway, ProxyOperationRuntime operation, Object[] ins, Object[] outs, TimeSpan timeout)
+   在 System.ServiceModel.Channels.ServiceChannelProxy.InvokeService(IMethodCallMessage methodCall, ProxyOperationRuntime operation)
+   在 System.ServiceModel.Channels.ServiceChannelProxy.Invoke(IMessage message)
+
+Exception rethrown at [0]: 
+   在 System.Runtime.Remoting.Proxies.RealProxy.HandleReturnMessage(IMessage reqMsg, IMessage retMsg)
+   在 System.Runtime.Remoting.Proxies.RealProxy.PrivateInvoke(MessageData& msgData, Int32 type)
+   在 MergeWar.JavaServer.SCPInquireService.queryDisappearDev(queryDisappearDev request)
+   在 MergeWar.JavaServer.SCPInquireServiceClient.MergeWar.JavaServer.SCPInquireService.queryDisappearDev(queryDisappearDev request) 位置 D:\netweb\合成作战新版\源码\MergeWar\Service References\JavaServer\Reference.cs:行号 872
+   在 MergeWar.JavaServer.SCPInquireServiceClient.queryDisappearDev(String arg0) 位置 D:\netweb\合成作战新版\源码\MergeWar\Service References\JavaServer\Reference.cs:行号 879
+   在 MergeWar.AppCode.JavaServerAction.GetJavaData(String ids, String txtStartTimes, String txtEndTimes, String keys, String type) 位置 D:\netweb\合成作战新版\源码\MergeWar\AppCode\JavaServerAction.cs:行号 71
+   在 HCZZ.Controllers.MacController.DisappearDevRes(String ids, String txtStartTimes, String txtEndTimes, String mac) 位置 D:\netweb\合成作战新版\源码\MergeWar\Controllers\MacController.cs:行号 188
+
+
+=============================================================
+====时间：2017/8/14 15:27:55
+====IP：::1
+====异常内容：
+Newtonsoft.Json.JsonSerializationException: Error converting value "18-E3-BC-16-2C-7F" to type 'MergeWar.Models.Collision'. Path '[0]', line 2, position 22. ---> System.ArgumentException: Could not cast or convert from System.String to MergeWar.Models.Collision.
+   在 Newtonsoft.Json.Utilities.ConvertUtils.EnsureTypeAssignable(Object value, Type initialType, Type targetType)
+   在 Newtonsoft.Json.Utilities.ConvertUtils.ConvertOrCast(Object initialValue, CultureInfo culture, Type targetType)
+   在 Newtonsoft.Json.Serialization.JsonSerializerInternalReader.EnsureType(JsonReader reader, Object value, CultureInfo culture, JsonContract contract, Type targetType)
+   --- 内部异常堆栈跟踪的结尾 ---
+   在 Newtonsoft.Json.Serialization.JsonSerializerInternalReader.EnsureType(JsonReader reader, Object value, CultureInfo culture, JsonContract contract, Type targetType)
+   在 Newtonsoft.Json.Serialization.JsonSerializerInternalReader.CreateValueInternal(JsonReader reader, Type objectType, JsonContract contract, JsonProperty member, JsonContainerContract containerContract, JsonProperty containerMember, Object existingValue)
+   在 Newtonsoft.Json.Serialization.JsonSerializerInternalReader.PopulateList(IList list, JsonReader reader, JsonArrayContract contract, JsonProperty containerProperty, String id)
+   在 Newtonsoft.Json.Serialization.JsonSerializerInternalReader.CreateList(JsonReader reader, Type objectType, JsonContract contract, JsonProperty member, Object existingValue, String id)
+   在 Newtonsoft.Json.Serialization.JsonSerializerInternalReader.CreateValueInternal(JsonReader reader, Type objectType, JsonContract contract, JsonProperty member, JsonContainerContract containerContract, JsonProperty containerMember, Object existingValue)
+   在 Newtonsoft.Json.Serialization.JsonSerializerInternalReader.Deserialize(JsonReader reader, Type objectType, Boolean checkAdditionalContent)
+   在 Newtonsoft.Json.JsonSerializer.DeserializeInternal(JsonReader reader, Type objectType)
+   在 Newtonsoft.Json.JsonConvert.DeserializeObject(String value, Type type, JsonSerializerSettings settings)
+   在 Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value, JsonSerializerSettings settings)
+   在 Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value)
+   在 MergeWar.AppCode.JavaServerAction.GetJavaData(String ids, String txtStartTimes, String txtEndTimes, String keys, String type) 位置 D:\netweb\合成作战新版\源码\MergeWar\AppCode\JavaServerAction.cs:行号 83
+   在 HCZZ.Controllers.MacController.DisappearDevRes(String ids, String txtStartTimes, String txtEndTimes, String mac) 位置 D:\netweb\合成作战新版\源码\MergeWar\Controllers\MacController.cs:行号 188
+
+
+=============================================================
+====时间：2017/8/14 15:29:34
+====IP：::1
+====异常内容：
+Newtonsoft.Json.JsonSerializationException: Error converting value "18-E3-BC-16-2C-7F" to type 'MergeWar.Models.Collision'. Path '[0]', line 2, position 22. ---> System.ArgumentException: Could not cast or convert from System.String to MergeWar.Models.Collision.
+   在 Newtonsoft.Json.Utilities.ConvertUtils.EnsureTypeAssignable(Object value, Type initialType, Type targetType)
+   在 Newtonsoft.Json.Utilities.ConvertUtils.ConvertOrCast(Object initialValue, CultureInfo culture, Type targetType)
+   在 Newtonsoft.Json.Serialization.JsonSerializerInternalReader.EnsureType(JsonReader reader, Object value, CultureInfo culture, JsonContract contract, Type targetType)
+   --- 内部异常堆栈跟踪的结尾 ---
+   在 Newtonsoft.Json.Serialization.JsonSerializerInternalReader.EnsureType(JsonReader reader, Object value, CultureInfo culture, JsonContract contract, Type targetType)
+   在 Newtonsoft.Json.Serialization.JsonSerializerInternalReader.CreateValueInternal(JsonReader reader, Type objectType, JsonContract contract, JsonProperty member, JsonContainerContract containerContract, JsonProperty containerMember, Object existingValue)
+   在 Newtonsoft.Json.Serialization.JsonSerializerInternalReader.PopulateList(IList list, JsonReader reader, JsonArrayContract contract, JsonProperty containerProperty, String id)
+   在 Newtonsoft.Json.Serialization.JsonSerializerInternalReader.CreateList(JsonReader reader, Type objectType, JsonContract contract, JsonProperty member, Object existingValue, String id)
+   在 Newtonsoft.Json.Serialization.JsonSerializerInternalReader.CreateValueInternal(JsonReader reader, Type objectType, JsonContract contract, JsonProperty member, JsonContainerContract containerContract, JsonProperty containerMember, Object existingValue)
+   在 Newtonsoft.Json.Serialization.JsonSerializerInternalReader.Deserialize(JsonReader reader, Type objectType, Boolean checkAdditionalContent)
+   在 Newtonsoft.Json.JsonSerializer.DeserializeInternal(JsonReader reader, Type objectType)
+   在 Newtonsoft.Json.JsonConvert.DeserializeObject(String value, Type type, JsonSerializerSettings settings)
+   在 Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value, JsonSerializerSettings settings)
+   在 Newtonsoft.Json.JsonConvert.DeserializeObject[T](String value)
+   在 MergeWar.AppCode.JavaServerAction.GetJavaData(String ids, String txtStartTimes, String txtEndTimes, String keys, String type) 位置 D:\netweb\合成作战新版\源码\MergeWar\AppCode\JavaServerAction.cs:行号 83
+   在 HCZZ.Controllers.MacController.DisappearDevRes(String ids, String txtStartTimes, String txtEndTimes, String mac) 位置 D:\netweb\合成作战新版\源码\MergeWar\Controllers\MacController.cs:行号 188
+
+

@@ -139,5 +139,6 @@ namespace HCZZ.ModeDB
         public string City_code { get; set; }
         public string Aguid { get; set; }
         public string Cguid{get;set;}
+        public int Num { get; set; }
     }
 }

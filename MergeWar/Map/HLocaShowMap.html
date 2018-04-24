@@ -5,12 +5,14 @@
     <title>百度离线地图</title>
     <!--<script type="text/javascript" src="../Map/Pub/js/jquery-1.8.0.min.js"></script>-->
     <script type="text/javascript" src="../Map/js/apiv.2.0.js"></script>
-    <script type="text/javascript" src="../Map/js/getmodules.js"></script>
-    <script type="text/javascript" src="../Map/Pub/layer/layer.js"></script>
-    <script type="text/javascript" src="../Map/Pub/js/console.js"></script>
+    <!--<script type="text/javascript" src="../Map/js/getmodules.js"></script>-->
+    <!--<script type="text/javascript" src="../Map/Pub/layer/layer.js"></script>
+    <script type="text/javascript" src="../Map/Pub/js/console.js"></script>-->
     <script src="../Content/js/jquery-1.7.1.min.js"></script>
     <link rel="stylesheet" type="text/css" href="../Map/css/bmap.css"/>
     <link rel="stylesheet" type="text/css" href="../Map/css/defaultMapStyle.css"/>
+    <script src="../Map/test/js/MarkerClusterer.js"></script>
+    <script src="../Map/test/js/TextIconOverlay.js"></script>
     <style type="text/css">
         html{height:100%}
         body{height:100%;margin:0px;padding:0px}
@@ -90,10 +92,11 @@
         for (var i = 0; i < data_info1.length; i++) {
             addSimulatorMarkers2(new BMap.Point(data_info1[i].lng,data_info1[i].lat),data_info1[i].loadMessage);
         }
+        closeDown();
     }
-
+    var markers = [];
     function addSimulatorMarkers2(point,id) {
-        var simulatorIcon = new BMap.Icon("../Map/images/2.png", new BMap.Size(32, 37));
+        var simulatorIcon = new BMap.Icon(point.static == "在线" ? "../Map/images/GPSzaixian.png" : "../Map/images/GPSlixian.png", new BMap.Size(32, 37));
         // 创建标注对象并添加到地图
         var simulatorMarkerOptions = {
             icon: simulatorIcon,
@@ -102,15 +105,16 @@
             title: id.slice(5,id.indexOf("<br>"))
         }
         var simulatorMarker = new BMap.Marker(point, simulatorMarkerOptions);
+        markers.push(simulatorMarker);
         simulatorMarker.setAnimation(BMAP_ANIMATION_DROP);
-        map.addOverlay(simulatorMarker);
+        //map.addOverlay(simulatorMarker);
 
         //为标注添加点击事件——弹出信息窗口
-        simulatorMarker.addEventListener("click", function(){
+        simulatorMarker.addEventListener("click", function () {
+            console.log(this);
             showInfoList(simulatorMarker,id);
         });
     }
-
     //显示信息窗口的函数
     function showInfoList (marker,strobj) {
         var mywindow='<div class="show">'+strobj+'</div>';
@@ -122,19 +126,19 @@
     }
 
     function submitValue() {
-            var strSearch="?ProId="+$("#selProvince").val()+"&CityId="+$("#selCity").val()+"&Aid="+$("#selArea").val();
+            //var strSearch="?ProId="+$("#selProvince").val()+"&CityId="+$("#selCity").val()+"&Aid="+$("#selArea").val();
             $.ajax({ type: "Get",
-                url: '/Public/RefLocaMapVal?ProId=1' ,//+ strSearch,
+                url: '/Public/RefLocaMapVal',//'/Public/RefLocaMapVal?ProId=1&Aid=49'
                 dataType: "json",
                 async: false,
                 cache: false,
                 success: function (data, status) {
                     if (typeof (data.jsAlter) != 'undefined' && data.jsAlter != "") {
-                        data.jsAlter;
+                        alert(data.jsAlter);
                     } else {
-                        map.clearOverlays();
+                        //map.clearOverlays();
                         setTimeout(function(){
-                        	map.panTo(new BMap.Point(data.pointLng,data.pointLat));    //10毫秒后移动中心点
+                        	map.panTo(new BMap.Point(data.Lng,data.Lat));    //10毫秒后移动中心点
                         }, 10);
                         data_info1=eval(data.mapJs); 
                         addMarkerList();
@@ -146,5 +150,8 @@
             });
     }
     submitValue();
+    var markerClusterer = new BMapLib.MarkerClusterer(map, {
+        markers: markers
+    });
 </script>
 <!--<script type="text/javascript" src="../Map/Pub/js/draw1.js"></script>-->

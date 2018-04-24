@@ -70,7 +70,7 @@
         var id = parseInt($("#" + fname).val());
         if (id != 0 || key == "Province") {
             $.ajax({ type: "Get",
-                url: "/Location/AreaValue?Id=" + id + "&key= " + key,
+                url: "/Public/AreaValue?Id=" + id + "&key= " + key,
                 dataType: "json",
                 async: false,
                 cache: false,
@@ -185,7 +185,7 @@
         if (isSubmit()) {
             var strSearch = "?ProId=" + $("#selProvince").val() + "&CityId=" + $("#selCity").val() + "&Aid=" + $("#selArea").val();
             $.ajax({ type: "Get",
-                url: '@Url.Content("~/Location/RefLocaMapVal")' + strSearch,
+                url: '@Url.Content("~/Public/RefLocaMapVal")' + strSearch,
                 dataType: "json",
                 async: false,
                 cache: false,
@@ -240,7 +240,7 @@
     function SolrSelnbId(nbId) {
         $.ajax({
             type: "Get",
-            url: '@Url.Content("~/Location/IdMapVal?nbId=")' + nbId,
+            url: '@Url.Content("~/Public/IdMapVal?nbId=")' + nbId,
             dataType: "json",
             async: false,
             cache: false,

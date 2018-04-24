@@ -28,7 +28,7 @@
 			        </tr>
                     <tr>
 				        <td align="right">省代码：</td>
-				        <td><input type="text" class="_text" name="txtCity_code" id="txtCity_code" maxlength="25" value="@(ProArea != null ? ProArea.City_code : "")" /><span id="spCity_code" class="color_ccc">*</span></td>   
+				        <td><input type="text" class="_text" name="txtCity_code" id="txtCity_code" maxlength="6" value="@(ProArea != null ? ProArea.City_code : "")" /><span id="spCity_code" class="color_ccc">*</span></td>   
 			        </tr>
                 </table>
             </div> 
@@ -38,9 +38,7 @@
 			      onmouseout="this.className='Onout_SS'"/>
             </div>
                </div>
-          
         }
- 
    <script type="text/javascript">
        function pageSubmit() {
            var result = true;
@@ -52,10 +50,7 @@
            }
 
            var reg = new RegExp(/\d+$/);
-           if ($.trim($("#txtCity_code").val()) == "") {
-               result = false;
-               $("#spCity_code").html("省代码不能为空");
-           } else if (!reg.test($.trim($("#txtCity_code").val()))) {
+           if ($.trim($("#txtCity_code").val()) != ""&& !reg.test($.trim($("#txtCity_code").val()))) {
                result = false;
                $("#spCity_code").html("省代码格式不正确");
            } else {
@@ -63,7 +58,6 @@
            }
            return result;
        }
-
        $(function () {
            $("form").submit(function () {
                if (pageSubmit()) {

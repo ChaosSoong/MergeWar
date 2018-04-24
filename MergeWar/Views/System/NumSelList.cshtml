@@ -1,21 +1,203 @@
-﻿@{
-    Layout = null;
+﻿@*<!DOCTYPE html>
+    <script src="@Url.Content("~/Content/DatePicker/WdatePicker.js")" type="text/javascript"></script>
+    <script src="~/Content/js/jquery-1.7.1.min.js"></script>*@
+@{
+    ViewBag.Title = "安全厂商管理-数据查询";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@using HCZZ.ModeDB;
-@using Webdiyer.WebControls.Mvc
-<!DOCTYPE html>
+<link href="~/Content/css/reset1.css" rel="stylesheet" />
+<link href="~/Content/css/page.css" rel="stylesheet" />
+<link href="~/Content/css/XTGL_AQCSGL.css" rel="stylesheet" />
+<link href="~/Content/css/publicHeader.css" rel="stylesheet" />
+<script src="~/Content/DatePicker/WdatePicker.js"></script>
+<style type="text/css">
+  .pupMain{width: 596px;/*height: 467px;*/background-color: #161523;margin: 20px auto;border: 1px solid #263738;height: auto;}
+		.pupMain input{display: inline-block;box-sizing: border-box;padding-left: 15px;width: 248px;height: 50px;background-color: #1e1f2d;border: 1px solid #263738;color: #7bd2da;font: 14px "微软雅黑";}
+		.pupMain .divTitle{width: 100%;height: 72px;border-bottom: 1px solid #263738;}
+		.pupMain .divTitle select{margin-left: 35px;margin-top: 23px;
+		    width: 248px;
+		    height: 50px;
+		    text-align: center;
+		    color: rgb(84, 140, 148);
+		    font-size: 13px;
+		    font-family: 微软雅黑;
+		    padding-right: 14px;
+		    padding-left: 8px;
+		    -webkit-appearance: none;
+		    border-width: 1px;
+		    border-style: solid;
+		    border-color: rgb(38, 55, 56);
+		    border-image: initial;
+		    background: url(/Content//images/select_icon2.png) right center no-repeat scroll transparent;
+		    display: inline-block;box-sizing: border-box;width: 248px;height: 50px;color: #7bd2da;font: 14px "微软雅黑";
+		    }
+		
+		.pupMain .divCondition1{margin-top: 24px;display: block;}
+		.pupMain .divCondition1 input{margin-left: 35px;}
+		.pupMain .divCondition1 input:last-child{margin-left: 28px;}
+		.pupMain .divCondition2{margin-top: 24px;display: block;}
+		.pupMain .divCondition2 input{margin-left: 35px;}
+		.pupMain .divCondition2 input:last-child{margin-left: 28px;}
+		.pupMain .divCondition3{margin-top: 24px;display: block;}
+		.pupMain .divCondition3 input{margin-left: 35px;width: 528px;}
+		.pupMain .divCondition4{margin-top: 24px;display: block;}
+		.pupMain .divCondition5{margin-top: 30px;text-align: center;margin-bottom: 25px;}
+		.pupMain .divCondition5 input{box-sizing: border-box;cursor: pointer;width: 360px;height: 50px;background-color: #1e1f2d;color: #7bd2da;border: none;font: 14px "微软雅黑";background-image: url(/Content/images/save_bg.png);}
+		
+        .pupMain .divCondition1 select{margin-left: 27px;
+		    width: 248px;
+		    height: 50px;
+		    color: rgb(84, 140, 148);
+		    font-size: 13px;
+		    font-family: 微软雅黑;
+		    padding-right: 14px;
+		    padding-left: 8px;
+		    -webkit-appearance: none;
+		    border-width: 1px;
+		    border-style: solid;
+		    border-color: rgb(38, 55, 56);
+		    border-image: initial;
+		    background: url(/Content//imageslect_icon2.png) right center no-repeat scroll transparent;
+		    display: inline-block;box-sizing: border-box;width: 248px;height: 50px;color: #7bd2da;font: 14px "微软雅黑";
+		    background-color: #1e1f2d;
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>安全厂商数据查询</title>
-</head>
-<body>
-    <div>
-        @{ 
-            PagedList<TermianlAccessLog> list = (PagedList<TermianlAccessLog>)ViewBag.pl;
-
+</style>
+<div class="contentbody" id="contentbody">
+    <div class="contentTitle">
+        <span>数据查询</span>
+    </div>
+    <div class="contentTable">
+        @using (Html.BeginForm("GetDataNum", "System", FormMethod.Get))
+        {
+            <input type="hidden" name="hid" id="hid" value="@ViewBag.id">
+            @*<div class="pupMain">
+                <ul>
+                    <li>
+                        <select style="box-sizing: border-box;padding-left: 15px;margin-top: 45px;width: 360px;height: 50px;background-color: #1e1f2d;border: 1px solid #263738;color: #7bd2da;font: 14px "微软雅黑";" name="id" id="id"></select>
+                    </li>
+                    <li>
+                        <select style="box-sizing: border-box;padding-left: 15px;background-image: url(../images/fhasjklfghhjko.png);width: 360px;height: 50px;background-color: #1e1f2d;border: 1px solid #263738;color: #7bd2da;font: 14px "微软雅黑";" id="dataType" name="dataType">
+                            <option value="1">上下线日志信息</option>
+                            <option value="2">上网日志信息</option>
+                            <option value="3">终端特征信息</option>
+                            <option value="4">被采集热点信息</option>
+                        </select>
+                    </li>
+                    <li class="Conditions Conditions5">
+                        <input style="width: 171px;box-sizing: border-box;padding-left: 15px;height: 50px;background-color: #1e1f2d;border: 1px solid #263738;color: #7bd2da;font: 14px "微软雅黑";" placeholder="开始时间" name="startTime" id="startTime" class="Wdate" type="text" onFocus="WdatePicker({ dateFmt: 'yyyy-MM-dd HH:mm:ss', readonly: true, maxDate: '#F{$dp.$D(\'endTime\')}' })" />
+                        <b style="color: #b1b1b1;">—</b>
+                        <input style="width: 171px;margin: 0;" placeholder="结束时间" name="endTime" id="endTime" class="Wdate" type="text" onFocus="WdatePicker({ dateFmt: 'yyyy-MM-dd HH:mm:ss', readonly: true, minDate: '#F{$dp.$D(\'startTime\')}' })" />
+                    </li>
+                    <li>
+                        <input type="submit" name="ButSelect" id="ButSelect" value="开始查询" />
+                    </li>
+                </ul>
+            </div>*@
+            <div class="pupMain">
+                <div class="divTitle">
+                    <select name="dataType" id="test_select">
+                        <option selected="selected" value="1">上下线日志信息</option>
+                        <option value="2">上网日志信息</option>
+                        <option value="3" onclick="">终端特征信息</option>
+                        <option value="4">被采集热点信息</option>
+                    </select>
+                </div>
+                <div class="divCondition1">
+                    <input type="text" name="PLACE_NAME" id="PLACE_NAME" value="场所名称" />
+                    @*<input type="text" name="" id="" value="厂商名称" />*@
+                    <select name="id" id="id"></select>
+                </div>
+                <div class="divCondition2">
+                    <input type="text" name="keyWord" id="keyWord" value="APMAC" />
+                    <input type="text" name="MAC" id="MAC" value="终端MAC" />
+                </div>
+                <div class="divCondition3" id="test">
+                    <input type="text" name="AUTH_ACCOUNT" id="AUTH_ACCOUNT" value="认证账号" />
+                </div>
+                <div class="divCondition4">
+                    @*<input style="width: 171px;box-sizing: border-box;padding-left: 15px;height: 50px;background-color: #1e1f2d;border: 1px solid #263738;color: #7bd2da;font: 14px " 微软雅黑";" placeholder="开始时间" name="startTime" id="startTime" class="Wdate" type="text" onFocus="WdatePicker({ dateFmt: 'yyyy-MM-dd HH:mm:ss', readonly: true, maxDate: '#F{$dp.$D(\'endTime\')}' })" />
+                    <b style="color: #263738;margin-left: 6px;margin-right: 6px;">—</b>
+                    <input style="width: 171px;margin: 0;" placeholder="结束时间" name="endTime" id="endTime" class="Wdate" type="text" onFocus="WdatePicker({ dateFmt: 'yyyy-MM-dd HH:mm:ss', readonly: true, minDate: '#F{$dp.$D(\'startTime\')}' })" />*@
+                    <input style="width: 248px;margin-left: 35px;"  placeholder="开始时间" id="startTime" name="startTime" class="Wdate" type="text" onFocus="WdatePicker({ dateFmt: 'yyyy-MM-dd HH:mm:ss', readonly: true, maxDate: '#F{$dp.$D(\'endTime\')}' })" />
+                    <b style="color: #263738;margin-left: 6px;margin-right: 6px;">—</b>
+                    <input style="width: 248px; margin: 0;" placeholder="结束时间" id="endTime" name="endTime" class="Wdate" type="text" onFocus="WdatePicker({ dateFmt: 'yyyy-MM-dd HH:mm:ss', readonly: true, minDate: '#F{$dp.$D(\'startTime\')}' })"/>
+                </div>
+                <div class="divCondition5">
+                    <input type="submit" name="" id="" value="开始查询" />
+                </div>
+            </div>
         }
     </div>
-</body>
-</html>
+</div>
+<script>
+    $("form").submit(function () {
+        showDown();
+    })
+    window.onload = function () {
+        var obj_select = document.getElementById("test_select");
+        var obj_div = document.getElementById("test");
+        obj_select.onchange = function () {
+            obj_div.style.display = this.value == 3 ? "none" : "block";
+        }
+    }
+    function obj_selectfuc() {
+        var obj_select = document.getElementById("test_select");
+        var obj_div = document.getElementById("test");
+        obj_div.style.display = obj_select.value == 3 ? "none" : "block";
+    }
+    $(function () {
+        obj_selectfuc();
+        $.ajax({
+            type: "Get",
+            url: "@Url.Content("~/Public/GetFirmName")",
+            success: function (data) {
+                for (var i = 0; i < data.length; i++) {
+                    $("#id").append("<option value='" + data[i].ID + "'>" + data[i].SECURITY_SOFTWARE_ORGNAME + "</option>")
+                    if ($("#hid").val() != "") {
+                        $("#id").val($("#hid").val());
+                    }
+                }
+            }
+        })
+    });
+    $("#PLACE_NAME").focus(function () {
+        if ($(this).val() == "场所名称") {
+            $(this).val("");
+        }
+    })
+    $("#PLACE_NAME").blur(function () {
+        if ($(this).val() == "") {
+            $(this).val("场所名称");
+        }
+    })
+    $("#keyWord").focus(function () {
+        if ($(this).val() == "APMAC") {
+            $(this).val("");
+        }
+    })
+    $("#keyWord").blur(function () {
+        if ($(this).val() == "") {
+            $(this).val("APMAC");
+        }
+    })
+    $("#MAC").focus(function () {
+        if ($(this).val() == "终端MAC") {
+            $(this).val("");
+        }
+    })
+    $("#MAC").blur(function () {
+        if ($(this).val() == "") {
+            $(this).val("终端MAC");
+        }
+    })
+    $("#AUTH_ACCOUNT").focus(function () {
+        if ($(this).val() == "认证账号") {
+            $(this).val("");
+        }
+    })
+    $("#AUTH_ACCOUNT").blur(function () {
+        if ($(this).val() == "") {
+            $(this).val("认证账号");
+        }
+    })
+</script>

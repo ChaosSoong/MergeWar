@@ -1,0 +1,149 @@
+﻿@{
+    Layout = null;
+    string dataType = ViewBag.dataType;
+}
+@using HCZZ.ModeDB;
+@using Webdiyer.WebControls.Mvc
+@using System.Collections.Generic
+@using Webdiyer.WebControls.Mvc
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>安全厂商数据查询</title>
+</head>
+<body>
+    <div id="taskManagementId">
+        @switch (dataType)
+        {
+            case "AuditLog":
+                PagedList<TermianlAccessLog> Tallist = (PagedList<TermianlAccessLog>)ViewBag.pl;
+                <div>
+                    <table>
+                        <tr>
+                            <td>场所名称</td>
+                            @*<td>认证账号</td>*@
+                            <td>终端MAC地址</td>
+                            <td>AP名称</td>
+                            <td>场所内网IP地址</td>
+                            <td>用户公网IP地址</td>
+                            <td>源外网起始端口</td>
+                            <td>源外网结束端口</td>
+                            <td>上线时间</td>
+                            <td>下线时间</td>
+                        </tr>
+                        @if (Tallist.Count > 0)
+                        {
+                            foreach (var item in Tallist)
+                            {
+                                Loc_DevInfo mac = HCZZ.AppCode.WebCommon.GetMacInfoByDevAP_ID(0, item.AP_MAC);
+                                Loc_NetBarInfo loca = HCZZ.AppCode.WebCommon.GetLocaInfoByNetBar_ID(Convert.ToInt32(item.NETBAR_ID));
+                                string PLACE_NAME = (loca == null ? "" : loca.PLACE_NAME);
+                                string apName = (mac != null ? mac.APName : "");
+                                <tr>
+                                    <td title='@PLACE_NAME'>@(Common.ChangeValue.ByteSubString(PLACE_NAME, 12))</td>
+                                    @*<td>@item.AUTH_ACCOUNT</td>*@
+                                    <td>@item.MAC</td>
+                                    <td title="@apName">@(Common.ChangeValue.ByteSubString(apName, 16))</td>
+                                    <td>@(Common.ChangeValue.RefIPvlong(item.IP_ADDRESS))</td>
+                                    <td>@Common.ChangeValue.RefIPvlong(item.SRC_IP)</td>
+                                    <td>@item.SRC_PORT_START</td>
+                                    <td>@item.SRC_PORT_END</td>
+                                    <td>@(item.START_TIME > 0 ? Common.ChangeValue.RefAuditTime(Convert.ToInt64(item.START_TIME)) : "N/A")</td>
+                                    <td>@(item.END_TIME > 0 ? Common.ChangeValue.RefAuditTime(Convert.ToInt64(item.END_TIME)) : "N/A")</td>
+                                </tr>
+                            }
+                            @Html.Partial("~/Views/Shared/_PartialPage.cshtml", new RouteValueDictionary { { "model", Tallist }, { "pageindex", "PageIndex" } })
+                        }
+                    </table>
+                </div>
+                break;
+            case "NetLog":
+                PagedList<TermianlNetworkLog> Tnllist = (PagedList<TermianlNetworkLog>)ViewBag.pl;
+                <div>
+                    <table>
+                        <tr>
+                            <td>场所名称</td>
+                            <td>认证账号</td>
+                            <td>应用服务类型</td>
+                            <td>应用服务类型值</td>
+                            <td>AP名称</td>
+                            <td>目的IP地址</td>
+                            <td>终端MAC地址</td>
+                            <td>目的起始端口</td>
+                            <td>目的结束端口</td>
+                            <td>在线时间</td>
+                        </tr>
+                        @if (Tnllist.Count > 0)
+                        {
+                            foreach (var item in Tnllist)
+                            {
+                                Loc_DevInfo mac = HCZZ.AppCode.WebCommon.GetMacInfoByDevAP_ID(0, item.AP_MAC);
+                                Loc_NetBarInfo loca = HCZZ.AppCode.WebCommon.GetLocaInfoByNetBar_ID(Convert.ToInt32(item.NETBAR_ID));
+                                string PLACE_NAME = (loca == null ? "" : loca.PLACE_NAME);
+                                string apName = (mac != null ? mac.APName : "");
+                                <tr>
+                                    <td title='@PLACE_NAME'>@(Common.ChangeValue.ByteSubString(PLACE_NAME, 12))</td>
+                                    <td>@item.AUTH_ACCOUNT</td>
+                                    <td>@Common.ChangeValue.GetDetailHttpLog(item.NETWORK_APP)</td>
+                                    <td title="@item.NETWORK_APP_VALUES">@(Common.ChangeValue.ByteSubString(item.NETWORK_APP_VALUES, 12))</td>
+                                    <td title="@apName">@(Common.ChangeValue.ByteSubString(apName, 12))</td>
+                                    <td>@Common.ChangeValue.RefIPvlong(Convert.ToInt64(item.DST_IP))</td>
+                                    <td>@item.MAC</td>
+                                    <td>@item.SRC_PORT_START</td>
+                                    <td>@item.SRC_PORT_END</td>
+                                    <td>@Common.ChangeValue.RefAuditTime(Convert.ToInt64(item.CAPTURE_TIME))</td>
+                                </tr>
+                            }
+                            @Html.Partial("~/Views/Shared/_PartialPage.cshtml", new RouteValueDictionary { { "model", Tnllist }, { "pageindex", "PageIndex" } })
+                        }
+                    </table>
+                </div>
+                break;
+            case "Termianl":
+                PagedList<Fench_TerminalInfo> ftilist = (PagedList<Fench_TerminalInfo>)ViewBag.pl;
+                <div>
+                    <table>
+                        <tr>
+                            <td>场所名称</td>
+                            <td>采集设备名称</td>
+                            <td>采集设备MAC地址</td>
+                            <td>采集设备经度</td>
+                            <td>采集设备纬度</td>
+                            <td>终端MAC地址</td>
+                            <td>被采终端场强</td>
+                            <td>接入热点频道</td>
+                            <td>采集时间</td>
+                        </tr>
+                        @if (ftilist.Count > 0)
+                        {
+                            foreach (var item in ftilist)
+                            {
+                                Loc_DevInfo mac = HCZZ.AppCode.WebCommon.GetMacInfoByDevAP_ID(0, item.AP_MAC);
+                                Loc_NetBarInfo loca = HCZZ.AppCode.WebCommon.GetLocaInfoByNetBar_ID(Convert.ToInt32(item.NETBAR_ID));
+                                string PLACE_NAME = (loca == null ? "" : loca.PLACE_NAME);
+                                string apName = (mac != null ? mac.APName : "");
+                                <tr>
+                                    <td title='@PLACE_NAME'>@(Common.ChangeValue.ByteSubString(PLACE_NAME, 12))</td>
+                                    <td title="@apName">@(Common.ChangeValue.ByteSubString(apName, 12))</td>
+                                    <td>@(mac != null ? mac.AP_MAC : "")</td>
+                                    <td title="">@item.COLLECTION_EQUIPMENT_LONGITUDE</td>
+                                    <td>@item.COLLECTION_EQUIPMENT_LATITUDE</td>
+                                    <td>@item.MAC</td>
+                                    <td>@(string.IsNullOrEmpty(item.TERMINAL_FIELD_STRENGTH) ? "" : "-" + item.TERMINAL_FIELD_STRENGTH + "dBm")</td>
+                                    <td>@item.ACCESS_AP_CHANNEL</td>
+                                    <td>@Common.ChangeValue.RefAuditTime(Convert.ToInt64(item.CAPTURE_TIME))</td>
+                                </tr>
+                            }
+                            @Html.Partial("~/Views/Shared/_PartialPage.cshtml", new RouteValueDictionary { { "model", ftilist }, { "pageindex", "PageIndex" } })
+                        }
+                    </table>
+                </div>
+                break;
+            default:
+                break;
+        }
+    </div>
+</body>
+</html>

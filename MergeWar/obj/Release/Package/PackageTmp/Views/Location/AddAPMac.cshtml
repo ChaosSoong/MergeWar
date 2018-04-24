@@ -2,6 +2,7 @@
     ViewBag.Title = "添加AP设备";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<link href="~/Content/css/CSGL.css" rel="stylesheet" />
 @using System.Collections.Generic
 @using Common;
 @using (Html.BeginForm("AddAPMac", "Location", FormMethod.Post))
@@ -294,7 +295,7 @@
         changeModel(1);
         $(function () {
             onSelect(1);
-            searchLoad("txtCOLLECTION_EQUIPMENT_ID", "@Url.Content("~/Location/RefMacList")");
+            searchLoad("txtCOLLECTION_EQUIPMENT_ID", "@Url.Content("~/Public/RefMacList")");
 
             $("form").submit(function () {
                 if (subVal()) {
@@ -466,7 +467,7 @@
                 $.ajax
 			    ({
 			        type: "Get",
-			        url: "/Location/CKMac?Id=" + macId,
+			        url: "/Public/CKMac?Id=" + macId,
 			        dataType: "json",
 			        async: false,
 			        cache: false,

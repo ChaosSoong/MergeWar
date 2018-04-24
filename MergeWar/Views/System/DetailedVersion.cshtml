@@ -4,60 +4,212 @@
 }
 @using HCZZ.DAL;
 @using HCZZ.ModeDB;
-@using Common;
+@using HCZZ.Common;
 @using Webdiyer.WebControls.Mvc;
-<div id="Cx" style="display: none"></div> 
-	<div class="Tjxx" id="TJ" style="display: none"></div>
-	<table>	
-			<tr>
-				<th colspan="4"><h1>终端版本详细信息</h1></th>
-			</tr>
-	</table>
-	<div id="mind" style="overflow-Y:auto">
-	<table >
-        @{
-            VersionInfo version = (VersionInfo)ViewBag.detail;
-            if (version != null)
-            {
-                if (version.Type == 1)
-                {
-			<tr>
-				<td width="15%" align="right">验证类型：</td>
-				<td colspan="3">    
-                    @((version.VerifyType != null && version.VerifyType.IndexOf("00") > -1 ? "关闭审计" : "") + "  " + (version.VerifyType != null && version.VerifyType.IndexOf("01") > -1 ? "开启审计" : "") + "  " + (version.VerifyType != null && version.VerifyType.IndexOf("02") > -1 ? "第三方验证" : "") + "  " + (version.VerifyType != null && version.VerifyType.IndexOf("03") > -1 ? "微信验证" : "") + "  " + (version.VerifyType != null && version.VerifyType.IndexOf("04") > -1 ? "WIFIDOG验证" : ""))  
-                </td>  
-			</tr>
-                } 
-			<tr>
-				<td width="15%" align="right">更新程序类型：</td>
-				<td colspan="3">               
+<link href="~/Content/css/reset.css" rel="stylesheet" />
+<link href="~/Content/css/publicHeader.css" rel="stylesheet" />
+<link href="~/Content/css/page.css" rel="stylesheet" />
+<link href="~/Content/css/XTGL_YHGLXXXX.css" rel="stylesheet" />
+<style>
+    .contentbody .contentInfo table {
+        color: #b1b1b1;
+        width: 1250px;
+        border: 1px solid #2a393a;
+        margin: 0 auto;
+        background-color: #21222f;
+    }
+
+        .contentbody .contentInfo table tr {
+            height: 40px;
+        }
+
+            .contentbody .contentInfo table tr:nth-child(even) {
+                background-color: #21202E;
+            }
+
+            .contentbody .contentInfo table tr:nth-child(odd) {
+                background-color: #21222F;
+            }
+
+            .contentbody .contentInfo table tr th {
+                text-align: left;
+                padding-left: 50px;
+                background-color: #1E1F2D;
+                border-bottom: 1px solid #2A393A;
+            }
+
+            .contentbody .contentInfo table tr td {
+                border-right: 1px solid #2A393A;
+                padding-left: 50px;
+            }
+
+                .contentbody .contentInfo table tr td .spanTitle {
+                    color: #999999;
+                }
+
+                .contentbody .contentInfo table tr td .spanText {
+                    color: #CCCCCC;
+                }
+
+                .contentbody .contentInfo table tr td .spanTextHint {
+                    color: #AA301C;
+                }
+
+        .contentbody .contentInfo table:nth-child(1) {
+            margin-top: 20px;
+        }
+
+        .contentbody .contentInfo table:nth-child(2) {
+            margin-bottom: 50px;
+            border-top: none;
+        }
+
+        .contentbody .contentInfo table tr td img {
+            vertical-align: middle;
+        }
+
+        .contentbody .contentInfo table tr td input {
+            margin-left: 5px;
+            background-color: transparent;
+            border: none;
+            background-color: #222B3B;
+            height: 25px;
+            padding-left: 5px;
+            color: #999999;
+        }
+
+        .contentbody .contentInfo table tr td select {
+            margin-left: 5px;
+            background-color: transparent;
+            border: none;
+            background-color: #222B3B;
+            height: 25px;
+            padding-left: 5px;
+            color: #999999;
+        }
+
+        .contentbody .contentInfo table tr td .SYHLXbtn {
+            border: 1px solid #222B3B;
+            cursor: pointer;
+            outline: none;
+            box-sizing: border-box;
+            /*padding-top: 3px;*/
+            margin-left: 10px;
+            padding-bottom: 3px;
+            padding-left: 15px;
+            padding-right: 15px;
+            -moz-border-radius: 15px; /* Firefox */
+            -webkit-border-radius: 15px; /* Safari 和 Chrome */
+            border-radius: 15px; /* Opera 10.5+, 以及使用了IE-CSS3的IE浏览器 */
+        }
+
+        .contentbody .contentInfo table tr td .YHLXbtnActive {
+            cursor: pointer;
+            box-sizing: border-box;
+            outline: none;
+            color: #7BD2DA;
+            border: 1px solid #7BD2DA;
+        }
+
+        .contentbody .contentInfo table tr td .ZJLX {
+            width: 80px;
+            border: 1px solid #0A7891;
+            cursor: pointer;
+            background-color: #0B2A3C;
+            color: #7BD2DA;
+        }
+
+    .GXCXLX {
+        margin-left: 10px;
+        width: 100px;
+        border: 1px solid #0A7891;
+        cursor: pointer;
+        background-color: #0B2A3C;
+        color: #7BD2DA;
+        padding: 2px 5px;
+    }
+
+    .contentbody .contentInfo table tr td textarea {
+        ;
+        margin-left: 5px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        padding: 3px 5px;
+        background-color: transparent;
+        border: none;
+        background-color: #222B3B;
+        height: 90px;
+        width: 944px;
+        padding-left: 5px;
+        color: #999999;
+    }
+
+    .footerAdd {
+        width: 100%;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+        .footerAdd .add {
+            box-sizing: border-box;
+            cursor: pointer;
+            width: 250px;
+            height: 50px;
+            background-color: #1e1f2d;
+            color: #7bd2da;
+            border: none;
+            font: 14px "Î¢ÈíÑÅºÚ";
+            background-image: url(/Content/images/save_bg.png);
+        }
+</style>
+<div id="contentbody" class="contentbody">
+    @{
+        VersionInfo version = (VersionInfo)ViewBag.detail;
+        <div class="contentInfo">
+            <table id="table" cellspacing="0" cellpadding="0" border="0">
+                <tbody>
+                    <tr>
+                        <th colspan="3">
+                            更新程序类型:
+                            <strong>
+                                @if (version.Type == 1)
+                            {
+                                <font>验证程序</font>
+                            }
+                            else if (version.Type == 2)
+                            {
+                                <font>审计程序</font>
+                            }
+                            else if (version.Type == 3)
+                            {
+                                <font>APP监管版</font>
+                            }
+                            else if (version.Type == 4)
+                            {
+                                <font>APP商户版</font>
+                            }
+                            else if (version.Type == 5)
+                            {
+                                <font>WEB网站</font>
+                            }
+                        </strong>
+                    </th>
+                </tr>
+                <!--===========类型二=================-->
                 @if (version.Type == 1)
                 {
-                    <font>验证程序</font>
+                    <tr class="tr2_1" style="display: inline;">
+                        <th colspan="3">
+                            @((version.VerifyType != null && version.VerifyType.IndexOf("01") > -1 ? "网站验证" : "") + "  " + (version.VerifyType != null && version.VerifyType.IndexOf("02") > -1 ? "第三方验证" : "") + "  " + (version.VerifyType != null && version.VerifyType.IndexOf("03") > -1 ? "微信验证" : "") + "  " + (version.VerifyType != null && version.VerifyType.IndexOf("04") > -1 ? "WIFIDOG验证" : "") + "  " + (version.VerifyType != null && version.VerifyType.IndexOf("05") > -1 ? "下行短信" : ""))
+                        </th>
+                    </tr>
                 }
-                else if (version.Type == 2)
+                @if (version.Type == 1 || version.Type == 2)
                 {
-                    <font>审计程序</font>
-                }
-                else if (version.Type == 3)
-                {
-                    <font>APP监管版</font>
-                }
-                else if (version.Type == 4)
-                {
-                    <font>APP商户版</font>
-                }
-                else if (version.Type == 5)
-                {
-                    <font>WEB网站</font>
-                }   
-                </td>  
-			</tr>
-                if (version.Type == 1 || version.Type == 2)
-                {
-                    <tr>
-				        <td width="15%" align="right">程序类型：</td>
-				        <td colspan="3">
+                    <tr class="tr2" style="display: inline;">
+                        <td style="width: 50%;">
+                            <img src="/Content/images/star1.png">
+                            <span class="spanTitle">程序类型:</span>
                             @if (version.CasesType == 1)
                             { <font>Atheros</font> }
                             else if (version.CasesType == 2)
@@ -66,14 +218,10 @@
                             { <font>X86</font>}
                             else if (version.Type == 1 && version.CasesType == 99)
                             {<font>全部</font>}
-                        </td>  
-			        </tr>
-                }
-                if (version.Type == 1 || version.Type == 2)
-                {
-                    <tr>
-				        <td width="15%" align="right">升级类型：</td>
-				        <td colspan="3">
+                        </td>
+                        <td style="width: 50%;">
+                            <img src="/Content/images/star1.png">
+                            <span class="spanTitle">升级类型:</span>
                             @if (version.UpdateType == 1)
                             { <font>全部升级</font> }
                             else if (version.UpdateType == 2)
@@ -82,76 +230,86 @@
                             { <font>指定市升级</font>}
                             else if (version.UpdateType == 4)
                             { <font>指定区升级</font>}
-                        </td>  
-			        </tr>
-                            if (version.UpdateType == 2)
-                            {
-                                AreaInfo area = new PoliceDAL().GetAreaInfoById(version.Aid, 2, 1);
-                        <tr>
-				            <td width="15%" align="right">区域：</td>
-				            <td colspan="3">@area.Area</td>  
-			            </tr>
-                            }
-                            else if (version.UpdateType == 3)
-                            {
-                                AreaInfo area = new PoliceDAL().GetAreaInfoById(version.Aid, 1, 1);
-                        <tr>
-				            <td width="15%" align="right">区域：</td>
-				            <td colspan="3">@(area.PName + " " + area.Area)</td>  
-			            </tr>
-                            }
-                            else if (version.UpdateType == 4)
-                            {
-                                AreaInfo area = new PoliceDAL().GetAreaInfoById(version.Aid, 0, 1);
-                        <tr>
-				            <td width="15%" align="right">区域：</td>
-				            <td colspan="3">@(area.PName + " " + area.CName + " " + area.Area)</td>  
-			            </tr>
-                            }
-                    <tr>
-				        <td width="15%" align="right">升级范围：</td>
-				        <td colspan="3">
-                            @if (version.otherType == 1)
-                            { <font>全部</font> }
-                            else if (version.otherType == 2)
-                            {<font>除城中村升级</font> }
-                            else if (version.otherType == 3)
-                            { <font>除旁路升级</font>}
-                            else if (version.otherType == 4)
-                            { <font>除城中村和旁路升级</font>}
-                        </td>  
-			        </tr>
+                        </td>
+                    </tr>
                 }
+                <tr class="tr2" style="display: inline;">
+                    <td>
+                        <img src="/Content/images/star1.png">
+                        <span class="spanTitle">升级范围:</span>
+                        @if (version.otherType == 1)
+                        { <font>全部</font> }
+                        else if (version.otherType == 2)
+                        {<font>除城中村升级</font> }
+                        else if (version.otherType == 3)
+                        { <font>除旁路升级</font>}
+                        else if (version.otherType == 4)
+                        { <font>除城中村和旁路升级</font>}
+                    </td>
+                    <td>
+                        <span class="spanTitle">区域:</span>
+                        @if (version.UpdateType == 2)
+                        {
+                            AreaInfo area = new PoliceDAL().GetAreaInfoById(version.Aid, 2, 1);
+                            <strong>区域：@area.Area</strong>
+                        }
+                        else if (version.UpdateType == 3)
+                        {
+                            AreaInfo area = new PoliceDAL().GetAreaInfoById(version.Aid, 1, 1);
+                            <strong>区域：@(area.PName + " " + area.Area)</strong>
+                        }
+                        else if (version.UpdateType == 4)
+                        {
+                            AreaInfo area = new PoliceDAL().GetAreaInfoById(version.Aid, 0, 1);
+                            <strong>区域：@(area.PName + " " + area.CName + " " + area.Area)</strong>
+                        }
+                    </td>
+                </tr>
+                <tr class="tr2" style="display: inline;">
+                    <td style="width: 50%;">
+                        <img src="/Content/images/star1.png">
+                        @if (version.Type != 5)
+                        {
 
-                if (version.Type != 5)
-                {
+                        }
+                        <span class="spanTitle">是否强制升级:</span>
+                        <strong>@(version.FocusUpdate == 1 ? "是" : "否")</strong>
+                    </td>
+                    <td style="width: 50%;">
+                        <img src="/Content/images/star1.png">
+                        <span class="spanTitle">外部版本:</span>
+                        <strong>@version.OutVersion</strong>
+                    </td>
+                </tr>
+                <tr class="tr2" style="display: inline;">
+                    @if (version.Type != 5)
+                    {
+                        <td>
+                            <img src="/Content/images/star1.png">
+                            <span class="spanTitle">更新包下载地址:</span>
+                            <strong>@version.DownloadUrl</strong>
+                        </td>
+                    }
+
+                    <td>
+                        <img src="/Content/images/star1.png">
+                        <span class="spanTitle">内部版本:</span>
+                        <strong>@version.Version</strong>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table cellspacing="0" cellpadding="0" border="0">
+            <tbody>
                 <tr>
-				    <td width="15%" align="right">是否强制升级：</td>
-				    <td colspan="3">@(version.FocusUpdate == 1 ? "是" : "否")</td>  
-			    </tr>           
-                }
-
-            <tr>
-				<td width="15%" align="right">外部版本：</td>
-				<td colspan="3">@version.OutVersion</td>  
-			</tr>
-			<tr>
-				<td width="15%" align="right">内部版本：</td>
-				<td colspan="3">@version.Version</td>  
-			</tr>
-                if (version.Type != 5)
-                {
-			    <tr>
-				    <td width="15%" align="right">更新包下载地址：</td>
-				    <td colspan="3">@version.DownloadUrl</td>  
-			    </tr>
-                }
-			<tr>
-				<td width="15%" align="right">更新说明：</td>
-				<td colspan="3">
-                <textarea id="txtChangeLog" name="txtChangeLog" style=" height:100px" rows="20" class="_textarea" disabled="disabled">@version.ChangeLog</textarea></td>  
-			</tr>
-            }
-            }
-	</table>
-	</div>
+                    <td style="border-right: none;">
+                        <span class="spanTitle" style="padding-top: 10px;padding-left: 15px;display: inline-block;float: left;">更新说明:</span>
+                        <textarea name="txtChangeLog" rows="" cols="" style="width: 908px; height: 116px;">@version.ChangeLog</textarea>
+                    </td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    }
+</div>

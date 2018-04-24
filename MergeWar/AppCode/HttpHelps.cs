@@ -1,19 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Net;
-using System.IO;
-using System.Text.RegularExpressions;
-using System.IO.Compression;
-using System.Diagnostics;
 using System.Configuration;
 using System.Security.Cryptography.X509Certificates;
 using System.Net.Security;
 using System.Web;
-using Common;
-using HCZZ.DAL;
-using System.Web.Script.Serialization;
-using System.Threading;
+using HCZZ.Common;
 
 namespace HCZZ
 {

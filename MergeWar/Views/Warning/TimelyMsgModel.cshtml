@@ -1,0 +1,222 @@
+﻿@using HCZZ.ModeDB
+@using HCZZ.Common
+@{
+
+    ViewBag.Title = "TimelyMsgModel";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    BKBJ.WarningInfo waringInfo = (BKBJ.WarningInfo)ViewBag.warinfo;
+}
+<link href="~/Content/css/BJGL_JSTXBJ.css" rel="stylesheet" />
+<link href="@Url.Content("~/Content/css/publicHeader.css")" rel="stylesheet" type="text/css" />
+<style type="text/css">
+    .contentbody .contentInfo table {
+        color: #b1b1b1;
+        width: 1250px;
+        border: 1px solid #2a393a;
+        margin: 0 auto;
+        background-color: #21222f;
+    }
+
+        .contentbody .contentInfo table tr {
+            height: 40px;
+        }
+
+            .contentbody .contentInfo table tr:nth-child(even) {
+                background-color: #21202E;
+            }
+
+            .contentbody .contentInfo table tr:nth-child(odd) {
+                background-color: #21222F;
+            }
+
+            .contentbody .contentInfo table tr th {
+                text-align: left;
+                padding-left: 50px;
+                background-color: #1E1F2D;
+                border-bottom: 1px solid #2A393A;
+            }
+
+            .contentbody .contentInfo table tr td {
+                border-right: 1px solid #2A393A;
+                padding-left: 50px;
+            }
+
+                .contentbody .contentInfo table tr td .spanTitle {
+                    color: #999999;
+                }
+
+                .contentbody .contentInfo table tr td .spanText {
+                    color: #CCCCCC;
+                }
+
+                .contentbody .contentInfo table tr td .spanTextHint {
+                    color: #AA301C;
+                }
+
+        .contentbody .contentInfo table:nth-child(1) {
+            margin-top: 20px;
+        }
+
+        .contentbody .contentInfo table:nth-child(2) {
+            margin-bottom: 50px;
+            border-top: none;
+        }
+
+        .contentbody .contentInfo table tr td img {
+            vertical-align: middle;
+        }
+
+        .contentbody .contentInfo table tr td input {
+            margin-left: 5px;
+            background-color: transparent;
+            border: none;
+            background-color: #222B3B;
+            height: 25px;
+            padding-left: 5px;
+            color: #999999;
+        }
+
+        .contentbody .contentInfo table tr td select {
+            margin-left: 5px;
+            background-color: transparent;
+            border: none;
+            background-color: #222B3B;
+            height: 25px;
+            padding-left: 5px;
+            color: #999999;
+        }
+
+        .contentbody .contentInfo table tr td .SYHLXbtn {
+            border: 1px solid #222B3B;
+            cursor: pointer;
+            outline: none;
+            box-sizing: border-box;
+            /*padding-top: 3px;*/
+            margin-left: 10px;
+            padding-bottom: 3px;
+            padding-left: 15px;
+            padding-right: 15px;
+            -moz-border-radius: 15px; /* Firefox */
+            -webkit-border-radius: 15px; /* Safari 和 Chrome */
+            border-radius: 15px; /* Opera 10.5+, 以及使用了IE-CSS3的IE浏览器 */
+        }
+
+        .contentbody .contentInfo table tr td .YHLXbtnActive {
+            cursor: pointer;
+            box-sizing: border-box;
+            outline: none;
+            color: #7BD2DA;
+            border: 1px solid #7BD2DA;
+        }
+
+        .contentbody .contentInfo table tr td .ZJLX {
+            width: 80px;
+            border: 1px solid #0A7891;
+            cursor: pointer;
+            background-color: #0B2A3C;
+            color: #7BD2DA;
+        }
+
+    .footerAdd {
+        width: 100%;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+        .footerAdd .add {
+            box-sizing: border-box;
+            cursor: pointer;
+            width: 250px;
+            height: 50px;
+            background-color: #1e1f2d;
+            color: #7bd2da;
+            border: none;
+            font: 14px "Î¢ÈíÑÅºÚ";
+            background-image: url(/Content/images/save_bg.png);
+        }
+</style>
+<div class="contentbody" id="contentbody">
+    <div class="contentTopNav">
+    </div>
+    <div class="contentInfo">
+        <table cellspacing="0" cellpadding="0" border="0">
+            <tbody>
+                <tr><th colspan="3">审计详细信息</th></tr>
+                <tr>
+                    <td width="17%" align="right">
+                        审计条件-@(waringInfo.CaseItem == 1 ? "手机号码" : (waringInfo.CaseItem == 2 ? "上网终端MAC地址" : "IMEI"))：
+                    </td>
+                    <td width="40%">@(waringInfo.CaseValue)</td>
+                    <td width="15%" align="right">审计任务名称：</td>
+                    <td width="*%">@waringInfo.TaskName</td>
+                </tr>
+                <tr>
+                    <td align="right">是否邮件报警：</td>
+                    <td>@Html.Raw(waringInfo.MailWarn == 1 ? "<font color='red'>是</font>" : "<font color='green'>否</font>")</td>
+                    <td align="right">接收邮箱地址：</td>
+                    <td>@waringInfo.WMail</td>
+                </tr>
+                <tr>
+                    <td align="right">负责人：</td>
+                    <td>@waringInfo.HeadName</td>
+                    <td align="right">负责人电话：</td>
+                    <td>@waringInfo.HeadMobile</td>
+                </tr>
+                <tr>
+                    <td align="right">布控时间：</td>
+                    <td>@(waringInfo.CaseCreatetime.ToString("yyyy-MM-dd") == "0001-01-01" ? "" : waringInfo.CaseCreatetime.ToString("yyyy-MM-dd HH:mm:ss"))</td>
+                    <td align="right">审计条件-审计有效时间至：</td>
+                    <td>@(waringInfo.EndTime.ToString("yyyy-MM-dd") == "0001-01-01" ? "" : waringInfo.EndTime.ToString("yyyy-MM-dd HH:mm:ss"))</td>
+                </tr>
+                <tr>
+                    <td align="right">案件说明：</td>
+                    <td colspan="3">@waringInfo.Remark</td>
+                </tr>
+
+                <tr>
+                    <th colspan="4"><h1>报警详细信息</h1></th>
+                </tr>
+
+                <tr>
+                    <td align="right">场所名称：</td>
+                    <td>@waringInfo.PLACE_NAME</td>
+                    <td align="right">报警时间：</td>
+                    <td>@(waringInfo.Createtime.ToString("yyyy-MM-dd") == "0001-01-01" ? "" : waringInfo.Createtime.ToString("yyyy-MM-dd HH:mm:ss"))</td>
+                </tr>
+
+                <tr>
+                    <td align="right">移动设备MAC地址：</td>
+                    <td>@waringInfo.MacAddress</td>
+                    <td align="right">AP设备MAC地址：</td>
+                    <td>@waringInfo.AP_MAC</td>
+                </tr>
+
+                <tr>
+                    <td align="right">手机号码：</td>
+                    <td>@waringInfo.Mobile</td>
+                    <td align="right">场所内网端口号：</td>
+                    <td>@(waringInfo.PORT)</td>
+                </tr>
+
+                <tr>
+                    <td align="right">场所内网IP地址：</td>
+                    <td>@ChangeValue.RefIPvlong(waringInfo.IP_ADDRESS)</td>
+                    <td align="right">源外网IPv4地址：</td>
+                    <td>@ChangeValue.RefIPvlong(waringInfo.SRC_IP) </td>
+                </tr>
+
+                <tr>
+                    <td align="right">是否已经发送邮件报警：</td>
+                    <td>@Html.Raw(waringInfo.IsSendMail == 1 ? "<font color='red'>是</font>" : "<font color='green'>否</font>")</td>
+                    <td align="right">目的公网IPv4地址：</td>
+                    <td>@(ChangeValue.RefIPvlong(waringInfo.DST_IP) == "0.0.0.0" ? "" : ChangeValue.RefIPvlong(waringInfo.DST_IP))</td>
+                </tr>
+                <tr>
+                    <td align="right">警报类型：</td>
+                    <td colspan="3">@Html.Raw(waringInfo.WaringType == 1 ? "采集警报" : "审计警报")</td>
+                </tr>
+                <tr></tr> 
+            </tbody>
+        </table>
+</div>
+</div>

@@ -1,6 +1,313 @@
 ﻿@{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "布控报警-布控管理";
 }
+@using System.Collections.Generic
+@using HCZZ.Common
+@using HCZZ.DAL
+@using HCZZ.ModeDB
+@using Webdiyer.WebControls.Mvc
+@{
 
-<h2>Index</h2>
+    <link href="~/Content/css/BJGL_JSTXBJ.css" rel="stylesheet" />
+    <link href="@Url.Content("~/Content/css/publicHeader.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Content/DatePicker/WdatePicker.js")" type="text/javascript"></script>
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    PagedList<BKBJ.AuditInfo> AI = (PagedList<BKBJ.AuditInfo>)ViewBag.pl;
+    string relaVal = ChangeValue.RefPageRelaByPath("Warning/Index");
+    Dictionary<string, string> dic = (Dictionary<string, string>)ViewBag.dic;
+    UserInfo user = (UserInfo)Session["userInfo"];
+}
+<style>
+    .contentbody .contentTable {
+    }
 
+        .contentbody .contentTable table {
+            width: 100%;
+        }
+
+            .contentbody .contentTable table tr {
+                border-bottom: 1px solid #181926;
+                height: 40px;
+            }
+
+                .contentbody .contentTable table tr:nth-child(even) {
+                    background-color: #20212e;
+                }
+
+                .contentbody .contentTable table tr:nth-child(odd) {
+                    background-color: #21222f;
+                }
+
+                .contentbody .contentTable table tr:first-child {
+                    background-color: #1E1F2D;
+                }
+
+                .contentbody .contentTable table tr th {
+                    text-align: left;
+                    padding-left: 15px;
+                    border-right: 2px solid rgb(24, 25, 38);
+                    color: #85858A;
+                    font-family: "微软雅黑";
+                    font-size: 13px;
+                }
+
+                .contentbody .contentTable table tr td {
+                    text-align: left;
+                    padding-left: 15px;
+                    border-right: 2px solid rgb(24, 25, 38);
+                    color: #85858A;
+                    font-family: "微软雅黑";
+                    font-size: 12px;
+                }
+
+                .contentbody .contentTable table tr:hover {
+                    background-color: #222a36;
+                }
+
+            .contentbody .contentTable table.djxTable tr:first-child:hover {
+                background-color: #1E1F2D;
+            }
+
+    #djsTable:hover {
+        background-color: #1E1F2D;
+    }
+</style>
+@using (Html.BeginForm("Index", "Warning", FormMethod.Get))
+{
+    <div class="contentbody" id="contentbody">
+        <div class="contentTitle">
+            <span>管理列表</span>
+            <input class="search" type="button" id="BtnSelect" onclick="myFunction(this, 'contentConditions')" value="隐藏" />
+            <input class="" type="button" id="" value="导出Excel" onclick="report()" />
+            @if (relaVal.Contains("2"))
+            {
+                <input class="add" type="button" value="+ 添加" onclick="window.location.href='@Url.Content("~/Warning/AddIndex")'" />
+            }
+        </div>
+        <div class="contentConditions" id="zbtnXY">
+            <ul>
+                <li class="Conditions Conditions1">
+                    <span>审计任务名称：</span>
+                    <select name="selTaskName">
+                        <option value="1">模糊</option>
+                        <option value="2">精确</option>
+                    </select>
+                    <input type="text" name="TaskName" id="TaskName" value="@dic["TaskName"]" />
+                </li>
+                <li class="Conditions Conditions2">
+                    <span>布控内容：</span>
+                    <select name="selkeyWord">
+                        <option value="1">模糊</option>
+                        <option value="2">精确</option>
+                    </select>
+                    <input type="text" name="keyWord" id="keyWord" value="@dic["keyWord"]" />
+                </li>
+                <li class="Conditions Conditions4">
+                    <span>负责人：</span>
+                    <select name="selHeadName">
+                        <option value="1">模糊</option>
+                        <option value="2">精确</option>
+                    </select>
+                    <input type="text" id="HeadName" name="HeadName" value="@dic["HeadName"]" />
+                </li>
+                <li class="Conditions Conditions5">
+                    <span>审计任务添加时间：</span>
+                    <input name="StartCreateTime" id="StartCreateTime" value="@dic["StartCreateTime"]" class="Wdate" type="text" onfocus="WdatePicker({ dateFmt: 'yyyy-MM-dd HH:mm:ss', readonly: true, maxDate: '#F{$dp.$D(\'EndCreateTime\')}' })">
+                    <b style="color: #b1b1b1;">—</b>
+                    <input name="EndCreateTime" id="EndCreateTime" value="@dic["EndCreateTime"]" class="Wdate" style="margin: 0;" onfocus="WdatePicker({ dateFmt: 'yyyy-MM-dd HH:mm:ss', readonly: true, minDate: '#F{$dp.$D(\'StartCreateTime\')}' })" type="text">
+                </li>
+                <li class="Conditions Conditions5">
+                    <span>审计有效时间至：</span>
+                    <input name="StartEndTime" id="StartEndTime" value="@dic["StartEndTime"]" class="Wdate" type="text" onfocus="WdatePicker({ dateFmt: 'yyyy-MM-dd HH:mm:ss', readonly: true, maxDate: '#F{$dp.$D(\'EndEndTime\')}' })">
+                    <b style="color: #b1b1b1;">—</b>
+                    <input name="EndEndTime" id="EndEndTime" value="@dic["EndEndTime"]" class="Wdate" style="margin: 0;" onfocus="WdatePicker({ dateFmt: 'yyyy-MM-dd HH:mm:ss', readonly: true, minDate: '#F{$dp.$D(\'StartEndTime\')}' })" type="text">
+                </li>
+                <li class="Conditions Conditions6">
+                    <input class="selectbg" type="submit" id="" value="搜索" />
+                    <input class="resetbg" type="reset" value="重置" />
+                </li>
+            </ul>
+        </div>
+        <div class="contentTable">
+            <table border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <th width="5%">
+                        序号
+                    </th>
+                    <th width="15%">
+                        布控任务名称
+                    </th>
+                    <th width="8%">
+                        布控类型
+                    </th>
+                    <th width="12%">
+                        布控内容
+                    </th>
+                    <th width="7%">
+                        负责人
+                    </th>
+                    <th width="12%">
+                        布控任务添加时间
+                    </th>
+                    <th width="12%">
+                        布控条件-布控有效时间至
+                    </th>
+                    <th width="4%">
+                        动作
+                    </th>
+                    <th width="10%">
+                        操作
+                    </th>
+                </tr>
+                @if (AI != null && AI.Count > 0)
+                {
+                    foreach (BKBJ.AuditInfo item in AI)
+                    {
+                        <tr>
+                            <td width="5%">
+                                @item.PageNum
+                            </td>
+                            <td width="15%">
+                                @item.TaskName
+                            </td>
+                            <td width="8%">
+                                @(item.CaseItem == 1 ? "手机号码" : item.CaseItem == 2 ? "上网终端MAC地址" : "批量导入黑名单")
+                            </td>
+                            <td width="12%">
+                                @item.CaseValue
+                            </td>
+                            @*<td width="11%">
+                                    @(item.CaseItem == 3 ? item.CaseValue : "")
+                                </td>*@
+                            <td width="7%">
+                                @item.HeadName
+                            </td>
+                            <td width="12%">
+                                @item.CreateTime
+                            </td>
+                            <td width="12%">
+                                @item.EndTime
+                            </td>
+                            <td width="4%">
+                                @if (item.EndTime > DateTime.Now && relaVal.Contains("2"))
+                                {
+                                    <a href="javascript:void(0)" style="text-decoration: underline;  color:#85858A; " onclick="ChangeIsEnabled(@item.ID, this)">@(item.IsEnabled == 1 ? "启用" : "禁用")</a>
+                                }
+                                else
+                                {
+                                    @(item.IsEnabled == 1 ? "启用" : "禁用")
+                                }
+                            </td>
+                            <td width="10%">
+                                <a class="Cz_chakan" href="@Url.Content("~/Warning/IndexModel/" + item.ID)" title="详细"><img title="详情" src="@Url.Content("~/Content/images/view1_icon.png")" alt="查看" /></a>
+
+                                @if (relaVal.Contains("2"))
+                                {
+                                    <a class="Cz_bianji" href="@Url.Content("~/Warning/EditIndex/" + item.ID)" title="修改"><img title="编辑" src="@Url.Content("~/Content/images/edit1_icon.png")" alt="编辑" /></a>
+                                }
+                                @if (relaVal.Contains("3"))
+                                {
+                                    <a class="Cz_shanchu" href="javascript:void(0)" onclick="delcase(@item.ID)" title="删除"><img title="删除" src="@Url.Content("~/Content/images/del1_icon.png")" alt="删除" /></a>
+
+                                }
+                            </td>
+                        </tr>
+                    }
+
+                }
+                else
+                {
+
+                }
+            </table>
+            @if (AI != null && AI.Count > 0)
+            {
+                @Html.Partial("~/Views/Shared/_PartialPage.cshtml", new RouteValueDictionary { { "model", AI }, { "pageindex", "PageIndex" } })
+            }
+        </div>
+    </div>
+    <script>
+        $(function () {
+            if (@(string.IsNullOrEmpty(dic["selTaskName"]) ? "0" : dic["selTaskName"]) == 2) {
+                $("#selTaskName").val("2");
+            } else {
+                $("#selTaskName").val("1");
+            }
+            if (@(string.IsNullOrEmpty(dic["selkeyWord"]) ? "0" : dic["selkeyWord"]) == 2) {
+                $("#selkeyWord").val("2");
+            } else {
+                $("#selkeyWord").val("1");
+            }
+            if (@(string.IsNullOrEmpty(dic["selHeadName"]) ? "0" : dic["selHeadName"]) == 2) {
+                $("#selHeadName").val("2");
+            } else {
+                $("#selHeadName").val("1");
+            }
+        });
+        function report() {
+            var maxCount = @Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["ExprotCout"]);
+            var TotalCount = parseInt($("#spTotalItem").html());
+            if (TotalCount > maxCount) {
+                alert("为了保证导出数据的速度，数据源不能大于“" + maxCount + "”行");
+                closeDown();
+            } else {
+                var str = window.location.search==""?"?":window.location.search;
+                showDown();
+                $.ajax
+                ({
+                    type: "Post",
+                    url: '@Url.Content("~/Warning/RepIndex")' + str + '&CaseType=1&abc=' + (new Date()).getTime(),
+                    dataType: "json",
+                    cache: false,
+                    success: function(data, status) {
+                        if (typeof (data.err) != 'undefined' && data.err != "") {
+                            alert(data.err);
+                        } else {
+                            window.location.href = '@Url.Content("~/Login/Download?name=")' + encodeURIComponent('布控报表_') + '&path=' + encodeURIComponent(data.result);
+                        }
+                        closeDown();
+                    },
+                    error: function (data, status, e) {
+                        alert(e);
+                        closeDown();
+                    }
+                });
+            }
+        }
+        //修改审计状态
+        function ChangeIsEnabled(id, a) {
+            $.ajax({
+                type: "Post",
+                url: '@Url.Content("~/Warning/ChangeAuditAbled/")' + id + '?abc=' + (new Date()).getTime(),
+                dataType: "json",
+                cache: false,
+                success: function(data) {
+                    if (data.err != undefined && data.err != "") {
+                        if (data.err == "dataerr") {
+                            alert("修改失败，数据库查询错误。");
+                        } else {
+                            alert("修改失败，未知错误。");
+                        }
+                        return false;
+                    }
+                    if (data.result == "ok") {
+                        $(a).css("color", "red");
+                        if ($(a).html() == "启用") {
+                            $(a).html("禁用");
+                        } else {
+                            $(a).html("启用");
+                        }
+                    } else if(data.result=="nopower") {
+                        alert("修改失败,权限不足。");
+                    }
+                }
+            });
+
+        }
+        function delcase(id) {
+            if (confirm("确定要删除该审计任务吗？\n\n删除后该审计信息对应的报警信息将不会再显示，\n如想停止审计，点击\"停用\"链接即可")) {
+                location.href = '@Url.Content("~/Warning/DelIndex/")' + id;
+            }
+        }
+    </script>
+}

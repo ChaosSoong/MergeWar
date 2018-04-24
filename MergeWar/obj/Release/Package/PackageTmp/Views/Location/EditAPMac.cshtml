@@ -1,8 +1,9 @@
 ﻿@{
-    ViewBag.Title = "-编辑AP设备";
+    ViewBag.Title = "编辑AP设备";
     Layout = "~/Views/Shared/_Layout.cshtml";
     MacInfo mac = (MacInfo)ViewBag.mac;
 }
+<link href="~/Content/css/CSGL.css" rel="stylesheet" />
 @using HCZZ.ModeDB;
 @using Common;
 @using (Html.BeginForm("EditAPMac", "Location", FormMethod.Post))
@@ -343,7 +344,7 @@
                 $("#tr3CID").show();
             }
 
-            searchLoad("txtCOLLECTION_EQUIPMENT_ID", "@Url.Content("~/Location/RefMacList")");
+            searchLoad("txtCOLLECTION_EQUIPMENT_ID", "@Url.Content("~/Public/RefMacList")");
             $("#txtCOLLECTION_EQUIPMENT_ID").val('@(mac != null ? mac.COLLECTION_EQUIPMENT_ID : "")');
 
             $("form").submit(function () {

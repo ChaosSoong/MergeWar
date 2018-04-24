@@ -1,0 +1,30 @@
+=============================================================
+====时间：2017/9/9 9:42:10
+====IP：::1
+====异常内容：
+System.FormatException: 输入字符串的格式不正确。
+   在 System.Number.ParseDouble(String value, NumberStyles options, NumberFormatInfo numfmt)
+   在 System.Convert.ToDouble(String value)
+   在 HCZZ.Controllers.PublicController.DevNum() 位置 D:\netweb\合成作战新版\源码\MergeWar\Controllers\PublicController.cs:行号 825
+
+
+=============================================================
+====时间：2017/9/9 10:26:23
+====IP：::1
+====异常内容：
+System.FormatException: 输入字符串的格式不正确。
+   在 System.Number.ParseDouble(String value, NumberStyles options, NumberFormatInfo numfmt)
+   在 System.Convert.ToDouble(String value)
+   在 HCZZ.Controllers.PublicController.DevNum() 位置 D:\netweb\合成作战新版\源码\MergeWar\Controllers\PublicController.cs:行号 825
+
+
+=============================================================
+====时间：2017/9/9 10:27:59
+====IP：::1
+====异常内容：
+System.FormatException: 输入字符串的格式不正确。
+   在 System.Number.ParseDouble(String value, NumberStyles options, NumberFormatInfo numfmt)
+   在 System.Convert.ToDouble(String value)
+   在 HCZZ.Controllers.PublicController.DevNum() 位置 D:\netweb\合成作战新版\源码\MergeWar\Controllers\PublicController.cs:行号 825
+
+

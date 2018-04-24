@@ -4,7 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
-using Common;
+using HCZZ.Common;
 using HCZZ.ModeDB;
 using Webdiyer.WebControls.Mvc;
 
@@ -27,7 +27,7 @@ namespace HCZZ.DAL
                 { 
                     new SqlParameter("@UID",log.UID),
                     new SqlParameter("@Module",log.Module),
-                    new SqlParameter("@What",StringFilter.Base64Str(1 , log.What)),
+                    new SqlParameter("@What",ChangeValue.Base64Str(1,log.What)),
                     new SqlParameter("@IpAddress",log.IpAddress)
                 };
                 return SqlHelper.ExecuteNonQuery(SqlHelper.DBConnStr, CommandType.Text, sql, param);
@@ -92,8 +92,8 @@ namespace HCZZ.DAL
 
                 if (!string.IsNullOrEmpty(what))
                 {
-                    whereSql += " AND l.What LIKE '%" + StringFilter.Base64Str(1, what) + "%'";
-                    listParam.Add(new SqlParameter("@What", what));
+                    whereSql += " AND l.What LIKE '%" + ChangeValue.Base64Str(1, what) + "%'";
+                    listParam.Add(new SqlParameter("@What", ChangeValue.Base64Str(1, what)));
                 }
 
                 SqlParameter[] param = listParam.ToArray();

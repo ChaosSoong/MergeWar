@@ -6,69 +6,206 @@
 
 <head>
     <title></title>
-<link href="@Url.Content("~/Content/css/index.css")" rel="stylesheet" type="text/css" />
+    @*<link href="@Url.Content("~/Content/css/index.css")" rel="stylesheet" type="text/css" />*@
+    <link href="~/Content/css/reset1.css" rel="stylesheet" />
     <script src="@Url.Content("~/Content/js/jquery-1.7.1.min.js")" type="text/javascript"></script>
-</head>
- @using (Html.BeginForm("AddProArea", "System", FormMethod.Post))
-        {
-            <div class="Pop_layer" style="float:left ;"> 
-		<div class="aq_title">
-			<div class="TT_left"></div>
-			<div class="TT_right"></div> 
-			<div class="img_close" onclick="javascript:parent.closeDiv()"></div>
-			添加省
-		</div>  
-            <div class="aq_tab aq_overflow2"> 
- 			     <table cellpadding="0" cellspacing="1" width="100%" class="aq_XxTab">
-                    <tr>
-				        <td width="20%" align="right">省名称：</td>
-				        <td width="30%"><input type="text" class="_text" name="txtArea" maxlength="25" id="txtArea" /><span id="spArea" class="color_ccc">*</span></td>   
-			        </tr>
-                    <tr>
-				        <td align="right">省代码：</td>
-				        <td><input type="text" class="_text" name="txtCity_code" maxlength="25" id="txtCity_code" /><span id="spCity_code" class="color_ccc">*</span></td>   
-			        </tr>
-                </table>
-            </div> 
-            <div class="aq_foot"> 
-			    <input class="btn_SS" type="submit" name="button" value="保存";
-			      onmouseover="this.className='Over_SS'"
-			      onmouseout="this.className='Onout_SS'"/>
-            </div>
-            </div>  
+    <style type="text/css">
+        .pupMain {
+            width: 510px;
+            height: 375px;
+            background-color: #161523;
+            margin: 0 auto;
         }
-        
-    <script type="text/javascript">
-        function pageSubmit() {
-                    var result = true;
-                    if ($.trim($("#txtArea").val()) == "") {
-                        result = false;
-                        $("#spArea").html("省名称不能为空");
-                    } else {
-                        $("#spArea").html("");
-                    }
+
+        .title {
+            width: 510px;
+            height: 65px;
+            background-image: url(../Content/images/title_bg.png);
+            line-height: 65px;
+        }
+
+            .title span:first-child {
+                float: left;
+                color: #b1b1b1;
+                font: 20px "微软雅黑";
+                margin-left: 20px;
+                margin-top: 19.5px;
+            }
+
+            .title span:last-child {
+                float: right;
+                margin-right: 23px;
+                cursor: pointer;
+                margin-top: 1px;
+            }
+
+            .title span img {
+                width: 15px;
+                height: 15px;
+            }
+
+        .pupMain ul li:nth-child(2) {
+            margin-top: 50px;
+            text-align: center;
+        }
+
+            .pupMain ul li:nth-child(2) input {
+                box-sizing: border-box;
+                padding-left: 15px;
+                width: 360px;
+                height: 50px;
+                background-color: #1e1f2d;
+                border: 1px solid #263738;
+                color: #7bd2da;
+                font: 14px "微软雅黑";
+            }
+
+            .pupMain ul li:nth-child(2) span {
+                position: absolute;
+                top: 131px;
+                right: 50px;
+            }
+
+        .pupMain ul li:nth-child(3) {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+            .pupMain ul li:nth-child(3) input {
+                box-sizing: border-box;
+                padding-left: 15px;
+                width: 360px;
+                height: 50px;
+                background-color: #1e1f2d;
+                border: 1px solid #263738;
+                color: #7bd2da;
+                font: 14px "微软雅黑";
+            }
+
+            .pupMain ul li:nth-child(3) span {
+                position: absolute;
+                top: 210px;
+                right: 50px;
+            }
+
+        .pupMain ul li:nth-child(4) {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+            .pupMain ul li:nth-child(4) input {
+                box-sizing: border-box;
+                cursor: pointer;
+                width: 360px;
+                height: 50px;
+                background-color: #1e1f2d;
+                color: #7bd2da;
+                border: none;
+                font: 14px "微软雅黑";
+                background-image: url(../Content/images/save_bg.png);
+            }
+    </style>
+</head>
+@using (Html.BeginForm("AddProArea", "System", FormMethod.Post))
+{
+    @*<div class="Pop_layer" style="float:left ;">
+        <div class="aq_title">
+            <div class="TT_left"></div>
+            <div class="TT_right"></div>
+            <div class="img_close" onclick="javascript:parent.closeDiv()"></div>
+            添加省
+        </div>
+            <div class="pupMain">
+                 <table cellpadding="0" cellspacing="1" width="100%" class="aq_XxTab">
+                    <tr>
+                        <td width="20%" align="right">省名称：</td>
+                        <td width="30%"><input type="text" class="_text" name="txtArea" maxlength="25" id="txtArea" /><span id="spArea" class="color_ccc">*</span></td>
+                    </tr>
+                    <tr>
+                        <td align="right">省代码：</td>
+                        <td><input type="text" class="_text" name="txtCity_code" maxlength="6" id="txtCity_code" /><span id="spCity_code" class="color_ccc">*</span></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="aq_foot">
+                <input class="btn_SS" type="submit" name="button" value="保存";
+                  onmouseover="this.className='Over_SS'"
+                  onmouseout="this.className='Onout_SS'"/>
+            </div>
+            </div>*@
+
+    <div class="pupMain">
+        <ul>
+            <li class="title">
+                <span>添加省</span>
+                <span onclick="layerClose()"><img src="../Content/images/icon_close.png"></span>
+            </li>
+            <li>
+                <input name="txtArea" id="txtArea" value="省名称" type="text"><span><img src="../Content/images/star.png"></span>
+            </li>
+            <li>
+                <input name="txtCity_code" id="txtCity_code" value="省代码" type="text"><span><img src="../Content/images/star.png"></span>
+            </li>
+            <li>
+                <input name="" id="" value="保存" type="submit">
+            </li>
+        </ul>
+    </div>
 
 
-                    var reg = new RegExp(/\d+$/);
-                    if ($.trim($("#txtCity_code").val()) == "") {
-                        result = false;
-                        $("#spCity_code").html("省代码不能为空");
-                    } else if (!reg.test($.trim($("#txtCity_code").val()))) {
-                        result = false;
-                        $("#spCity_code").html("省代码格式不正确");
-                    } else {
-                        $("#spCity_code").html("");
-                    }
-                    return result;
-                }
+}
 
-                $(function () {
-                    $("form").submit(function () {
-                        if (pageSubmit()) {
-                            return true;
-                        }
-                        return false;
-                    });
-                });
-            </script>
+<script type="text/javascript">
+    function pageSubmit() {
+        var result = true;
+        if ($.trim($("#txtArea").val()) == "省名称") {
+            result = false;
+            $("#spArea").html("省名称不能为空");
+        } else {
+            $("#spArea").html("");
+        }
+
+        var reg = new RegExp(/\d+$/);
+        if ($.trim($("#txtCity_code").val()) != "" && !reg.test($.trim($("#txtCity_code").val()))) {
+            result = false;
+            $("#spCity_code").html("省代码格式不正确");
+        } else {
+            $("#spCity_code").html("");
+        }
+        return result;
+    }
+    $(function () {
+        $("form").submit(function () {
+            if (pageSubmit()) {
+                return true;
+            }
+            return false;
+        });
+    });
+    //点击弹窗中的某个元素关闭自身（弹窗）
+    function layerClose() {
+        var index = parent.layer.getFrameIndex(window.name);
+        parent.layer.close(index);
+    }
+    $("#txtArea").focus(function () {
+        if ($(this).val() == "省名称") {
+            $(this).val("");
+        }
+    })
+    $("#txtArea").blur(function () {
+        if ($(this).val() == "") {
+            $(this).val("省名称");
+        }
+    })
+    $("#txtCity_code").focus(function () {
+        if ($(this).val() == "省代码") {
+            $(this).val("");
+        }
+    })
+    $("#txtCity_code").blur(function () {
+        if ($(this).val() == "") {
+            $(this).val("省代码");
+        }
+    })
+</script>
 

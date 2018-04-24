@@ -4,60 +4,71 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>@ViewBag.Title</title>
-    <link href="@Url.Content("~/Content/css/reset.css")" rel="stylesheet" type="text/css"/>
-    <link href="@Url.Content("~/Content/css/Layout.css")" rel="stylesheet" type="text/css"/>
-    <link href="@Url.Content("~/Content/css/publicHeader.css")" rel="stylesheet" type="text/css"/>
+    <link href="@Url.Content("~/Content/css/reset.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/css/Layout.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/css/publicHeader.css")" rel="stylesheet" type="text/css" />
     <script src="@Url.Content("~/Content/js/jquery-1.7.1.min.js")" type="text/javascript"></script>
     <script src="@Url.Content("~/Content/js/publicJS.js")" type="text/javascript"></script>
 </head>
 @{
     UserInfo DBuser = (UserInfo)Session["userInfo"];
     IEnumerable<Sys_UserPowerInfo> IElist = DBuser._UserShowPage;
-    IElist = IElist.Where(a => a.PageType == 0&&!string.IsNullOrEmpty(a.FilePath)).OrderBy(a => a.Indexs);
+    IElist = IElist.Where(a => a.PageType == 0 && !string.IsNullOrEmpty(a.FilePath)).OrderBy(a => a.Indexs);
     List<Sys_UserPowerInfo> topList = IElist.ToList();
 }
 <body style="min-width:1366px">
     <!--最顶部top-->
-<!--最顶部top-->
-	<div class="top">
-		<div class="toplogo">
-			<img src=""/>
-		</div>
-		<div class="toplogin">
-			<span id="time"></span>
-			<span class="loginUser">欢迎<a href="#" style="color: #aaaaaa;display: inline-block;margin: 0px 3px;">@DBuser.UserName</a>登录</span>
-			<input type="button" name="" id="" value="快捷查询" />
-		</div>
-	</div>
-	
-	<!--头部导航栏header-->
-<div class="header">
-    <ul>
-        @for (int i = 0; i < topList.Count; i++)
-        {
-            <li class="@( ViewBag.lishow == topList[i].SelShowValue ? topList[i].Class + "2" : topList[i].Class)">
-            <a href="@Url.Content("~/"+topList[i].FilePath+"")">@topList[i].Name</a>
-        </li>
-        }
-    </ul>
-</div>
-<div style="color: #616363; margin-right: 25px; height: 30px; line-height: 30px; float: right">
-    <ul>
-        <li><img src="@Url.Content("~/Content/images/home_icon.png")"/>@Html.Raw(ViewBag.location)</li>
-        
-    </ul>
-</div>
-<div class="center" id="center">
+    <!--最顶部top-->
+    <div class="top">
+        <div class="toplogo">
+            <img src="" />
+        </div>
+        <div class="toplogin">
+            <span id="time"></span>
+            <span class="loginUser">欢迎<a href="#" style="color: #aaaaaa;display: inline-block;margin: 0px 3px;">@DBuser.UserName</a>登录</span>
+            <input type="button" name="" id="" value="快捷查询" />
+        </div>
+    </div>
+
+    <!--头部导航栏header-->
+    <div class="header">
+        <ul>
+            @for (int i = 0; i < topList.Count; i++)
+            {
+                <li class="@( ViewBag.lishow == topList[i].Class ? topList[i].Class+"2" : topList[i].Class)">
+                    <a href="@Url.Content("~/" + topList[i].FilePath + "")">@topList[i].Name</a>
+                </li>
+            }
+        </ul>
+    </div>
+    <div style="color: #616363; margin-right: 25px; height: 30px; line-height: 30px; float: right">
+        <ul>
+            <li><img src="@Url.Content("~/Content/images/home_icon.png")" />@Html.Raw(ViewBag.location)</li>
+
+        </ul>
+    </div>
+    <div class="center" id="center">
         @RenderBody()
     </div>
     @*<div class="footer">
-        <div class="innerFooter">
-            <a href="#">Copyright &copy 2016-@(DateTime.Now.Year)
-                深圳市携网科技有限公司</a></div>
-    </div>*@
+            <div class="innerFooter">
+                <a href="#">Copyright &copy 2016-@(DateTime.Now.Year)
+                    深圳市携网科技有限公司</a></div>
+        </div>*@
     <script type="text/javascript">
+         @Html.Raw(ViewBag.errscript)
+        $(function () {
+            $(".WLFX").click(function () { a(this) })
+            $(".CPFX").click(function () { a(this) })
+            $(".TZPZ").click(function () { a(this) })
+            $(".BJGL").click(function () { a(this) })
+        })
+        function a(obj) {
+            $("." + obj.attributes[0].value + " a").attr("href", "#");
+            alert("此功能正在开发。。。");
+        }
     </script>
 </body>
 </html>

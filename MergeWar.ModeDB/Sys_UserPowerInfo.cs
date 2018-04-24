@@ -94,6 +94,8 @@ namespace HCZZ.ModeDB
           /// </summary>
           public int PageType { get; set; }
           public string Class { get; set; }
+
+        public string UserType { get; set; }
       }
     }
 

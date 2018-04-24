@@ -1,136 +1,119 @@
 ﻿@using System.Collections.Generic
-@using Common
+@using HCZZ.Common
 @using HCZZ.ModeDB
 @using Webdiyer.WebControls.Mvc
 @{
     ViewBag.Title = "系统设置-安全厂商管理";
     Layout = "~/Views/Shared/_Layout.cshtml";
     string relaVal = ChangeValue.RefPageRelaByPath("System/SecurityOrgList");
-   
+
 }
 <link href="@Url.Content("~/Content/css/publicHeader.css")" rel="stylesheet" type="text/css" />
 <link href="@Url.Content("~/Content/css/XTGL.css")" rel="stylesheet" type="text/css" />
+<link href="~/Content/css/XTGL_AQCSGL.css" rel="stylesheet" />
 @using (Html.BeginForm("SecurityOrgList", "System", new { @Id = 1 }, FormMethod.Get))
 {
     Dictionary<string, string> dic = (Dictionary<string, string>)ViewBag.dic;
-<div class="contentbody" id="contentbody">
-    <div class="contentTitle">
-        <span>查询条件和按钮区</span>
-        <input class="search" type="button" id="BtnSelect" onclick="myFunction(this, 'contentConditions')" value="隐藏" />
-        <input class="add" id="" value="添加安全厂商" type="button" onclick="PublicFun(1,'System/AddOrg')" />
-    </div>
-    <div class="contentConditions">
-        <ul>
-            <li class="Conditions Conditions1">
-                <span>厂商名称：</span>
-                <input type="text" name="ORGNAME" id="ORGNAME" maxlength="64" class="_text" value="@dic["orgName"]" />
-            </li>
-            <li class="Conditions Conditions2">
-                <span>厂商组织机构代码:</span>
-                <input type="text" name="ORGCODE" id="ORGCODE" maxlength="9" class="_text" value="@dic["orgCode"]" />
-            </li>
-            <li class="Conditions Conditions6">
-                <input class="selectbg" type="submit" id="but_Seek" value="搜索" />
-                <input class="resetbg" type="reset" value="重置" onclick="Reset()" />
-            </li>
-        </ul>
-    </div>
-    <div class="contentTable">
-        <table cellspacing="0" cellpadding="0" border="0">
-            <tr>
-                <th style="width: 5%;">
-                序号
-                </th>
-                <th style="width: 15%;">厂商名称</th>
-                <th style="width: 15%;">机构代码</th>
-                <th style="width: 10%;">联系人</th>
-                <th style="width: 10%;">联系电话</th>
-                <th style="width: 10%;">IMSI</th>
-                <th style="width: 10%;">IMEI</th>
-                <th style="width: 10%;">虚拟身份</th>
-                <th style="width: 15%;">操作</th>
-            </tr>
-            @{
-                PagedList<SecurityOrg> list = (PagedList<SecurityOrg>)ViewBag.pl;
-                if (list != null && list.Count > 0)
+    <div class="contentbody" id="contentbody">
+        <div class="contentTitle">
+            <span>安全厂商管理</span>
+            <input class="search" type="button" id="BtnSelect" onclick="myFunction(this, 'contentConditions')" value="隐藏"/>
+            <input class="add" type="button" id="" value="+ 添加" onclick="PublicFun(1,'System/AddOrg')"/>
+        </div>
+        <div class="contentConditions" id="contentConditions">
+            <ul>
+                <li class="Conditions Conditions1">
+                    <span>厂商名称：</span>
+                    <input type="text" id="orgName"name="orgName" value="@dic["orgName"]" />
+                </li>
+                <li class="Conditions Conditions1">
+                    <span style="width: 150px;">厂商组织机构代码：</span>
+                    <input type="text" id="orgCode" name="orgCode" value="@dic["orgCode"]" />
+                </li>
+                <li class="Conditions Conditions6">
+                    <input class="selectbg" type="submit" id="" value="搜索" />
+                    <input class="resetbg" type="reset" value="重置" />
+                </li>
+            </ul>
+        </div>
+        <div class="contentTable">
+            <table border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    @*<th style="width: 4%;"><input type="checkbox" name="" id="" value="" /></th>*@
+                    <th style="width: 5%;">序号</th>
+                    <th style="width: 8%;">厂商名称</th>
+                    <th style="width: 11%;">厂商组织机构代码</th>
+                    <th style="width: 8%;">联系人</th>
+                    <th style="width: 11%;">联系人电话</th>
+                    <th style="width: 6%;">IMSI</th>
+                    <th style="width: 6%;">IMEI</th>
+                    <th style="width: 6%;">虚拟身份</th>
+                    <th style="width: 6%;">MAC</th>
+                    @if (relaVal.Contains("6"))
                 {
-                    foreach (SecurityOrg item in list)
+                        <th style="width: 9%;">数据查询</th>
+                    }
+                    <th style="width: 12%;">操作</th>
+                </tr>
+                @{
+                    PagedList<SecurityOrg> list = (PagedList<SecurityOrg>)ViewBag.pl;
+                    if (list != null && list.Count > 0)
                     {
-                        <tr >
-                            <td width="5%">
-                                @item.PageNum
+                        foreach (SecurityOrg item in list)
+                        {
+                            <tr>
+                                @*<td><input type="checkbox" name="" id="" value="" /></td>*@
+                                <td>@item.PageNum</td>
+                                <td title='@item.SECURITY_SOFTWARE_ORGNAME'>@(ChangeValue.ByteSubString(item.SECURITY_SOFTWARE_ORGNAME, 12))</td>
+                                <td>@item.SECURITY_SOFTWARE_ORGCODE</td>
+                                <td>@item.CONTACTOR</td>
+                                <td>@item.CONTACTOR_TEL</td>
+                                <td>@item.IMSINum/个</td>
+                                <td>@item.IMEINum/个</td>
+                                <td>@item.virtualNum/个</td>
+                                <td>@item.MACNum/个</td>
+                                <td>
+                                    @if (relaVal.Contains("6"))
+                                {
+                                    <a href="/System/NumSelList?id=@item.ID" style="color:green">
+                                        数据查询
+                                        @*<img title="数据查询" src="@Url.Content("~/Content/images/edit1_icon.png")" alt="数据查询" onclick="PublicFun(1,'System/NumSelList?id=@item.ID')" />*@
+                                    </a>
+                                }
                             </td>
-                            <td width="15%"title='@item.SECURITY_SOFTWARE_ORGNAME'>@(ChangeValue.ByteSubString(item.SECURITY_SOFTWARE_ORGNAME, 12))</td>
-                            <td width="15%">@item.SECURITY_SOFTWARE_ORGCODE</td>
-                            <td width="10%">@item.CONTACTOR</td>
-                            <td width="10%">@item.CONTACTOR_TEL</td>
-                            <td width="10%"></td>
-                            <td width="10%"></td>
-                            <td width="10%"></td>
-                            <td width="15%">
-                                @if (relaVal.Contains("6"))
-                                {
-                                    <img title="数据查询" src="@Url.Content("~/Content/images/edit1_icon.png")" alt="数据查询" onclick="PublicFun(1,'System/NumSelList?id=@item.ID')" />
-                                }
+                            <td>
                                 @if (relaVal.Contains("1"))
-                                {
-                                    <img title="详情" src="@Url.Content("~/Content/images/view1_icon.png")" alt="查看" onclick="PublicFun(1,'System/DetOrg?Id=@item.ID')"/>
-                                }
-                                @if (relaVal.Contains("2"))
-                                {
-                                    <img title="编辑" src="@Url.Content("~/Content/images/edit1_icon.png")" alt="编辑"  onclick="PublicFun(1,'System/EditOrg?id=@item.ID')"/>
-                                }
-                                @if (relaVal.Contains("3"))
+                            {
+                                <img title="详情" src="@Url.Content("~/Content/images/view1_icon.png")" alt="查看" onclick="PublicFun(1,'System/DetOrg?Id=@item.ID')" />
+                            }@if (relaVal.Contains("2"))
+                            {
+                                <img title="编辑" src="@Url.Content("~/Content/images/edit1_icon.png")" alt="编辑" onclick="PublicFun(1,'System/EditOrg?id=@item.ID')" />
+                            }@if (relaVal.Contains("3"))
+                            {
+                                if (item.Num==0)
                                 {
                                     <img title="删除" src="@Url.Content("~/Content/images/del1_icon.png")" alt="删除" onclick="del('@item.ID')" />
                                 }
-                            </td>
-                        </tr>
-                    }
-                      @*<tr>
-                    <td colspan="10">
-                        <div class="pag_td" style="width: 100%; text-align: center; font-size: 14px">
-                            @Html.Pager(list, new PagerOptions()
-                       {
-                           PageIndexParameterName = "pageIndex",
-                           @CssClass = "pag"
-                       })
-                        <div class="pag_all">
-                                共<font>@list.TotalPageCount</font>页/共<font id="spTotalItem">@list.TotalItemCount</font>条</div>
-                        </div>
-                    </td>
-                </tr>     
-                }
-                else
-                {
-                    <tr><td>没有配置信息</td></tr>
-                }*@
+                                else
+                                {
+                                    <img title="删除" src="@Url.Content("~/Content/images/del_icon.png")" alt="删除"/>
+                                }
+
+                            }
+                        </td>
+                    </tr>
+                        }
                     }
                 }
-        </table>
-        <div class="page">
-            <ul class="ulPage">
-                @Ajax.Pager(list, new PagerOptions
-               {
-                   FirstPageText = "首页",
-                   PrevPageText = "上一页",
-                   NextPageText = "下一页",
-                   LastPageText = "尾页",
-                   PageIndexParameterName = "PageIndex",
-                   NavigationPagerItemTemplate = "<li class=\"liPage\" style=\"width: 42px; \">{0}</li>",
-                   NumericPagerItemTemplate = "<li class=\"liPage\" style=\"width: 42px; \">{0}</li>",
-                   ShowMorePagerItems = false,
-               }).AjaxOptions(a => a.SetUpdateTargetId("taskManagementId"))
-                <li class="contPage">共<span>@list.TotalPageCount</span>页/共<span>@list.TotalItemCount</span>条</li>
-            </ul>
+            </table>
+            @Html.Partial("~/Views/Shared/_PartialPage.cshtml", new RouteValueDictionary { { "model", list }, { "pageindex", "PageIndex" } })
         </div>
     </div>
-</div>
-<script type="text/javascript">
-    function del(obj) {
-        if (confirm("确定要删除吗？")) {
-            location.href = "/System/DelOrg?id=" + obj;
+    <script type="text/javascript">
+        function del(obj) {
+            if (confirm("确定要删除吗？")) {
+                location.href = "/System/DelOrg?id=" + obj;
+            }
         }
-    }
-</script>
+    </script>
 }

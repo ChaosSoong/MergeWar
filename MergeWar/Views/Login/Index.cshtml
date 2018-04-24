@@ -1,7 +1,249 @@
-﻿@{
-    ViewBag.Title = "Index";
-    Layout = null;
-}
+﻿@{ Layout = null;}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>区县级合成作战平台_登录</title>
+    <link rel="stylesheet" type="text/css" href="../../Content/css/reset.css" />
+    <script src="~/Content/js/jquery-1.7.1.min.js"></script>
+    <style type="text/css">
+        body {
+            width: 100%;
+            height: 100%;
+            background-image: url(../../Content/images/loginbg.png);
+            background-repeat: no-repeat;
+            background-size: 100%;
+        }
 
-<h2>Index</h2>
+        .login {
+            margin: 145px auto;
+            width: 709px;
+            height: 406px;
+        }
+
+        .loginLeft {
+            float: left;
+            width: 353px;
+            height: 406px;
+            border: 1px solid #313343;
+            background-image: url(../../Content/images/L.png);
+        }
+
+        .loginRight {
+            float: left;
+            width: 353px;
+            height: 406px;
+            border: 1px solid #313343;
+            border-left: none;
+        }
+
+            .loginRight ul {
+            }
+
+                .loginRight ul li {
+                    font: 14px "微软雅黑";
+                    color: #7bd2da;
+                    padding-left: 44px;
+                }
+
+                    .loginRight ul li:nth-child(1) {
+                        font: 20px "微软雅黑";
+                        color: #b8b8b8;
+                        height: 50px;
+                        line-height: 50px;
+                        border-bottom: 1px solid #313343;
+                    }
+
+                    .loginRight ul li input {
+                        background-color: transparent;
+                        color:#548C94;
+                        box-sizing:border-box;
+                        padding-left:5px;
+                        padding-right:5px;
+                        border: 1px solid #263738;
+                        width: 260px;
+                        height: 32px;
+                    }
+
+                        .loginRight ul li input[type="checkbox"] {
+                            width: 15px;
+                            height: 15px;
+                            vertical-align: middle;
+                        }
+
+                    .loginRight ul li label {
+                        font-size: 13px;
+                        margin-left: 5px;
+                    }
+
+                    .loginRight ul li input[type="submit"] {
+                        background-image: url(../../Content/images/BUTTON.png);
+                        border: none;
+                        cursor: pointer;
+                        color: #7BD2DA;
+                        font:;
+                    }
+
+                    .loginRight ul li:nth-child(2) {
+                        margin-top: 15px;
+                    }
+
+                    .loginRight ul li:nth-child(3) {
+                        margin-top: 10px;
+                    }
+
+                    .loginRight ul li:nth-child(4) {
+                        margin-top: 15px;
+                    }
+
+                    .loginRight ul li:nth-child(5) {
+                        margin-top: 10px;
+                    }
+
+                    .loginRight ul li:nth-child(6) {
+                        margin-top: 15px;
+                    }
+
+                    .loginRight ul li:nth-child(7) {
+                        margin-top: 10px;
+                    }
+
+                    .loginRight ul li:nth-child(8) {
+                        margin-top: 15px;
+                    }
+
+                    .loginRight ul li:nth-child(9) {
+                        margin-top: 20px;
+                    }
+
+                    .loginRight ul li img {
+                        float: right;
+                        margin-right: 48px;
+                    }
+    </style>
+</head>
+<body>
+    <div class="login">
+        <div class="loginLeft">
+
+        </div>
+@using (Html.BeginForm("Index", "Login", FormMethod.Post))
+{
+    <div class="loginRight">
+        <ul>
+            <li>登 录</li>
+            <li id="labUser">用户名</li>
+            <li><input type="text" name="txtName" id="txtName" value="" /></li>
+            <li id="labPwd">密码</li>
+            <li><input type="password" name="txtPwd" id="txtPwd" value="" /></li>
+            <li id="labYzm">验证码</li>
+            <li><input style="width: 122px" type="text" name="txtValidator" id="txtValidator" value="" /><img src="@Url.Content("~/Login/Validator")" onclick="this.src='@Url.Content("~/Login/Validator/id=")'+(new Date()).getTime()" title="看不清，换一张" /></li>
+            <li><input type="checkbox" name="rememberPsw" id="rememberPsw" value=""/><label for="rememberPsw">记住密码</label></li>
+            <li><input type="submit" name="" id="" value="登 录" /></li>
+        </ul>
+    </div>
+}     
+    </div>
+<script>
+    $(function () {
+        setFocus();
+        $("form").submit(function () {
+            //if (ckVal() && issub()) {
+            if (ckVal()) {
+                return true;
+            } else {
+                return false;
+            }
+        });
+    });
+    var userPwd = [];
+    $("#rememberPsw").click(function () {
+        var flag = $("#rememberPsw").is(':checked');
+        if (flag) {
+            userPwd.push($("#txtName").val());
+            userPwd.push($("#txtPwd").val());
+            userPwd.push($("#rememberPsw").attr("checked"));
+            console.log(userPwd);
+            //记住密码
+            if (window.localStorage) {
+                localStorage.setItem("userPsw", userPwd);
+            } else {
+                Cookie.write("userPsw", userPwd);
+            }
+        } else {
+            //删除密码
+            if (window.localStorage) {
+                localStorage.removeItem("userPsw");
+            } else {
+                //Cookie.write("userPsw", userPwd);
+            }
+        }
+    });
+    //赋值
+    function getCookies ()  {
+        if (window.localStorage) {
+            if (localStorage.getItem("userPsw")) {
+                var user = localStorage.getItem("userPsw");
+                var users = user.split(",");
+                $("#rememberPsw").attr("checked", users[2]);
+                $("#txtName").val(users[0]);
+                $("#txtPwd").val(users[1]);
+            } else {
+                $("#rememberPsw").attr("checked", false);
+                $("#txtName").val("");
+                $("#txtPwd").val("");
+            }
+        } else { }
+    }
+    getCookies();
+    function setFocus() {
+        $("#txtName").select();
+        $("#txtName").focus();
+    }
+
+    function ckVal() {
+        var result = true;
+        if ($.trim($("#txtName").val()) == "") {
+            result = false;
+            $("#labUser").text("用户名不能为空!").css("color", "red");
+        } else {
+            $("#labUser").text("用户名").css("color", "#7bd2da");
+        }
+        if ($.trim($("#txtPwd").val()) == "") {
+            result = false;
+            $("#labPwd").text("密码不能为空!").css("color", "red");
+        } else if ($.trim($("#txtPwd").val()).length < 6 || $.trim($("#txtPwd").val()).length > 18) {
+            result = false;
+            $("#labPwd").text("密码长度为6-18位!").css("color", "red");
+        } else {
+            $("#labPwd").text("密码").css("color", "#7bd2da");
+        }
+        if ($.trim($("#txtValidator").val()) == "") {
+            result = false;
+            $("#labYzm").text("验证码不能为空!").css("color", "red");
+        } else {
+            $("#labYzm").text("验证码").css("color", "#7bd2da");
+        }
+        return result;
+    }
+    $("#txtName").blur(function () {
+        if ($(this).val() != "") {
+            $("#labUser").text("用户名").css("color", "#7bd2da");
+        }
+    })
+    $("#txtPwd").blur(function () {
+        if ($(this).val() != "") {
+            $("#labPwd").text("密码").css("color", "#7bd2da");
+        }
+    })
+    $("#txtValidator").blur(function () {
+        if ($(this).val() != "") {
+            $("#labYzm").text("验证码").css("color", "#7bd2da");
+        }
+    })
+    @Html.Raw(ViewBag.errscript);
+</script>
+</body>
+</html>
+
 

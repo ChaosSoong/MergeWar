@@ -1,6 +1,6 @@
-﻿.contentLeftNav .sideNav .sideNavLeft .sideNavImg1{background-image: url(../images/sideGray1.png);} /*sideNavImg1默认状态*/
+﻿.contentLeftNav .sideNav .sideNavLeft .sideNavImg1{background-image: url(../images/sideGray1.png);/*background:url(../images/ysyImg.png) no-repeat ; background-position:0 0 -154px;*/} /*sideNavImg1默认状态*/
 		.contentLeftNav .sideNav .sideNavLeft .sideNavImg1:hover{background-image: url(../images/sideYellow1.png);}
-		.contentLeftNav .sideNav .sideNavLeft .sideNavImg11{background-image: url(../images/sideYellow1.png);background-color: #1B1A29;} /*sideNavImg11选中状态*/
+		.contentLeftNav .sideNav .sideNavLeft .sideNavImg11{background-image: url(../images/sideYellow1.png);background-color: #1B1A29; /*background:url(../images/ysyImg.png) no-repeat ;background-position:0 0 -154px;*/} /*sideNavImg11选中状态*/
 		.contentLeftNav .sideNav .sideNavLeft .sideNavImg11 img{display: inline-block;}
 		.contentLeftNav .sideNav .sideNavLeft .sideNavImg111{background-image: url(../images/sideYellow1.png);background-color: #1B1A29;} /*sideNavImg111划过状态*/
 		
@@ -39,3 +39,9 @@
 		.contentLeftNav .sideNav .sideNavLeft .sideNavImg77{background-image: url(../images/sideYellow7.png);}
 		.contentLeftNav .sideNav .sideNavLeft .sideNavImg77 img{display: inline-block;}
 		.contentLeftNav .sideNav .sideNavLeft .sideNavImg777{background-image: url(../images/sideYellow7.png);background-color: #1B1A29;}
+
+        .contentLeftNav .sideNav .sideNavLeft .sideNavImg8{background-image: url(../images/sideGray8.png);}
+		.contentLeftNav .sideNav .sideNavLeft .sideNavImg8:hover{background-image: url(../images/sideYellow8.png);}
+		.contentLeftNav .sideNav .sideNavLeft .sideNavImg88{background-image: url(../images/sideYellow8.png);}
+		.contentLeftNav .sideNav .sideNavLeft .sideNavImg88 img{display: inline-block;}
+		.contentLeftNav .sideNav .sideNavLeft .sideNavImg888{background-image: url(../images/sideYellow8.png);background-color: #1B1A29;}

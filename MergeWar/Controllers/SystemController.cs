@@ -4,13 +4,14 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web.Mvc;
-using Common;
+using HCZZ.Common;
 using HCZZ.AppCode;
 using HCZZ.DAL;
 using HCZZ.ModeDB;
 using HCZZt.Filter;
 using MergeWar.Filter;
 using Webdiyer.WebControls.Mvc;
+using MergeWar.Models;
 
 namespace HCZZ.Controllers
 {
@@ -18,8 +19,10 @@ namespace HCZZ.Controllers
     [SystemAutherFilter]
     public class SystemController : Controller
     {
-        //
-        // GET: /System/
+        /// <summary>
+        /// 每页显示数量
+        /// </summary>
+        public static string PageSize = System.Configuration.ConfigurationManager.AppSettings["PageSize"];
         string lishow = "XTGL";
         VersionDAL VerDal = new VersionDAL();
         OPLogDAL logDal = new OPLogDAL();
@@ -38,7 +41,7 @@ namespace HCZZ.Controllers
         /// </summary>
         /// <param name="form"></param>
         /// <returns></returns>
-        public ActionResult UserList(int? PageIndex, string selName, string txtName, string selTrueName, string txtTrueName, string selMobile, string txtMobile, string selIdnumber, string txtIdnumber, string UserType)
+        public ActionResult UserList(int? PageIndex, string selName, string txtName, string selTrueName, string txtTrueName, string selMobile, string txtMobile, string selIdnumber, string txtIdnumber, string UserType, string Valid)
         {
             try
             {
@@ -51,23 +54,22 @@ namespace HCZZ.Controllers
                 selIdnumber = selIdnumber == null ? "1" : selIdnumber;
                 selMobile = selMobile == null ? "1" : selMobile;
                 selTrueName = selTrueName == null ? "1" : selTrueName;
-                //form["Valid"] = string.IsNullOrEmpty(form["Valid"]) ? "0" : form["Valid"];
-                //form["UserType"] = form["UserType"] ?? "0";
+                UserType = UserType == null ? "0" : UserType;
                 int[] userType = ChangeValue.GetUserType();
                 Dictionary<string, string> dic = new Dictionary<string, string>()
                 {
                     {"pageIndex",((PageIndex??1).ToString())},
-                    {"pageSize","2"},
+                    {"pageSize",PageSize},
                     {"txtName",txtName},
                     {"selName",selName},
                     {"txtMobile",txtMobile},
                     {"selMobile",selMobile},
-                    //{"txtIdnumber",txtIdnumber},
-                    //{"selIdnumber",selIdnumber},
+                    {"txtIdnumber",txtIdnumber},
+                    {"selIdnumber",selIdnumber},
                     {"txtTrueName",txtTrueName},
                     {"selTrueName",selTrueName},
-                    //{"CreateId",Valid},
-                    //{"UserType",UserType},
+                    {"Valid", Valid ?? "1"},
+                    {"UserType",UserType},
                     {"AreaId",userType[1].ToString()}
                 };
                 ViewBag.ul = new UserInfoDAL().GetList(dic);
@@ -76,7 +78,6 @@ namespace HCZZ.Controllers
                 if (!string.IsNullOrEmpty(txtMobile)) log.What += " 手机号码：" + txtMobile;
                 if (!string.IsNullOrEmpty(txtIdnumber)) log.What += " 证件号码：" + txtIdnumber;
                 if (!string.IsNullOrEmpty(txtTrueName)) log.What += " 真实姓名：" + txtTrueName;
-                //if (selUserType != "0") log.What = " 用户类型：" + ChangeValue.RefUseTypeValue(Convert.ToInt32(selUserType));
                 if (!string.IsNullOrEmpty(log.What)) { log.What += "用户管理列表查询,查询条件：" + log.What; new OPLogDAL().InsertLog(log); }
 
                 ViewBag.dic = dic;
@@ -104,8 +105,23 @@ namespace HCZZ.Controllers
             ViewBag.ashow = "user";
             ViewBag.LfetShow = "系统管理";
             ViewBag.location = "所在位置：<a href='" + Url.Content("~/System/UserList") + "'>系统管理</a>>><a href='" + Url.Content("~/System/UserList") + "'>用户管理</a>>>添加新用户";
-
-            return View();
+            List<Sys_UserPowerInfo> list = null;
+            try
+            {
+                UserInfo user = (UserInfo)Session["userInfo"];
+                list = new UserInfoDAL().GetRoleList(user.Type);
+            }
+            catch (System.Data.SqlClient.SqlException sql)
+            {
+                ViewBag.errscript = "alert('检索数据遇到错误，请联系管理员')";
+                Logger.ErrorLog(sql, null);
+            }
+            catch (Exception ex)
+            {
+                Logger.ErrorLog(ex, null);
+                ViewBag.errscript = "alert('未知错误，请联系管理员')";
+            }
+            return View(list);
         }
         [HttpPost]
         public ActionResult AddUser(FormCollection form)
@@ -113,8 +129,9 @@ namespace HCZZ.Controllers
             try
             {
                 UserInfoDAL userDal = new UserInfoDAL();
-                DBuser = ChangeValue.GteUserVal(form);
+                DBuser = ChangeValue.GteUserVal(form, "1");
                 DBuser.CreateId = (Session["userInfo"] as UserInfo).ID;
+                DBuser.JId = Convert.ToInt32(form["Sys_RID"]);
                 if (userDal.GetUserInfoByName(DBuser.UserName, 0) != null)
                     return Content("<script>alert('用户名已经存在,请重新输入!');history.go(-1);</script>");
                 int result = userDal.InsertUser(DBuser);
@@ -156,7 +173,7 @@ namespace HCZZ.Controllers
                 {
                     return Content("<script>alert('不能删除自己');history.go(-1);</script>");
                 }
-                DBuser = userDal.GetUserInfoById(Id);
+                DBuser = userDal.GetUserInfoById(Id, "", "");
                 if (userDal.DeleteUser(Id) > 0)
                 {
                     log.Module = "系统管理-用户管理-删除用户信息";
@@ -188,23 +205,30 @@ namespace HCZZ.Controllers
         [HttpGet]
         public ActionResult EditUser(int Id)
         {
+            List<Sys_UserPowerInfo> list = null;
             try
             {
                 ViewBag.lishow = lishow;
                 ViewBag.ashow = "user";
                 ViewBag.LfetShow = "系统管理";
                 ViewBag.location = "所在位置：<a href='" + Url.Content("~/System/UserList") + "'>系统管理</a>>><a href='" + Url.Content("~/System/UserList") + "'>用户管理</a>>>编辑用户信息";
-                ViewBag.user = new UserInfoDAL().GetUserInfoById(Id);
+                UserInfo user = new UserInfoDAL().GetUserInfoById(Id, "", "");
+                list = new UserInfoDAL().GetRoleList(user.Type);
+                ViewBag.user = user;
             }
-            catch (SqlException sql)
+            catch (System.Data.SqlClient.SqlException)
             {
-                Logger.ErrorLog(sql, null);
+                ViewBag.errscript = "alert('检索数据遇到错误，请联系管理员')";
             }
             catch (Exception ex)
             {
-                Logger.ErrorLog(ex, null);
+                Logger.ErrorLog(ex, new Dictionary<string, string>()
+                {
+                    {"Function","UserController.EditUser(int Id)[HttpGet]"}
+                });
+                ViewBag.errscript = "alert('未知错误，请联系管理员')";
             }
-            return View();
+            return View(list);
         }
         [HttpPost]
         public ActionResult EditUser(FormCollection form)
@@ -212,8 +236,9 @@ namespace HCZZ.Controllers
             try
             {
                 UserInfoDAL userDal = new UserInfoDAL();
-                DBuser = ChangeValue.GteUserVal(form);
+                DBuser = ChangeValue.GteUserVal(form, "2");
                 DBuser.ID = Convert.ToInt32(form["HId"]);
+                DBuser.JId = Convert.ToInt32(form["Sys_RID"]);
                 if (userDal.GetUserInfoByName(DBuser.UserName, DBuser.ID) != null)
                     return Content("<script>alert('用户名已经存在,请重新输入!');history.go(-1);</script>");
                 int result = userDal.UPdateUser(DBuser);
@@ -253,7 +278,8 @@ namespace HCZZ.Controllers
                 ViewBag.lishow = lishow;
                 ViewBag.ashow = "user";
                 ViewBag.LfetShow = "系统管理";
-                ViewBag.user = new UserInfoDAL().GetUserInfoById(Id);
+                ViewBag.location = "所在位置：<a href='" + Url.Content("~/System/UserList") + "'>系统管理</a>>><a href='" + Url.Content("~/System/UserList") + "'>用户管理</a>>>用户信息详情";
+                ViewBag.user = new UserInfoDAL().GetUserInfoById(Id, "", "");
                 log.UserName = (Session["userInfo"] as UserInfo).UserName;
                 log.Module = "系统管理-用户管理-查看用户信息";
                 log.What = "查看用户详细信息，用户Id：" + Id;
@@ -294,7 +320,7 @@ namespace HCZZ.Controllers
                 Dictionary<string, string> dic = new Dictionary<string, string>()
                 {
                     {"PageIndex",((PageIndex??1).ToString())},
-                    {"PageSize","5"},
+                    {"PageSize",PageSize},
                     {"CreateTime",CreateTime},
                     {"EndTime", EndTime },
                     {"txtkeyword",keyword}
@@ -337,16 +363,16 @@ namespace HCZZ.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult AddRole(string name)
+        public ActionResult AddRole(string name, string UserType)
         {
-            if (string.IsNullOrEmpty(name))
+            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(UserType) || UserType == "0")
                 return Content("{\"err\":\"请输入提交的数据\"}");
             try
             {
                 VersionDAL VerDal = new VersionDAL();
                 if (VerDal.GetRoleNameCountByNameOrId(name, 0))
                     return Content("{\"err\":\"角色名称已存在\"}");
-                int result = VerDal.InsertRole(name);
+                int result = VerDal.InsertRole(name, UserType);
                 if (result > 0)
                 {
                     log.What = "添加角色：" + name;
@@ -419,18 +445,18 @@ namespace HCZZ.Controllers
             return View(suPower);
         }
         [HttpPost]
-        public ActionResult EditRole(int Jid, string Name)
+        public ActionResult EditRole(int Jid, string Name, string UserType)
         {
             try
             {
-                if (string.IsNullOrEmpty(Name))
+                if (string.IsNullOrEmpty(Name) || string.IsNullOrEmpty(UserType) || UserType == "0")
                     return Content("{\"err\":\"请输入提交的数据\"}");
                 else
                 {
                     VersionDAL VerDal = new VersionDAL();
                     if (VerDal.GetRoleNameCountByNameOrId(Name, Jid))
                         return Content("{\"err\":\"角色名称已存在\"}");
-                    if (VerDal.ChangeRoleNameById(Jid, Name) > 0)
+                    if (VerDal.ChangeRoleNameById(Jid, Name, UserType) > 0)
                     {
                         log.Module = "系统管理-角色管理-编辑角色信息";
                         log.What = "编辑角色名称";
@@ -603,7 +629,7 @@ namespace HCZZ.Controllers
                 Dictionary<string, string> dic = new Dictionary<string, string>()
                 {
                     {"pageIndex", (PageIndex ?? 1).ToString()},
-                    {"pageSize", "10"},
+                    {"pageSize", PageSize},
                     {"txtName", txtName},
                     {"selName", selName},
                     {"selAdderss", selAdderss},
@@ -620,7 +646,7 @@ namespace HCZZ.Controllers
                 if (!string.IsNullOrEmpty(txtWhat)) log.What += "操作描述：" + txtWhat;
                 if (!string.IsNullOrEmpty(CreateTime)) log.What += "记录开始时间范围：" + CreateTime;
                 if (!string.IsNullOrEmpty(EndTime)) log.What += "记录结束时间范围：" + EndTime;
-                if (!string.IsNullOrEmpty(log.What)) { log.What = "日志管理列表，" + log.What; new OPLogDAL().InsertLog(log); }
+                if (!string.IsNullOrEmpty(log.What)) { log.What = "日志管理列表，" + log.What; /*new OPLogDAL().InsertLog(log); */}
             }
             catch (SqlException sql)
             {
@@ -665,7 +691,7 @@ namespace HCZZ.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult AreaManageInfoList(int? Id, string selName, string txtName)
+        public ActionResult AreaManageInfoList(int? PageIndex, string selName, string txtName)
         {
             try
             {
@@ -676,13 +702,14 @@ namespace HCZZ.Controllers
                 selName = selName == null ? "1" : selName;
                 Dictionary<string, string> dic = new Dictionary<string, string>()
                 {
-                    {"pageIndex",(Id??1).ToString()},
-                    {"pageSize","10"},
+                    {"pageIndex",(PageIndex??1).ToString()},
+                    {"pageSize",PageSize},
                     {"txtName",txtName},
                     {"selName",selName},
                     {"CityType","2"}
                 };
                 ViewBag.Pro = new SystemDAL().GetAreaManage(dic);
+                log.Module = "系统管理-区域管理";
                 if (!string.IsNullOrEmpty(txtName)) { log.What = "省管理列表查询,查询条件：省名称：" + txtName; new OPLogDAL().InsertLog(log); }
                 ViewBag.dic = dic;
             }
@@ -726,9 +753,10 @@ namespace HCZZ.Controllers
             ProArea.CityType = 2;
             ProArea.ID = Convert.ToInt32(form["Hid"]);
             ProArea.City_code = form["txtCity_code"].ToString();
-            if (SystemDAL.JudgeProExist(ProArea.ID, ProArea.City_code, 2))
+            if (ProArea.City_code != "")
             {
-                return Content("<script>alert('省代码已存在,请重新输入!');history.go(-1);</script>");
+                if (SystemDAL.JudgeProExist(ProArea.ID, ProArea.City_code, 2))
+                    return Content("<script>alert('省代码已存在,请重新输入!');history.go(-1);</script>");
             }
             if (SystemDAL.JudgeProvince(ProArea.Area, 2, ProArea.ID, ProArea.Pid))
             {
@@ -736,6 +764,7 @@ namespace HCZZ.Controllers
             }
             if (SystemDAL.UpdateProArea(ProArea))
             {
+                log.Module = "系统管理-区域管理";
                 log.What = "编辑省信息，省ID：" + ProArea.ID + "，省名称名称：" + ProArea.Area;
                 new OPLogDAL().InsertLog(log);
                 return Content("<script>alert('保存成功');parent.location.replace('" + Url.Content("~/System/AreaManageInfoList") + "');</script>");
@@ -767,9 +796,10 @@ namespace HCZZ.Controllers
             area.City_code = form["txtCity_code"].ToString();
             area.ProID = 0;
             area.CreateTime = DateTime.Now;
-            if (SystemDAL.JudgeProExist(0, area.City_code, 2))
+            if (area.City_code != "")
             {
-                return Content("<script>alert('省代码已存在,请重新输入!');history.go(-1);</script>");
+                if (SystemDAL.JudgeProExist(0, area.City_code, 2))
+                    return Content("<script>alert('省代码已存在,请重新输入!');history.go(-1);</script>");
             }
             if (SystemDAL.JudgeProvince(area.Area, 2, 0, area.Pid))
             {
@@ -778,7 +808,8 @@ namespace HCZZ.Controllers
             int result = SystemDAL.InsertProArea(area);
             if (result > 0)
             {
-                log.What = "添加省信息，省ID：" + area.ID + "，省名称名称：" + area.Area;
+                log.Module = "系统管理-区域管理";
+                log.What = "添加省信息，省名称名称：" + area.Area;
                 new OPLogDAL().InsertLog(log);
                 return Content("<script>alert('保存成功');parent.location.replace('" + Url.Content("~/System/AreaManageInfoList") + "');</script>");
             }
@@ -804,7 +835,7 @@ namespace HCZZ.Controllers
         /// <param name="txtName"></param>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult AreaManageCityInfoList(int Id, int? key, string selName, string txtName)
+        public ActionResult AreaManageCityInfoList(int ID, int? PageIndex, string selName, string txtName)
         {
             try
             {
@@ -815,18 +846,18 @@ namespace HCZZ.Controllers
                 selName = selName == null ? "1" : selName;
                 Dictionary<string, string> dic = new Dictionary<string, string>()
                 {
-                    {"pageIndex",(key??1).ToString()},
-                    {"pageSize","10"},
+                    {"pageIndex",(PageIndex??1).ToString()},
+                    {"pageSize",PageSize},
                     {"txtName",txtName},
                     {"selName",selName},
                     {"CityType","1"},
-                    {"ProId",Id.ToString()}
+                    {"ProId",ID.ToString()}
                 };
                 ViewBag.Pro = new SystemDAL().GetAreaManage(dic);
                 if (!string.IsNullOrEmpty(txtName))
                 {
-                    log.What = "省管理列表查询,查询条件：省名称：" + txtName;
-                    new OPLogDAL().InsertLog(log);
+                    log.Module = "系统管理-区域管理";
+                    log.What = "市管理列表查询,查询条件：市名称：" + txtName; new OPLogDAL().InsertLog(log);
                 }
                 ViewBag.dic = dic;
             }
@@ -863,9 +894,10 @@ namespace HCZZ.Controllers
             CityArea.City_code = form["txtCity_code"].ToString();
             CityArea.ProID = CityArea.Pid;
             CityArea.CreateTime = DateTime.Now;
-            if (SystemDAL.JudgeProExist(0, CityArea.City_code, 1))
+            if (CityArea.City_code != "")
             {
-                return Content("<script>alert('市代码已存在,请重新输入!');history.go(-1);</script>");
+                if (SystemDAL.JudgeProExist(0, CityArea.City_code, 1))
+                    return Content("<script>alert('市代码已存在,请重新输入!');history.go(-1);</script>");
             }
             if (SystemDAL.JudgeProvince(CityArea.Area, 1, 0, CityArea.Pid))
             {
@@ -874,7 +906,8 @@ namespace HCZZ.Controllers
             int result = SystemDAL.InsertProArea(CityArea);
             if (result > 0)
             {
-                log.What = "添加市信息，市ID：" + CityArea.ID + "市名称名称：" + CityArea.Area;
+                log.Module = "系统管理-区域管理";
+                log.What = "添加市信息，市名称名称：" + CityArea.Area;
                 new OPLogDAL().InsertLog(log);
                 return Content("<script>alert('保存成功');parent.location.replace('" + Url.Content("~/System/AreaManageCityInfoList/" + CityArea.Pid) + "');</script>");
             }
@@ -904,12 +937,11 @@ namespace HCZZ.Controllers
             CityArea.Pid = Convert.ToInt32(form["Hpid"]);
             CityArea.CityType = 1;
             CityArea.City_code = form["txtCity_code"].ToString();
-
-            if (SystemDAL.JudgeProExist(CityArea.ID, CityArea.City_code, 1))
+            if (CityArea.City_code != "")
             {
-                return Content("<script>alert('市代码已存在,请重新输入!');history.go(-1);</script>");
+                if (SystemDAL.JudgeProExist(CityArea.ID, CityArea.City_code, 1))
+                    return Content("<script>alert('市代码已存在,请重新输入!');history.go(-1);</script>");
             }
-
             if (SystemDAL.JudgeProvince(CityArea.Area, 1, CityArea.ID, CityArea.Pid))
             {
                 return Content("<script>alert('市已经存在,请重新输入!');history.go(-1);</script>");
@@ -917,6 +949,7 @@ namespace HCZZ.Controllers
 
             if (SystemDAL.UpdateProArea(CityArea))
             {
+                log.Module = "系统管理-区域管理";
                 log.What = "编辑市信息，市ID：" + CityArea.ID + "市名称名称：" + CityArea.Area;
                 new OPLogDAL().InsertLog(log);
                 return Content("<script>alert('保存成功');parent.location.replace('" + Url.Content("~/System/AreaManageCityInfoList/" + CityArea.Pid) + "');</script>");
@@ -939,7 +972,7 @@ namespace HCZZ.Controllers
         /// <param name="txtName"></param>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult AreaInfoList(int Id, int? key, string selName, string txtName)
+        public ActionResult AreaInfoList(int Id, int? PageIndex, string selName, string txtName)
         {
             try
             {
@@ -952,8 +985,8 @@ namespace HCZZ.Controllers
                 selName = selName == null ? "1" : selName;
                 Dictionary<string, string> dic = new Dictionary<string, string>()
                 {
-                    {"pageIndex",(key??1).ToString()},
-                    {"pageSize","10"},
+                    {"pageIndex",(PageIndex??1).ToString()},
+                    {"pageSize",PageSize},
                     {"txtName",txtName},
                     {"selName",selName},
                     {"CityType","0"},
@@ -962,8 +995,8 @@ namespace HCZZ.Controllers
                 ViewBag.Pro = new SystemDAL().GetAreaManage(dic);
                 if (!string.IsNullOrEmpty(txtName))
                 {
-                    log.What = "区管理列表查询,查询条件：区名称：" + txtName;
-                    new OPLogDAL().InsertLog(log);
+                    log.Module = "系统管理-区域管理";
+                    log.What = "区管理列表查询,查询条件：区名称：" + txtName; new OPLogDAL().InsertLog(log);
                 }
                 ViewBag.dic = dic;
             }
@@ -999,9 +1032,10 @@ namespace HCZZ.Controllers
             Area.City_code = form["txtCity_code"].ToString();
             Area.ProID = Convert.ToInt32(form["Hproid"]);
             Area.CreateTime = DateTime.Now;
-            if (SystemDAL.JudgeProExist(0, Area.City_code, 0))
+            if (Area.City_code != "")
             {
-                return Content("<script>alert('区代码已存在,请重新输入!');history.go(-1);</script>");
+                if (SystemDAL.JudgeProExist(0, Area.City_code, 0))
+                    return Content("<script>alert('区代码已存在,请重新输入!');history.go(-1);</script>");
             }
             if (SystemDAL.JudgeProvince(Area.Area, 0, 0, Area.Pid))
             {
@@ -1010,7 +1044,8 @@ namespace HCZZ.Controllers
             int result = SystemDAL.InsertProArea(Area);
             if (result > 0)
             {
-                log.What = "添加区信息，区ID：" + Area.ID + "区名称名称：" + Area.Area;
+                log.Module = "系统管理-区域管理";
+                log.What = "添加区信息，区名称名称：" + Area.Area;
                 new OPLogDAL().InsertLog(log);
                 return Content("<script>alert('保存成功');parent.location.replace('" + Url.Content("~/System/AreaInfoList/" + Area.Pid) + "');</script>");
             }
@@ -1041,9 +1076,10 @@ namespace HCZZ.Controllers
             Area.CityType = 0;
             Area.City_code = form["txtCity_code"].ToString();
             Area.ID = Convert.ToInt32(form["Hid"]);
-            if (SystemDAL.JudgeProExist(Area.ID, Area.City_code, 0))
+            if (Area.City_code != "")
             {
-                return Content("<script>alert('区代码已存在,请重新输入!');history.go(-1);</script>");
+                if (SystemDAL.JudgeProExist(Area.ID, Area.City_code, 0))
+                    return Content("<script>alert('区代码已存在,请重新输入!');history.go(-1);</script>");
             }
             if (SystemDAL.JudgeProvince(Area.Area, 0, Area.ID, Area.Pid))
             {
@@ -1052,7 +1088,8 @@ namespace HCZZ.Controllers
 
             if (SystemDAL.UpdateProArea(Area))
             {
-                log.What = "编辑区信息，市ID：" + Area.ID + "区名称名称：" + Area.Area;
+                log.Module = "系统管理-区域管理";
+                log.What = "编辑区信息，区ID：" + Area.ID + "区名称名称：" + Area.Area;
                 new OPLogDAL().InsertLog(log);
                 return Content("<script>alert('保存成功');parent.location.replace('" + Url.Content("~/System/AreaInfoList/" + Area.Pid) + "');</script>");
             }
@@ -1074,7 +1111,7 @@ namespace HCZZ.Controllers
         /// <param name="txtName"></param>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult PoliceInfoList(int Id, int? key, string selName, string txtName, string selMobile, string txtMobile, string selAddress, string txtAddress, string selContact, string txtContact)
+        public ActionResult PoliceInfoList(int Id, int? PageIndex, string selName, string txtName, string selMobile, string txtMobile, string selAddress, string txtAddress, string selContact, string txtContact)
         {
             try
             {
@@ -1090,8 +1127,8 @@ namespace HCZZ.Controllers
                 selContact = selContact == null ? "1" : selContact;
                 Dictionary<string, string> dic = new Dictionary<string, string>()
                 {
-                    {"pageIndex",(key??1).ToString()},
-                    {"pageSize","10"},
+                    {"pageIndex",(PageIndex??1).ToString()},
+                    {"pageSize",PageSize},
                     {"txtName",txtName},
                     {"selName",selName},
                     {"txtMobile",txtMobile},
@@ -1105,6 +1142,7 @@ namespace HCZZ.Controllers
                 ViewBag.Police = new SystemDAL().GetPoliceInfoList(dic);
                 if (!string.IsNullOrEmpty(txtName) || !string.IsNullOrEmpty(txtMobile) || !string.IsNullOrEmpty(txtAddress) || !string.IsNullOrEmpty(txtContact))
                 {
+                    log.Module = "系统管理-区域管理";
                     log.What = "派出所管理列表查询,查询条件：派出所名字：" + txtName + "；派出所地址：" + txtAddress + "；联系人：" + txtContact + "；联系人电话：" + txtMobile;
                     new OPLogDAL().InsertLog(log);
                 }
@@ -1141,7 +1179,7 @@ namespace HCZZ.Controllers
                 SystemDAL SystemDAL = new SystemDAL();
                 police.Aid = Convert.ToInt32(form["HAid"]);
                 police.Name = form["txtName"].ToString();
-                if (SystemDAL.GetPoliceInfo(police.Name, 0, police.Aid))
+                if (SystemDAL.GetIsTruePolice(police.Name, 0, police.Aid))
                 {
                     return Content("<script>alert('派出所已经存在,请重新输入!');history.go(-1);</script>");
                 }
@@ -1153,6 +1191,7 @@ namespace HCZZ.Controllers
                 int result = SystemDAL.InsertPoliceInfo(police);
                 if (result > 0)
                 {
+                    log.Module = "系统管理-区域管理";
                     log.What = "添加派出所信息，市ID：" + police.ID + "，派出所名称名称：" + police.Name;
                     new OPLogDAL().InsertLog(log);
                     return Content("<script>alert('保存成功');parent.location.replace('" + Url.Content("~/System/PoliceInfoList/" + police.Aid) + "');</script>");
@@ -1193,7 +1232,7 @@ namespace HCZZ.Controllers
                 police.Aid = Convert.ToInt32(form["HAid"]);
                 police.ID = Convert.ToInt32(form["Hid"]);
                 police.Name = form["txtName"].ToString();
-                if (SystemDAL.GetPoliceInfo(police.Name, police.ID, police.Aid))
+                if (SystemDAL.GetIsTruePolice(police.Name, police.ID, police.Aid))
                 {
                     return Content("<script>alert('派出所已经存在,请重新输入!');history.go(-1);</script>");
                 }
@@ -1204,6 +1243,7 @@ namespace HCZZ.Controllers
                 int result = SystemDAL.UPdatePoliceInfo(police);
                 if (result > 0)
                 {
+                    log.Module = "系统管理-区域管理";
                     log.What = "修改派出所信息，市ID：" + police.ID + "，派出所名称名称：" + police.Name;
                     new OPLogDAL().InsertLog(log);
                     return Content("<script>alert('保存成功');parent.location.replace('" + Url.Content("~/System/PoliceInfoList/" + police.Aid) + "');</script>");
@@ -1226,14 +1266,14 @@ namespace HCZZ.Controllers
         #endregion
 
         #region 警区列表
-        public ActionResult ScenicInfoList(int Id, int? key, string selName, string txtName, string selMobile, string txtMobile, string selAddress, string txtAddress, string selContact, string txtContact)
+        public ActionResult ScenicInfoList(int Id, int? PageIndex, string selName, string txtName, string selMobile, string txtMobile, string selAddress, string txtAddress, string selContact, string txtContact)
         {
             try
             {
                 ViewBag.lishow = lishow;
                 ViewBag.ashow = "Area";
-                AreaInfo area = new SystemDAL().GetAreaInfoById(Id, 0);
-                PoliceInfo police = new SystemDAL().GetPoliceInfoById(Id);
+                PoliceInfo police = new SystemDAL().GetPoliceInfo("", Id);
+                AreaInfo area = new SystemDAL().GetAreaInfoById(police.Aid, 0);
                 ViewBag.LfetShow = "系统管理";
                 ViewBag.location = "所在位置：<a href=\"" + Url.Content("~/User/UserList") + "\">系统管理</a> >> <a href=\"" + Url.Content("~/System/AreaManageInfoList") + "\">区域管理</a> >> <a href=\"" + Url.Content("~/System/AreaManageInfoList") + "\">省管理</a> >> <a href=\"" + Url.Content("~/System/AreaManageCityInfoList/" + area.ProID) + "\">市管理</a> >> <a href=\"" + Url.Content("~/System/AreaInfoList/" + area.Pid) + "\">区管理</a> >> <a href=\"" + Url.Content("~/System/PoliceInfoList/" + police.Aid) + "\">派出所管理</a> >> 警区管理";
                 selName = selName == null ? "1" : selName;
@@ -1242,8 +1282,8 @@ namespace HCZZ.Controllers
                 selContact = selContact == null ? "1" : selContact;
                 Dictionary<string, string> dic = new Dictionary<string, string>()
                 {
-                    {"pageIndex",(key??1).ToString()},
-                    {"pageSize","10"},
+                    {"pageIndex",(PageIndex??1).ToString()},
+                    {"pageSize",PageSize},
                     {"txtName",txtName},
                     {"selName",selName},
                     {"txtMobile",txtMobile},
@@ -1258,8 +1298,8 @@ namespace HCZZ.Controllers
                 ViewBag.police = new SystemDAL().GetPoliceInfoById(Id);
                 if (!string.IsNullOrEmpty(txtName) || !string.IsNullOrEmpty(txtMobile) || !string.IsNullOrEmpty(txtAddress) || !string.IsNullOrEmpty(txtContact))
                 {
+                    log.Module = "系统管理-区域管理";
                     log.What = "警区管理列表查询,查询条件：警区名字：" + txtName + "；派出所地址：" + txtAddress + "；联系人：" + txtContact + "；联系人电话：" + txtMobile;
-                    new OPLogDAL().InsertLog(log);
                 }
                 ViewBag.dic = dic;
             }
@@ -1305,6 +1345,7 @@ namespace HCZZ.Controllers
                 int result = SystemDAL.InsertScenicInfo(scenic);
                 if (result > 0)
                 {
+                    log.Module = "系统管理-区域管理";
                     log.What = "添加警区信息，市ID：" + scenic.ID + "，警区名称名称：" + scenic.SName;
                     new OPLogDAL().InsertLog(log);
                     return Content("<script>alert('保存成功');parent.location.replace('" + Url.Content("~/System/ScenicInfoList/" + scenic.Pid.ToString()) + "');</script>");
@@ -1356,7 +1397,7 @@ namespace HCZZ.Controllers
                 int result = SystemDAL.UPdateScenicInfo(scenic);
                 if (result > 0)
                 {
-
+                    log.Module = "系统管理-区域管理";
                     log.What = "修改警区信息，市ID：" + scenic.ID + "，警区名称名称：" + scenic.SName;
                     new OPLogDAL().InsertLog(log);
                     return Content("<script>alert('保存成功');parent.location.replace('" + Url.Content("~/System/ScenicInfoList/" + scenic.Pid) + "');</script>");
@@ -1407,7 +1448,7 @@ namespace HCZZ.Controllers
                     result = new SystemDAL().DeleteProArea(Id, key);
                     if (result > 0)
                     {
-
+                        log.Module = "系统管理-区域管理";
                         log.What = "删除数据成功，标示Id：" + Id + "，关键字：" + key;
                         new OPLogDAL().InsertLog(log);
                         return Content("<script>alert('删除成功');window.location.href='" + Url.Content("~/System/" + key + "InfoList" + (key == "AreaManage" ? "" : "/" + key1)) + "';</script>");
@@ -1415,7 +1456,6 @@ namespace HCZZ.Controllers
                     else
                         return Content("<script>alert('删除失败');history.go(-1);</script>");
                 }
-
             }
             catch (SqlException sql)
             {
@@ -1454,6 +1494,10 @@ namespace HCZZ.Controllers
         [HttpGet]
         public ActionResult EditConfigInfo()
         {
+            ViewBag.lishow = lishow;
+            ViewBag.ashow = "Config";
+            ViewBag.LfetShow = "系统管理";
+            ViewBag.location = "所在位置：<a href='" + Url.Content("~/System/UserList") + "'>系统管理>><a href='" + Url.Content("~/System/ConfigInfoList") + "'>编辑系统参数配置</a></a>";
             try
             {
                 DataTable dt = new SystemDAL().GetSysConfigTable();
@@ -1497,6 +1541,7 @@ namespace HCZZ.Controllers
                 int result = new SystemDAL().UpdateSysConfig(dic);
                 if (result > 0)
                 {
+                    log.Module = "系统管理-系统参数配置";
                     log.What = "编辑系统参数配置";
                     new OPLogDAL().InsertLog(log);
                     return Content("<script>alert('保存成功！');parent.location.href=\"" + Url.Content("~/System/ConfigInfoList") + "\"</script>");
@@ -1523,7 +1568,7 @@ namespace HCZZ.Controllers
         ///创建人:张团勃
         ///创建时间：2017-07-03
         [HttpGet]
-        public ActionResult VersionInfoList(int? ID)
+        public ActionResult VersionInfoList(int? PageIndex)
         {
             try
             {
@@ -1533,10 +1578,11 @@ namespace HCZZ.Controllers
                 ViewBag.location = "所在位置：系统管理 >> <a href=\"" + Url.Content("~/System/VersionInfoList") + "\">终端版本管理</a> ";
                 Dictionary<string, string> dic = new Dictionary<string, string>()
                 {
-                    {"pageIndex",(ID??1).ToString()},
-                    {"pageSize","10"}
+                    {"pageIndex",(PageIndex??1).ToString()},
+                    {"pageSize",PageSize}
                 };
                 ViewBag.pl = new SystemDAL().GetVersionList(dic);
+
             }
             catch (SqlException sql)
             {
@@ -1583,7 +1629,7 @@ namespace HCZZ.Controllers
                 VersionInfo version = new VersionInfo();
                 SystemDAL SystemDAL = new SystemDAL();
                 version.Type = Convert.ToInt32(form["selType"]);
-                version.OutVersion = form["txtOutVersion"].ToString();
+                version.OutVersion = form["txtOutVersion"];
                 if (version.Type == 1 || version.Type == 2)
                 {
                     version.CasesType = Convert.ToInt32(form["selCasesType"]);
@@ -1608,8 +1654,8 @@ namespace HCZZ.Controllers
                 }
                 version.FocusUpdate = Convert.ToInt32(form["selFocusUpdate"]);
                 version.ChangeLog = form["txtChangeLog"].ToString();
-                version.Version = form["txtVersion"].ToString();
-                version.DownloadUrl = form["txtDownloadUrl"].ToString();
+                version.Version = form["txtVersion"];
+                version.DownloadUrl = form["txtDownloadUrl"];
                 int result = SystemDAL.InsertVersionInfo(version);
                 if (result > 0)
                 {
@@ -1623,9 +1669,10 @@ namespace HCZZ.Controllers
                             strVer = version.OutVersion;
                         HttpContext.Cache.Insert("Version", strVer, null, DateTime.Now.AddHours(5), TimeSpan.Zero);
                     }
+                    log.Module = "系统管理-终端版本管理";
                     log.What = "添加终端版本信息，外部版本：" + version.OutVersion;
                     new OPLogDAL().InsertLog(log);
-                    return Content("<script>alert('保存成功');window.location.replace('" + Url.Content("~/System/VersionInfoList") + "');</script>");
+                    return Content("<script>alert('保存成功');parent.window.location.replace('" + Url.Content("~/System/VersionInfoList") + "');</script>");
                 }
                 else
                     return Content("<script>alert('保存失败');history.go(-1);</script>");
@@ -1734,6 +1781,7 @@ namespace HCZZ.Controllers
                             strVer = version.OutVersion;
                         HttpContext.Cache.Insert("Version", strVer, null, DateTime.Now.AddHours(5), TimeSpan.Zero);
                     }
+                    log.Module = "系统管理-终端版本管理";
                     log.What = "编辑终端版本信息，Id：" + version.ID;
                     new OPLogDAL().InsertLog(log);
                     return Content("<script>alert('保存成功');window.location.replace('" + Url.Content("~/System/VersionInfoList") + "');</script>");
@@ -1764,10 +1812,13 @@ namespace HCZZ.Controllers
                 int result = new SystemDAL().DeleteVersionInfo(ID);
                 if (result > 0)
                 {
-                    return Content("<script>alert('保存成功');window.location.replace('" + Url.Content("~/System/VersionInfoList") + "');</script>");
+                    log.Module = "系统管理-终端版本管理";
+                    log.What = "删除删除终端版本信息成功，ID：" + ID;
+                    new OPLogDAL().InsertLog(log);
+                    return Content("<script>alert('删除成功');window.location.replace('" + Url.Content("~/System/VersionInfoList") + "');</script>");
                 }
                 else
-                    return Content("<script>alert('保存失败');history.go(-1);</script>");
+                    return Content("<script>alert('删除失败');history.go(-1);</script>");
             }
             catch (SqlException sql)
             {
@@ -1779,6 +1830,11 @@ namespace HCZZ.Controllers
             }
             return View();
         }
+        /// <summary>
+        /// 端版本详细信息
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <returns></returns>
         public ActionResult DetailedVersion(int ID)
         {
             try
@@ -1786,8 +1842,9 @@ namespace HCZZ.Controllers
                 ViewBag.lishow = lishow;
                 ViewBag.ashow = "Version";
                 ViewBag.LfetShow = "系统管理";
-                ViewBag.location = "所在位置：系统管理 >> <a href=\"" + Url.Content("~/System/VersionInfoList") + "\">终端版本管理</a> >> 编辑终端版本信息";
+                ViewBag.location = "所在位置：系统管理 >> <a href=\"" + Url.Content("~/System/VersionInfoList") + "\">终端版本管理</a> >> 终端版本信息详情";
                 ViewBag.detail = new SystemDAL().GetVersionInfoById(ID);
+                log.Module = "系统管理-终端版本管理";
                 log.What = "查询终端版本详细信息ID：" + ID;
                 new OPLogDAL().InsertLog(log);
             }
@@ -1814,7 +1871,6 @@ namespace HCZZ.Controllers
         [HttpGet]
         public ActionResult SecurityOrgList(int? pageIndex, string orgName, string orgCode)
         {
-
             ViewBag.lishow = lishow;
             ViewBag.ashow = "Org";
             ViewBag.LfetShow = "系统管理";
@@ -1824,12 +1880,13 @@ namespace HCZZ.Controllers
                 Dictionary<string, string> dic = new Dictionary<string, string>()
                 {
                     {"pageIndex",(pageIndex??1).ToString()},
-                    {"pageSize","10"},
+                    {"pageSize",PageSize},
                     {"orgName",orgName},
                     {"orgCode",orgCode}
                 };
                 ViewBag.pl = new SystemDAL().GetAQList(dic);
                 ViewBag.dic = dic;
+                log.Module = "系统管理-安全厂商管理";
                 if (!string.IsNullOrEmpty(orgName)) log.What += "厂商名称：" + orgName;
                 if (!string.IsNullOrEmpty(orgCode)) log.What += "场所组织机构代码：" + orgCode;
                 if (!string.IsNullOrEmpty(log.What)) { log.What = "安全厂商管理列表，" + log.What; new OPLogDAL().InsertLog(log); }
@@ -1845,7 +1902,7 @@ namespace HCZZ.Controllers
             return View();
         }
 
-       
+
         /// <summary>
         /// 新增安全厂商
         /// 创建人：邓佳训
@@ -1902,6 +1959,7 @@ namespace HCZZ.Controllers
                 int result = HBDal.InsertOrg(sec);
                 if (result > 0)
                 {
+                    log.Module = "系统管理-安全厂商管理";
                     //重新获取安全厂商缓存
                     WebCommon.GetSecurityList(true);
                     log.What = "添加安全厂商信息，厂商名称：" + sec.SECURITY_SOFTWARE_ORGNAME + "，厂商组织机构代码：" + sec.SECURITY_SOFTWARE_ORGCODE;
@@ -1987,6 +2045,7 @@ namespace HCZZ.Controllers
                 int result = putDal.UpadteSec(sec);
                 if (result > 0)
                 {
+                    log.Module = "系统管理-安全厂商管理";
                     //重新获取安全厂商缓存
                     WebCommon.GetSecurityList(true);
                     log.What = "编辑安全厂商信息，厂商名称：" + sec.SECURITY_SOFTWARE_ORGNAME + "，厂商组织机构代码：" + sec.SECURITY_SOFTWARE_ORGCODE;
@@ -2025,23 +2084,24 @@ namespace HCZZ.Controllers
             try
             {
                 HBHtmlDAL putDal = new HBHtmlDAL();
-                int num = putDal.GetOrgCountByID(Id);//获取场所信息
-                if (num > 0)
-                {
-                    return Content("<script>alert('该安全厂商下还存在 " + num + " 个场所，请先删除场所');history.go(-1);</script>");
-                }
+                //int num = putDal.GetOrgCountByID(Id);//获取场所信息
+                //if (num > 0)
+                //{
+                //    return Content("<script>alert('该安全厂商下还存在 " + num + " 个场所，请先删除场所');history.go(-1);</script>");
+                //}
                 int result = putDal.DeleteSec(Id);//删除没有场所的安全厂商
                 if (result > 0)
                 {
+                    log.Module = "系统管理-安全厂商管理";
                     //重新获取安全厂商缓存
                     WebCommon.GetSecurityList(true);
                     log.What = "删除安全厂商信息成功，ID：" + Id;
                     new OPLogDAL().InsertLog(log);
-                    return Content("<script>alert('保存成功');location.replace('" + Url.Content("~/System/SecurityOrgList") + "');</script>");
+                    return Content("<script>alert('删除成功');location.replace('" + Url.Content("~/System/SecurityOrgList") + "');</script>");
                 }
                 else
                 {
-                    return Content("<script>alert('保存失败');history.go(-1);</script>");
+                    return Content("<script>alert('删除失败');history.go(-1);</script>");
                 }
             }
             catch (System.Data.SqlClient.SqlException)
@@ -2089,7 +2149,23 @@ namespace HCZZ.Controllers
                 Logger.ErrorLog(ex, null);
             }
             return View();
-        } 
+        }
+        /// <summary>
+        /// 数据查询
+        /// </summary>
+        /// <param name="id">厂商Id</param>
+        /// <returns></returns>
+        [HttpGet]
+        public ActionResult NumSelList(int id)
+        {
+            ViewBag.lishow = lishow;
+            ViewBag.ashow = "Org";
+            ViewBag.LfetShow = "系统管理";
+            ViewBag.location = "所在位置：系统管理 >> <a href=\"" + Url.Content("~/System/SecurityOrgList") + "\">安全厂商管理</a> >> 数据查询";
+            ViewBag.id = id;
+            return View();
+        }
+        [HttpGet]
         /// <summary>
         /// 数据查询
         /// </summary>
@@ -2098,56 +2174,316 @@ namespace HCZZ.Controllers
         /// <param name="startTime">开始时间</param>
         /// <param name="endTime">结束时间</param>
         /// <param name="dataType">数据类型</param>
-        /// <param name="authType">上网日志数据类别 1、虚拟身份，2、HTTP协议</param>
         /// <returns></returns>
-        [HttpGet]
-        public ActionResult NumSelList(int? pageIndex, int id, string startTime, string endTime, string dataType, string authType)
+        public ActionResult GetDataNum(string id, string startTime, string endTime, string dataType, string authType, string PLACE_NAME, string MAC, string keyWord, string AUTH_ACCOUNT, int pageIndex = 1)
         {
             try
             {
-                var javaResJson=string.Empty;
-                dataType = "1";
+                PLACE_NAME = PLACE_NAME.Equals("场所名称") ? "" : PLACE_NAME;
+                MAC = MAC.Equals("终端MAC") ? "" : MAC;
+                keyWord = keyWord.Equals("APMAC") ? "" : keyWord;
+                AUTH_ACCOUNT = AUTH_ACCOUNT.Equals("认证账号") ? "" : AUTH_ACCOUNT;
+                string NETBAR_ID = string.Empty;
+                if (!String.IsNullOrEmpty(PLACE_NAME))
+                {
+                    if ((List<Loc_NetBarInfo>)System.Web.HttpContext.Current.Cache["ShowCacheLoca"] == null)
+                        WebCommon.GetCacheLoca();
+                    List<Loc_NetBarInfo> netlist = (List<Loc_NetBarInfo>)System.Web.HttpContext.Current.Cache["ShowCacheLoca"];
+                    netlist = netlist.FindAll(a => a.PLACE_NAME.Contains(PLACE_NAME));
+                    if (netlist != null && netlist.Count > 0)
+                    {
+                        for (int i = 0; i < netlist.Count; i++)
+                        {
+                            NETBAR_ID += netlist[i].ID + (i == netlist.Count - 1 ? "" : ",");
+                        }
+                    }
+                }
+                ViewBag.lishow = lishow;
+                ViewBag.ashow = "Org";
+                ViewBag.LfetShow = "系统管理";
+                ViewBag.location = "所在位置：系统管理 >> <a href=\"" + Url.Content("~/System/SecurityOrgList") + "\">安全厂商管理</a> >> 数据查询结果";
+                if (!string.IsNullOrEmpty(id))
+                    Session["factoryId"] = id;
+                id = string.IsNullOrEmpty(id) ? Session["factoryId"].ToString() : id;
+                SolrShowModel solrmodel = new SolrShowModel();
+                var javaResJson = string.Empty;
+                startTime = string.IsNullOrEmpty(startTime) ? "0" : Szcert.Audit.CommonBase.ChangeValueBase.RefInt64Time(startTime, Szcert.Audit.CommonBase.TimeUnits.Sec, true).ToString();
+                endTime = string.IsNullOrEmpty(endTime) ? "4099776775" : Szcert.Audit.CommonBase.ChangeValueBase.RefInt64Time(endTime, Szcert.Audit.CommonBase.TimeUnits.Sec, true).ToString();
+
                 if (!string.IsNullOrEmpty(dataType))
                 {
-                    pageIndex = pageIndex == null ? 0 : pageIndex;
                     dataType = ChangeValue.RefauthTypeStr(dataType);
-                    MergeWar.JavaServer.SCPInquireServiceClient java = new MergeWar.JavaServer.SCPInquireServiceClient();
-                    var parameter = new
+                    MergeWar.JavaServer.BigDataServiceClient java = new MergeWar.JavaServer.BigDataServiceClient();
+                    java.InnerChannel.OperationTimeout = new TimeSpan(0, 10, 0);
+                    Dictionary<string, string> parameter = new Dictionary<string, string>();
+                    parameter.Add("pageIndex", pageIndex.ToString());
+                    parameter.Add("secId", "1");
+                    parameter.Add("startTime", startTime);
+                    parameter.Add("endTime", endTime);
+                    parameter.Add("MAC", string.IsNullOrEmpty(MAC) ? "nullval" : MAC);
+                    parameter.Add("NETBAR_ID", string.IsNullOrEmpty(NETBAR_ID) ? "nullval" : NETBAR_ID);
+                    if (dataType == "Termianl")
+                        parameter.Add("COLLECTION_EQUIPMENT_ID", string.IsNullOrEmpty(keyWord) ? "nullval" : keyWord.Replace("-", ""));
+                    else
                     {
-                        curPage = pageIndex,
-                        factoryId = 1,
-                        startTime = startTime,
-                        endTime = endTime,
-                        dataType = dataType,
-                        authType = authType
-                    };
+                        parameter.Add("AP_MAC", string.IsNullOrEmpty(keyWord) ? "nullval" : keyWord);
+                        parameter.Add("AUTH_ACCOUNT", string.IsNullOrEmpty(AUTH_ACCOUNT) ? "nullval" : AUTH_ACCOUNT);
+                    }
                     try
                     {
                         javaResJson = Newtonsoft.Json.JsonConvert.SerializeObject(parameter);
-                        javaResJson = java.queryTerminalManageList(javaResJson);
                         var Json = Newtonsoft.Json.Linq.JObject.Parse(javaResJson);
-                        if (Convert.ToInt32(Json["state"]) == 1)
+                        Logger.writeLog("四类基础数据开始查询：" + DateTime.Now);
+                        switch (dataType)
                         {
-                            Logger.writeLog(Json.ToString());
-                            return Content("<script>alert('暂无数据可查!');</script>");
+                            case "AuditLog"://上下线
+
+                                javaResJson = java.queryTermianlAccessLog(javaResJson);
+                                Json = Newtonsoft.Json.Linq.JObject.Parse(javaResJson);
+                                if (Convert.ToInt32(Json["state"]) != 0)
+                                {
+                                    Logger.writeLog(Json.ToString());
+                                    return Content("<script>alert('暂无数据可查!');history.go(-1);</script>");
+                                }
+                                solrmodel.numFound = Convert.ToInt32(Json["totalNumber"].ToString());
+                                solrmodel._taLog = Newtonsoft.Json.JsonConvert.DeserializeObject<List<TermianlAccessLog>>(Json["termianlAccessLogResult"].ToString());
+                                ViewBag.pl = new PagedList<TermianlAccessLog>(solrmodel._taLog, pageIndex, Convert.ToInt32(PageSize), solrmodel.numFound);
+                                break;
+                            case "NetLog"://上网
+                                javaResJson = java.queryTermianlNetworkLog(javaResJson);
+                                Json = Newtonsoft.Json.Linq.JObject.Parse(javaResJson);
+                                if (Convert.ToInt32(Json["state"]) != 0)
+                                {
+                                    Logger.writeLog(Json.ToString());
+                                    return Content("<script>alert('暂无数据可查!');history.go(-1);</script>");
+                                }
+                                solrmodel.numFound = Convert.ToInt32(Json["totalNumber"].ToString());
+                                solrmodel._tnkLog = Newtonsoft.Json.JsonConvert.DeserializeObject<List<TermianlNetworkLog>>(Json["termianlNetworkLogResult"].ToString());
+                                ViewBag.pl = new PagedList<TermianlNetworkLog>(solrmodel._tnkLog, pageIndex, Convert.ToInt32(PageSize), solrmodel.numFound);
+                                break;
+                            case "Termianl"://终端
+                                javaResJson = java.queryFenchTerminalInfo(javaResJson);
+                                Json = Newtonsoft.Json.Linq.JObject.Parse(javaResJson);
+                                if (Convert.ToInt32(Json["state"]) != 0)
+                                {
+                                    Logger.writeLog(Json.ToString());
+                                    return Content("<script>alert('暂无数据可查!');history.go(-1);</script>");
+                                }
+                                solrmodel.numFound = Convert.ToInt32(Json["totalNumber"].ToString());
+                                solrmodel._ftInfo = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Fench_TerminalInfo>>(Json["fenchTerminalInfoResult"].ToString());
+                                ViewBag.pl = new PagedList<Fench_TerminalInfo>(solrmodel._ftInfo, pageIndex, Convert.ToInt32(PageSize), solrmodel.numFound);
+                                break;
+                            default:
+                                break;
                         }
-                        ViewBag.count = Convert.ToInt32(Json["numFound"].ToString());
-                        ViewBag.pl = Newtonsoft.Json.JsonConvert.DeserializeObject<List<TermianlAccessLog>>(Json["terminalList"].ToString());
+                        Logger.writeLog("四类基础数据结束查询：" + DateTime.Now);
                     }
                     catch (Exception solr)
                     {
+
                         Logger.ErrorLog(solr, null);
-                        return Content("<script>alert('服务器开小差啦!');</script>");
+                        return Content("<script>alert('请求超时，请稍后再试!');history.go(-1);</script>");
                     }
                 }
+                ViewBag.dataType = dataType;
                 return View();
             }
             catch (Exception ex)
             {
                 Logger.ErrorLog(ex, null);
-                throw;
+                return Content("<script>alert('未知错误，请联系管理员!');history.go(-1);</script>");
             }
         }
-        #endregion 
+        #endregion
+
+        #region 上下线 设备Mac地址
+        [HttpGet]
+        public ActionResult MacList(string txtMac, string txtCOLLECTION_EQUIPMENT_ID, string txtBeginTime, string txtEndTime, int pageIndex = 1)
+        {
+            try
+            {
+                ViewBag.location = "所在位置：系统管理 >> 设备MAC管理";
+                ViewBag.lishow = lishow;
+                ViewBag.ashow = "sysmac";
+                Dictionary<string, string> dic = new Dictionary<string, string>()
+                {
+                    {"pageIndex",pageIndex.ToString()},
+                    {"pageSize",PageSize},
+                    {"AP_MAC",txtMac},
+                    {"COLLECTION_EQUIPMENT_ID",txtCOLLECTION_EQUIPMENT_ID},
+                    {"BeginTime",txtBeginTime},
+                    {"EndTime",txtEndTime}
+                };
+                ViewBag.pl = new MacDAL().GetList(dic);
+
+                if (!string.IsNullOrEmpty(txtMac) || !string.IsNullOrEmpty(txtBeginTime) || !string.IsNullOrEmpty(txtEndTime))
+                {
+                    log.What = "设备MAC管理列表查询,查询条件：设备MAC地址：" + txtMac + "；AP设备编码：" + txtCOLLECTION_EQUIPMENT_ID + "；开始时间：" + txtBeginTime + "；结束时间：" + txtEndTime;
+                    new OPLogDAL().InsertLog(log);
+                }
+                ViewBag.dic = new Dictionary<string, string> { { "AP_MAC", txtMac }, { "COLLECTION_EQUIPMENT_ID", txtCOLLECTION_EQUIPMENT_ID }, { "BeginTime", txtBeginTime }, { "EndTime", txtEndTime } };
+            }
+            catch (System.Data.SqlClient.SqlException)
+            {
+                ViewBag.errscript = "alert('检索数据遇到错误，请联系管理员')";
+            }
+            catch (Exception ex)
+            {
+                Logger.ErrorLog(ex, new Dictionary<string, string>()
+                {
+                    {"Function","UserController.MacList(int? Id, string txtMac,string txtCOLLECTION_EQUIPMENT_ID, string txtBeginTime, string txtEndTime)[HttpGet]"}
+                });
+                ViewBag.errscript = "alert('未知错误，请联系管理员')";
+            }
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult AddMac()
+        {
+            ViewBag.navig = "所在位置：系统管理 >> <a href=\"" + Url.Content("~/System/MacList") + "\">设备MAC管理 >> </a> >> 添加设备MAC";
+            ViewBag.left = "mac";
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult AddMac(FormCollection form)
+        {
+            try
+            {
+                MacInfo mac = new MacInfo();
+                MacDAL macDal = new MacDAL();
+                mac.AP_MAC = form["txtMacAddress"].ToString().Trim().ToUpper();
+                mac.CreateTime = DateTime.Now;
+                if (macDal.GetMacSNOrMacCount(0, "", mac.AP_MAC, "") > 0)
+                    return Content("<script>alert('该设备MAC地址已经存在，请重新输入');history.go(-1);</script>");
+                else
+                {
+                    string selSecurity = form["selSecurity"];
+                    mac.COLLECTION_EQUIPMENT_ID = selSecurity + mac.AP_MAC.ToUpper().Replace("-", "");
+                    int result = macDal.InsertMac(mac);
+                    if (result > 0)
+                    {
+                        WebCommon.GetCacheMac(true);
+                        //List<MacInfo> list = WebCommon.GetMacList();
+                        //if (list == null || list.Count == 0) { WebCommon.GetCacheMac(true); }
+                        //else
+                        //{
+                        //    mac.ID = result;
+                        //    list.Add(mac);
+                        //    HttpContext.Cache.Insert("CacheMac", list, null, DateTime.Now.AddHours(5), TimeSpan.Zero);
+                        //}
+
+                        log.What = "添加设备Mac地址信息；设备Mac地址：" + mac.AP_MAC;
+                        new OPLogDAL().InsertLog(log);
+
+                        return Content("<script>alert('保存成功');parent.location.replace('" + Url.Content("~/System/MacList") + "');</script>");
+                    }
+                    else
+                        return Content("<script>alert('保存失败，请稍后重试');history.go(-1);</script>");
+                }
+            }
+            catch (System.Data.SqlClient.SqlException)
+            {
+                ViewBag.errscript = "alert('检索数据遇到错误，请联系管理员')";
+            }
+            catch (Exception ex)
+            {
+                Logger.ErrorLog(ex, new Dictionary<string, string>()
+                {
+                    {"Function","UserController.AddMac(FormCollection form)[HttpPost]"}
+                });
+                ViewBag.errscript = "alert('未知错误，请联系管理员')";
+            }
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult EditMac(int Id)
+        {
+            try
+            {
+                ViewBag.navig = "所在位置：系统管理 >> <a href=\"" + Url.Content("~/System/MacList") + "\">设备MAC管理 >> </a> 编辑设备MAC";
+                ViewBag.left = "mac";
+                ViewBag.mac = new MacDAL().GetMACInfoById(Id, "");
+            }
+            catch (System.Data.SqlClient.SqlException)
+            {
+                ViewBag.errscript = "alert('检索数据遇到错误，请联系管理员')";
+            }
+            catch (Exception ex)
+            {
+                Logger.ErrorLog(ex, new Dictionary<string, string>()
+                {
+                    {"Function","VersionController.EditMac(int Id)[HttpGet]"}
+                });
+                ViewBag.errscript = "alert('未知错误，请联系管理员')";
+            }
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult EditMac(FormCollection form)
+        {
+            try
+            {
+                MacInfo mac = new MacInfo();
+                MacDAL macDal = new MacDAL();
+                mac.AP_MAC = form["txtMacAddress"].ToString().Trim().ToUpper();
+                mac.CreateTime = DateTime.Now;
+                mac.ID = Convert.ToInt32(form["Hid"]);
+
+                if (macDal.GetMacSNOrMacCount(mac.ID, "", mac.AP_MAC, "") > 0)
+                    return Content("<script>alert('该设备MAC地址已经存在，请重新输入');history.go(-1);</script>");
+                else
+                {
+                    string selSecurity = form["selSecurity"];
+                    mac.COLLECTION_EQUIPMENT_ID = selSecurity + mac.AP_MAC.ToUpper().Replace("-", "");
+                    int result = macDal.UpdateMac(mac);
+                    if (result > 0)
+                    {
+                        //MacInfo mac2 = macDal.GetMACInfoById(mac.ID, "");
+                        //if (mac2.NETBAR_ID > 0)
+                        //    new LocationDAL().UpdateOldLoca(mac.ID, "");
+
+                        WebCommon.GetCacheMac(true);
+
+                        //为了增加响应效率，先修改缓存，如果缓存为null则重新获取
+                        //List<MacInfo> list = WebCommon.GetMacList();
+                        //if (list == null || list.Count == 0) { WebCommon.GetCacheMac(true); }
+                        //else
+                        //{
+                        //    if(list.Where(m => m.ID == mac.ID).Count()>0)
+                        //    {
+                        //        MacInfo mT = list.Where(m => m.ID == mac.ID).First();
+                        //        list.Remove(mT);
+                        //        HttpContext.Cache.Insert("CacheMac", list, null, DateTime.Now.AddHours(5), TimeSpan.Zero);
+                        //    }
+                        //}
+
+                        log.What = "编辑设备Mac地址信息；设备MacId：" + mac.ID + "，Mac地址：" + mac.AP_MAC;
+                        new OPLogDAL().InsertLog(log);
+
+                        return Content("<script>alert('保存成功');parent.location.replace('" + Url.Content("~/System/MacList") + "');</script>");
+                    }
+                    else
+                        return Content("<script>alert('保存失败，请稍后重试');history.go(-1);</script>");
+                }
+            }
+            catch (System.Data.SqlClient.SqlException)
+            {
+                ViewBag.errscript = "alert('检索数据遇到错误，请联系管理员')";
+            }
+            catch (Exception ex)
+            {
+                Logger.ErrorLog(ex, new Dictionary<string, string>()
+                {
+                    {"Function","   UserController.EditMac(FormCollection form)[HttpPost]"}
+                });
+                ViewBag.errscript = "alert('未知错误，请联系管理员')";
+            }
+            return View();
+        }
+        #endregion
     }
 }

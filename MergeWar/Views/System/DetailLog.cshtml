@@ -2,10 +2,61 @@
     ViewBag.Title = "日志详细信息";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<link href="@Url.Content("~/Content/css/XTGL.css")" rel="stylesheet" type="text/css" />
 @using HCZZ.ModeDB;
-@using Common;
+@using HCZZ.Common;
 @using Webdiyer.WebControls.Mvc;
-	<table >	
+<style type="text/css">
+    .contentbody .contentInfo table {
+        color: #b1b1b1;
+        width: 1250px;
+        border: 1px solid #2a393a;
+        margin: 0 auto;
+        background-color: #21222f;
+    }
+
+        .contentbody .contentInfo table tr {
+            height: 40px;
+        }
+
+            .contentbody .contentInfo table tr:nth-child(even) {
+                background-color: #21202E;
+            }
+
+            .contentbody .contentInfo table tr:nth-child(odd) {
+                background-color: #21222F;
+            }
+
+            .contentbody .contentInfo table tr th {
+                text-align: left;
+                padding-left: 50px;
+                background-color: #1E1F2D;
+                border-bottom: 1px solid #2A393A;
+            }
+
+            .contentbody .contentInfo table tr td {
+                border-right: 1px solid #2A393A;
+                padding-left: 50px;
+            }
+
+                .contentbody .contentInfo table tr td .spanTitle {
+                    color: #999999;
+                }
+
+                .contentbody .contentInfo table tr td .spanText {
+                    color: #CCCCCC;
+                }
+
+        .contentbody .contentInfo table:nth-child(1) {
+            margin-top: 20px;
+        }
+
+        .contentbody .contentInfo table:nth-child(2) {
+            margin-bottom: 50px;
+            border-top: none;
+        }
+</style>
+	@*<table >	
 			<tr>
 				<th colspan="4"><h1>日志详细信息</h1></th>
 			</tr>
@@ -13,14 +64,14 @@
 	<div>
 	<table >
         @{
-            OPLog log = (OPLog)ViewBag.log;
+            
             if (log != null)
             {
                 <tr>
 				    <td width="15%" align="right">操作模块：</td>
 				    <td>@log.Module</td>   
 				    <td width="15%" align="right">操作描述：</td>
-				    <td>@StringFilter.Base64Str(0,log.What)</td>   
+				    <td>@log.What</td>   
 			    </tr>
             
                 <tr>
@@ -32,6 +83,30 @@
             }
          }
 	</table>
-	</div>
+	</div>*@
+@{OPLog log = (OPLog)ViewBag.log;
+<div class="contentbody">
+    <div class="contentInfo">
+        <table cellspacing="0" cellpadding="0" border="0">
+            <tbody>
+                <tr>
+                    <td width="15%" align="right">操作模块：</td>
+                    <td>@log.Module</td>
+                    <td width="15%" align="right">操作描述：</td>
+                    <td>@log.What</td>
+                </tr>
 
-
+                <tr>
+                    <td width="15%" align="right">操作IP：</td>
+                    <td>@log.IpAddress</td>
+                    <td width="15%" align="right">操作时间：</td>
+                    <td>@log.CreateTime.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                </tr>
+            </tbody>
+        </table>
+        <table cellspacing="0" cellpadding="0" border="0">
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+    }

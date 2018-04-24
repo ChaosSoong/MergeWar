@@ -4,26 +4,29 @@
 @using HCZZ.ModeDB
 @using Webdiyer.WebControls.Mvc
 @{
-    ViewBag.Title = "-用户管理";
+    <link href="@Url.Content("~/Content/css/XTGL.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/css/publicHeader.css")" rel="stylesheet" type="text/css" />
+    ViewBag.Title = "系统设置-用户管理";
     Layout = "~/Views/Shared/_Layout.cshtml";
     PagedList<UserInfo> userlist = (PagedList<UserInfo>)ViewBag.ul;
     PoliceDAL pdal = new PoliceDAL();
     AreaInfo area = new AreaInfo();
     string relaVal = ChangeValue.RefPageRelaByPath("System/UserList");
     Dictionary<string, string> dic = (Dictionary<string, string>)ViewBag.dic;
+    UserInfo user = (UserInfo)Session["userInfo"];
 }
-@using (Html.BeginForm("UserList", "System", new {@Id = 1}, FormMethod.Get))
+@using (Html.BeginForm("UserList", "System", new { @Id = "taskManagementForm" }, FormMethod.Get))
 {
     <div class="contentbody" id="contentbody">
         <div class="contentTitle">
             <span>查询条件和按钮区</span>
-            <input class="search" type="button" id="BtnSelect" onclick="myFunction(this, 'contentConditions')" value="隐藏"/>
+            <input class="search" type="button" id="BtnSelect" onclick="myFunction(this, 'contentConditions')" value="隐藏" />
             @if (relaVal.Contains("2"))
             {
-                <input class="add" type="button" id="" value="+ 添加" onclick="PublicFun(1,'System/AddUser')"/>
+                <input class="add" type="button" value="+ 添加" onclick="window.location.href='@Url.Content("~/System/AddUser")'" />
             }
         </div>
-        <div class="contentConditions">
+        <div class="contentConditions" style="height:160px">
             <ul>
                 <li class="Conditions Conditions1">
                     <span>用户名：</span>
@@ -31,7 +34,7 @@
                         <option value="1">模糊</option>
                         <option value="2">精确</option>
                     </select>
-                    <input type="text" id="txtName" name="txtName" value="@dic["txtName"]"/>
+                    <input type="text" id="txtName" name="txtName" value="@dic["txtName"]" />
                 </li>
                 <li class="Conditions Conditions2">
                     <span>真实姓名：</span>
@@ -39,57 +42,65 @@
                         <option value="1">模糊</option>
                         <option value="2">精确</option>
                     </select>
-                    <input type="text" id="txtTrueName" name="txtTrueName" value="@dic["txtTrueName"]"/>
+                    <input type="text" id="txtTrueName" name="txtTrueName" value="@dic["txtTrueName"]" />
                 </li>
-                <li class="Conditions Conditions3">
-                   <span>用户类型：</span>
-                   <select name="UserType" id="UserType">
-                       <option value="0">=请选择=</option>
-                       <option value="1">管理员</option>
-                       <option value="2">分局用户</option>
-                       <option value="3">派出所用户</option>
-                       <option value="4">市局用户</option>
-                       <option value="5">分中心用户</option>
-                       <option value="6">省用户</option>
-                       <option value="7">全国用户</option>
-                       <option value="8">运营用户</option>
-                   </select>
-                </li>
+                
+                    <li class="Conditions Conditions3">
+                        <span>用户类型：</span>
+                        <select name="UserType" id="UserType">
+                            <option value="0">=请选择=</option>
+                            <option value="1">管理员</option>
+                            <option value="2">分局用户</option>
+                            <option value="3">派出所用户</option>
+                            <option value="4">市局用户</option>
+                            <option value="5">分中心用户</option>
+                            <option value="6">省用户</option>
+                            <option value="7">全国用户</option>
+                            <option value="8">运营用户</option>
+                        </select>
+                    </li>
                 <li class="Conditions Conditions4">
                     <span>手机号码：</span>
                     <select name="selMobile" id="selMobile">
                         <option value="1">模糊</option>
                         <option value="2">精确</option>
                     </select>
-                    <input type="text" id="txtMobile" name="txtMobile" value="@dic["txtMobile"]"/>
+                    <input type="text" id="txtMobile" name="txtMobile" value="@dic["txtMobile"]" />
                 </li>
+                    <li class="Conditions Conditions5">
+                        <span>证件号码：</span>
+                        <select name="selIdnumber" id="selIdnumber">
+                            <option value="1">模糊</option>
+                            <option value="2">精确</option>
+                        </select>
+                        <input type="text" id="txtIdnumber" name="txtIdnumber" value="@dic["txtIdnumber"]" />
+                    </li>
                 <li class="Conditions Conditions5">
-                    <span>证件号码：</span>
-                    <select name="selIdnumber" id="selIdnumber">
-                        <option value="1">模糊</option>
-                        <option value="2">精确</option>
+                    <span>删除标识:</span>
+                    <select name="Valid" id="Valid">
+                        <option value="0">已删除</option>
+                        <option value="1" selected="selected">未删除</option>
                     </select>
-                    <input type="text" id="txtIdnumber" name="txtIdnumber" value="@dic["txtIdnumber"]"/>
                 </li>
-                <li class="Conditions Conditions6">
-                    <input class="selectbg" type="submit" id="but_Seek"value="搜索"/>
-                    <input class="resetbg" type="reset" value="重置" onclick="Reset()"/>
+                <li class="Conditions Conditions6" style="margin-left:500px">
+                    <input class="selectbg" type="submit" id="but_Seek" value="搜索" />
+                    <input class="resetbg" type="reset" value="重置" onclick="Reset()" />
                 </li>
             </ul>
         </div>
-        <div class="contentTable">
+        <div class="contentTable" id="taskManagementId">
             <table border="0" cellspacing="0" cellpadding="0">
                 <tr>
-                    <th style="width: 5%;">序号</th>
+                    <th style="width: 6%;">序号</th>
                     <th style="width: 8%;">用户名</th>
                     <th style="width: 8%;">真实姓名</th>
-                    <th style="width: 10%;">联系电话</th>
+                    <th style="width: 6%;">联系电话</th>
                     <th style="width: 15%;">区域</th>
-                    <th style="width: 10%;">用户类型</th>
-                    <th style="width: 7%;">标识</th>
+                    <th style="width: 6%;">用户类型</th>
+                    <th style="width: 11%;">证件号码</th>
                     <th style="width: 12%;">最近登录时间</th>
                     <th style="width: 12%;">创建时间</th>
-                    <th style="width: 13%;">操作</th>
+                    <th style="width: 17%;">操作</th>
                 </tr>
                 @if (userlist != null && userlist.Count > 0)
                 {
@@ -127,52 +138,61 @@
                             area = pdal.GetAreaInfoById(item.AId, 0);
                         }
                         <tr>
-                            <td style="width: 5%;">@item.PageNum</td>
+                            <td style="width: 6%;">@item.PageNum</td>
                             <td style="width: 8%;">@item.UserName</td>
-                            <td style="width: 8%;">@item.TrueName</td>
-                            <td style="width: 10%;">@item.Mobile</td>
+                            <td style="width: 8%;" title="@item.TrueName">@(ChangeValue.ByteSubString(item.TrueName, 16))</td>
+                            <td style="width: 6%;">@item.Mobile</td>
                             <td style="width: 15%;">@(area != null ? (area.PName + " " + area.CName + " " + area.Area) : "") @item.Pname</td>
-                            <td style="width: 10%;">@ChangeValue.RefUseTypeValue(item.Type)</td>
-                            <td style="width: 7%;">@(item.Valid == 0 ? "已删除" : "未删除")</td>
+                            <td style="width: 6%;">@ChangeValue.RefUseTypeValue(item.Type)</td>
+                            <td style="width: 11%;">@item.idNumber</td>
                             <td style="width: 12%;">@(item.LastTime.ToString("yyyy-MM-dd") == "0001-01-01" ? "N/A" : item.LastTime.ToString("yyyy-MM-dd HH:mm:ss"))</td>
                             <td style="width: 12%;">@item.CreateTime.ToString("yyyy-MM-dd HH:mm:ss")</td>
-                            <td style="width: 13%;" >
-                                @if (item.Valid==0)
+                            <td style="width: 17%;">
+                                @if (item.Valid == 0)
                                 {
                                     <a>
                                         <img title="详情" src="@Url.Content("~/Content/images/view_icon.png")" alt="查看" />
-                                        <img title="编辑" src="@Url.Content("~/Content/images/edit_icon.png")" alt="编辑"/>
-                                        <img title="删除" src="@Url.Content("~/Content/images/del_icon.png")" alt="删除" />
-                                    </a> 
-                                }else{
-                                    <a onclick="PublicFun(1,'System/DetUser?Id=@item.ID')">
-                                        <img title="详情" src="@Url.Content("~/Content/images/view1_icon.png")" alt="查看"/>
-                                    </a> 
-                                    <a onclick="PublicFun(1,'System/EditUser?Id=@item.ID')">
-                                        <img title="编辑" src="@Url.Content("~/Content/images/edit1_icon.png")" alt="编辑"/>
-                                    </a> 
-                                    <a onclick="PublicFun(2,'System/DelUser?Id=@item.ID')">
-                                        <img title="删除" src="@Url.Content("~/Content/images/del1_icon.png")" alt="删除" />
                                     </a>
+                                    <a>
+                                        <img title="编辑" src="@Url.Content("~/Content/images/edit_icon.png")" alt="编辑" />
+                                    </a>
+                                    <a>
+                                        <img title="删除" src="@Url.Content("~/Content/images/del_icon.png")" alt="删除" />
+                                    </a>
+                                }
+                                else if (item.Valid == 1 && ChangeValue.RefUseTypeValue(item.Type) == "管理员")
+                                {
+                                    <a onclick="PublicFun(1,'System/DetUser?Id=@item.ID')">
+                                        <img title="详情" src="@Url.Content("~/Content/images/view1_icon.png")" alt="查看" />
+                                    </a>
+                                }
+                                else
+                                {
+                                    if (relaVal.Contains("1"))
+                                    {
+                                        <a onclick="PublicFun(1,'System/DetUser?Id=@item.ID')">
+                                           <img title="详情" src="@Url.Content("~/Content/images/view1_icon.png")" alt="查看" />
+                                        </a>
+                                    }
+                                    if (relaVal.Contains("2"))
+                                    {
+                                        <a onclick="PublicFun(1,'System/EditUser?Id=@item.ID')">
+                                            <img title="编辑" src="@Url.Content("~/Content/images/edit1_icon.png")" alt="编辑" />
+                                        </a>
+                                    }
+                                    if (relaVal.Contains("3"))
+                                    {
+                                        <a onclick="PublicFun(2,'System/DelUser?Id=@item.ID')">
+                                            <img title="删除" src="@Url.Content("~/Content/images/del1_icon.png")" alt="删除" />
+                                        </a>
+                                    }
                                 }
                             </td>
                         </tr>
                     }
                 }
-                else
-                {
-                            <tr><td>暂无可显示数据</td></tr>
-                }
-            </table>
-            <table border="0" cellspacing="0" cellpadding="0">
-                <tr><td>@Html.Pager(userlist, new PagerOptions()
-                   {
-                       PageIndexParameterName = "PageIndex",
-                       @CssClass = ""
-                   })
-                    <div class="">共<font>@userlist.TotalPageCount</font>页/共<font>@userlist.TotalItemCount</font>条
-                    </div></td></tr>
-            </table>
+        </table>
+            @Html.Partial("~/Views/Shared/_PartialPage.cshtml", new RouteValueDictionary { { "model", userlist }, { "pageindex", "PageIndex" } })
         </div>
     </div>
 }
@@ -180,31 +200,32 @@
     var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
     function InputVerify() {
         var res = false;
-   $(".contentConditions").find("input[type='text']").each(function(){
-            if ($.trim($(this).val())!=""){ 
+        $(".contentConditions").find("input[type='text']").each(function () {
+            if ($.trim($(this).val()) != "") {
                 res = true;
             }
         });
-          return res;
+        if ($("#UserType").val() != "0") {
+            res = true;
+        }
+        return res;
     }
-     $("form").submit(function () {
-     if (InputVerify()) {
-         if ($("#txtMobile").val() != "") {
-            if (!myreg.test($("#txtMobile").val())) {
-                 alert('请输入有效的手机号码！');
-                 return false;
-             }
-         }
-         return InputVerify();
-     } else {
-         alert("请输入搜索条件");
-         return false;
-     }
-     });
+    $("form").submit(function () {
+        if (InputVerify()) {
+            if ($("#txtMobile").val() != "") {
+                if (!myreg.test($("#txtMobile").val())) {
+                    alert('请输入有效的手机号码！');
+                    return false;
+                }
+            }
+            return InputVerify();
+        }
+    });
     $(function () {
         $("#selName").val('@dic["selName"]');
         $("#selTrueName").val('@dic["selTrueName"]');
         $("#selMobile").val('@dic["selMobile"]');
-        $("#selIdnumber").val('@dic["selIdnumber"]');
+        $("#UserType").val('@dic["UserType"]');
+        $("#Valid").val('@dic["Valid"]');
     });
 </script>

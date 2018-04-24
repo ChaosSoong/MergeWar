@@ -48,7 +48,7 @@
             </tr>
         </table>
     </div>
-    <div style="width: auto; margin: 0 auto; height: 440px; width: 100%; border: 2px solid #1e1f2d;"
+    <div style="width: auto; margin: 0 auto; height: 588px; width: 100%; border: 2px solid #1e1f2d;"
         id="dituContent">
     </div>
 </div>
@@ -59,11 +59,40 @@
     var a = "";
     var Id = "";
     var retnbidval = "";
+    var ShowType=false;
     $(function () {
-        //$("#dituContent").load("../Map/HLocaShowMap.html");
+        @*//$("#dituContent").load("../Map/HLocaShowMap.html");
+        if(@ViewBag.ProId!="0"){
+            ShowType=true;
+            //document.getElementById("selProvince").value = '@ViewBag.ProId';
+            $("#selProvince").val('@ViewBag.ProId')
+        }
+        if(@ViewBag.CityId!="0"){
+            ShowType=true;
+            //document.getElementById("selCity").value = '@ViewBag.CityId';
+            $("#selCity").val('@ViewBag.CityId')
+        }
+        if(@ViewBag.Aid!="0"){
+            ShowType=true;
+            //document.getElementById("selArea").value = '@ViewBag.Aid';
+            $("#selArea").val('@ViewBag.Aid')
+        }
         changeValue("selProvince", "selProvince", "Province");
         //document.getElementById("selProvince").value = '@ViewBag.ProId';
+        //changeValue('selProvince', 'selCity', 'City');
+        submitValue();*@
+        changeValue("selProvince", "selProvince", "Province");
+        document.getElementById("selProvince").value = '@ViewBag.ProId';
         changeValue('selProvince', 'selCity', 'City');
+        var CityId = @ViewBag.CityId;
+        var AreaId = @ViewBag.Aid;
+        if (CityId > 0) {
+            document.getElementById("selCity").value = CityId;
+            changeValue('selCity', 'selArea', 'Area');
+        }
+        if (AreaId > 0) {
+            document.getElementById("selArea").value = AreaId;
+        }
         submitValue();
     });
     function changeValue(fname, sname, key) {

@@ -1,0 +1,86 @@
+﻿@{
+    ViewBag.Title = "分析结果";
+}
+@using HCZZ.ModeDB;
+@using Webdiyer.WebControls.Mvc
+@using System.Collections.Generic
+@using Webdiyer.WebControls.Mvc
+<link href="~/Content/css/MACFX.css" rel="stylesheet" />
+<link href="~/Content/css/PZFX.css" rel="stylesheet" />
+<div class="contentbody" id="contentbody">
+    <div class="contentTitle">
+        <span>碰撞分析-分析结果</span>
+        <input class="add" type="button" id="" value="导出表格" onclick="report()" />
+    </div>
+    <div class="contentTable">
+        @{List<MergeWar.Models.Collision> cllist = (List<MergeWar.Models.Collision>)ViewBag.pl;
+        //var list = cllist.Skip(1).Take(10);
+        var size = cllist.Count / 10 + 1;
+            <table border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <th style="width: 30%;">序号</th>
+                    <th style="width: 40%;">MAC地址</th>
+                    <th style="width: 30%;">出现次数</th>
+                    @*<th style="width: 25%;">最后出现场所名称</th>
+                        <th style="width: 24%;">最后出现场所时间</th>*@
+                </tr>
+                @if (cllist.Count > 0)
+                {
+                    int i = 1;
+                    foreach (var cl in cllist)
+                    {
+                        <tr>
+                            <td style="width: 30%;">@i</td>
+                            <td style="width: 40%;">@cl.MAC</td>
+                            <td class="addAuthority" style="width: 30%;"><a href="@Url.Content("~/Public/AnalysisDet?ids=" + ViewBag.ids + "&sTime=" + ViewBag.STime + "&eTime=" + ViewBag.ETime + "&mac=" + cl.MAC + "")">@cl.count</a></td>
+                        </tr>
+                        i++;
+                    }
+                }
+                @*<tr>
+                    @{ 
+                        for (var j = 0; j < size; j++) {
+                            @j
+                        }
+                    }
+                </tr>*@
+            </table>
+            @Html.Partial("~/Views/Shared/_PartialPage.cshtml", new RouteValueDictionary { { "pageIndex", "PageIndex" }, { "model", cllist } })
+        }
+    </div>
+</div>
+<script type="text/javascript">
+    function closeDown() {
+        document.getElementById('divDown').style.display = 'none';
+        $("#Bk").hide();
+    }
+    function report() {
+        var maxCount = @Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["ExprotCout"]);
+        var TotalCount =parseInt($("#spTotalItem").html());
+        if(TotalCount>maxCount){
+            alert("为保证导出数据的速度，数据源不能大于"+maxCount+"条");
+            closeDown();
+        }
+            $.ajax
+             ({
+                 type: "Get",
+                 url: '@Url.Content("~/Public/AnalyzeExport?dataType=1")'+ '&data=' + (new Date()).getTime(),
+                 dataType: "json",
+                 cache: false,
+                 success: function (data, status) {
+                     if (typeof (data.err) != 'undefined' && data.err != "") {
+                         alert(data.err);
+                     } else {
+                         window.location.href = '@Url.Content("~/Public/Download?name=")' + encodeURIComponent('碰撞分析列表报表_') + '&path=' + encodeURIComponent(data.result);
+                     }
+                     closeDown();
+                 },
+                 error: function (data, status, e) {
+                     alert(e);
+                     closeDown();
+                 }
+             });
+        }
+</script>
+
+

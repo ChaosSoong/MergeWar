@@ -9,111 +9,145 @@
 //------------------------------------------------------------------------------
 
 namespace MergeWar.JavaServer {
-    using System.Runtime.Serialization;
-    using System;
     
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="SolrServerException", Namespace="http://service/")]
-    [System.SerializableAttribute()]
-    public partial class SolrServerException : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="IOException", Namespace="http://service/")]
-    [System.SerializableAttribute()]
-    public partial class IOException : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(Namespace="http://service/", ConfigurationName="JavaServer.SCPInquireService")]
-    public interface SCPInquireService {
+    [System.ServiceModel.ServiceContractAttribute(Namespace="http://server.bigdata.com/", ConfigurationName="JavaServer.BigDataService")]
+    public interface BigDataService {
         
-        // CODEGEN: 命名空间  的元素名称 arg0 以后生成的消息协定未标记为 nillable
-        [System.ServiceModel.OperationContractAttribute(Action="", ReplyAction="*")]
-        [System.ServiceModel.FaultContractAttribute(typeof(MergeWar.JavaServer.SolrServerException), Action="", Name="SolrServerException")]
-        [System.ServiceModel.FaultContractAttribute(typeof(MergeWar.JavaServer.IOException), Action="", Name="IOException")]
-        MergeWar.JavaServer.addTerminalManageListResponse addTerminalManageList(MergeWar.JavaServer.addTerminalManageList request);
+        // CODEGEN: 命名空间  的元素名称 json 以后生成的消息协定未标记为 nillable
+        [System.ServiceModel.OperationContractAttribute(Action="http://server.bigdata.com/BigDataService/collisionAnalysisMACRequest", ReplyAction="http://server.bigdata.com/BigDataService/collisionAnalysisMACResponse")]
+        MergeWar.JavaServer.collisionAnalysisMACResponse collisionAnalysisMAC(MergeWar.JavaServer.collisionAnalysisMACRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="", ReplyAction="*")]
-        System.Threading.Tasks.Task<MergeWar.JavaServer.addTerminalManageListResponse> addTerminalManageListAsync(MergeWar.JavaServer.addTerminalManageList request);
+        [System.ServiceModel.OperationContractAttribute(Action="http://server.bigdata.com/BigDataService/collisionAnalysisMACRequest", ReplyAction="http://server.bigdata.com/BigDataService/collisionAnalysisMACResponse")]
+        System.Threading.Tasks.Task<MergeWar.JavaServer.collisionAnalysisMACResponse> collisionAnalysisMACAsync(MergeWar.JavaServer.collisionAnalysisMACRequest request);
         
-        // CODEGEN: 命名空间  的元素名称 arg0 以后生成的消息协定未标记为 nillable
-        [System.ServiceModel.OperationContractAttribute(Action="", ReplyAction="*")]
-        [System.ServiceModel.FaultContractAttribute(typeof(MergeWar.JavaServer.SolrServerException), Action="", Name="SolrServerException")]
-        [System.ServiceModel.FaultContractAttribute(typeof(MergeWar.JavaServer.IOException), Action="", Name="IOException")]
-        MergeWar.JavaServer.addNetLogListResponse addNetLogList(MergeWar.JavaServer.addNetLogList request);
+        // CODEGEN: 命名空间  的元素名称 json 以后生成的消息协定未标记为 nillable
+        [System.ServiceModel.OperationContractAttribute(Action="http://server.bigdata.com/BigDataService/queryFenchTerminalInfoRequest", ReplyAction="http://server.bigdata.com/BigDataService/queryFenchTerminalInfoResponse")]
+        MergeWar.JavaServer.queryFenchTerminalInfoResponse queryFenchTerminalInfo(MergeWar.JavaServer.queryFenchTerminalInfoRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="", ReplyAction="*")]
-        System.Threading.Tasks.Task<MergeWar.JavaServer.addNetLogListResponse> addNetLogListAsync(MergeWar.JavaServer.addNetLogList request);
+        [System.ServiceModel.OperationContractAttribute(Action="http://server.bigdata.com/BigDataService/queryFenchTerminalInfoRequest", ReplyAction="http://server.bigdata.com/BigDataService/queryFenchTerminalInfoResponse")]
+        System.Threading.Tasks.Task<MergeWar.JavaServer.queryFenchTerminalInfoResponse> queryFenchTerminalInfoAsync(MergeWar.JavaServer.queryFenchTerminalInfoRequest request);
         
-        // CODEGEN: 命名空间  的元素名称 arg0 以后生成的消息协定未标记为 nillable
-        [System.ServiceModel.OperationContractAttribute(Action="", ReplyAction="*")]
-        MergeWar.JavaServer.queryTerminalManageListResponse queryTerminalManageList(MergeWar.JavaServer.queryTerminalManageList request);
+        // CODEGEN: 命名空间  的元素名称 json 以后生成的消息协定未标记为 nillable
+        [System.ServiceModel.OperationContractAttribute(Action="http://server.bigdata.com/BigDataService/accompanyAnalysisMACRequest", ReplyAction="http://server.bigdata.com/BigDataService/accompanyAnalysisMACResponse")]
+        MergeWar.JavaServer.accompanyAnalysisMACResponse accompanyAnalysisMAC(MergeWar.JavaServer.accompanyAnalysisMACRequest request);
         
-        [System.ServiceModel.OperationContractAttribute(Action="", ReplyAction="*")]
-        System.Threading.Tasks.Task<MergeWar.JavaServer.queryTerminalManageListResponse> queryTerminalManageListAsync(MergeWar.JavaServer.queryTerminalManageList request);
+        [System.ServiceModel.OperationContractAttribute(Action="http://server.bigdata.com/BigDataService/accompanyAnalysisMACRequest", ReplyAction="http://server.bigdata.com/BigDataService/accompanyAnalysisMACResponse")]
+        System.Threading.Tasks.Task<MergeWar.JavaServer.accompanyAnalysisMACResponse> accompanyAnalysisMACAsync(MergeWar.JavaServer.accompanyAnalysisMACRequest request);
+        
+        // CODEGEN: 命名空间  的元素名称 json 以后生成的消息协定未标记为 nillable
+        [System.ServiceModel.OperationContractAttribute(Action="http://server.bigdata.com/BigDataService/queryTermianlAccessLogRequest", ReplyAction="http://server.bigdata.com/BigDataService/queryTermianlAccessLogResponse")]
+        MergeWar.JavaServer.queryTermianlAccessLogResponse queryTermianlAccessLog(MergeWar.JavaServer.queryTermianlAccessLogRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://server.bigdata.com/BigDataService/queryTermianlAccessLogRequest", ReplyAction="http://server.bigdata.com/BigDataService/queryTermianlAccessLogResponse")]
+        System.Threading.Tasks.Task<MergeWar.JavaServer.queryTermianlAccessLogResponse> queryTermianlAccessLogAsync(MergeWar.JavaServer.queryTermianlAccessLogRequest request);
+        
+        // CODEGEN: 命名空间  的元素名称 json 以后生成的消息协定未标记为 nillable
+        [System.ServiceModel.OperationContractAttribute(Action="http://server.bigdata.com/BigDataService/queryTermianlNetworkLogRequest", ReplyAction="http://server.bigdata.com/BigDataService/queryTermianlNetworkLogResponse")]
+        MergeWar.JavaServer.queryTermianlNetworkLogResponse queryTermianlNetworkLog(MergeWar.JavaServer.queryTermianlNetworkLogRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://server.bigdata.com/BigDataService/queryTermianlNetworkLogRequest", ReplyAction="http://server.bigdata.com/BigDataService/queryTermianlNetworkLogResponse")]
+        System.Threading.Tasks.Task<MergeWar.JavaServer.queryTermianlNetworkLogResponse> queryTermianlNetworkLogAsync(MergeWar.JavaServer.queryTermianlNetworkLogRequest request);
+        
+        // CODEGEN: 命名空间  的元素名称 json 以后生成的消息协定未标记为 nillable
+        [System.ServiceModel.OperationContractAttribute(Action="http://server.bigdata.com/BigDataService/collisionAnalysisDetailMACRequest", ReplyAction="http://server.bigdata.com/BigDataService/collisionAnalysisDetailMACResponse")]
+        MergeWar.JavaServer.collisionAnalysisDetailMACResponse collisionAnalysisDetailMAC(MergeWar.JavaServer.collisionAnalysisDetailMACRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://server.bigdata.com/BigDataService/collisionAnalysisDetailMACRequest", ReplyAction="http://server.bigdata.com/BigDataService/collisionAnalysisDetailMACResponse")]
+        System.Threading.Tasks.Task<MergeWar.JavaServer.collisionAnalysisDetailMACResponse> collisionAnalysisDetailMACAsync(MergeWar.JavaServer.collisionAnalysisDetailMACRequest request);
+        
+        // CODEGEN: 命名空间  的元素名称 json 以后生成的消息协定未标记为 nillable
+        [System.ServiceModel.OperationContractAttribute(Action="http://server.bigdata.com/BigDataService/accompanyAnalysisDetailMACRequest", ReplyAction="http://server.bigdata.com/BigDataService/accompanyAnalysisDetailMACResponse")]
+        MergeWar.JavaServer.accompanyAnalysisDetailMACResponse accompanyAnalysisDetailMAC(MergeWar.JavaServer.accompanyAnalysisDetailMACRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://server.bigdata.com/BigDataService/accompanyAnalysisDetailMACRequest", ReplyAction="http://server.bigdata.com/BigDataService/accompanyAnalysisDetailMACResponse")]
+        System.Threading.Tasks.Task<MergeWar.JavaServer.accompanyAnalysisDetailMACResponse> accompanyAnalysisDetailMACAsync(MergeWar.JavaServer.accompanyAnalysisDetailMACRequest request);
+        
+        // CODEGEN: 命名空间  的元素名称 json 以后生成的消息协定未标记为 nillable
+        [System.ServiceModel.OperationContractAttribute(Action="http://server.bigdata.com/BigDataService/queryByRealnameInfoRequest", ReplyAction="http://server.bigdata.com/BigDataService/queryByRealnameInfoResponse")]
+        MergeWar.JavaServer.queryByRealnameInfoResponse queryByRealnameInfo(MergeWar.JavaServer.queryByRealnameInfoRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://server.bigdata.com/BigDataService/queryByRealnameInfoRequest", ReplyAction="http://server.bigdata.com/BigDataService/queryByRealnameInfoResponse")]
+        System.Threading.Tasks.Task<MergeWar.JavaServer.queryByRealnameInfoResponse> queryByRealnameInfoAsync(MergeWar.JavaServer.queryByRealnameInfoRequest request);
+        
+        // CODEGEN: 命名空间  的元素名称 json 以后生成的消息协定未标记为 nillable
+        [System.ServiceModel.OperationContractAttribute(Action="http://server.bigdata.com/BigDataService/queryByVirtualIdentityRequest", ReplyAction="http://server.bigdata.com/BigDataService/queryByVirtualIdentityResponse")]
+        MergeWar.JavaServer.queryByVirtualIdentityResponse queryByVirtualIdentity(MergeWar.JavaServer.queryByVirtualIdentityRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://server.bigdata.com/BigDataService/queryByVirtualIdentityRequest", ReplyAction="http://server.bigdata.com/BigDataService/queryByVirtualIdentityResponse")]
+        System.Threading.Tasks.Task<MergeWar.JavaServer.queryByVirtualIdentityResponse> queryByVirtualIdentityAsync(MergeWar.JavaServer.queryByVirtualIdentityRequest request);
+        
+        // CODEGEN: 命名空间  的元素名称 json 以后生成的消息协定未标记为 nillable
+        [System.ServiceModel.OperationContractAttribute(Action="http://server.bigdata.com/BigDataService/queryByHardwareFeatureRequest", ReplyAction="http://server.bigdata.com/BigDataService/queryByHardwareFeatureResponse")]
+        MergeWar.JavaServer.queryByHardwareFeatureResponse queryByHardwareFeature(MergeWar.JavaServer.queryByHardwareFeatureRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://server.bigdata.com/BigDataService/queryByHardwareFeatureRequest", ReplyAction="http://server.bigdata.com/BigDataService/queryByHardwareFeatureResponse")]
+        System.Threading.Tasks.Task<MergeWar.JavaServer.queryByHardwareFeatureResponse> queryByHardwareFeatureAsync(MergeWar.JavaServer.queryByHardwareFeatureRequest request);
+        
+        // CODEGEN: 命名空间  的元素名称 json 以后生成的消息协定未标记为 nillable
+        [System.ServiceModel.OperationContractAttribute(Action="http://server.bigdata.com/BigDataService/queryVirtualIdentDetailRequest", ReplyAction="http://server.bigdata.com/BigDataService/queryVirtualIdentDetailResponse")]
+        MergeWar.JavaServer.queryVirtualIdentDetailResponse queryVirtualIdentDetail(MergeWar.JavaServer.queryVirtualIdentDetailRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://server.bigdata.com/BigDataService/queryVirtualIdentDetailRequest", ReplyAction="http://server.bigdata.com/BigDataService/queryVirtualIdentDetailResponse")]
+        System.Threading.Tasks.Task<MergeWar.JavaServer.queryVirtualIdentDetailResponse> queryVirtualIdentDetailAsync(MergeWar.JavaServer.queryVirtualIdentDetailRequest request);
+        
+        // CODEGEN: 命名空间  的元素名称 json 以后生成的消息协定未标记为 nillable
+        [System.ServiceModel.OperationContractAttribute(Action="http://server.bigdata.com/BigDataService/queryTermianlAccessLogListRequest", ReplyAction="http://server.bigdata.com/BigDataService/queryTermianlAccessLogListResponse")]
+        MergeWar.JavaServer.queryTermianlAccessLogListResponse queryTermianlAccessLogList(MergeWar.JavaServer.queryTermianlAccessLogListRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://server.bigdata.com/BigDataService/queryTermianlAccessLogListRequest", ReplyAction="http://server.bigdata.com/BigDataService/queryTermianlAccessLogListResponse")]
+        System.Threading.Tasks.Task<MergeWar.JavaServer.queryTermianlAccessLogListResponse> queryTermianlAccessLogListAsync(MergeWar.JavaServer.queryTermianlAccessLogListRequest request);
+        
+        // CODEGEN: 命名空间  的元素名称 json 以后生成的消息协定未标记为 nillable
+        [System.ServiceModel.OperationContractAttribute(Action="http://server.bigdata.com/BigDataService/queryTermianlAccessLogDetailRequest", ReplyAction="http://server.bigdata.com/BigDataService/queryTermianlAccessLogDetailResponse")]
+        MergeWar.JavaServer.queryTermianlAccessLogDetailResponse queryTermianlAccessLogDetail(MergeWar.JavaServer.queryTermianlAccessLogDetailRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://server.bigdata.com/BigDataService/queryTermianlAccessLogDetailRequest", ReplyAction="http://server.bigdata.com/BigDataService/queryTermianlAccessLogDetailResponse")]
+        System.Threading.Tasks.Task<MergeWar.JavaServer.queryTermianlAccessLogDetailResponse> queryTermianlAccessLogDetailAsync(MergeWar.JavaServer.queryTermianlAccessLogDetailRequest request);
+        
+        // CODEGEN: 命名空间  的元素名称 json 以后生成的消息协定未标记为 nillable
+        [System.ServiceModel.OperationContractAttribute(Action="http://server.bigdata.com/BigDataService/queryRealnameRequest", ReplyAction="http://server.bigdata.com/BigDataService/queryRealnameResponse")]
+        MergeWar.JavaServer.queryRealnameResponse queryRealname(MergeWar.JavaServer.queryRealnameRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://server.bigdata.com/BigDataService/queryRealnameRequest", ReplyAction="http://server.bigdata.com/BigDataService/queryRealnameResponse")]
+        System.Threading.Tasks.Task<MergeWar.JavaServer.queryRealnameResponse> queryRealnameAsync(MergeWar.JavaServer.queryRealnameRequest request);
+        
+        // CODEGEN: 命名空间  的元素名称 json 以后生成的消息协定未标记为 nillable
+        [System.ServiceModel.OperationContractAttribute(Action="http://server.bigdata.com/BigDataService/appearDevMACRequest", ReplyAction="http://server.bigdata.com/BigDataService/appearDevMACResponse")]
+        MergeWar.JavaServer.appearDevMACResponse appearDevMAC(MergeWar.JavaServer.appearDevMACRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://server.bigdata.com/BigDataService/appearDevMACRequest", ReplyAction="http://server.bigdata.com/BigDataService/appearDevMACResponse")]
+        System.Threading.Tasks.Task<MergeWar.JavaServer.appearDevMACResponse> appearDevMACAsync(MergeWar.JavaServer.appearDevMACRequest request);
+        
+        // CODEGEN: 命名空间  的元素名称 json 以后生成的消息协定未标记为 nillable
+        [System.ServiceModel.OperationContractAttribute(Action="http://server.bigdata.com/BigDataService/disappearDevMACRequest", ReplyAction="http://server.bigdata.com/BigDataService/disappearDevMACResponse")]
+        MergeWar.JavaServer.disappearDevMACResponse disappearDevMAC(MergeWar.JavaServer.disappearDevMACRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://server.bigdata.com/BigDataService/disappearDevMACRequest", ReplyAction="http://server.bigdata.com/BigDataService/disappearDevMACResponse")]
+        System.Threading.Tasks.Task<MergeWar.JavaServer.disappearDevMACResponse> disappearDevMACAsync(MergeWar.JavaServer.disappearDevMACRequest request);
+        
+        // CODEGEN: 命名空间  的元素名称 json 以后生成的消息协定未标记为 nillable
+        [System.ServiceModel.OperationContractAttribute(Action="http://server.bigdata.com/BigDataService/queryHardwareRequest", ReplyAction="http://server.bigdata.com/BigDataService/queryHardwareResponse")]
+        MergeWar.JavaServer.queryHardwareResponse queryHardware(MergeWar.JavaServer.queryHardwareRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://server.bigdata.com/BigDataService/queryHardwareRequest", ReplyAction="http://server.bigdata.com/BigDataService/queryHardwareResponse")]
+        System.Threading.Tasks.Task<MergeWar.JavaServer.queryHardwareResponse> queryHardwareAsync(MergeWar.JavaServer.queryHardwareRequest request);
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
-    public partial class addTerminalManageList {
+    public partial class collisionAnalysisMACRequest {
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Name="addTerminalManageList", Namespace="http://service/", Order=0)]
-        public MergeWar.JavaServer.addTerminalManageListBody Body;
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="collisionAnalysisMAC", Namespace="http://server.bigdata.com/", Order=0)]
+        public MergeWar.JavaServer.collisionAnalysisMACRequestBody Body;
         
-        public addTerminalManageList() {
+        public collisionAnalysisMACRequest() {
         }
         
-        public addTerminalManageList(MergeWar.JavaServer.addTerminalManageListBody Body) {
+        public collisionAnalysisMACRequest(MergeWar.JavaServer.collisionAnalysisMACRequestBody Body) {
             this.Body = Body;
         }
     }
@@ -122,43 +156,16 @@ namespace MergeWar.JavaServer {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.Runtime.Serialization.DataContractAttribute(Namespace="")]
-    public partial class addTerminalManageListBody {
+    public partial class collisionAnalysisMACRequestBody {
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
-        public string arg0;
+        public string json;
         
-        public addTerminalManageListBody() {
+        public collisionAnalysisMACRequestBody() {
         }
         
-        public addTerminalManageListBody(string arg0) {
-            this.arg0 = arg0;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
-    public partial class addTerminalManageListResponse {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Name="addTerminalManageListResponse", Namespace="http://service/", Order=0)]
-        public MergeWar.JavaServer.addTerminalManageListResponseBody Body;
-        
-        public addTerminalManageListResponse() {
-        }
-        
-        public addTerminalManageListResponse(MergeWar.JavaServer.addTerminalManageListResponseBody Body) {
-            this.Body = Body;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.Runtime.Serialization.DataContractAttribute()]
-    public partial class addTerminalManageListResponseBody {
-        
-        public addTerminalManageListResponseBody() {
+        public collisionAnalysisMACRequestBody(string json) {
+            this.json = json;
         }
     }
     
@@ -166,15 +173,15 @@ namespace MergeWar.JavaServer {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
-    public partial class addNetLogList {
+    public partial class collisionAnalysisMACResponse {
         
-        [System.ServiceModel.MessageBodyMemberAttribute(Name="addNetLogList", Namespace="http://service/", Order=0)]
-        public MergeWar.JavaServer.addNetLogListBody Body;
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="collisionAnalysisMACResponse", Namespace="http://server.bigdata.com/", Order=0)]
+        public MergeWar.JavaServer.collisionAnalysisMACResponseBody Body;
         
-        public addNetLogList() {
+        public collisionAnalysisMACResponse() {
         }
         
-        public addNetLogList(MergeWar.JavaServer.addNetLogListBody Body) {
+        public collisionAnalysisMACResponse(MergeWar.JavaServer.collisionAnalysisMACResponseBody Body) {
             this.Body = Body;
         }
     }
@@ -183,212 +190,1557 @@ namespace MergeWar.JavaServer {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.Runtime.Serialization.DataContractAttribute(Namespace="")]
-    public partial class addNetLogListBody {
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
-        public string arg0;
-        
-        public addNetLogListBody() {
-        }
-        
-        public addNetLogListBody(string arg0) {
-            this.arg0 = arg0;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
-    public partial class addNetLogListResponse {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Name="addNetLogListResponse", Namespace="http://service/", Order=0)]
-        public MergeWar.JavaServer.addNetLogListResponseBody Body;
-        
-        public addNetLogListResponse() {
-        }
-        
-        public addNetLogListResponse(MergeWar.JavaServer.addNetLogListResponseBody Body) {
-            this.Body = Body;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.Runtime.Serialization.DataContractAttribute()]
-    public partial class addNetLogListResponseBody {
-        
-        public addNetLogListResponseBody() {
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
-    public partial class queryTerminalManageList {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Name="queryTerminalManageList", Namespace="http://service/", Order=0)]
-        public MergeWar.JavaServer.queryTerminalManageListBody Body;
-        
-        public queryTerminalManageList() {
-        }
-        
-        public queryTerminalManageList(MergeWar.JavaServer.queryTerminalManageListBody Body) {
-            this.Body = Body;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.Runtime.Serialization.DataContractAttribute(Namespace="")]
-    public partial class queryTerminalManageListBody {
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
-        public string arg0;
-        
-        public queryTerminalManageListBody() {
-        }
-        
-        public queryTerminalManageListBody(string arg0) {
-            this.arg0 = arg0;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
-    public partial class queryTerminalManageListResponse {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Name="queryTerminalManageListResponse", Namespace="http://service/", Order=0)]
-        public MergeWar.JavaServer.queryTerminalManageListResponseBody Body;
-        
-        public queryTerminalManageListResponse() {
-        }
-        
-        public queryTerminalManageListResponse(MergeWar.JavaServer.queryTerminalManageListResponseBody Body) {
-            this.Body = Body;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.Runtime.Serialization.DataContractAttribute(Namespace="")]
-    public partial class queryTerminalManageListResponseBody {
+    public partial class collisionAnalysisMACResponseBody {
         
         [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
         public string @return;
         
-        public queryTerminalManageListResponseBody() {
+        public collisionAnalysisMACResponseBody() {
         }
         
-        public queryTerminalManageListResponseBody(string @return) {
+        public collisionAnalysisMACResponseBody(string @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class queryFenchTerminalInfoRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="queryFenchTerminalInfo", Namespace="http://server.bigdata.com/", Order=0)]
+        public MergeWar.JavaServer.queryFenchTerminalInfoRequestBody Body;
+        
+        public queryFenchTerminalInfoRequest() {
+        }
+        
+        public queryFenchTerminalInfoRequest(MergeWar.JavaServer.queryFenchTerminalInfoRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="")]
+    public partial class queryFenchTerminalInfoRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string json;
+        
+        public queryFenchTerminalInfoRequestBody() {
+        }
+        
+        public queryFenchTerminalInfoRequestBody(string json) {
+            this.json = json;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class queryFenchTerminalInfoResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="queryFenchTerminalInfoResponse", Namespace="http://server.bigdata.com/", Order=0)]
+        public MergeWar.JavaServer.queryFenchTerminalInfoResponseBody Body;
+        
+        public queryFenchTerminalInfoResponse() {
+        }
+        
+        public queryFenchTerminalInfoResponse(MergeWar.JavaServer.queryFenchTerminalInfoResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="")]
+    public partial class queryFenchTerminalInfoResponseBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string @return;
+        
+        public queryFenchTerminalInfoResponseBody() {
+        }
+        
+        public queryFenchTerminalInfoResponseBody(string @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class accompanyAnalysisMACRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="accompanyAnalysisMAC", Namespace="http://server.bigdata.com/", Order=0)]
+        public MergeWar.JavaServer.accompanyAnalysisMACRequestBody Body;
+        
+        public accompanyAnalysisMACRequest() {
+        }
+        
+        public accompanyAnalysisMACRequest(MergeWar.JavaServer.accompanyAnalysisMACRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="")]
+    public partial class accompanyAnalysisMACRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string json;
+        
+        public accompanyAnalysisMACRequestBody() {
+        }
+        
+        public accompanyAnalysisMACRequestBody(string json) {
+            this.json = json;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class accompanyAnalysisMACResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="accompanyAnalysisMACResponse", Namespace="http://server.bigdata.com/", Order=0)]
+        public MergeWar.JavaServer.accompanyAnalysisMACResponseBody Body;
+        
+        public accompanyAnalysisMACResponse() {
+        }
+        
+        public accompanyAnalysisMACResponse(MergeWar.JavaServer.accompanyAnalysisMACResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="")]
+    public partial class accompanyAnalysisMACResponseBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string @return;
+        
+        public accompanyAnalysisMACResponseBody() {
+        }
+        
+        public accompanyAnalysisMACResponseBody(string @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class queryTermianlAccessLogRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="queryTermianlAccessLog", Namespace="http://server.bigdata.com/", Order=0)]
+        public MergeWar.JavaServer.queryTermianlAccessLogRequestBody Body;
+        
+        public queryTermianlAccessLogRequest() {
+        }
+        
+        public queryTermianlAccessLogRequest(MergeWar.JavaServer.queryTermianlAccessLogRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="")]
+    public partial class queryTermianlAccessLogRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string json;
+        
+        public queryTermianlAccessLogRequestBody() {
+        }
+        
+        public queryTermianlAccessLogRequestBody(string json) {
+            this.json = json;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class queryTermianlAccessLogResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="queryTermianlAccessLogResponse", Namespace="http://server.bigdata.com/", Order=0)]
+        public MergeWar.JavaServer.queryTermianlAccessLogResponseBody Body;
+        
+        public queryTermianlAccessLogResponse() {
+        }
+        
+        public queryTermianlAccessLogResponse(MergeWar.JavaServer.queryTermianlAccessLogResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="")]
+    public partial class queryTermianlAccessLogResponseBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string @return;
+        
+        public queryTermianlAccessLogResponseBody() {
+        }
+        
+        public queryTermianlAccessLogResponseBody(string @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class queryTermianlNetworkLogRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="queryTermianlNetworkLog", Namespace="http://server.bigdata.com/", Order=0)]
+        public MergeWar.JavaServer.queryTermianlNetworkLogRequestBody Body;
+        
+        public queryTermianlNetworkLogRequest() {
+        }
+        
+        public queryTermianlNetworkLogRequest(MergeWar.JavaServer.queryTermianlNetworkLogRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="")]
+    public partial class queryTermianlNetworkLogRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string json;
+        
+        public queryTermianlNetworkLogRequestBody() {
+        }
+        
+        public queryTermianlNetworkLogRequestBody(string json) {
+            this.json = json;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class queryTermianlNetworkLogResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="queryTermianlNetworkLogResponse", Namespace="http://server.bigdata.com/", Order=0)]
+        public MergeWar.JavaServer.queryTermianlNetworkLogResponseBody Body;
+        
+        public queryTermianlNetworkLogResponse() {
+        }
+        
+        public queryTermianlNetworkLogResponse(MergeWar.JavaServer.queryTermianlNetworkLogResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="")]
+    public partial class queryTermianlNetworkLogResponseBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string @return;
+        
+        public queryTermianlNetworkLogResponseBody() {
+        }
+        
+        public queryTermianlNetworkLogResponseBody(string @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class collisionAnalysisDetailMACRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="collisionAnalysisDetailMAC", Namespace="http://server.bigdata.com/", Order=0)]
+        public MergeWar.JavaServer.collisionAnalysisDetailMACRequestBody Body;
+        
+        public collisionAnalysisDetailMACRequest() {
+        }
+        
+        public collisionAnalysisDetailMACRequest(MergeWar.JavaServer.collisionAnalysisDetailMACRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="")]
+    public partial class collisionAnalysisDetailMACRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string json;
+        
+        public collisionAnalysisDetailMACRequestBody() {
+        }
+        
+        public collisionAnalysisDetailMACRequestBody(string json) {
+            this.json = json;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class collisionAnalysisDetailMACResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="collisionAnalysisDetailMACResponse", Namespace="http://server.bigdata.com/", Order=0)]
+        public MergeWar.JavaServer.collisionAnalysisDetailMACResponseBody Body;
+        
+        public collisionAnalysisDetailMACResponse() {
+        }
+        
+        public collisionAnalysisDetailMACResponse(MergeWar.JavaServer.collisionAnalysisDetailMACResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="")]
+    public partial class collisionAnalysisDetailMACResponseBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string @return;
+        
+        public collisionAnalysisDetailMACResponseBody() {
+        }
+        
+        public collisionAnalysisDetailMACResponseBody(string @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class accompanyAnalysisDetailMACRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="accompanyAnalysisDetailMAC", Namespace="http://server.bigdata.com/", Order=0)]
+        public MergeWar.JavaServer.accompanyAnalysisDetailMACRequestBody Body;
+        
+        public accompanyAnalysisDetailMACRequest() {
+        }
+        
+        public accompanyAnalysisDetailMACRequest(MergeWar.JavaServer.accompanyAnalysisDetailMACRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="")]
+    public partial class accompanyAnalysisDetailMACRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string json;
+        
+        public accompanyAnalysisDetailMACRequestBody() {
+        }
+        
+        public accompanyAnalysisDetailMACRequestBody(string json) {
+            this.json = json;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class accompanyAnalysisDetailMACResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="accompanyAnalysisDetailMACResponse", Namespace="http://server.bigdata.com/", Order=0)]
+        public MergeWar.JavaServer.accompanyAnalysisDetailMACResponseBody Body;
+        
+        public accompanyAnalysisDetailMACResponse() {
+        }
+        
+        public accompanyAnalysisDetailMACResponse(MergeWar.JavaServer.accompanyAnalysisDetailMACResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="")]
+    public partial class accompanyAnalysisDetailMACResponseBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string @return;
+        
+        public accompanyAnalysisDetailMACResponseBody() {
+        }
+        
+        public accompanyAnalysisDetailMACResponseBody(string @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class queryByRealnameInfoRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="queryByRealnameInfo", Namespace="http://server.bigdata.com/", Order=0)]
+        public MergeWar.JavaServer.queryByRealnameInfoRequestBody Body;
+        
+        public queryByRealnameInfoRequest() {
+        }
+        
+        public queryByRealnameInfoRequest(MergeWar.JavaServer.queryByRealnameInfoRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="")]
+    public partial class queryByRealnameInfoRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string json;
+        
+        public queryByRealnameInfoRequestBody() {
+        }
+        
+        public queryByRealnameInfoRequestBody(string json) {
+            this.json = json;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class queryByRealnameInfoResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="queryByRealnameInfoResponse", Namespace="http://server.bigdata.com/", Order=0)]
+        public MergeWar.JavaServer.queryByRealnameInfoResponseBody Body;
+        
+        public queryByRealnameInfoResponse() {
+        }
+        
+        public queryByRealnameInfoResponse(MergeWar.JavaServer.queryByRealnameInfoResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="")]
+    public partial class queryByRealnameInfoResponseBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string @return;
+        
+        public queryByRealnameInfoResponseBody() {
+        }
+        
+        public queryByRealnameInfoResponseBody(string @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class queryByVirtualIdentityRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="queryByVirtualIdentity", Namespace="http://server.bigdata.com/", Order=0)]
+        public MergeWar.JavaServer.queryByVirtualIdentityRequestBody Body;
+        
+        public queryByVirtualIdentityRequest() {
+        }
+        
+        public queryByVirtualIdentityRequest(MergeWar.JavaServer.queryByVirtualIdentityRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="")]
+    public partial class queryByVirtualIdentityRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string json;
+        
+        public queryByVirtualIdentityRequestBody() {
+        }
+        
+        public queryByVirtualIdentityRequestBody(string json) {
+            this.json = json;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class queryByVirtualIdentityResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="queryByVirtualIdentityResponse", Namespace="http://server.bigdata.com/", Order=0)]
+        public MergeWar.JavaServer.queryByVirtualIdentityResponseBody Body;
+        
+        public queryByVirtualIdentityResponse() {
+        }
+        
+        public queryByVirtualIdentityResponse(MergeWar.JavaServer.queryByVirtualIdentityResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="")]
+    public partial class queryByVirtualIdentityResponseBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string @return;
+        
+        public queryByVirtualIdentityResponseBody() {
+        }
+        
+        public queryByVirtualIdentityResponseBody(string @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class queryByHardwareFeatureRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="queryByHardwareFeature", Namespace="http://server.bigdata.com/", Order=0)]
+        public MergeWar.JavaServer.queryByHardwareFeatureRequestBody Body;
+        
+        public queryByHardwareFeatureRequest() {
+        }
+        
+        public queryByHardwareFeatureRequest(MergeWar.JavaServer.queryByHardwareFeatureRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="")]
+    public partial class queryByHardwareFeatureRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string json;
+        
+        public queryByHardwareFeatureRequestBody() {
+        }
+        
+        public queryByHardwareFeatureRequestBody(string json) {
+            this.json = json;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class queryByHardwareFeatureResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="queryByHardwareFeatureResponse", Namespace="http://server.bigdata.com/", Order=0)]
+        public MergeWar.JavaServer.queryByHardwareFeatureResponseBody Body;
+        
+        public queryByHardwareFeatureResponse() {
+        }
+        
+        public queryByHardwareFeatureResponse(MergeWar.JavaServer.queryByHardwareFeatureResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="")]
+    public partial class queryByHardwareFeatureResponseBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string @return;
+        
+        public queryByHardwareFeatureResponseBody() {
+        }
+        
+        public queryByHardwareFeatureResponseBody(string @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class queryVirtualIdentDetailRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="queryVirtualIdentDetail", Namespace="http://server.bigdata.com/", Order=0)]
+        public MergeWar.JavaServer.queryVirtualIdentDetailRequestBody Body;
+        
+        public queryVirtualIdentDetailRequest() {
+        }
+        
+        public queryVirtualIdentDetailRequest(MergeWar.JavaServer.queryVirtualIdentDetailRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="")]
+    public partial class queryVirtualIdentDetailRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string json;
+        
+        public queryVirtualIdentDetailRequestBody() {
+        }
+        
+        public queryVirtualIdentDetailRequestBody(string json) {
+            this.json = json;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class queryVirtualIdentDetailResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="queryVirtualIdentDetailResponse", Namespace="http://server.bigdata.com/", Order=0)]
+        public MergeWar.JavaServer.queryVirtualIdentDetailResponseBody Body;
+        
+        public queryVirtualIdentDetailResponse() {
+        }
+        
+        public queryVirtualIdentDetailResponse(MergeWar.JavaServer.queryVirtualIdentDetailResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="")]
+    public partial class queryVirtualIdentDetailResponseBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string @return;
+        
+        public queryVirtualIdentDetailResponseBody() {
+        }
+        
+        public queryVirtualIdentDetailResponseBody(string @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class queryTermianlAccessLogListRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="queryTermianlAccessLogList", Namespace="http://server.bigdata.com/", Order=0)]
+        public MergeWar.JavaServer.queryTermianlAccessLogListRequestBody Body;
+        
+        public queryTermianlAccessLogListRequest() {
+        }
+        
+        public queryTermianlAccessLogListRequest(MergeWar.JavaServer.queryTermianlAccessLogListRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="")]
+    public partial class queryTermianlAccessLogListRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string json;
+        
+        public queryTermianlAccessLogListRequestBody() {
+        }
+        
+        public queryTermianlAccessLogListRequestBody(string json) {
+            this.json = json;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class queryTermianlAccessLogListResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="queryTermianlAccessLogListResponse", Namespace="http://server.bigdata.com/", Order=0)]
+        public MergeWar.JavaServer.queryTermianlAccessLogListResponseBody Body;
+        
+        public queryTermianlAccessLogListResponse() {
+        }
+        
+        public queryTermianlAccessLogListResponse(MergeWar.JavaServer.queryTermianlAccessLogListResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="")]
+    public partial class queryTermianlAccessLogListResponseBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string @return;
+        
+        public queryTermianlAccessLogListResponseBody() {
+        }
+        
+        public queryTermianlAccessLogListResponseBody(string @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class queryTermianlAccessLogDetailRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="queryTermianlAccessLogDetail", Namespace="http://server.bigdata.com/", Order=0)]
+        public MergeWar.JavaServer.queryTermianlAccessLogDetailRequestBody Body;
+        
+        public queryTermianlAccessLogDetailRequest() {
+        }
+        
+        public queryTermianlAccessLogDetailRequest(MergeWar.JavaServer.queryTermianlAccessLogDetailRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="")]
+    public partial class queryTermianlAccessLogDetailRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string json;
+        
+        public queryTermianlAccessLogDetailRequestBody() {
+        }
+        
+        public queryTermianlAccessLogDetailRequestBody(string json) {
+            this.json = json;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class queryTermianlAccessLogDetailResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="queryTermianlAccessLogDetailResponse", Namespace="http://server.bigdata.com/", Order=0)]
+        public MergeWar.JavaServer.queryTermianlAccessLogDetailResponseBody Body;
+        
+        public queryTermianlAccessLogDetailResponse() {
+        }
+        
+        public queryTermianlAccessLogDetailResponse(MergeWar.JavaServer.queryTermianlAccessLogDetailResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="")]
+    public partial class queryTermianlAccessLogDetailResponseBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string @return;
+        
+        public queryTermianlAccessLogDetailResponseBody() {
+        }
+        
+        public queryTermianlAccessLogDetailResponseBody(string @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class queryRealnameRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="queryRealname", Namespace="http://server.bigdata.com/", Order=0)]
+        public MergeWar.JavaServer.queryRealnameRequestBody Body;
+        
+        public queryRealnameRequest() {
+        }
+        
+        public queryRealnameRequest(MergeWar.JavaServer.queryRealnameRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="")]
+    public partial class queryRealnameRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string json;
+        
+        public queryRealnameRequestBody() {
+        }
+        
+        public queryRealnameRequestBody(string json) {
+            this.json = json;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class queryRealnameResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="queryRealnameResponse", Namespace="http://server.bigdata.com/", Order=0)]
+        public MergeWar.JavaServer.queryRealnameResponseBody Body;
+        
+        public queryRealnameResponse() {
+        }
+        
+        public queryRealnameResponse(MergeWar.JavaServer.queryRealnameResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="")]
+    public partial class queryRealnameResponseBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string @return;
+        
+        public queryRealnameResponseBody() {
+        }
+        
+        public queryRealnameResponseBody(string @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class appearDevMACRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="appearDevMAC", Namespace="http://server.bigdata.com/", Order=0)]
+        public MergeWar.JavaServer.appearDevMACRequestBody Body;
+        
+        public appearDevMACRequest() {
+        }
+        
+        public appearDevMACRequest(MergeWar.JavaServer.appearDevMACRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="")]
+    public partial class appearDevMACRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string json;
+        
+        public appearDevMACRequestBody() {
+        }
+        
+        public appearDevMACRequestBody(string json) {
+            this.json = json;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class appearDevMACResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="appearDevMACResponse", Namespace="http://server.bigdata.com/", Order=0)]
+        public MergeWar.JavaServer.appearDevMACResponseBody Body;
+        
+        public appearDevMACResponse() {
+        }
+        
+        public appearDevMACResponse(MergeWar.JavaServer.appearDevMACResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="")]
+    public partial class appearDevMACResponseBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string @return;
+        
+        public appearDevMACResponseBody() {
+        }
+        
+        public appearDevMACResponseBody(string @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class disappearDevMACRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="disappearDevMAC", Namespace="http://server.bigdata.com/", Order=0)]
+        public MergeWar.JavaServer.disappearDevMACRequestBody Body;
+        
+        public disappearDevMACRequest() {
+        }
+        
+        public disappearDevMACRequest(MergeWar.JavaServer.disappearDevMACRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="")]
+    public partial class disappearDevMACRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string json;
+        
+        public disappearDevMACRequestBody() {
+        }
+        
+        public disappearDevMACRequestBody(string json) {
+            this.json = json;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class disappearDevMACResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="disappearDevMACResponse", Namespace="http://server.bigdata.com/", Order=0)]
+        public MergeWar.JavaServer.disappearDevMACResponseBody Body;
+        
+        public disappearDevMACResponse() {
+        }
+        
+        public disappearDevMACResponse(MergeWar.JavaServer.disappearDevMACResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="")]
+    public partial class disappearDevMACResponseBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string @return;
+        
+        public disappearDevMACResponseBody() {
+        }
+        
+        public disappearDevMACResponseBody(string @return) {
+            this.@return = @return;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class queryHardwareRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="queryHardware", Namespace="http://server.bigdata.com/", Order=0)]
+        public MergeWar.JavaServer.queryHardwareRequestBody Body;
+        
+        public queryHardwareRequest() {
+        }
+        
+        public queryHardwareRequest(MergeWar.JavaServer.queryHardwareRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="")]
+    public partial class queryHardwareRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string json;
+        
+        public queryHardwareRequestBody() {
+        }
+        
+        public queryHardwareRequestBody(string json) {
+            this.json = json;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class queryHardwareResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="queryHardwareResponse", Namespace="http://server.bigdata.com/", Order=0)]
+        public MergeWar.JavaServer.queryHardwareResponseBody Body;
+        
+        public queryHardwareResponse() {
+        }
+        
+        public queryHardwareResponse(MergeWar.JavaServer.queryHardwareResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="")]
+    public partial class queryHardwareResponseBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string @return;
+        
+        public queryHardwareResponseBody() {
+        }
+        
+        public queryHardwareResponseBody(string @return) {
             this.@return = @return;
         }
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface SCPInquireServiceChannel : MergeWar.JavaServer.SCPInquireService, System.ServiceModel.IClientChannel {
+    public interface BigDataServiceChannel : MergeWar.JavaServer.BigDataService, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class SCPInquireServiceClient : System.ServiceModel.ClientBase<MergeWar.JavaServer.SCPInquireService>, MergeWar.JavaServer.SCPInquireService {
+    public partial class BigDataServiceClient : System.ServiceModel.ClientBase<MergeWar.JavaServer.BigDataService>, MergeWar.JavaServer.BigDataService {
         
-        public SCPInquireServiceClient() {
+        public BigDataServiceClient() {
         }
         
-        public SCPInquireServiceClient(string endpointConfigurationName) : 
+        public BigDataServiceClient(string endpointConfigurationName) : 
                 base(endpointConfigurationName) {
         }
         
-        public SCPInquireServiceClient(string endpointConfigurationName, string remoteAddress) : 
+        public BigDataServiceClient(string endpointConfigurationName, string remoteAddress) : 
                 base(endpointConfigurationName, remoteAddress) {
         }
         
-        public SCPInquireServiceClient(string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
+        public BigDataServiceClient(string endpointConfigurationName, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(endpointConfigurationName, remoteAddress) {
         }
         
-        public SCPInquireServiceClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
+        public BigDataServiceClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(binding, remoteAddress) {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        MergeWar.JavaServer.addTerminalManageListResponse MergeWar.JavaServer.SCPInquireService.addTerminalManageList(MergeWar.JavaServer.addTerminalManageList request) {
-            return base.Channel.addTerminalManageList(request);
+        MergeWar.JavaServer.collisionAnalysisMACResponse MergeWar.JavaServer.BigDataService.collisionAnalysisMAC(MergeWar.JavaServer.collisionAnalysisMACRequest request) {
+            return base.Channel.collisionAnalysisMAC(request);
         }
         
-        public void addTerminalManageList(string arg0) {
-            MergeWar.JavaServer.addTerminalManageList inValue = new MergeWar.JavaServer.addTerminalManageList();
-            inValue.Body = new MergeWar.JavaServer.addTerminalManageListBody();
-            inValue.Body.arg0 = arg0;
-            MergeWar.JavaServer.addTerminalManageListResponse retVal = ((MergeWar.JavaServer.SCPInquireService)(this)).addTerminalManageList(inValue);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<MergeWar.JavaServer.addTerminalManageListResponse> MergeWar.JavaServer.SCPInquireService.addTerminalManageListAsync(MergeWar.JavaServer.addTerminalManageList request) {
-            return base.Channel.addTerminalManageListAsync(request);
-        }
-        
-        public System.Threading.Tasks.Task<MergeWar.JavaServer.addTerminalManageListResponse> addTerminalManageListAsync(string arg0) {
-            MergeWar.JavaServer.addTerminalManageList inValue = new MergeWar.JavaServer.addTerminalManageList();
-            inValue.Body = new MergeWar.JavaServer.addTerminalManageListBody();
-            inValue.Body.arg0 = arg0;
-            return ((MergeWar.JavaServer.SCPInquireService)(this)).addTerminalManageListAsync(inValue);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        MergeWar.JavaServer.addNetLogListResponse MergeWar.JavaServer.SCPInquireService.addNetLogList(MergeWar.JavaServer.addNetLogList request) {
-            return base.Channel.addNetLogList(request);
-        }
-        
-        public void addNetLogList(string arg0) {
-            MergeWar.JavaServer.addNetLogList inValue = new MergeWar.JavaServer.addNetLogList();
-            inValue.Body = new MergeWar.JavaServer.addNetLogListBody();
-            inValue.Body.arg0 = arg0;
-            MergeWar.JavaServer.addNetLogListResponse retVal = ((MergeWar.JavaServer.SCPInquireService)(this)).addNetLogList(inValue);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<MergeWar.JavaServer.addNetLogListResponse> MergeWar.JavaServer.SCPInquireService.addNetLogListAsync(MergeWar.JavaServer.addNetLogList request) {
-            return base.Channel.addNetLogListAsync(request);
-        }
-        
-        public System.Threading.Tasks.Task<MergeWar.JavaServer.addNetLogListResponse> addNetLogListAsync(string arg0) {
-            MergeWar.JavaServer.addNetLogList inValue = new MergeWar.JavaServer.addNetLogList();
-            inValue.Body = new MergeWar.JavaServer.addNetLogListBody();
-            inValue.Body.arg0 = arg0;
-            return ((MergeWar.JavaServer.SCPInquireService)(this)).addNetLogListAsync(inValue);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        MergeWar.JavaServer.queryTerminalManageListResponse MergeWar.JavaServer.SCPInquireService.queryTerminalManageList(MergeWar.JavaServer.queryTerminalManageList request) {
-            return base.Channel.queryTerminalManageList(request);
-        }
-        
-        public string queryTerminalManageList(string arg0) {
-            MergeWar.JavaServer.queryTerminalManageList inValue = new MergeWar.JavaServer.queryTerminalManageList();
-            inValue.Body = new MergeWar.JavaServer.queryTerminalManageListBody();
-            inValue.Body.arg0 = arg0;
-            MergeWar.JavaServer.queryTerminalManageListResponse retVal = ((MergeWar.JavaServer.SCPInquireService)(this)).queryTerminalManageList(inValue);
+        public string collisionAnalysisMAC(string json) {
+            MergeWar.JavaServer.collisionAnalysisMACRequest inValue = new MergeWar.JavaServer.collisionAnalysisMACRequest();
+            inValue.Body = new MergeWar.JavaServer.collisionAnalysisMACRequestBody();
+            inValue.Body.json = json;
+            MergeWar.JavaServer.collisionAnalysisMACResponse retVal = ((MergeWar.JavaServer.BigDataService)(this)).collisionAnalysisMAC(inValue);
             return retVal.Body.@return;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<MergeWar.JavaServer.queryTerminalManageListResponse> MergeWar.JavaServer.SCPInquireService.queryTerminalManageListAsync(MergeWar.JavaServer.queryTerminalManageList request) {
-            return base.Channel.queryTerminalManageListAsync(request);
+        System.Threading.Tasks.Task<MergeWar.JavaServer.collisionAnalysisMACResponse> MergeWar.JavaServer.BigDataService.collisionAnalysisMACAsync(MergeWar.JavaServer.collisionAnalysisMACRequest request) {
+            return base.Channel.collisionAnalysisMACAsync(request);
         }
         
-        public System.Threading.Tasks.Task<MergeWar.JavaServer.queryTerminalManageListResponse> queryTerminalManageListAsync(string arg0) {
-            MergeWar.JavaServer.queryTerminalManageList inValue = new MergeWar.JavaServer.queryTerminalManageList();
-            inValue.Body = new MergeWar.JavaServer.queryTerminalManageListBody();
-            inValue.Body.arg0 = arg0;
-            return ((MergeWar.JavaServer.SCPInquireService)(this)).queryTerminalManageListAsync(inValue);
+        public System.Threading.Tasks.Task<MergeWar.JavaServer.collisionAnalysisMACResponse> collisionAnalysisMACAsync(string json) {
+            MergeWar.JavaServer.collisionAnalysisMACRequest inValue = new MergeWar.JavaServer.collisionAnalysisMACRequest();
+            inValue.Body = new MergeWar.JavaServer.collisionAnalysisMACRequestBody();
+            inValue.Body.json = json;
+            return ((MergeWar.JavaServer.BigDataService)(this)).collisionAnalysisMACAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        MergeWar.JavaServer.queryFenchTerminalInfoResponse MergeWar.JavaServer.BigDataService.queryFenchTerminalInfo(MergeWar.JavaServer.queryFenchTerminalInfoRequest request) {
+            return base.Channel.queryFenchTerminalInfo(request);
+        }
+        
+        public string queryFenchTerminalInfo(string json) {
+            MergeWar.JavaServer.queryFenchTerminalInfoRequest inValue = new MergeWar.JavaServer.queryFenchTerminalInfoRequest();
+            inValue.Body = new MergeWar.JavaServer.queryFenchTerminalInfoRequestBody();
+            inValue.Body.json = json;
+            MergeWar.JavaServer.queryFenchTerminalInfoResponse retVal = ((MergeWar.JavaServer.BigDataService)(this)).queryFenchTerminalInfo(inValue);
+            return retVal.Body.@return;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<MergeWar.JavaServer.queryFenchTerminalInfoResponse> MergeWar.JavaServer.BigDataService.queryFenchTerminalInfoAsync(MergeWar.JavaServer.queryFenchTerminalInfoRequest request) {
+            return base.Channel.queryFenchTerminalInfoAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<MergeWar.JavaServer.queryFenchTerminalInfoResponse> queryFenchTerminalInfoAsync(string json) {
+            MergeWar.JavaServer.queryFenchTerminalInfoRequest inValue = new MergeWar.JavaServer.queryFenchTerminalInfoRequest();
+            inValue.Body = new MergeWar.JavaServer.queryFenchTerminalInfoRequestBody();
+            inValue.Body.json = json;
+            return ((MergeWar.JavaServer.BigDataService)(this)).queryFenchTerminalInfoAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        MergeWar.JavaServer.accompanyAnalysisMACResponse MergeWar.JavaServer.BigDataService.accompanyAnalysisMAC(MergeWar.JavaServer.accompanyAnalysisMACRequest request) {
+            return base.Channel.accompanyAnalysisMAC(request);
+        }
+        
+        public string accompanyAnalysisMAC(string json) {
+            MergeWar.JavaServer.accompanyAnalysisMACRequest inValue = new MergeWar.JavaServer.accompanyAnalysisMACRequest();
+            inValue.Body = new MergeWar.JavaServer.accompanyAnalysisMACRequestBody();
+            inValue.Body.json = json;
+            MergeWar.JavaServer.accompanyAnalysisMACResponse retVal = ((MergeWar.JavaServer.BigDataService)(this)).accompanyAnalysisMAC(inValue);
+            return retVal.Body.@return;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<MergeWar.JavaServer.accompanyAnalysisMACResponse> MergeWar.JavaServer.BigDataService.accompanyAnalysisMACAsync(MergeWar.JavaServer.accompanyAnalysisMACRequest request) {
+            return base.Channel.accompanyAnalysisMACAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<MergeWar.JavaServer.accompanyAnalysisMACResponse> accompanyAnalysisMACAsync(string json) {
+            MergeWar.JavaServer.accompanyAnalysisMACRequest inValue = new MergeWar.JavaServer.accompanyAnalysisMACRequest();
+            inValue.Body = new MergeWar.JavaServer.accompanyAnalysisMACRequestBody();
+            inValue.Body.json = json;
+            return ((MergeWar.JavaServer.BigDataService)(this)).accompanyAnalysisMACAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        MergeWar.JavaServer.queryTermianlAccessLogResponse MergeWar.JavaServer.BigDataService.queryTermianlAccessLog(MergeWar.JavaServer.queryTermianlAccessLogRequest request) {
+            return base.Channel.queryTermianlAccessLog(request);
+        }
+        
+        public string queryTermianlAccessLog(string json) {
+            MergeWar.JavaServer.queryTermianlAccessLogRequest inValue = new MergeWar.JavaServer.queryTermianlAccessLogRequest();
+            inValue.Body = new MergeWar.JavaServer.queryTermianlAccessLogRequestBody();
+            inValue.Body.json = json;
+            MergeWar.JavaServer.queryTermianlAccessLogResponse retVal = ((MergeWar.JavaServer.BigDataService)(this)).queryTermianlAccessLog(inValue);
+            return retVal.Body.@return;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<MergeWar.JavaServer.queryTermianlAccessLogResponse> MergeWar.JavaServer.BigDataService.queryTermianlAccessLogAsync(MergeWar.JavaServer.queryTermianlAccessLogRequest request) {
+            return base.Channel.queryTermianlAccessLogAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<MergeWar.JavaServer.queryTermianlAccessLogResponse> queryTermianlAccessLogAsync(string json) {
+            MergeWar.JavaServer.queryTermianlAccessLogRequest inValue = new MergeWar.JavaServer.queryTermianlAccessLogRequest();
+            inValue.Body = new MergeWar.JavaServer.queryTermianlAccessLogRequestBody();
+            inValue.Body.json = json;
+            return ((MergeWar.JavaServer.BigDataService)(this)).queryTermianlAccessLogAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        MergeWar.JavaServer.queryTermianlNetworkLogResponse MergeWar.JavaServer.BigDataService.queryTermianlNetworkLog(MergeWar.JavaServer.queryTermianlNetworkLogRequest request) {
+            return base.Channel.queryTermianlNetworkLog(request);
+        }
+        
+        public string queryTermianlNetworkLog(string json) {
+            MergeWar.JavaServer.queryTermianlNetworkLogRequest inValue = new MergeWar.JavaServer.queryTermianlNetworkLogRequest();
+            inValue.Body = new MergeWar.JavaServer.queryTermianlNetworkLogRequestBody();
+            inValue.Body.json = json;
+            MergeWar.JavaServer.queryTermianlNetworkLogResponse retVal = ((MergeWar.JavaServer.BigDataService)(this)).queryTermianlNetworkLog(inValue);
+            return retVal.Body.@return;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<MergeWar.JavaServer.queryTermianlNetworkLogResponse> MergeWar.JavaServer.BigDataService.queryTermianlNetworkLogAsync(MergeWar.JavaServer.queryTermianlNetworkLogRequest request) {
+            return base.Channel.queryTermianlNetworkLogAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<MergeWar.JavaServer.queryTermianlNetworkLogResponse> queryTermianlNetworkLogAsync(string json) {
+            MergeWar.JavaServer.queryTermianlNetworkLogRequest inValue = new MergeWar.JavaServer.queryTermianlNetworkLogRequest();
+            inValue.Body = new MergeWar.JavaServer.queryTermianlNetworkLogRequestBody();
+            inValue.Body.json = json;
+            return ((MergeWar.JavaServer.BigDataService)(this)).queryTermianlNetworkLogAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        MergeWar.JavaServer.collisionAnalysisDetailMACResponse MergeWar.JavaServer.BigDataService.collisionAnalysisDetailMAC(MergeWar.JavaServer.collisionAnalysisDetailMACRequest request) {
+            return base.Channel.collisionAnalysisDetailMAC(request);
+        }
+        
+        public string collisionAnalysisDetailMAC(string json) {
+            MergeWar.JavaServer.collisionAnalysisDetailMACRequest inValue = new MergeWar.JavaServer.collisionAnalysisDetailMACRequest();
+            inValue.Body = new MergeWar.JavaServer.collisionAnalysisDetailMACRequestBody();
+            inValue.Body.json = json;
+            MergeWar.JavaServer.collisionAnalysisDetailMACResponse retVal = ((MergeWar.JavaServer.BigDataService)(this)).collisionAnalysisDetailMAC(inValue);
+            return retVal.Body.@return;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<MergeWar.JavaServer.collisionAnalysisDetailMACResponse> MergeWar.JavaServer.BigDataService.collisionAnalysisDetailMACAsync(MergeWar.JavaServer.collisionAnalysisDetailMACRequest request) {
+            return base.Channel.collisionAnalysisDetailMACAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<MergeWar.JavaServer.collisionAnalysisDetailMACResponse> collisionAnalysisDetailMACAsync(string json) {
+            MergeWar.JavaServer.collisionAnalysisDetailMACRequest inValue = new MergeWar.JavaServer.collisionAnalysisDetailMACRequest();
+            inValue.Body = new MergeWar.JavaServer.collisionAnalysisDetailMACRequestBody();
+            inValue.Body.json = json;
+            return ((MergeWar.JavaServer.BigDataService)(this)).collisionAnalysisDetailMACAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        MergeWar.JavaServer.accompanyAnalysisDetailMACResponse MergeWar.JavaServer.BigDataService.accompanyAnalysisDetailMAC(MergeWar.JavaServer.accompanyAnalysisDetailMACRequest request) {
+            return base.Channel.accompanyAnalysisDetailMAC(request);
+        }
+        
+        public string accompanyAnalysisDetailMAC(string json) {
+            MergeWar.JavaServer.accompanyAnalysisDetailMACRequest inValue = new MergeWar.JavaServer.accompanyAnalysisDetailMACRequest();
+            inValue.Body = new MergeWar.JavaServer.accompanyAnalysisDetailMACRequestBody();
+            inValue.Body.json = json;
+            MergeWar.JavaServer.accompanyAnalysisDetailMACResponse retVal = ((MergeWar.JavaServer.BigDataService)(this)).accompanyAnalysisDetailMAC(inValue);
+            return retVal.Body.@return;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<MergeWar.JavaServer.accompanyAnalysisDetailMACResponse> MergeWar.JavaServer.BigDataService.accompanyAnalysisDetailMACAsync(MergeWar.JavaServer.accompanyAnalysisDetailMACRequest request) {
+            return base.Channel.accompanyAnalysisDetailMACAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<MergeWar.JavaServer.accompanyAnalysisDetailMACResponse> accompanyAnalysisDetailMACAsync(string json) {
+            MergeWar.JavaServer.accompanyAnalysisDetailMACRequest inValue = new MergeWar.JavaServer.accompanyAnalysisDetailMACRequest();
+            inValue.Body = new MergeWar.JavaServer.accompanyAnalysisDetailMACRequestBody();
+            inValue.Body.json = json;
+            return ((MergeWar.JavaServer.BigDataService)(this)).accompanyAnalysisDetailMACAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        MergeWar.JavaServer.queryByRealnameInfoResponse MergeWar.JavaServer.BigDataService.queryByRealnameInfo(MergeWar.JavaServer.queryByRealnameInfoRequest request) {
+            return base.Channel.queryByRealnameInfo(request);
+        }
+        
+        public string queryByRealnameInfo(string json) {
+            MergeWar.JavaServer.queryByRealnameInfoRequest inValue = new MergeWar.JavaServer.queryByRealnameInfoRequest();
+            inValue.Body = new MergeWar.JavaServer.queryByRealnameInfoRequestBody();
+            inValue.Body.json = json;
+            MergeWar.JavaServer.queryByRealnameInfoResponse retVal = ((MergeWar.JavaServer.BigDataService)(this)).queryByRealnameInfo(inValue);
+            return retVal.Body.@return;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<MergeWar.JavaServer.queryByRealnameInfoResponse> MergeWar.JavaServer.BigDataService.queryByRealnameInfoAsync(MergeWar.JavaServer.queryByRealnameInfoRequest request) {
+            return base.Channel.queryByRealnameInfoAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<MergeWar.JavaServer.queryByRealnameInfoResponse> queryByRealnameInfoAsync(string json) {
+            MergeWar.JavaServer.queryByRealnameInfoRequest inValue = new MergeWar.JavaServer.queryByRealnameInfoRequest();
+            inValue.Body = new MergeWar.JavaServer.queryByRealnameInfoRequestBody();
+            inValue.Body.json = json;
+            return ((MergeWar.JavaServer.BigDataService)(this)).queryByRealnameInfoAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        MergeWar.JavaServer.queryByVirtualIdentityResponse MergeWar.JavaServer.BigDataService.queryByVirtualIdentity(MergeWar.JavaServer.queryByVirtualIdentityRequest request) {
+            return base.Channel.queryByVirtualIdentity(request);
+        }
+        
+        public string queryByVirtualIdentity(string json) {
+            MergeWar.JavaServer.queryByVirtualIdentityRequest inValue = new MergeWar.JavaServer.queryByVirtualIdentityRequest();
+            inValue.Body = new MergeWar.JavaServer.queryByVirtualIdentityRequestBody();
+            inValue.Body.json = json;
+            MergeWar.JavaServer.queryByVirtualIdentityResponse retVal = ((MergeWar.JavaServer.BigDataService)(this)).queryByVirtualIdentity(inValue);
+            return retVal.Body.@return;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<MergeWar.JavaServer.queryByVirtualIdentityResponse> MergeWar.JavaServer.BigDataService.queryByVirtualIdentityAsync(MergeWar.JavaServer.queryByVirtualIdentityRequest request) {
+            return base.Channel.queryByVirtualIdentityAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<MergeWar.JavaServer.queryByVirtualIdentityResponse> queryByVirtualIdentityAsync(string json) {
+            MergeWar.JavaServer.queryByVirtualIdentityRequest inValue = new MergeWar.JavaServer.queryByVirtualIdentityRequest();
+            inValue.Body = new MergeWar.JavaServer.queryByVirtualIdentityRequestBody();
+            inValue.Body.json = json;
+            return ((MergeWar.JavaServer.BigDataService)(this)).queryByVirtualIdentityAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        MergeWar.JavaServer.queryByHardwareFeatureResponse MergeWar.JavaServer.BigDataService.queryByHardwareFeature(MergeWar.JavaServer.queryByHardwareFeatureRequest request) {
+            return base.Channel.queryByHardwareFeature(request);
+        }
+        
+        public string queryByHardwareFeature(string json) {
+            MergeWar.JavaServer.queryByHardwareFeatureRequest inValue = new MergeWar.JavaServer.queryByHardwareFeatureRequest();
+            inValue.Body = new MergeWar.JavaServer.queryByHardwareFeatureRequestBody();
+            inValue.Body.json = json;
+            MergeWar.JavaServer.queryByHardwareFeatureResponse retVal = ((MergeWar.JavaServer.BigDataService)(this)).queryByHardwareFeature(inValue);
+            return retVal.Body.@return;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<MergeWar.JavaServer.queryByHardwareFeatureResponse> MergeWar.JavaServer.BigDataService.queryByHardwareFeatureAsync(MergeWar.JavaServer.queryByHardwareFeatureRequest request) {
+            return base.Channel.queryByHardwareFeatureAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<MergeWar.JavaServer.queryByHardwareFeatureResponse> queryByHardwareFeatureAsync(string json) {
+            MergeWar.JavaServer.queryByHardwareFeatureRequest inValue = new MergeWar.JavaServer.queryByHardwareFeatureRequest();
+            inValue.Body = new MergeWar.JavaServer.queryByHardwareFeatureRequestBody();
+            inValue.Body.json = json;
+            return ((MergeWar.JavaServer.BigDataService)(this)).queryByHardwareFeatureAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        MergeWar.JavaServer.queryVirtualIdentDetailResponse MergeWar.JavaServer.BigDataService.queryVirtualIdentDetail(MergeWar.JavaServer.queryVirtualIdentDetailRequest request) {
+            return base.Channel.queryVirtualIdentDetail(request);
+        }
+        
+        public string queryVirtualIdentDetail(string json) {
+            MergeWar.JavaServer.queryVirtualIdentDetailRequest inValue = new MergeWar.JavaServer.queryVirtualIdentDetailRequest();
+            inValue.Body = new MergeWar.JavaServer.queryVirtualIdentDetailRequestBody();
+            inValue.Body.json = json;
+            MergeWar.JavaServer.queryVirtualIdentDetailResponse retVal = ((MergeWar.JavaServer.BigDataService)(this)).queryVirtualIdentDetail(inValue);
+            return retVal.Body.@return;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<MergeWar.JavaServer.queryVirtualIdentDetailResponse> MergeWar.JavaServer.BigDataService.queryVirtualIdentDetailAsync(MergeWar.JavaServer.queryVirtualIdentDetailRequest request) {
+            return base.Channel.queryVirtualIdentDetailAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<MergeWar.JavaServer.queryVirtualIdentDetailResponse> queryVirtualIdentDetailAsync(string json) {
+            MergeWar.JavaServer.queryVirtualIdentDetailRequest inValue = new MergeWar.JavaServer.queryVirtualIdentDetailRequest();
+            inValue.Body = new MergeWar.JavaServer.queryVirtualIdentDetailRequestBody();
+            inValue.Body.json = json;
+            return ((MergeWar.JavaServer.BigDataService)(this)).queryVirtualIdentDetailAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        MergeWar.JavaServer.queryTermianlAccessLogListResponse MergeWar.JavaServer.BigDataService.queryTermianlAccessLogList(MergeWar.JavaServer.queryTermianlAccessLogListRequest request) {
+            return base.Channel.queryTermianlAccessLogList(request);
+        }
+        
+        public string queryTermianlAccessLogList(string json) {
+            MergeWar.JavaServer.queryTermianlAccessLogListRequest inValue = new MergeWar.JavaServer.queryTermianlAccessLogListRequest();
+            inValue.Body = new MergeWar.JavaServer.queryTermianlAccessLogListRequestBody();
+            inValue.Body.json = json;
+            MergeWar.JavaServer.queryTermianlAccessLogListResponse retVal = ((MergeWar.JavaServer.BigDataService)(this)).queryTermianlAccessLogList(inValue);
+            return retVal.Body.@return;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<MergeWar.JavaServer.queryTermianlAccessLogListResponse> MergeWar.JavaServer.BigDataService.queryTermianlAccessLogListAsync(MergeWar.JavaServer.queryTermianlAccessLogListRequest request) {
+            return base.Channel.queryTermianlAccessLogListAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<MergeWar.JavaServer.queryTermianlAccessLogListResponse> queryTermianlAccessLogListAsync(string json) {
+            MergeWar.JavaServer.queryTermianlAccessLogListRequest inValue = new MergeWar.JavaServer.queryTermianlAccessLogListRequest();
+            inValue.Body = new MergeWar.JavaServer.queryTermianlAccessLogListRequestBody();
+            inValue.Body.json = json;
+            return ((MergeWar.JavaServer.BigDataService)(this)).queryTermianlAccessLogListAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        MergeWar.JavaServer.queryTermianlAccessLogDetailResponse MergeWar.JavaServer.BigDataService.queryTermianlAccessLogDetail(MergeWar.JavaServer.queryTermianlAccessLogDetailRequest request) {
+            return base.Channel.queryTermianlAccessLogDetail(request);
+        }
+        
+        public string queryTermianlAccessLogDetail(string json) {
+            MergeWar.JavaServer.queryTermianlAccessLogDetailRequest inValue = new MergeWar.JavaServer.queryTermianlAccessLogDetailRequest();
+            inValue.Body = new MergeWar.JavaServer.queryTermianlAccessLogDetailRequestBody();
+            inValue.Body.json = json;
+            MergeWar.JavaServer.queryTermianlAccessLogDetailResponse retVal = ((MergeWar.JavaServer.BigDataService)(this)).queryTermianlAccessLogDetail(inValue);
+            return retVal.Body.@return;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<MergeWar.JavaServer.queryTermianlAccessLogDetailResponse> MergeWar.JavaServer.BigDataService.queryTermianlAccessLogDetailAsync(MergeWar.JavaServer.queryTermianlAccessLogDetailRequest request) {
+            return base.Channel.queryTermianlAccessLogDetailAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<MergeWar.JavaServer.queryTermianlAccessLogDetailResponse> queryTermianlAccessLogDetailAsync(string json) {
+            MergeWar.JavaServer.queryTermianlAccessLogDetailRequest inValue = new MergeWar.JavaServer.queryTermianlAccessLogDetailRequest();
+            inValue.Body = new MergeWar.JavaServer.queryTermianlAccessLogDetailRequestBody();
+            inValue.Body.json = json;
+            return ((MergeWar.JavaServer.BigDataService)(this)).queryTermianlAccessLogDetailAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        MergeWar.JavaServer.queryRealnameResponse MergeWar.JavaServer.BigDataService.queryRealname(MergeWar.JavaServer.queryRealnameRequest request) {
+            return base.Channel.queryRealname(request);
+        }
+        
+        public string queryRealname(string json) {
+            MergeWar.JavaServer.queryRealnameRequest inValue = new MergeWar.JavaServer.queryRealnameRequest();
+            inValue.Body = new MergeWar.JavaServer.queryRealnameRequestBody();
+            inValue.Body.json = json;
+            MergeWar.JavaServer.queryRealnameResponse retVal = ((MergeWar.JavaServer.BigDataService)(this)).queryRealname(inValue);
+            return retVal.Body.@return;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<MergeWar.JavaServer.queryRealnameResponse> MergeWar.JavaServer.BigDataService.queryRealnameAsync(MergeWar.JavaServer.queryRealnameRequest request) {
+            return base.Channel.queryRealnameAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<MergeWar.JavaServer.queryRealnameResponse> queryRealnameAsync(string json) {
+            MergeWar.JavaServer.queryRealnameRequest inValue = new MergeWar.JavaServer.queryRealnameRequest();
+            inValue.Body = new MergeWar.JavaServer.queryRealnameRequestBody();
+            inValue.Body.json = json;
+            return ((MergeWar.JavaServer.BigDataService)(this)).queryRealnameAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        MergeWar.JavaServer.appearDevMACResponse MergeWar.JavaServer.BigDataService.appearDevMAC(MergeWar.JavaServer.appearDevMACRequest request) {
+            return base.Channel.appearDevMAC(request);
+        }
+        
+        public string appearDevMAC(string json) {
+            MergeWar.JavaServer.appearDevMACRequest inValue = new MergeWar.JavaServer.appearDevMACRequest();
+            inValue.Body = new MergeWar.JavaServer.appearDevMACRequestBody();
+            inValue.Body.json = json;
+            MergeWar.JavaServer.appearDevMACResponse retVal = ((MergeWar.JavaServer.BigDataService)(this)).appearDevMAC(inValue);
+            return retVal.Body.@return;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<MergeWar.JavaServer.appearDevMACResponse> MergeWar.JavaServer.BigDataService.appearDevMACAsync(MergeWar.JavaServer.appearDevMACRequest request) {
+            return base.Channel.appearDevMACAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<MergeWar.JavaServer.appearDevMACResponse> appearDevMACAsync(string json) {
+            MergeWar.JavaServer.appearDevMACRequest inValue = new MergeWar.JavaServer.appearDevMACRequest();
+            inValue.Body = new MergeWar.JavaServer.appearDevMACRequestBody();
+            inValue.Body.json = json;
+            return ((MergeWar.JavaServer.BigDataService)(this)).appearDevMACAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        MergeWar.JavaServer.disappearDevMACResponse MergeWar.JavaServer.BigDataService.disappearDevMAC(MergeWar.JavaServer.disappearDevMACRequest request) {
+            return base.Channel.disappearDevMAC(request);
+        }
+        
+        public string disappearDevMAC(string json) {
+            MergeWar.JavaServer.disappearDevMACRequest inValue = new MergeWar.JavaServer.disappearDevMACRequest();
+            inValue.Body = new MergeWar.JavaServer.disappearDevMACRequestBody();
+            inValue.Body.json = json;
+            MergeWar.JavaServer.disappearDevMACResponse retVal = ((MergeWar.JavaServer.BigDataService)(this)).disappearDevMAC(inValue);
+            return retVal.Body.@return;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<MergeWar.JavaServer.disappearDevMACResponse> MergeWar.JavaServer.BigDataService.disappearDevMACAsync(MergeWar.JavaServer.disappearDevMACRequest request) {
+            return base.Channel.disappearDevMACAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<MergeWar.JavaServer.disappearDevMACResponse> disappearDevMACAsync(string json) {
+            MergeWar.JavaServer.disappearDevMACRequest inValue = new MergeWar.JavaServer.disappearDevMACRequest();
+            inValue.Body = new MergeWar.JavaServer.disappearDevMACRequestBody();
+            inValue.Body.json = json;
+            return ((MergeWar.JavaServer.BigDataService)(this)).disappearDevMACAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        MergeWar.JavaServer.queryHardwareResponse MergeWar.JavaServer.BigDataService.queryHardware(MergeWar.JavaServer.queryHardwareRequest request) {
+            return base.Channel.queryHardware(request);
+        }
+        
+        public string queryHardware(string json) {
+            MergeWar.JavaServer.queryHardwareRequest inValue = new MergeWar.JavaServer.queryHardwareRequest();
+            inValue.Body = new MergeWar.JavaServer.queryHardwareRequestBody();
+            inValue.Body.json = json;
+            MergeWar.JavaServer.queryHardwareResponse retVal = ((MergeWar.JavaServer.BigDataService)(this)).queryHardware(inValue);
+            return retVal.Body.@return;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<MergeWar.JavaServer.queryHardwareResponse> MergeWar.JavaServer.BigDataService.queryHardwareAsync(MergeWar.JavaServer.queryHardwareRequest request) {
+            return base.Channel.queryHardwareAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<MergeWar.JavaServer.queryHardwareResponse> queryHardwareAsync(string json) {
+            MergeWar.JavaServer.queryHardwareRequest inValue = new MergeWar.JavaServer.queryHardwareRequest();
+            inValue.Body = new MergeWar.JavaServer.queryHardwareRequestBody();
+            inValue.Body.json = json;
+            return ((MergeWar.JavaServer.BigDataService)(this)).queryHardwareAsync(inValue);
         }
     }
 }

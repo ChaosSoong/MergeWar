@@ -1,8 +1,93 @@
-﻿
-@{
-    ViewBag.Title = "Analysis";
+﻿@{
+    ViewBag.Title = "分析结果";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@using System.Collections.Generic
+<link href="~/Content/css/MACFX.css" rel="stylesheet" />
+<link href="~/Content/css/PZFX.css" rel="stylesheet" />
+<style>
+    #djsTable:hover {
+        background-color: #1E1F2D;
+    }
+</style>
+<script src="~/Content/js/jquery-1.7.1.min.js"></script>
+<script src="~/Content/layer/layer.js"></script>
+<script src="~/Content/js/publicJS.js"></script>
+<div class="contentbody" id="contentbody">
+@{List<MergeWar.Models.Collision> cllist = (List<MergeWar.Models.Collision>)ViewBag.pl;
+    string urlval = string.Empty;
+    <div class="contentTitle">
+        <span>碰撞分析-分析结果</span>
+        @if (cllist.Count > 0 && cllist.Count > 0)
+        {
+            <input class="add" type="button" id="" value="导出表格" onclick="report()" />
+        }
+    </div>
+    <div class="contentTable">
+        
+            <table border="0" cellspacing="0" cellpadding="0">
+                <tr id="djsTable">
+                    <th style="width: 30%;">序号</th>
+                    <th style="width: 40%;">MAC地址</th>
+                    <th style="width: 30%;">出现次数</th>
+                    @*<th style="width: 25%;">最后出现场所名称</th>
+                        <th style="width: 24%;">最后出现场所时间</th>*@
+                </tr>
+                @if (cllist.Count > 0 && cllist.Count > 0)
+                {
+                    int i = 1;
+                    foreach (var cl in cllist)
+                    {
+                        urlval = "/Public/AnalysisDet?analyType=1&mac=" + cl.MAC;
+                        <tr>
+                            <td style="width: 30%;">@i</td>
+                            <td style="width: 40%;">@cl.MAC</td>
+                            @*<td class="addAuthority" style="width: 30%;"><a href="@Url.Content("~/Public/AnalysisDet?ids=" + ViewBag.ids + "&sTime=" + ViewBag.STime + "&eTime=" + ViewBag.ETime + "&mac=" + cl.MAC + "&analyType=1")">@cl.c</a></td>*@
+                            <td title="点击查看详情" class="addAuthority" style="width: 30%;"><a href="#" onclick="AlertShow(632,434,'@urlval')" style="color:#85858A">@(cl.c)次</a></td>
+                        </tr>
+                        i++;
+                    }
+                }
+            </table>
+            @if (cllist.Count > 0 && cllist.Count > 0)
+            {
+                @Html.Partial("~/Views/Shared/_PartialPage.cshtml", new RouteValueDictionary { { "pageIndex", "PageIndex" }, { "model", cllist } })
+            }
+        
+    </div>}
+</div>
+<script type="text/javascript">
+    function closeDown() {
+        document.getElementById('divDown').style.display = 'none';
+        $("#Bk").hide();
+    }
+    function report() {
+        var maxCount = @Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["ExprotCout"]);
+        var TotalCount =parseInt($("#spTotalItem").html());
+        if(TotalCount>maxCount){
+            alert("为保证导出数据的速度，数据源不能大于"+maxCount+"条");
+            closeDown();
+        }
+            $.ajax
+             ({
+                 type: "Get",
+                 url: '@Url.Content("~/Public/AnalyzeExport?dataType=1")'+ '&data=' + (new Date()).getTime(),
+                 dataType: "json",
+                 cache: false,
+                 success: function (data, status) {
+                     if (typeof (data.err) != 'undefined' && data.err != "") {
+                         alert(data.err);
+                     } else {
+                         window.location.href = '@Url.Content("~/Public/Download?name=")' + encodeURIComponent('碰撞分析列表报表_') + '&path=' + encodeURIComponent(data.result);
+                     }
+                     closeDown();
+                 },
+                 error: function (data, status, e) {
+                     alert(e);
+                     closeDown();
+                 }
+             });
+        }
+</script>
 
-<h2>Analysis</h2>
-@viewBag.ids
 

@@ -5,13 +5,7 @@
 @using System.Linq
 @using HCZZ.ModeDB
 @model System.Collections.Generic.List<Sys_UserPowerInfo>
-<!DOCTYPE html>
 
-<html>
-<head>
-    <title>AddPower</title>
-</head>
-<body>
 <div>
     @{
         List<Sys_UserPowerInfo> list = Model;
@@ -89,7 +83,7 @@
     </div>
 </div>
 
-<script type="text/javascript">
+    <script type="text/javascript">
     function QXOnclick(obj) {
         var sp = obj.id.split("_");
         var ck1 = $(obj).parent().parent().find("input[type='checkbox']:checked").length;
@@ -162,15 +156,14 @@
 			                alert("保存失败，请稍后重试");
 			            } else {
 			                alert("保存成功！");
-			                window.location.href = '@Url.Content("~/Version/RoleList")';
+			               
+			                window.location.href = '@Url.Content("~/System/RoleList")';
 			            }
 			        }
 			    });
-        } else {
-            alert("请勾选模块");
-            return false;
+            } else {
+                alert("请勾选模块");
+                return false;
+            }
         }
-    }
     </script>
-</body>
-</html>

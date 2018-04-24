@@ -4,11 +4,11 @@
 }
 @using System
 @using System.Collections.Generic
-@using Common;
-@using HCZZ.Controllers
+@using HCZZ.Common;
+@using HCZZ.ModeDB
 @using Webdiyer.WebControls.Mvc
 @{
-    PagedList<PublicController.DatasInfo> list = (PagedList<PublicController.DatasInfo>)ViewBag.pl;
+    PagedList<DatasInfo> list = (PagedList<DatasInfo>)ViewBag.pl;
     Dictionary<string, string> dic = (Dictionary<string, string>)ViewBag.dic;
     string TypeVal = ChangeValue.RefRadVal(Convert.ToInt32(dic["TypeVal"]));
     int RadVal = Convert.ToInt32(dic["TypeVal"]);
@@ -84,16 +84,14 @@
     <table cellspacing="0" cellpadding="0" border="0">
         @if (list != null && list.Count > 0)
         {
-            foreach (PublicController.DatasInfo item in list)
+            foreach (DatasInfo item in list)
             {
                 if (RadVal == 1 || RadVal == 2)
                 {
                     string message = (RadVal == 1 ? item.AUTH_ACCOUNT : item.MAC);
                     <tr>
-                        <td width="80%">@message
-                        </td>
+                        <td width="80%">@message</td>
                         <td width="20%">
-
                             <a class="Cz_chakan" onclick="detail('@message', @RadVal);" href="javascript:void(0)" title="详细"><img title="详情" src="@Url.Content("~/Content/images/view1_icon.png")" alt="查看"/></a><span style="display: none">@message</span>
                         </td>
                     </tr>

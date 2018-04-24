@@ -69,7 +69,7 @@
 		.content .contentbody .contentTable table tr:nth-child(odd){background-color: #20212e;}
 		.content .contentbody .contentTable table tr:nth-child(even){background-color: #21222f;}
 		.content .contentbody .contentTable table tr:first-child{background-color: #1E1F2D;}
-		.content .contentbody .contentTable table tr th{text-align: center;color: #85858A;font-family: "微软雅黑";font-size: 13px;}
-		.content .contentbody .contentTable table tr td{text-align: center;color: #85858A;font-family: "微软雅黑";font-size: 12px;}
+		.content .contentbody .contentTable table tr th{color: #85858A;font-family: "微软雅黑";font-size: 13px;}
+		.content .contentbody .contentTable table tr td{color: #85858A;font-family: "微软雅黑";font-size: 12px;}
 		.content .contentbody .contentTable table tr td img{cursor: pointer;display: inline-block;margin-left: 0px;margin-right: -2px;}
 	

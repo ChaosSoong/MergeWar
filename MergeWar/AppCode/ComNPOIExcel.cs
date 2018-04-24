@@ -7,7 +7,7 @@ using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 using System.IO;
 using System.Data;
-using Common;
+using HCZZ.Common;
 using HCZZ.AppCode;
 
 namespace HCZZ.Common
@@ -22,9 +22,8 @@ namespace HCZZ.Common
         /// </summary>
         public NPOISheetModel()
         {
-             
-        }
 
+        }
         /// <summary>
         /// Excel页标签名称
         /// </summary>
@@ -47,7 +46,7 @@ namespace HCZZ.Common
         /// key:查询条件字段
         /// value:查询条件值
         /// </summary>
-        public Dictionary<string,string> TableSearch { get; set; }
+        public Dictionary<string, string> TableSearch { get; set; }
 
         /// <summary>
         /// 数据
@@ -90,7 +89,7 @@ namespace HCZZ.Common
             //内容行开始的索引
             int rowIndes = 0;
             int rowCount = sheet.TableTitle.Count - 1;
-            HSSFWorkbook wk = new HSSFWorkbook();
+            XSSFWorkbook wk = new XSSFWorkbook();
             //IWorkbook wk = new HSSFWorkbook();
             //创建一个名称为mySheet的表
             ISheet tb = wk.CreateSheet(sheet.ExcelTitle + "报表");
@@ -167,7 +166,7 @@ namespace HCZZ.Common
                 foreach (KeyValuePair<string, string> item in sheet.TableTitle)
                 {
                     //在第k行中创建单元格
-                    cell = row.CreateCell(y);  
+                    cell = row.CreateCell(y);
                     //循环往第二行的单元格中添加数据
                     cell.SetCellValue(FormatDataByKey(item.Value, sheet.dt.Rows[k][item.Value].ToString(), sheet, y));
                     y++;
@@ -222,7 +221,7 @@ namespace HCZZ.Common
                 {
                     return value == "1" ? "待审核" : (value == "2" ? "审核成功" : "审核失败");
                 }
-            }  
+            }
             else if (key == "verified")
                 return ChangeValue.RefVerifiedStrExcel(Convert.ToInt32(value));
             else if (key == "caseitem")
@@ -279,14 +278,20 @@ namespace HCZZ.Common
             else if (key == "network_app")
                 return ChangeValue.GetDetailHttpLog(value);
             else if (key == "start_time" || key == "end_time" || key == "capture_time")
-                return value == "0" ? "N/A" : ChangeValue.RefAuditTime(Convert.ToInt64(value));
+            {
+                DateTime time = new DateTime();
+                if (DateTime.TryParse(value, out time))
+                    return value;
+                else
+                    return value == "0" ? "N/A" : ChangeValue.RefAuditTime(Convert.ToInt64(value));
+            }
             else if (key == "terminal_field_strength" || key == "ap_field_strength")
                 return string.IsNullOrEmpty(value) ? "" : ("-" + value + "dBm");
             else if (key == "access_type")
                 return string.IsNullOrEmpty(value) ? "" : ChangeValue.GetConnectTypeValue(Convert.ToInt32(value));
             else if (key == "operator_net")
                 return string.IsNullOrEmpty(value) ? "" : ChangeValue.GetServiceBusinesValue(value);
-           
+
             else if (key == "law_principal_certificate_type")
             {
                 if (!string.IsNullOrEmpty(value))
@@ -504,6 +509,24 @@ namespace HCZZ.Common
                 sheet1 = null;
             }
             return dt;
+        }
+        /// <summary>
+        /// 分割数据
+        /// </summary>
+        /// <param name="dt"></param>
+        /// <param name="from"></param>
+        /// <param name="pagesize"></param>
+        /// <returns></returns>
+        public static DataTable TablePage(DataTable dt, int from, int pagesize)
+        {
+            DataTable pagedt = dt.Clone();
+            var query = dt.AsEnumerable().Skip(from).Take(pagesize);
+            foreach (DataRow item in query)
+            {
+                pagedt.Rows.Add(item.ItemArray);
+            }
+            int COUNT = pagedt.Rows.Count;
+            return pagedt;
         }
         #endregion
     }

@@ -74,7 +74,7 @@
             showInfoMap("","");
 			$.ajax({
 				type:"get",
-				url: strProto + lpyhtj + "/CommonMap/RefAddressToVal?Address=" + encodeURIComponent(address) + "&a=" + (new Date()).getTime(),
+				url: strProto + lpyhtj + "/Public/RefAddressToVal?Address=" + encodeURIComponent(address) + "&a=" + (new Date()).getTime(),
 			    dataType: "json",
 			    async: false,
 				success:function  (data,status) {
@@ -122,4 +122,4 @@
     }
 	 
 </script>
-<script type="text/javascript" src="../Map/Pub/js/draw1.js"></script>
+<!--<script type="text/javascript" src="../Map/Pub/js/draw1.js"></script>-->

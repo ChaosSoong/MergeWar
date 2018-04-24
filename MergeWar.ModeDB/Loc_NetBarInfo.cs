@@ -146,7 +146,7 @@ namespace HCZZ.ModeDB
         /// <summary>
         /// 厂商数据来源
         /// </summary>
-        public int MakeType { get; set; }
+        public string MakeType { get; set; }
         /// <summary>
         /// 表关键字
         /// </summary>

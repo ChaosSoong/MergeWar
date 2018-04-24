@@ -22,12 +22,12 @@
     <div class="map_open" style="margin: 0 15px;width:223px;float:left">
     <div style="width:223px;height:30px;line-height:30px;color:#2f84c7;font-size:14px;font-weight:bold">定位中心点</div>
     <input style="border:#d6d6d6 solid 1px;width:149px;height:22px;color:#c0c0c0;float:left;line-height:22px;margin-top:5px;" class="inputT_2" id="searchMap" value="请输入地址确定经纬度" onfocus="if(this.value=='请输入地址确定经纬度'){this.value=''}" onblur="if(this.value==''){this.value='请输入地址确定经纬度'}" type="text">
-    <span onclick="setCenterMap()" style="display:block;float:left;margin-top:5px;border:#cfe9ff solid 1px;color:#2f83c9;padding:1px;width:50px;height:20px;line-height:20px;text-align:center; cursor:pointer">查找</span>
+    <span onclick="setCenterMap();" style="display:block;float:left;margin-top:5px;border:#cfe9ff solid 1px;color:#2f83c9;padding:1px;width:50px;height:20px;line-height:20px;text-align:center; cursor:pointer">查找</span>
     <div style="clear:both;height:10px;"></div>
     <div>当前地图中心点经纬度：</div>
     <div style="margin-top:10px;"><b style="color:#727272">经度：</b><input id="mapCenterPointX" readonly="true" type="text" style="background:#F5F5F5;border:1px solid #D1E7FB;color:#727272"></div>
     <div style="margin-top:5px;"><b style="color:#727272">纬度：</b><input id="mapCenterPointY" readonly="true" type="text" style="background:#F5F5F5;border:1px solid #D1E7FB;color:#727272"></div>
-    <div> <span onclick="returnValue()" style="display:block;float:left;border:#cfe9ff solid 1px;color:#2f83c9;padding:1px;width:100px;height:20px;line-height:20px; margin-top:10px;text-align:center;cursor:pointer">确定</span></div>
+    <div> <span onclick="returnValue();" style="display:block;float:left;border:#cfe9ff solid 1px;color:#2f83c9;padding:1px;width:100px;height:20px;line-height:20px; margin-top:10px;text-align:center;cursor:pointer">确定</span></div>
     </div>
     <div style="width: 720px; height: 550px; border: #ccc solid 1px; float: left;" id="container"></div>
 </body>
@@ -40,6 +40,7 @@
             var val = X + "," + Y;
             parent.document.getElementById("txtItude").value = val;
             parent.hideItude();
+            layerClose();
         } else {
             alert("请输入地址查询经纬度");
         }
@@ -74,7 +75,7 @@
             showInfoMap("","");
 			$.ajax({
 				type:"get",
-				url: strProto + lpyhtj + "/CommonMap/RefAddressToVal?Address=" + encodeURIComponent(address) + "&a=" + (new Date()).getTime(),
+				url: strProto + lpyhtj + "/Public/RefAddressToVal?Address=" + encodeURIComponent(address) + "&a=" + (new Date()).getTime(),
 			    dataType: "json",
 			    async: false,
 				success:function  (data,status) {
@@ -120,6 +121,11 @@
     //防止出现undefinded
     function checkEmpty (str) {
     }
+    //点击弹窗中的某个元素关闭自身（弹窗）
+    function layerClose() {
+        var index = parent.layer.getFrameIndex(window.name);
+        parent.layer.close(index);
+    }
 	 
 </script>
-<script type="text/javascript" src="../Map/Pub/js/draw1.js"></script>
+<!--<script type="text/javascript" src="../Map/Pub/js/draw1.js"></script>-->

@@ -5,8 +5,59 @@
 }
 <link href="@Url.Content("~/Content/css/publicHeader.css")" rel="stylesheet" type="text/css" />
 <link href="@Url.Content("~/Content/css/XTGL.css")" rel="stylesheet" type="text/css" />
+<style>
+    .contentTable {
+    }
+
+        .contentTable table {
+            width: 100%;
+        }
+
+            .contentTable table tr {
+                border-bottom: 1px solid #181926;
+                height: 40px;
+            }
+
+                .contentTable table tr:nth-child(even) {
+                    background-color: #20212e;
+                }
+
+                .contentTable table tr:nth-child(odd) {
+                    background-color: #21222f;
+                }
+
+                .contentTable table tr:first-child {
+                    background-color: #1E1F2D;
+                }
+
+                .contentTable table tr th {
+                    text-align: left;
+                    padding-left: 15px;
+                    border-right: 2px solid rgb(24, 25, 38);
+                    color: #85858A;
+                    font-family: "微软雅黑";
+                    font-size: 13px;
+                }
+
+                .contentTable table tr td {
+                    text-align: left;
+                    padding-left: 15px;
+                    border-right: 2px solid rgb(24, 25, 38);
+                    color: #85858A;
+                    font-family: "微软雅黑";
+                    font-size: 12px;
+                }
+
+                .contentTable table tr:hover {
+                    background-color: #222a36;
+                }
+
+                .contentTable table.djsTable tr:first-child:hover {
+                    background-color: #1E1F2D;
+                }
+</style>
 @using System.Collections.Generic
-@using Common
+@using HCZZ.Common
 @using HCZZ.DAL
 @using HCZZ.ModeDB
 @using Webdiyer.WebControls.Mvc
@@ -15,15 +66,20 @@
     @Id = dic["PId"]
 }, FormMethod.Get))
 {
+    string relaVal = ChangeValue.RefPageRelaByPath("System/AreaManageInfoList");
     PoliceInfo police = (PoliceInfo)ViewBag.police;
     string pName = police == null ? "" : police.Name;
     <div class="contentbody" id="contentbody">
         <div class="contentTitle">
             <span>查询条件和按钮区</span>
             <input class="search" type="button" id="BtnSelect" onclick="myFunction(this, 'contentConditions')" value="隐藏" />
-            <input class="search" onclick="javascript:location.replace('@Url.Content("~/System/AddScenicInfo/" + police.ID)')" type="button" name="button" value="添加警区" />
+            @if (relaVal.Contains("2"))
+            {
+                @*<input class="add" onclick="javascript:location.replace('@Url.Content("~/System/AddScenicInfo/" + police.ID)')" type="button" name="button" value="+添加警区" />*@
+                <input class="add" onclick="AlertShow(700, 375, '/System/AddScenicInfo/@police.ID')" type="button" name="button" value="+添加警区" />
+            }
         </div>
-        <div class="contentConditions">
+        <div class="contentConditions" style="height:170px">
             <ul>
                 <li class="Conditions Conditions1">
                     <span>警区名称：</span>
@@ -57,14 +113,18 @@
                     </select>
                     <input type="text" name="txtMobile" id="txtMobile" class="_text" value="@dic["txtMobile"]" />
                 </li>
-                <li class="Conditions Conditions5">
+                @*<li class="Conditions Conditions5">
                     <input class="btn_SS" type="button" name="button" value="重置" ; />
                     <input class="btn_SS" type="submit" name="button" value="搜索" ; />
+                </li>*@
+                <li class="Conditions Conditions6">
+                    <input class="selectbg" type="submit" id="but_Seek" value="搜索" />
+                    <input class="resetbg" type="reset" value="重置" onclick="Reset()" />
                 </li>
             </ul>
         </div>
         <div class="contentTable" id="taskManagementId">
-            <table border="0" cellspacing="0" cellpadding="0">
+            <table class="djsTable" border="0" cellspacing="0" cellpadding="0">
                 <tr>
                     <th style="width: 5%;">序号</th>
                     <th style="width: 5%;">自增ID</th>
@@ -94,65 +154,55 @@
                                 <td style="width: 10%;">@item.Contact</td>
                                 <td style="width: 10%;">@item.Mobile</td>
                                 <td style="width: 20%;">
-                                    <a class="Cz_bianji" href="@Url.Content("~/System/EditScenicInfo/" + item.ID)">
-                                        <img title="编辑" src="@Url.Content("~/Content/images/edit1_icon.png")" alt="编辑" />
-                                    </a>
-                                    <a class="Cz_shanchu" href="javascript:void(0)" onclick="del('@item.ID','Scenic')">
-                                        <img title="删除" src="@Url.Content("~/Content/images/del1_icon.png")" alt="删除" />
-                                    </a>
+                                    @if (relaVal.Contains("2"))
+                                    {
+                                        <a class="Cz_bianji" href="#" onclick="AlertShow(700, 375, '/System/EditScenicInfo/@item.ID')">
+                                            <img title="编辑" src="@Url.Content("~/Content/images/edit1_icon.png")" alt="编辑" />
+                                        </a>
+                                    }
+                                    @if (relaVal.Contains("3"))
+                                    {
+                                        <a class="Cz_shanchu" href="javascript:void(0)" onclick="del('@item.ID','Scenic')">
+                                            <img title="删除" src="@Url.Content("~/Content/images/del1_icon.png")" alt="删除" />
+                                        </a>
+                                    }
                                 </td>
                             </tr>                                   }
-                        @*if (list.TotalPageCount > 1)
-                        {
-                            <tr>
-                                <td colspan="8">
-                                    <div class="pag_td" style="width: 100%; text-align: center; font-size: 14px">
-                                        @Html.Pager(list, new PagerOptions()
-                       {
-                           PageIndexParameterName = "key",
-                           @CssClass = "pag1"
-                       })
-                                        <div class="pag_all">
-                                            共<font>@list.TotalPageCount</font>页/共<font id="spTotalItem">@list.TotalItemCount</font>条
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                        }
-                    }
-                    else
-                    {
-                        <tr><td colspan="8">暂无可显示数据</td></tr>
-                    }*@
                     }
                 }
             </table>
-            <div class="page">
-                <ul class="ulPage">
-                    @Ajax.Pager(list, new PagerOptions
-               {
-                   FirstPageText = "首页",
-                   PrevPageText = "上一页",
-                   NextPageText = "下一页",
-                   LastPageText = "尾页",
-                   PageIndexParameterName = "PageIndex",
-                   NavigationPagerItemTemplate = "<li class=\"liPage\" style=\"width: 42px; \">{0}</li>",
-                   NumericPagerItemTemplate = "<li class=\"liPage\" style=\"width: 42px; \">{0}</li>",
-                   ShowMorePagerItems = false,
-               }).AjaxOptions(a => a.SetUpdateTargetId("taskManagementId"))
-                    <li class="contPage">共<span>@list.TotalPageCount</span>页/共<span>@list.TotalItemCount</span>条</li>
-                </ul>
-            </div>
+            @Html.Partial("~/Views/Shared/_PartialPage.cshtml", new RouteValueDictionary { { "model", list }, { "pageindex", "PageIndex" } })
         </div>
     </div>
     <script type="text/javascript">
         function del(obj,key,key1) {
             if (confirm("确定要删除吗？")) {
                 location.href = "/System/DelProArea?Id=" + obj + "&key=" + key+"&key1="+@police.ID;
-
             }
         }
-
+        $(function(){
+            $("#selName").val("@dic["selName"]");
+            $("#selAddress").val("@dic["selAddress"]");
+            $("#selContact").val("@dic["selContact"]");
+            $("#selMobile").val("@dic["selMobile"]");
+        })
+        $("form").submit(function(){
+            if(issubmit()==true){
+                return true;
+            }else{
+                alert("请输入条件");
+                return false;
+            }
+        });
+        function issubmit(){
+            var resl=false;
+            $("input[type='text']").each(function(){
+                if ($.trim($(this).val()) != "") {
+                    resl= true
+                }
+            })
+            return resl;
+        };
     </script>
 
                     }

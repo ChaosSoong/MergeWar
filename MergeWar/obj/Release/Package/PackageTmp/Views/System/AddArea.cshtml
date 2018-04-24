@@ -1,10 +1,8 @@
 ﻿@{
     Layout = null;
 }
-
 <!DOCTYPE html>
 @using HCZZ.ModeDB
-
 <head>
     <title></title>
 <link href="@Url.Content("~/Content/css/index.css")" rel="stylesheet" type="text/css" />
@@ -38,7 +36,7 @@
 			        </tr>
                     <tr>
                     <td align="right">区代码：</td>
-                    <td><input type="text" id="txtCity_code" name="txtCity_code"  maxlength="25" class="_text" /><span id="spCity_code" class="color_ccc">*例如：黄浦区，310101</span></td>
+                    <td><input type="text" id="txtCity_code" name="txtCity_code"  maxlength="6" class="_text" /><span id="spCity_code" class="color_ccc">*例如：黄浦区，310101</span></td>
                     </tr>
                 </table>
             </div> 
@@ -58,10 +56,7 @@
                      $("#spArea").html("");
                  }
                  var reg = new RegExp(/\d+$/);
-                 if ($.trim($("#txtCity_code").val()) == "") {
-                     result = false;
-                     $("#spCity_code").html("区域代码不能为空");
-                 } else if (!reg.test($.trim($("#txtCity_code").val()))) {
+                 if($.trim($("#txtCity_code").val()) !=""  && !reg.test($.trim($("#txtCity_code").val()))) {
                      result = false;
                      $("#spCity_code").html("区域代码格式不正确");
                  } else {

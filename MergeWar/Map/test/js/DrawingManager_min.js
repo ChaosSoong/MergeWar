@@ -1,4 +1,9 @@
-﻿//"use strict";
+﻿
+//"use strict";
+var overlayi = null;
+var overlay = null;
+var RECVAL = 0;//矩形选框时间input的ID+1
+var OVAL = 0////圆形选框时间input的ID+1
 var saveData = [],
     type, temData;
 var BMapLib = window.BMapLib = BMapLib || {};
@@ -7,13 +12,13 @@ var BMAP_DRAWING_MARKER = "marker",
     BMAP_DRAWING_CIRCLE = "circle",
     BMAP_DRAWING_RECTANGLE = "rectangle",
     BMAP_DRAWING_POLYGON = "polygon";
-(function() {
+(function () {
     var b = b || {
         guid: "$BAIDU$"
     };
-    (function() {
+    (function () {
         window[b.guid] = {};
-        b.extend = function(i, g) {
+        b.extend = function (i, g) {
             for (var h in g) {
                 if (g.hasOwnProperty(h)) {
                     i[h] = g[h]
@@ -22,26 +27,26 @@ var BMAP_DRAWING_MARKER = "marker",
             return i
         };
         b.lang = b.lang || {};
-        b.lang.guid = function() {
+        b.lang.guid = function () {
             return "TANGRAM__" + (window[b.guid]._counter++).toString(36)
         };
         window[b.guid]._counter = window[b.guid]._counter || 1;
         window[b.guid]._instances = window[b.guid]._instances || {};
-        b.lang.Class = function(g) {
+        b.lang.Class = function (g) {
             this.guid = g || b.lang.guid();
             window[b.guid]._instances[this.guid] = this
         };
         window[b.guid]._instances = window[b.guid]._instances || {};
-        b.lang.isString = function(g) {
+        b.lang.isString = function (g) {
             return "[object String]" == Object.prototype.toString.call(g)
         };
-        b.lang.isFunction = function(g) {
+        b.lang.isFunction = function (g) {
             return "[object Function]" == Object.prototype.toString.call(g)
         };
-        b.lang.Class.prototype.toString = function() {
+        b.lang.Class.prototype.toString = function () {
             return "[object " + (this._className || "Object") + "]"
         };
-        b.lang.Class.prototype.dispose = function() {
+        b.lang.Class.prototype.dispose = function () {
             delete window[b.guid]._instances[this.guid];
             for (var g in this) {
                 if (!b.lang.isFunction(this[g])) {
@@ -50,16 +55,16 @@ var BMAP_DRAWING_MARKER = "marker",
             }
             this.disposed = true
         };
-        b.lang.Event = function(g, h) {
+        b.lang.Event = function (g, h) {
             this.type = g;
             this.returnValue = true;
             this.target = h || null;
             this.currentTarget = null
         };
-        b.lang.Class.prototype.addEventListener = function(j, i, h) {
+        b.lang.Class.prototype.addEventListener = function (j, i, h) {
             if (!b.lang.isFunction(i)) {
                 return
-            }!this.__listeners && (this.__listeners = {});
+            } !this.__listeners && (this.__listeners = {});
             var g = this.__listeners,
                 k;
             if (typeof h == "string" && h) {
@@ -76,14 +81,14 @@ var BMAP_DRAWING_MARKER = "marker",
             i.hashCode = k;
             g[j][k] = i
         };
-        b.lang.Class.prototype.removeEventListener = function(i, h) {
+        b.lang.Class.prototype.removeEventListener = function (i, h) {
             if (b.lang.isFunction(h)) {
                 h = h.hashCode
             } else {
                 if (!b.lang.isString(h)) {
                     return
                 }
-            }!this.__listeners && (this.__listeners = {});
+            } !this.__listeners && (this.__listeners = {});
             i.indexOf("on") != 0 && (i = "on" + i);
             var g = this.__listeners;
             if (!g[i]) {
@@ -91,10 +96,10 @@ var BMAP_DRAWING_MARKER = "marker",
             }
             g[i][h] && delete g[i][h]
         };
-        b.lang.Class.prototype.dispatchEvent = function(k, g) {
+        b.lang.Class.prototype.dispatchEvent = function (k, g) {
             if (b.lang.isString(k)) {
                 k = new b.lang.Event(k)
-            }!this.__listeners && (this.__listeners = {});
+            } !this.__listeners && (this.__listeners = {});
             g = g || {};
             for (var j in g) {
                 k[j] = g[j]
@@ -112,7 +117,7 @@ var BMAP_DRAWING_MARKER = "marker",
             }
             return k.returnValue
         };
-        b.lang.inherits = function(m, k, j) {
+        b.lang.inherits = function (m, k, j) {
             var i, l, g = m.prototype,
                 h = new Function();
             h.prototype = k.prototype;
@@ -127,13 +132,13 @@ var BMAP_DRAWING_MARKER = "marker",
             }
         };
         b.dom = b.dom || {};
-        b._g = b.dom._g = function(g) {
+        b._g = b.dom._g = function (g) {
             if (b.lang.isString(g)) {
                 return document.getElementById(g)
             }
             return g
         };
-        b.g = b.dom.g = function(g) {
+        b.g = b.dom.g = function (g) {
             if ("string" == typeof g || g instanceof String) {
                 return document.getElementById(g)
             } else {
@@ -143,7 +148,7 @@ var BMAP_DRAWING_MARKER = "marker",
             }
             return null
         };
-        b.insertHTML = b.dom.insertHTML = function(j, g, i) {
+        b.insertHTML = b.dom.insertHTML = function (j, g, i) {
             j = b.dom.g(j);
             var h, k;
             if (j.insertAdjacentHTML) {
@@ -163,7 +168,7 @@ var BMAP_DRAWING_MARKER = "marker",
             }
             return j
         };
-        b.ac = b.dom.addClass = function(n, o) {
+        b.ac = b.dom.addClass = function (n, o) {
             n = b.dom.g(n);
             var h = o.split(/\s+/),
                 g = n.className,
@@ -180,12 +185,12 @@ var BMAP_DRAWING_MARKER = "marker",
         };
         b.event = b.event || {};
         b.event._listeners = b.event._listeners || [];
-        b.on = b.event.on = function(h, k, m) {
+        b.on = b.event.on = function (h, k, m) {
             k = k.replace(/^on/i, "");
             h = b._g(h);
-            var l = function(o) {
-                    m.call(h, o)
-                },
+            var l = function (o) {
+                m.call(h, o)
+            },
                 g = b.event._listeners,
                 j = b.event._eventFilter,
                 n, i = k;
@@ -205,7 +210,7 @@ var BMAP_DRAWING_MARKER = "marker",
             g[g.length] = [h, k, m, l, i];
             return h
         };
-        b.un = b.event.un = function(i, l, h) {
+        b.un = b.event.un = function (i, l, h) {
             i = b._g(i);
             l = l.replace(/^on/i, "").toLowerCase();
             var o = b.event._listeners,
@@ -229,14 +234,14 @@ var BMAP_DRAWING_MARKER = "marker",
             }
             return i
         };
-        b.getEvent = b.event.getEvent = function(g) {
+        b.getEvent = b.event.getEvent = function (g) {
             return window.event || g
         };
-        b.getTarget = b.event.getTarget = function(g) {
+        b.getTarget = b.event.getTarget = function (g) {
             var g = b.getEvent(g);
             return g.target || g.srcElement
         };
-        b.preventDefault = b.event.preventDefault = function(g) {
+        b.preventDefault = b.event.preventDefault = function (g) {
             var g = b.getEvent(g);
             if (g.preventDefault) {
                 g.preventDefault()
@@ -244,7 +249,7 @@ var BMAP_DRAWING_MARKER = "marker",
                 g.returnValue = false
             }
         };
-        b.stopBubble = b.event.stopBubble = function(g) {
+        b.stopBubble = b.event.stopBubble = function (g) {
             g = b.getEvent(g);
             g.stopPropagation ? g.stopPropagation() : g.cancelBubble = true
         };
@@ -253,7 +258,7 @@ var BMAP_DRAWING_MARKER = "marker",
             b.browser.ie = b.ie = document.documentMode || +RegExp["\x241"]
         }
     })();
-    var d = BMapLib.DrawingManager = function(h, g) {
+    var d = BMapLib.DrawingManager = function (h, g) {
         if (!h) {
             return
         }
@@ -262,40 +267,40 @@ var BMAP_DRAWING_MARKER = "marker",
         this._initialize(h, g)
     };
     b.lang.inherits(d, b.lang.Class, "DrawingManager");
-    d.prototype.open = function() {
+    d.prototype.open = function () {
         if (this._isOpen == true) {
             return true
         }
         f(this);
         this._open()
     };
-    d.prototype.close = function() {
+    d.prototype.close = function () {
         if (this._isOpen == false) {
             return true
         }
         var g = this;
         this._close();
-        setTimeout(function() {
+        setTimeout(function () {
             g._map.enableDoubleClickZoom()
         }, 2000)
     };
-    d.prototype.setDrawingMode = function(g) {
+    d.prototype.setDrawingMode = function (g) {
         if (this._drawingType != g) {
             f(this);
             this._setDrawingMode(g)
         }
     };
-    d.prototype.getDrawingMode = function() {
+    d.prototype.getDrawingMode = function () {
         return this._drawingType
     };
-    d.prototype.enableCalculate = function() {
+    d.prototype.enableCalculate = function () {
         this._enableCalculate = true;
         this._addGeoUtilsLibrary()
     };
-    d.prototype.disableCalculate = function() {
+    d.prototype.disableCalculate = function () {
         this._enableCalculate = false
     };
-    d.prototype._initialize = function(h, g) {
+    d.prototype._initialize = function (h, g) {
         this._map = h;
         this._opts = g;
         this._drawingType = g.drawingMode || BMAP_DRAWING_MARKER;
@@ -319,7 +324,7 @@ var BMAP_DRAWING_MARKER = "marker",
         this.polygonOptions = g.polygonOptions || {};
         this.rectangleOptions = g.rectangleOptions || {};
         this.controlButton = g.controlButton == "right" ? "right" : "left"
-    }, d.prototype._open = function() {
+    }, d.prototype._open = function () {
         this._isOpen = true;
         if (!this._mask) {
             this._mask = new e()
@@ -329,7 +334,7 @@ var BMAP_DRAWING_MARKER = "marker",
     };
 
     //console.log();
-    d.prototype._setDrawingMode = function(g) {
+    d.prototype._setDrawingMode = function (g) {
         this._drawingType = g;
         if (this._isOpen) {
             this._mask.__listeners = {};
@@ -356,7 +361,7 @@ var BMAP_DRAWING_MARKER = "marker",
             this._drawingTool.setStyleByDrawingMode(g)
         }
     };
-    d.prototype._close = function() {
+    d.prototype._close = function () {
         this._isOpen = false;
         if (this._mask) {
             this._map.removeOverlay(this._mask)
@@ -365,11 +370,11 @@ var BMAP_DRAWING_MARKER = "marker",
             this._drawingTool.setStyleByDrawingMode("hander")
         }
     };
-    d.prototype._bindMarker = function() {
+    d.prototype._bindMarker = function () {
         var i = this,
             j = this._map,
             h = this._mask;
-        var g = function(l) {
+        var g = function (l) {
             // var k = new BMap.Marker(l.point, i.markerOptions);
             // $.post('add.php', { type: type, lat: l.point.lat, lng: l.point.lng, style: styleOptions }, function(data) {
             //     var a = new BMap.Point(l.point.lng, l.point.lat);
@@ -380,13 +385,13 @@ var BMAP_DRAWING_MARKER = "marker",
         };
         h.addEventListener("click", g)
     };
-    d.prototype._bindCircle = function() {
+    d.prototype._bindCircle = function () {
         var m = this,
             h = this._map,
             o = this._mask,
             i = null,
             k = null;
-        var j = function(p) {
+        var j = function (p) {
             if (m.controlButton == "right" && (p.button == 1 || p.button == 0)) {
                 return;
             }
@@ -399,12 +404,12 @@ var BMAP_DRAWING_MARKER = "marker",
             o.addEventListener("mousemove", n);
             b.on(document, "mouseup", l)
         };
-        var n = function(p) {
+        var n = function (p) {
             var abc = m._map.getDistance(k, p.point);
             saveData['radius'] = abc;
             i.setRadius(abc);
         };
-        var l = function(q) {
+        var l = function (q) {
             var p = m._calculate(i, q.point);
             m._dispatchOverlayComplete(i, p);
             k = null;
@@ -416,7 +421,7 @@ var BMAP_DRAWING_MARKER = "marker",
             o.removeEventListener("mousemove", n);
             b.un(document, "mouseup", l)
         };
-        var g = function(p) {
+        var g = function (p) {
             b.preventDefault(p);
             b.stopBubble(p);
             if (m.controlButton == "right" && p.button == 1) {
@@ -428,14 +433,20 @@ var BMAP_DRAWING_MARKER = "marker",
         };
         o.addEventListener("mousedown", g)
     };
-    d.prototype._bindPolylineOrPolygon = function() {
+    d.prototype._bindPolylineOrPolygon = function () {
         var k = this,
             m = this._map,
             h = this._mask,
             j = [],
             n = null;
-        overlay = null, isBinded = false;
-        var l = function(o) {
+        isBinded = false;
+        if (overlay) {
+            m.removeOverlay(overlay);
+        }
+        if (overlayi) {
+            m.removeOverlay(overlayi);
+        }
+        var l = function (o) {
             if (k.controlButton == "right" && (o.button == 1 || o.button == 0)) {
                 return
             }
@@ -454,9 +465,9 @@ var BMAP_DRAWING_MARKER = "marker",
 
                 }
                 m.addOverlay(overlay); //添加多边覆盖物
-                setTimeout(function() {
-                    m.removeOverlay(overlay);
-                }, 4000)
+                //setTimeout(function() {
+                //    m.removeOverlay(overlay);
+                //}, 4000)
 
             } else {
                 overlay.setPath(n);
@@ -470,10 +481,10 @@ var BMAP_DRAWING_MARKER = "marker",
                 h.addEventListener("dblclick", g)
             }
         };
-        var i = function(o) {
+        var i = function (o) {
             overlay.setPositionAt(n.length - 1, o.point);
         };
-        var g = function(p) {
+        var g = function (p) {
             b.stopBubble(p);
             isBinded = false;
             h.disableEdgeMove();
@@ -516,29 +527,33 @@ var BMAP_DRAWING_MARKER = "marker",
                 }
             }
             // console.log(markers);
-            let html = "";
-            for (let i = 0; i < ptsIn.length; i++) {
+            var html = "";
+            for (var i = 0; i < ptsIn.length; i++) {
                 // console.log(ptsIn[i].getTitle());
-                html += ptsIn[i].getTitle() + ",";
+                html += ptsIn[i].getLabel().content + ",";
             }
-            html=html.substring(0,html.length-2);
-//             layer.open({
-//                 type: 1,
-//                 skin: 'layui-layer-rim', //加上边框
-//                 area: ['420px', '240px'], //宽高
-//                 content: html
-//             });
-             //线路选择
-            $("#map").width("75%");
-            $("#condition").css("display","inline-block");
-            $("#contentList").append(`<li class="listyle"><div onclick="del(this)" class="del"></div><span class="spid">场所id:</span></br><span class="sphtml">${html}</span></br><span class="spid">时间段:</span></br><input type="text" name="txtStartTime" id="txtStartTime" class="_time" value="" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',readonly:true})" /><span class="spid">---</span><input type="text" name="txtEndTime" id="txtEndTime" class="_time" value="" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',readonly:true})" /></li>`);;
+            html = html.substring(0, html.length - 2);
+            //             layer.open({
+            //                 type: 1,
+            //                 skin: 'layui-layer-rim', //加上边框
+            //                 area: ['420px', '240px'], //宽高
+            //                 content: html
+            //             });
+            //线路选择s
+            if (html.length > 0) {
+                OVAL = OVAL + 1 + "O";
+                //$("#map").width("75%");
+                $(".BMapLib_Drawing_panel").css("marginRight", $("#condition").width());
+                $("#condition").css("display", "inline-block");
+                $("#contentList").append("<li class=\"listyle\"><div onclick=\"del(this)\" class=\"del\"></div><span class=\"spid\">设备ID：</span></br><span class=\"sphtml\">" + html + "</span></br><span class=\"spid\">时间段:</span></br><input type=\"text\" name=\"txtStartTime\" id=\"txtStartTime" + OVAL + "\" class=\"wdate\" value=\"\" onfocus=\"WdatePicker({dateFmt:\'yyyy-MM-dd HH:mm\',readonly:true,maxDate: \'#F{$dp.$D(\\'txtEndTime" + OVAL + "\\')}'})\" /><span class=\"spid\">---</span><input type=\"text\" name=\"txtEndTime\" id=\"txtEndTime" + OVAL + "\" class=\"wdate\" value=\"\" onfocus=\"WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',readonly:true,minDate: '#F{$dp.$D(\\'txtStartTime" + OVAL + "\\')}'})\" /></li>");
+            } else { alert("没有选出设备")}
             // $.post('add.php', { parent: parent, type: type, data: tmp, style: styleOptions }, function(data) {
 
             // });
             if (k.controlButton == "right") {
                 j.push(p.point)
             } else {
-                if (b.ie <= 8) {} else {
+                if (b.ie <= 8) { } else {
                     j.pop();
                 }
             }
@@ -550,17 +565,22 @@ var BMAP_DRAWING_MARKER = "marker",
             k.close()
         };
         h.addEventListener("mousedown", l);
-        h.addEventListener("dblclick", function(o) {
+        h.addEventListener("dblclick", function (o) {
             b.stopBubble(o)
         })
     };
-    d.prototype._bindRectangle = function() {
+    d.prototype._bindRectangle = function () {
         var k = this,
             n = this._map,
             h = this._mask,
-            i = null,
             j = null;
-        var m = function(p) {
+        if (overlay) {
+            n.removeOverlay(overlay);
+        }
+        if (overlayi) {
+            n.removeOverlay(overlayi);
+        }
+        var m = function (p) {
             b.stopBubble(p);
             b.preventDefault(p);
             if (k.controlButton == "right" && (p.button == 1 || p.button == 0)) {
@@ -570,25 +590,25 @@ var BMAP_DRAWING_MARKER = "marker",
             var o = j;
             var a = k._getRectanglePoint(j, o);
             saveData = a;
-            i = new BMap.Polygon(a, k.rectangleOptions);
-            n.addOverlay(i); //添加矩形覆盖物
-            setTimeout(function() {
-                n.removeOverlay(i);
-            }, 2000)
+            overlayi = new BMap.Polygon(a, k.rectangleOptions);
+            n.addOverlay(overlayi); //添加矩形覆盖物
+            //setTimeout(function() {
+            //    n.removeOverlay(overlayi);
+            //}, 2000)
             h.enableEdgeMove();
             h.addEventListener("mousemove", l);
             b.on(document, "mouseup", g);
             // console.log(a);
         };
-        var l = function(o) {
+        var l = function (o) {
             var abc = k._getRectanglePoint(j, o.point);
             saveData = abc;
-            i.setPath(abc);
+            overlayi.setPath(abc);
             // console.log(abc);
         };
-        var g = function(p) {
-            var o = k._calculate(i, i.getPath()[2]);
-            k._dispatchOverlayComplete(i, o);
+        var g = function (p) {
+            var o = k._calculate(overlayi, overlayi.getPath()[2]);
+            k._dispatchOverlayComplete(overlayi, o);
             j = null;
             var tmp = [],
                 parent = Date.parse(new Date()) / 1000;
@@ -604,13 +624,14 @@ var BMAP_DRAWING_MARKER = "marker",
             h.disableEdgeMove();
             h.removeEventListener("mousemove", l);
             b.un(document, "mouseup", g);
+            k.close();
             //获取的矩形顶点坐标
             // console.log(tmp);
-            let rectangles = [];
-            for (let i = 0; i < tmp.length; i++) {
+            var rectangles = [];
+            for (var i = 0; i < tmp.length; i++) {
                 rectangles.push(new BMap.Point(tmp[i][0], tmp[i][1]));
             }
-            let ptsIn = [];
+            var ptsIn = [];
             // console.log(polygons);
             for (var jj = 0; jj < pts.length; jj++) {
                 var result = BMapLib.GeoUtils.isPointInPolygon(markers[jj].point, new BMap.Polygon(rectangles));
@@ -620,26 +641,30 @@ var BMAP_DRAWING_MARKER = "marker",
                     continue;
                 }
             }
-            let html = "";
-            for (let i = 0; i < ptsIn.length; i++) {
+            var html = "";
+            for (var i = 0; i < ptsIn.length; i++) {
                 // console.log(ptsIn[i].getTitle());
-                html += ptsIn[i].getTitle() + ",";
+                html += ptsIn[i].getLabel().content + ",";
             }
-            html=html.substring(0,html.length-1);
-//            layer.open({
-//                type: 1,
-//                skin: 'layui-layer-rim', //加上边框
-//                area: ['420px', '240px'], //宽高
-//                content: html
-//            });
-            //矩形选择 
-            $("#map").width("75%");
-            $("#condition").css("display","inline-block");
-            $("#contentList").append(`<li class="listyle"><div onclick="del(this)" class="del"></div><span class="spid">场所id:</span></br><span class="sphtml">${html}</span></br><span class="spid">时间段:</span></br><input type="text" name="txtStartTime" id="txtStartTime" class="_time" value="" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',readonly:true})" /><span class="spid">---</span><input type="text" name="txtEndTime" id="txtEndTime" class="_time" value="" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',readonly:true})" /></li>`);
+            html = html.substring(0, html.length - 1);
+            //            layer.open({
+            //                type: 1,
+            //                skin: 'layui-layer-rim', //加上边框
+            //                area: ['420px', '240px'], //宽高
+            //                content: html
+            //            });
+            //矩形选择
+            if (html.length > 0) {
+                RECVAL = RECVAL + 1 + "R";
+                //$("#map").width("75%");
+                $(".BMapLib_Drawing_panel").css("marginRight", $("#condition").width());
+                $("#condition").css("display", "inline-block");
+                $("#contentList").append("<li class=\"listyle\"><div onclick=\"del(this)\" class=\"del\"></div><span class=\"spid\">设备ID：</span></br><span class=\"sphtml\">" + html + "</span></br><span class=\"spid\">时间段:</span></br><input type=\"text\" name=\"txtStartTime\" id=\"txtStartTime" + RECVAL + "\" class=\"wdate\" value=\"\" onfocus=\"WdatePicker({dateFmt:\'yyyy-MM-dd HH:mm\',readonly:true,maxDate: \'#F{$dp.$D(\\'txtEndTime" + RECVAL + "\\')}'})\" /><span class=\"spid\">---</span><input type=\"text\" name=\"txtEndTime\" id=\"txtEndTime" + RECVAL + "\" class=\"wdate\" value=\"\" onfocus=\"WdatePicker({dateFmt:'yyyy-MM-dd HH:mm',readonly:true,minDate: '#F{$dp.$D(\\'txtStartTime" + RECVAL + "\\')}'})\" /></li>");
+            } else { alert("没有选出设备") }
         };
-        h.addEventListener("mousedown", m)
+        h.addEventListener("mousedown", m);
     };
-    d.prototype._calculate = function(j, i) {
+    d.prototype._calculate = function (j, i) {
         var h = {
             data: 0,
             label: null
@@ -667,7 +692,7 @@ var BMAP_DRAWING_MARKER = "marker",
         }
         return h
     };
-    d.prototype._addGeoUtilsLibrary = function() {
+    d.prototype._addGeoUtilsLibrary = function () {
         if (!BMapLib.GeoUtils) {
             var g = document.createElement("script");
             g.setAttribute("type", "text/javascript");
@@ -675,19 +700,19 @@ var BMAP_DRAWING_MARKER = "marker",
             document.body.appendChild(g)
         }
     };
-    d.prototype._addLabel = function(g, i) {
+    d.prototype._addLabel = function (g, i) {
         var h = new BMap.Label(i, {
             position: g
         });
         this._map.addOverlay(h);
         return h
     };
-    d.prototype._getRectanglePoint = function(h, g) {
+    d.prototype._getRectanglePoint = function (h, g) {
         // console.log(h);
         // console.log(g);
         return [new BMap.Point(h.lng, h.lat), new BMap.Point(g.lng, h.lat), new BMap.Point(g.lng, g.lat), new BMap.Point(h.lng, g.lat)]
     };
-    d.prototype._dispatchOverlayComplete = function(h, i) {
+    d.prototype._dispatchOverlayComplete = function (h, i) {
         var g = {
             "overlay": h,
             "drawingMode": this._drawingType
@@ -707,50 +732,50 @@ var BMAP_DRAWING_MARKER = "marker",
     e.prototype.dispatchEvent = b.lang.Class.prototype.dispatchEvent;
     e.prototype.addEventListener = b.lang.Class.prototype.addEventListener;
     e.prototype.removeEventListener = b.lang.Class.prototype.removeEventListener;
-    e.prototype.initialize = function(i) {
+    e.prototype.initialize = function (i) {
         var h = this;
         this._map = i;
         var j = this.container = document.createElement("div");
         var g = this._map.getSize();
         j.style.cssText = "position:absolute;background:url(about:blank);cursor:crosshair;width:" + g.width + "px;height:" + g.height + "px";
-        this._map.addEventListener("resize", function(k) {
+        this._map.addEventListener("resize", function (k) {
             h._adjustSize(k.size)
         });
         this._map.getPanes().floatPane.appendChild(j);
         this._bind();
         return j
     };
-    e.prototype.draw = function() {
+    e.prototype.draw = function () {
         var i = this._map,
             g = i.pixelToPoint(new BMap.Pixel(0, 0)),
             h = i.pointToOverlayPixel(g);
         this.container.style.left = h.x + "px";
         this.container.style.top = h.y + "px"
     };
-    e.prototype.enableEdgeMove = function() {
+    e.prototype.enableEdgeMove = function () {
         this._enableEdgeMove = true
     };
-    e.prototype.disableEdgeMove = function() {
+    e.prototype.disableEdgeMove = function () {
         clearInterval(this._edgeMoveTimer);
         this._enableEdgeMove = false
     };
-    e.prototype._bind = function() {
+    e.prototype._bind = function () {
         var l = this,
             g = this._map,
             h = this.container,
             m = null,
             n = null;
-        var k = function(p) {
+        var k = function (p) {
             return {
                 x: p.clientX,
                 y: p.clientY
             }
         };
-        var j = function(r) {
+        var j = function (r) {
             var q = r.type;
             r = b.getEvent(r);
             point = l.getDrawPoint(r);
-            var s = function(t) {
+            var s = function (t) {
                 r.point = point;
                 l.dispatchEvent(r)
             };
@@ -776,13 +801,13 @@ var BMAP_DRAWING_MARKER = "marker",
         while (i--) {
             b.on(h, o[i], j);
         }
-        b.on(h, "mousemove", function(p) {
+        b.on(h, "mousemove", function (p) {
             if (l._enableEdgeMove) {
                 l.mousemoveAction(p)
             }
         })
     };
-    e.prototype.mousemoveAction = function(n) {
+    e.prototype.mousemoveAction = function (n) {
         function g(s) {
             var r = s.clientX,
                 q = s.clientY;
@@ -822,7 +847,7 @@ var BMAP_DRAWING_MARKER = "marker",
                 }
             }
             if (!this._edgeMoveTimer) {
-                this._edgeMoveTimer = setInterval(function() {
+                this._edgeMoveTimer = setInterval(function () {
                     h.panBy(o._panByX, o._panByY, {
                         "noAnimation": true
                     })
@@ -835,11 +860,11 @@ var BMAP_DRAWING_MARKER = "marker",
             }
         }
     };
-    e.prototype._adjustSize = function(g) {
+    e.prototype._adjustSize = function (g) {
         this.container.style.width = g.width + "px";
         this.container.style.height = g.height + "px"
     };
-    e.prototype.getDrawPoint = function(l) {
+    e.prototype.getDrawPoint = function (l) {
         var k = this._map,
             j = b.getTarget(l),
             h = l.offsetX || l.layerX || 0,
@@ -878,7 +903,7 @@ var BMAP_DRAWING_MARKER = "marker",
         }
     }
     a.prototype = new BMap.Control();
-    a.prototype.initialize = function(i) {
+    a.prototype.initialize = function (i) {
         var h = this.container = document.createElement("div");
         h.className = "BMapLib_Drawing";
         var g = this.panel = document.createElement("div");
@@ -892,7 +917,7 @@ var BMAP_DRAWING_MARKER = "marker",
         i.getContainer().appendChild(h);
         return h
     };
-    a.prototype._generalHtml = function(m) {
+    a.prototype._generalHtml = function (m) {
         var h = {};
         h["hander"] = "拖动地图";
         h[BMAP_DRAWING_MARKER] = "创建标注";
@@ -900,7 +925,7 @@ var BMAP_DRAWING_MARKER = "marker",
         h[BMAP_DRAWING_POLYLINE] = "线路选择";
         h[BMAP_DRAWING_POLYGON] = "画多边形";
         h[BMAP_DRAWING_RECTANGLE] = "区域选择";
-        var n = function(o, i) {
+        var n = function (o, i) {
             return '<a class="' + o + '" drawingType="' + i + '" href="javascript:void(0)" title="' + h[i] + '" onfocus="this.blur()"></a>'
         };
         var k = [];
@@ -914,23 +939,23 @@ var BMAP_DRAWING_MARKER = "marker",
         }
         return k.join("")
     };
-    a.prototype._setScale = function(j) {
+    a.prototype._setScale = function (j) {
         var i = 390,
             g = 50,
             k = -parseInt((i - i * j) / 2, 10),
             h = -parseInt((g - g * j) / 2, 10);
         this.container.style.cssText = ["-moz-transform: scale(" + j + ");", "-o-transform: scale(" + j + ");", "-webkit-transform: scale(" + j + ");", "transform: scale(" + j + ");", "margin-left:" + k + "px;", "margin-top:" + h + "px;", "*margin-left:0px;", "*margin-top:0px;", "margin-left:0px\\0;", "margin-top:0px\\0;", "filter: progid:DXImageTransform.Microsoft.Matrix(", "M11=" + j + ",", "M12=0,", "M21=0,", "M22=" + j + ",", "SizingMethod='auto expand');"].join("")
     };
-    a.prototype._bind = function(g) {
+    a.prototype._bind = function (g) {
         var h = this;
-        b.on(this.panel, "click", function(k) {
+        b.on(this.panel, "click", function (k) {
             var j = b.getTarget(k);
             var i = j.getAttribute("drawingType");
             h.setStyleByDrawingMode(i);
             h._bindEventByDraingMode(i)
         })
     };
-    a.prototype.setStyleByDrawingMode = function(h) {
+    a.prototype.setStyleByDrawingMode = function (h) {
         if (!h) {
             return
         }
@@ -948,10 +973,12 @@ var BMAP_DRAWING_MARKER = "marker",
             }
         }
     };
-    a.prototype._bindEventByDraingMode = function(g) {
+    a.prototype._bindEventByDraingMode = function (g) {
         var i = this;
         var h = this.drawingManager;
         if (g == "hander") {
+            map.removeOverlay(overlay);
+            map.removeOverlay(overlayi);
             h.close();
             h._map.enableDoubleClickZoom()
         } else {
@@ -971,3 +998,33 @@ var BMAP_DRAWING_MARKER = "marker",
         }
     }
 })();
+//地图搜索
+function GetAddressLM()
+{
+    if ($("#dataInput").val() != "") {
+        $.ajax({
+            type: "get",
+            url: strProto + lpyhtj + "/Public/RefAddressToVal?Address=" + encodeURIComponent($("#dataInput").val()) + "&a=" + (new Date()).getTime(),
+            dataType: "json",
+            async: false,
+            success: function (data, status) {
+                if (data.status == 1) {
+                    alert(data.message);
+                } else {
+                    //showInfoMap(data.lng, data.lat);
+                    //map.clearOverlays();
+                    //createNewOverlay(data.lng, data.lat); // 创建标注
+                    map.addOverlay(new BMap.Marker(new BMap.Point(data.lng, data.lat))); // 创建标注
+
+                    setTimeout(function () {
+                        var initPoint = new BMap.Point(data.lng, data.lat);    // 创建点坐标
+                        map.panTo(map.centerAndZoom(initPoint, 16));    //10毫秒后移动中心点
+                    }, 10);
+                }
+            },
+            error: function (data, status, e) {
+                alert(e);
+            }
+        });
+    }
+}

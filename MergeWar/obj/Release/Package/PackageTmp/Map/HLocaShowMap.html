@@ -93,13 +93,13 @@
     }
 
     function addSimulatorMarkers2(point,id) {
-        var simulatorIcon = new BMap.Icon("../Map/images/1.png", new BMap.Size(32, 37));
+        var simulatorIcon = new BMap.Icon("../Map/images/2.png", new BMap.Size(32, 37));
         // 创建标注对象并添加到地图
         var simulatorMarkerOptions = {
             icon: simulatorIcon,
             enableDragging: false,
             draggingCursor: "move",
-            title: "新标注"
+            title: id.slice(5,id.indexOf("<br>"))
         }
         var simulatorMarker = new BMap.Marker(point, simulatorMarkerOptions);
         simulatorMarker.setAnimation(BMAP_ANIMATION_DROP);
@@ -124,15 +124,15 @@
     function submitValue() {
             var strSearch="?ProId="+$("#selProvince").val()+"&CityId="+$("#selCity").val()+"&Aid="+$("#selArea").val();
             $.ajax({ type: "Get",
-                url: '/Location/RefLocaMapVal?ProId=1' ,//+ strSearch,
+                url: '/Public/RefLocaMapVal?ProId=1&Aid=49' ,//+ strSearch,
                 dataType: "json",
                 async: false,
                 cache: false,
                 success: function (data, status) {
                     if (typeof (data.jsAlter) != 'undefined' && data.jsAlter != "") {
-                        data.jsAlter;
+                        alert(data.jsAlter);
                     } else {
-                        map.clearOverlays();
+                        //map.clearOverlays();
                         setTimeout(function(){
                         	map.panTo(new BMap.Point(data.pointLng,data.pointLat));    //10毫秒后移动中心点
                         }, 10);

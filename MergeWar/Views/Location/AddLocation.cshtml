@@ -1,227 +1,348 @@
-﻿@{ 
+﻿@{
     ViewBag.Title = "添加场所信息";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @using HCZZ.ModeDB;
-@using Common;
+@using HCZZ.Common;
 <link href="@Url.Content(" ../../Content/css/CSGL.css ")" rel="stylesheet" type="text/css" />
-<script src="@Url.Content("../../Content/DatePicker/WdatePicker.js")"  type="text/javascript" charset="utf-8"></script>
+<script src="@Url.Content(" ../../Content/DatePicker/WdatePicker.js")" type="text/javascript" charset="utf-8"></script>
+<link href="~/Content/css/publicHeader.css" rel="stylesheet" />
+<link href="~/Content/css/page.css" rel="stylesheet" />
+<style type="text/css">
+    .contentbody .contentInfo table {
+        color: #b1b1b1;
+        width: 1250px;
+        border: 1px solid #2a393a;
+        margin: 0 auto;
+        background-color: #21222f;
+    }
+
+        .contentbody .contentInfo table tr {
+            height: 40px;
+        }
+
+            .contentbody .contentInfo table tr:nth-child(even) {
+                background-color: #21202E;
+            }
+
+            .contentbody .contentInfo table tr:nth-child(odd) {
+                background-color: #21222F;
+            }
+
+            .contentbody .contentInfo table tr th {
+                text-align: left;
+                padding-left: 50px;
+                background-color: #1E1F2D;
+                border-bottom: 1px solid #2A393A;
+            }
+
+            .contentbody .contentInfo table tr td {
+                border-right: 1px solid #2A393A;
+                padding-left: 50px;
+            }
+
+                .contentbody .contentInfo table tr td .spanTitle {
+                    color: #999999;
+                }
+
+                .contentbody .contentInfo table tr td .spanText {
+                    color: #CCCCCC;
+                }
+
+                .contentbody .contentInfo table tr td .spanTextHint {
+                    color: #AA301C;
+                }
+
+        .contentbody .contentInfo table:nth-child(1) {
+            margin-top: 20px;
+        }
+
+        .contentbody .contentInfo table:nth-child(2) {
+            margin-bottom: 50px;
+            border-top: none;
+        }
+
+        .contentbody .contentInfo table tr td img {
+            vertical-align: middle;
+        }
+
+        .contentbody .contentInfo table tr td input {
+            margin-left: 5px;
+            background-color: transparent;
+            border: none;
+            background-color: #222B3B;
+            height: 25px;
+            padding-left: 5px;
+            color: #999999;
+        }
+
+        .contentbody .contentInfo table tr td select {
+            margin-left: 5px;
+            background-color: transparent;
+            border: none;
+            background-color: #222B3B;
+            height: 25px;
+            padding-left: 5px;
+            color: #999999;
+        }
+
+        .contentbody .contentInfo table tr td .SYHLXbtn {
+            border: 1px solid #222B3B;
+            cursor: pointer;
+            outline: none;
+            box-sizing: border-box;
+            /*padding-top: 3px;*/
+            margin-left: 10px;
+            padding-bottom: 3px;
+            padding-left: 15px;
+            padding-right: 15px;
+            -moz-border-radius: 15px; /* Firefox */
+            -webkit-border-radius: 15px; /* Safari 和 Chrome */
+            border-radius: 15px; /* Opera 10.5+, 以及使用了IE-CSS3的IE浏览器 */
+        }
+
+        .contentbody .contentInfo table tr td .YHLXbtnActive {
+            cursor: pointer;
+            box-sizing: border-box;
+            outline: none;
+            color: #7BD2DA;
+            border: 1px solid #7BD2DA;
+        }
+
+        .contentbody .contentInfo table tr td .ZJLX {
+            width: 80px;
+            border: 1px solid #0A7891;
+            cursor: pointer;
+            background-color: #0B2A3C;
+            color: #7BD2DA;
+        }
+            .btn_SS {
+        box-sizing: border-box;
+        cursor: pointer;
+        width: 250px;
+        height: 50px;
+        background-color: #1e1f2d;
+        color: #7bd2da;
+        border: none;
+        font: 14px "Î¢ÈíÑÅºÚ";
+        background-image: url(/Content/images/save_bg.png);
+        margin-left: 520px;
+    }
+            /*span{ 
+                color:#AA301C;
+            }*/
+</style>
 @using (Html.BeginForm("AddLocation", "Location", FormMethod.Post))
 {
     UserInfo user = (UserInfo)Session["userInfo"];
     <div class="contentbody" id="contentbody">
-        <table cellpadding="50" cellspacing="1" width="100%">
-            <tr>
-                <th colspan="4">
-                    <h1>
-                        添加场所信息</h1>
-                </th>
-            </tr>
-        </table>
-        <div id="mind" style="overflow-y: auto">
-            <table cellpadding="50" cellspacing="1" width="100%" class="AddCx_tab4L">
-                <tr>
-                    <td width="12%" align="right">
-                        上网服务场所名称：
-                    </td>
-                    <td width="35%">
-                        <input type="text" id="txtPLACE_NAME" name="txtPLACE_NAME" class="_text" maxlength="250"
-                            value="" /><span id="spPLACE_NAME">*</span>
-                    </td>
-                    <td width="14%" align="right">
-                        场所服务类型：
-                    </td>
-                    <td>
-                        <select id="SelNETSITE_TYPE" name="SelNETSITE_TYPE">
-                            <option value="0">==请选择==</option>
-                            @{ Dictionary<int, string> dicType = ChangeValue.GetLocaTypeList(); foreach (var item in dicType)
-                               {
-                                <option value="@item.Key">@item.Value</option>
-                               } }
-                        </select>
-                        <span id="spNETSITE_TYPE">*</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="right">
-                        场所经营性质：
-                    </td>
-                    <td>
-                        <select name="selBusiness_Nature" id="selBusiness_Nature" style="float: left; margin-top: 3px;
-                            margin-right: 10px;">
-                            <option value="0">==请选择==</option>
-                            <option value="0">经营</option>
-                            <option value="1">非经营</option>
-                            <option value="3">其他</option>
-                        </select><span id="spBusiness_Nature">*</span>
-                    </td>
-                    <td align="right">
-                        场所详细地址：
-                    </td>
-                    <td>
-                        <input type="text" id="txtSITE_ADDRESS" name="txtSITE_ADDRESS" maxlength="250" class="_text"
-                            value="" /><span id="spSITE_ADDRESS">*</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="right">
-                        场所经营法人：
-                    </td>
-                    <td>
-                        <input type="text" id="txtUserName" name="txtUserName" maxlength="15" class="_text"
-                            value="" /><span id="spUserName"></span>
-                    </td>
-                    <td align="right">
-                        联系方式：
-                    </td>
-                    <td>
-                        <input type="text" id="txtMobile" name="txtMobile" maxlength="15" class="_text" value="" /><span
-                            id="spMobile">手机号码或座机</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="right">
-                        经营法人有效证件类型：
-                    </td>
-                    <td>
-                        <input type="text" id="txtCERTIFICATE_TYPE" name="txtCERTIFICATE_TYPE" readonly="readonly"
-                            maxlength="11" class="_text" value="" />
-                        <input type="hidden" value="" id="txtCertifiID" name="txtCertifiID" /><a href="javascript:void(0)"
-                            onclick="javascript:showIdentify()" style="background: #1b5579; border: 1px solid #000;
+        <div class="contentTopNav">
+        </div>
+        <div class="contentInfo">
+            <table cellspacing="0" cellpadding="0" border="0">
+                <tbody>
+                    <tr><th colspan="3">添加场所信息</th></tr>
+                    <tr>
+                        <td style="width: 50%;">
+                            <img src="/Content/images/star1.png">
+                            <span class="spanTitle">上网服务场所名称：</span>
+                            <input type="text" id="txtPLACE_NAME" name="txtPLACE_NAME" class="_text" maxlength="250"
+                                   value="" /><span id="spPLACE_NAME"></span>
+                        </td>
+                        <td style="width: 50%;">
+                            <img src="/Content/images/star1.png">
+                            <span class="spanTitle">场所服务类型：</span>
+                            <select id="SelNETSITE_TYPE" name="SelNETSITE_TYPE">
+                                <option value="0">==请选择==</option>
+                                @{ Dictionary<int, string> dicType = ChangeValue.GetLocaTypeList();
+                                    foreach (var item in dicType)
+                                    {
+                                        <option value="@item.Key">@item.Value</option>
+                                    } }
+                            </select>
+                            <span id="spNETSITE_TYPE"></span>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 50%;">
+                            <img src="/Content/images/star1.png">
+                            <span class="spanTitle">场所经营性质：</span>
+                            <select name="selBusiness_Nature" id="selBusiness_Nature">
+                                <option value="0">==请选择==</option>
+                                <option value="0">经营</option>
+                                <option value="1">非经营</option>
+                                <option value="3">其他</option>
+                            </select><span id="spBusiness_Nature"></span>
+                        </td>
+                        <td>
+                            <img src="/Content/images/star1.png">
+                            <span class="spanTitle">Email:</span>
+                            <input style="width: 320px;" id="txtEmail" name="txtEmail" value="" maxlength="64" type="text">
+                            <!--<span class="spanText">625968931@qq.com</span>-->
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="margin-top: 20px;">
+                            <img src="/Content/images/star1.png">
+                            <span class="spanTitle">场所详细地址：</span>
+                            <input type="text" id="txtSITE_ADDRESS" name="txtSITE_ADDRESS" maxlength="250" class="_text"
+                                   value="" /><span id="spSITE_ADDRESS"></span>
+                        </td>
+                        <td>
+                            @*<img src="/Content/images/star1.png">*@
+                            <span class="spanTitle">  场所经营法人：</span>
+                            <input type="text" id="txtUserName" name="txtUserName" maxlength="15" class="_text"
+                                   value="" /><span id="spUserName"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @*<img src="/Content/images/star1.png">*@
+                            <span class="spanTitle">联系方式：</span>
+                            <input type="text" id="txtMobile" name="txtMobile" maxlength="15" class="_text" value="" /><span id="spMobile">手机号码或座机</span>
+                        </td>
+                        <td>
+                            @*<img src="/Content/images/star1.png">*@
+                            <span class="spanTitle"> 经营法人有效证件类型：</span>
+                            <select name="txtCertifiID" id="txtCertifiID">
+                                <option value="0">==请选择==</option>
+                                <option value="1">身份证</option>
+                                <option value="2">军官证</option>
+                                <option value="3">港澳通行证</option>
+                                <option value="4">护照</option>
+                                <option value="5">驾驶证</option>
+                            </select><span id="spServiceBusines"></span>
+                            @*<input type="text" id="txtCERTIFICATE_TYPE" name="txtCERTIFICATE_TYPE" readonly="readonly"
+                                   maxlength="11" class="_text" value="" />
+                            <input type="hidden" value="" id="txtCertifiID" name="txtCertifiID" /><a href="javascript:void(0)"
+                                                                                                     onclick="javascript:showIdentify()" style="background: #1b5579; border: 1px solid #000;
                             padding: 4px 5px; margin-left: 5px; color: #fff">选择证件类型</a> <span id="spCERTIFICATE_TYPE"
-                                class="color_ccc"></span>
-                    </td>
-                    <td align="right">
-                        经营法人有效证件号码：
-                    </td>
-                    <td>
-                        <input type="text" id="txtCERTIFICATE_ID" name="txtCERTIFICATE_ID" maxlength="50"
-                            value="" /><span id="spCERTIFICATE_ID"></span>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="right">
-                        营业开始时间：
-                    </td>
-                    <td>
-                        <input type="text" id="txtSTART_TIME" class="Wdate" name="txtSTART_TIME" readonly="readonly" maxlength="11"
-                            onfocus="WdatePicker({ dateFmt: 'HH:mm' })" value="" /><span id="spSTART_TIME"></span>
-                    </td>
-                    <td align="right">
-                        营业结束时间：
-                    </td>
-                    <td>
-                        <input type="text" id="txtEND_TIME" class="Wdate" name="txtEND_TIME" readonly="readonly" maxlength="15"
-                            onfocus="WdatePicker({ dateFmt: 'HH:mm' })" value="" /><span id="spEND_TIME"></span>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="right">
-                        所属区域：
-                    </td>
-                    <td colspan="3">
-                        省:
-                        <select id="selProvince" name="selProvince" onchange="changeValue('selProvince','selCity','City')">
-                            <option value="0">==请选择==</option>
-                        </select>
-                        市:
-                        <select id="selCity" name="selCity" onchange="changeValue('selCity','SelArea','Area')">
-                            <option value="0">==请选择==</option>
-                        </select>
-                        区:
-                        <select id="SelArea" name="SelArea" onchange="changeValue('SelArea','selPolice','police')">
-                            <option value="0">==请选择==</option>
-                        </select>
-                        派出所:
-                        <select id="selPolice" name="selPolice" onchange="changeValue('selPolice','selscenic','Scenic')">
-                            <option value="0">==请选择==</option>
-                        </select>
-                        警区:
-                        <select id="selscenic" name="selscenic">
-                            <option value="0">==请选择==</option>
-                        </select>
-                        <span id="spscenic">*</span>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="right">
-                        经纬度：
-                    </td>
-                    <td>
-                        <input type="text" id="txtItude" maxlength="23" name="txtItude" readonly="readonly"
-                            value="" /><a href="javascript:void(0)" onclick="showItude()" style="background: #1b5579;
+                                                                                              class="color_ccc"></span>*@
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @*<img src="/Content/images/star1.png">*@
+                            <span class="spanTitle"> 经营法人有效证件号码：</span>
+                            <input type="text" id="txtCERTIFICATE_ID" name="txtCERTIFICATE_ID" maxlength="50"
+                                   value="" /><span id="spCERTIFICATE_ID"></span>
+                        </td>
+                        <td>
+                            @*<img src="/Content/images/star1.png">*@
+                            <span class="spanTitle"> 营业开始时间：</span>
+                            <input type="text" id="txtSTART_TIME" class="Wdate" name="txtSTART_TIME" readonly="readonly" maxlength="11"
+                                   onfocus="WdatePicker({ dateFmt: 'HH:mm' })" value="" /><span id="spSTART_TIME"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @*<img src="/Content/images/star1.png">*@
+                            <span class="spanTitle">营业结束时间：</span>
+                            <input type="text" id="txtEND_TIME" class="Wdate" name="txtEND_TIME" readonly="readonly" maxlength="15"
+                                   onfocus="WdatePicker({ dateFmt: 'HH:mm' })" value="" /><span id="spEND_TIME"></span>
+                        </td>
+                        <td colspan="3">
+                            <img src="/Content/images/star1.png">
+                            所属区域：
+                            省:
+                            <select id="selProvince" name="selProvince" onchange="changeValue('selProvince','selCity','City')">
+                                <option value="0">==请选择==</option>
+                            </select>
+                            市:
+                            <select id="selCity" name="selCity" onchange="changeValue('selCity','SelArea','Area')">
+                                <option value="0">==请选择==</option>
+                            </select>
+                            区:
+                            <select id="SelArea" name="SelArea" onchange="changeValue('SelArea','selPolice','police')">
+                                <option value="0">==请选择==</option>
+                            </select>
+                            派出所:
+                            <select id="selPolice" name="selPolice" onchange="changeValue('selPolice','selscenic','Scenic')">
+                                <option value="0">==请选择==</option>
+                            </select>
+                            警区:
+                            <select id="selscenic" name="selscenic">
+                                <option value="0">==请选择==</option>
+                            </select>
+                            <span id="spscenic">*</span>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>
+                            @*<img src="/Content/images/star1.png">*@
+                            <span class="spanTitle">经纬度：</span>
+                            <input type="text" id="txtItude" maxlength="23" name="txtItude" readonly="readonly"
+                                   value="" /><a href="javascript:void(0)" onclick="AlertShow(1000,550,'/Map/HGetItude.html')" style="background: #1b5579;
                                 border: 1px solid #000; padding: 4px 5px; margin-left: 5px; color: #fff">获取经纬度</a>
-                        <span id="spItude"></span>
-                    </td>
-                    <td align="right">
-                        厂商数据来源：
-                    </td>
-                    <td>
-                        <select id="SelMakeType" name="SelMakeType">
-                            @{ Dictionary<int, string> dicMakeType = ViewBag.dic; foreach (var item in dicMakeType)
-                               {
-                                <option @(item.Key == 1 ? "selected=selected" : "") value="@item.Key">@item.Value</option>
-                               } }
-                        </select><span id="spMakeType"></span>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="right">
-                        场所网络接入方式：
-                    </td>
-                    <td>
-                        <select name="SelConnectType" id="SelConnectType">
-                            <option value="0">==请选择==</option>
-                            @{ Dictionary<int, string> dicConType = ChangeValue.GetConnectTypeList(); foreach (var item in dicConType)
-                               {
-                                <option value="@item.Key">@item.Value</option>
-                               } }
-                        </select><span id="spConnectType"></span>
-                    </td>
-                    <td align="right">
-                        场所网络接入服务商：
-                    </td>
-                    <td>
-                        <select name="SelServiceBusines" id="SelServiceBusines">
-                            <option value="0">==请选择==</option>
-                            @{ Dictionary<string, string> dicSerBus = ChangeValue.GetServiceBusinesList(); foreach (var item in dicSerBus)
-                               {
-                                <option value="@item.Key">@item.Value</option>
-                               } }
-                        </select><span id="spServiceBusines"></span>
-                    </td>
-                </tr>
-                <tr>
-                    <td align="right">
-                        场所状态：
-                    </td>
-                    <td>
-                        <label>
-                            <input type="radio" name="radStatis" checked="checked" value="1" />场所营业</label>
-                        <label>
-                            <input type="radio" name="radStatis" value="2" />场所停业</label>
-                    </td>
-                    <td align="right">
-                        @* 网络接入账号或固定IP地址：*@
-                    </td>
-                    <td>
-                        @*
-                    <input type="text" id="txtOutIpAddress" name="txtOutIpAddress" maxlength="50" class="_text" value="" /><span id="spOutIpAddress" class="color_ccc"></span>*@
-                    </td>
-                </tr>
-                <tr>
-                    <td align="center" colspan="4">
-                        <input class="btn_SS" type="submit" name="button" value="保存" onmouseover="this.className='Over_SS'"
-                            onmouseout="this.className='Onout_SS'" />&nbsp;&nbsp; <font color="red">*注意：场所经纬度如果为空，则在地图标记中不显示</font>
-                    </td>
-                </tr>
+                            <span id="spItude"></span>
+                        </td>
+                        <td>
+                            @*<img src="/Content/images/star1.png">*@
+                            <span class="spanTitle"> 厂商数据来源：</span>
+                            <select id="SelMakeType" name="SelMakeType">
+                                @{ Dictionary <int, string>dicMakeType = ViewBag.dic; foreach (var item in dicMakeType)
+                                    {
+                                        <option @(item.Key == 1 ? "selected=selected" : "" ) value="@item.Key">@item.Value</option>
+                                    }
+                                     }
+                            </select><span id="spMakeType"></span>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @*<img src="/Content/images/star1.png">*@
+                            <span class="spanTitle"> 场所网络接入方式：</span>
+                            <select name="SelConnectType" id="SelConnectType">
+                                <option value="0">==请选择==</option>
+                                @{ Dictionary
+   <int, string>
+   dicConType = ChangeValue.GetConnectTypeList(); foreach (var item in dicConType)
+                                    {
+                                        <option value="@item.Key">@item.Value</option>
+                                    } }
+                            </select><span id="spConnectType"></span>
+                        </td>
+                        <td>
+                            @*<img src="/Content/images/star1.png">*@
+                            <span class="spanTitle"> 场所网络接入服务商：</span>
+                            <select name="SelServiceBusines" id="SelServiceBusines">
+                                <option value="0">==请选择==</option>
+                                @{ Dictionary
+   <string, string>
+   dicSerBus = ChangeValue.GetServiceBusinesList(); foreach (var item in dicSerBus)
+                                    {
+                                        <option value="@item.Key">@item.Value</option>
+                                    } }
+                            </select><span id="spServiceBusines"></span>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @*<img src="/Content/images/star1.png">*@
+                            <span class="spanTitle"> 场所状态：</span>
+                            <label>
+                                <input type="radio" name="radStatis" checked="checked" value="1" />场所营业
+                            </label>
+                            <label>
+                                <input type="radio" name="radStatis" value="2" />场所停业
+                            </label>
+                        </td>
+                        <td></td>
+                    </tr>
+
+                </tbody>
             </table>
+            <input class="btn_SS" type="submit" name="button" value="保存" />&nbsp;&nbsp; <font color="#AA301C;">*注意：场所经纬度如果为空，则在地图标记中不显示,带"*"为必填项</font>
         </div>
         <div id="mapPop" style="position: absolute; background: #fff; overflow: hidden; width: 980px;
             height: 600px; margin-left: -490px; margin-top: -300px; top: 50%; left: 50%;
             border: 1px solid #333; z-index: 1000; display: none">
             <iframe src="../../Map/HGetItude.html" height="100%" width="100%" scrolling="no"
-                frameborder="0"></iframe>
+                    frameborder="0"></iframe>
         </div>
         <div id="identify" style="position: absolute; background: #fff; overflow: hidden;
             width: 980px; height: 600px; margin-left: -490px; margin-top: -300px; top: 50%;
@@ -230,57 +351,183 @@
         </div>
     </div>
     <script type="text/javascript">
-    var showItude=()=>{
-        $("#mapPop").css("display","block");
-    }
-    var hideItude=()=>{
-        $("#mapPop").css("display","none");
-    }
-    var showIdentify=()=>{
-        $("#identify").css("display","block");
-    }
-    var hideIdentify=()=>{
-        $("#identify").css("display","none");
-    }
-    function changeValue(fname, sname, key) {
-        var id = parseInt($("#" + fname).val());
-        if (id != 0 || key == "Province") {
-            $.ajax
-			    ({
-			        type: "Get",
-			        url: "/Public/AreaValue?Id=" + id + "&key= " + key,
-			        dataType: "json",
-			        async: false,
-			        success: function (data, status) {
-			            if (typeof (data.err) != 'undefined' && data.err != "") {
-			                alert(data.err);
-			            } else {
-			                SelClear(key);
-			                for (var i = 0; i < data.length; i++) {
-			                    $("#" + sname).append("<option value='" + data[i].ID + "'>" + data[i].Name + "</option>");
-			                }
-			            }
-			        },
-			        error: function (data, status, e) {
-			            alert(e);
-			        }
-			    });
-        } else {
-            SelClear(key);
+        var showItude = () => {
+            $("#mapPop").css("display", "block");
         }
-    }
-    changeValue('selProvince', 'selProvince', 'Province');
-    function SelClear(key) {
-        if (key == "City") {
-            $("#selCity").html("<option value='0'>==市级==</option>");
-            $("#selArea").html("<option value='0'>==区级==</option>");
-            $("#selPolice").html("<option value='0'>==派出所级==</option>");
-        } else if (key == "Area") {
-            $("#selArea").html("<option value='0'>==区级==</option>");
-            $("#selPolice").html("<option value='0'>==派出所级==</option>");
-        } else if (key == "police") {
-            $("#selPolice").html("<option value='0'>==派出所级==</option>");
+        var hideItude = () => {
+            $("#mapPop").css("display", "none");
         }
-    }
+        var showIdentify = () => {
+            $("#identify").css("display", "block");
+        }
+        var hideIdentify = () => {
+            $("#identify").css("display", "none");
+        }
+        function changeValue(fname, sname, key) {
+            var id = parseInt($("#" + fname).val());
+            if (id != 0 || key == "Province") {
+                $.ajax
+                    ({
+                        type: "Get",
+                        url: "/Public/AreaValue?Id=" + id + "&key= " + key,
+                        dataType: "json",
+                        async: false,
+                        success: function (data, status) {
+                            if (typeof (data.err) != 'undefined' && data.err != "") {
+                                alert(data.err);
+                            } else {
+                                SelClear(key);
+                                for (var i = 0; i < data.length; i++) {
+                                    $("#" + sname).append("<option value='" + data[i].ID + "'>" + data[i].Name + "</option>");
+                                }
+                            }
+                        },
+                        error: function (data, status, e) {
+                            alert(e);
+                        }
+                    });
+            } else {
+                SelClear(key);
+            }
+        }
+        changeValue('selProvince', 'selProvince', 'Province');
+        function SelClear(key) {
+            if (key == "City") {
+                $("#selCity").html("<option value='0'>==市级==</option>");
+                $("#selArea").html("<option value='0'>==区级==</option>");
+                $("#selPolice").html("<option value='0'>==派出所级==</option>");
+            } else if (key == "Area") {
+                $("#selArea").html("<option value='0'>==区级==</option>");
+                $("#selPolice").html("<option value='0'>==派出所级==</option>");
+            } else if (key == "police") {
+                $("#selPolice").html("<option value='0'>==派出所级==</option>");
+            }
+        }
+    </script>
+    <script type="text/javascript">
+        function pageSubmit() {
+            var result = true;
+
+            if (!regtxt()) {
+                result = false;
+            }
+
+            var regInput = new RegExp(/^[\u4e00-\u9fa5A-Za-z\d_( ).,—@@:-]*$/);
+
+            if ($.trim($("#txtPLACE_NAME").val()) == "") {
+                result = false;
+                $("#spPLACE_NAME").html("上网服务场所名称不能为空");
+            } else if (!regInput.test($.trim($("#txtPLACE_NAME").val()))) {
+                result = false;
+                $("#spPLACE_NAME").html("上网服务场所名称不能存在特殊字符");
+            } else {
+                $("#spPLACE_NAME").html("");
+            }
+
+            if ($.trim($("#txtSITE_ADDRESS").val()) == "") {
+                result = false;
+                $("#spSITE_ADDRESS").html("场所详细地址不能为空");
+            } else if (!regInput.test($.trim($("#txtSITE_ADDRESS").val()))) {
+                result = false;
+                $("#spSITE_ADDRESS").html("场所详细地址不能存在特殊字符");
+            } else {
+                $("#spSITE_ADDRESS").html("");
+            }
+
+            if ($("#txtUserName").val() != "" && !regName.test($.trim($("#txtUserName").val()))) {
+                result = false;
+                $("#spUserName").html("场所经营法人不能存在特殊字符");
+            } else {
+                $("#spUserName").html("");
+            }
+
+            if ($("#SelNETSITE_TYPE").val() == "0") {
+                result = false;
+                $("#spNETSITE_TYPE").html("请选择场所服务类型");
+            } else {
+                $("#spNETSITE_TYPE").html("");
+            }
+
+            if ($("#selBusiness_Nature").val() == "-1") {
+                result = false;
+                $("#spBusiness_Nature").html("请选择场所经营性质");
+            } else {
+                $("#spBusiness_Nature").html("");
+            }
+
+            if ($("#selscenic").val() == "0") {
+                result = false;
+                $("#spscenic").html("请选择所属区域");
+            } else {
+                $("#spscenic").html("");
+            }
+
+            var reg = new RegExp(/^\w+([-+.']\w+)*@@\w+([-.]\w+)*\.\w+([-.]\w+)*$/g);
+            if ($.trim($("#txtInterEmail").val()) != "") {
+                if (!reg.test($.trim($("#txtInterEmail").val()))) {
+                    result = false;
+                    $("#spInterEmail").html("邮箱格式不正确，请重新输入");
+                } else {
+                    $("#spInterEmail").html("");
+                }
+            }
+
+            var regZipCode = new RegExp(/^[1-9]\d{5}(?!\d)/g);
+            if ($.trim($("#txtZipcode").val()) != "") {
+                if (!regZipCode.test($.trim($("#txtZipcode").val()))) {
+                    result = false;
+                    $("#spZipcode").html("邮编不正确，请重新输入");
+                } else {
+                    $("#spZipcode").html("");
+                }
+            }
+
+            var txtItude = $.trim($("#txtItude").val());
+            reg = new RegExp(/^(-?\d+)(\.\d+)?$/);
+            if (txtItude != "") {
+                if (!(reg.test(txtItude.split(",")[0]) && reg.test(txtItude.split(",")[1])) || txtItude.split(",").length != 2) {
+                    result = false;
+                    $("#spItude").html("经纬度格式不正确，请重新输入！");
+                } else {
+                    $("#spItude").html("");
+                }
+            }
+
+
+            var regmobile = new RegExp(/^[\d-]+$/);
+            if ($.trim($("#txtMobile").val()) != "") {
+                if (!regmobile.test($.trim($("#txtMobile").val()))) {
+                    result = false;
+                    $("#spMobile").html("联系方式只能为数字或-");
+                } else {
+                    $("#spMobile").html("");
+                }
+            } else {
+                $("#spMobile").html("");
+            }
+
+            var WebTel = $.trim($("#txtWebTel").val());
+            if (WebTel != "") {
+                if (isNaN(WebTel)) {
+                    result = false;
+                    $("#spWebTel").html("网络负责人联系电话只能是11或12位数字");
+                } else if (WebTel.length != 11 && WebTel.length != 12) {
+                    result = false;
+                    $("#spWebTel").html("网络负责人联系电话的长度为11或12位");
+                } else {
+                    $("#spWebTel").html("");
+                }
+            }
+
+            return result;
+        }
+        $(function () {
+            $("form").submit(function () {
+                if (pageSubmit()) {
+                    return true;
+                }
+                return false;
+            });
+        });
     </script>
 }

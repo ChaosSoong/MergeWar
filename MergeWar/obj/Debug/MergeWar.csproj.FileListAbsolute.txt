@@ -80,7 +80,6 @@ D:\netweb\合成作战新版\源码\MergeWar\bin\roslyn\VBCSCompiler.exe.config
 D:\netweb\合成作战新版\源码\MergeWar\bin\MergeWar.dll.config
 D:\netweb\合成作战新版\源码\MergeWar\bin\MergeWar.dll
 D:\netweb\合成作战新版\源码\MergeWar\bin\MergeWar.pdb
-D:\netweb\合成作战新版\源码\MergeWar\bin\Common.dll
 D:\netweb\合成作战新版\源码\MergeWar\bin\HCZZ.DAL.dll
 D:\netweb\合成作战新版\源码\MergeWar\bin\HCZZ.ModeDB.dll
 D:\netweb\合成作战新版\源码\MergeWar\bin\HCZZt.Filter.dll
@@ -106,7 +105,6 @@ D:\netweb\合成作战新版\源码\MergeWar\bin\System.Web.Webpages.Deployment.
 D:\netweb\合成作战新版\源码\MergeWar\bin\System.Web.Webpages.dll
 D:\netweb\合成作战新版\源码\MergeWar\bin\System.Web.Webpages.Razor.dll
 D:\netweb\合成作战新版\源码\MergeWar\bin\Webdiyer.MvcPager.dll
-D:\netweb\合成作战新版\源码\MergeWar\bin\Common.pdb
 D:\netweb\合成作战新版\源码\MergeWar\bin\HCZZ.DAL.pdb
 D:\netweb\合成作战新版\源码\MergeWar\bin\HCZZt.Filter.pdb
 D:\netweb\合成作战新版\源码\MergeWar\bin\HCZZ.ModeDB.pdb
@@ -132,3 +130,5 @@ D:\netweb\合成作战新版\源码\MergeWar\obj\Debug\MergeWar.dll
 D:\netweb\合成作战新版\源码\MergeWar\obj\Debug\MergeWar.pdb
 D:\netweb\合成作战新版\源码\MergeWar\bin\Szcert.Audit.CommonBase.dll
 D:\netweb\合成作战新版\源码\MergeWar\bin\Szcert.Audit.CommonBase.xml
+D:\netweb\合成作战新版\源码\MergeWar\bin\HCZZ.Common.dll
+D:\netweb\合成作战新版\源码\MergeWar\bin\HCZZ.Common.pdb

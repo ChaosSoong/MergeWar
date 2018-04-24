@@ -1,0 +1,545 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://service/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="sCPInquireService" targetNamespace="http://service/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xs:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://service/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="addTerminalManageList" type="tns:addTerminalManageList" />
+      <xs:element name="addTerminalManageListResponse" type="tns:addTerminalManageListResponse" />
+      <xs:element name="findCaptureTime" type="tns:findCaptureTime" />
+      <xs:element name="findCaptureTimeResponse" type="tns:findCaptureTimeResponse" />
+      <xs:element name="queryAccessLogAuth" type="tns:queryAccessLogAuth" />
+      <xs:element name="queryAccessLogAuthResponse" type="tns:queryAccessLogAuthResponse" />
+      <xs:element name="queryAppearDev" type="tns:queryAppearDev" />
+      <xs:element name="queryAppearDevResponse" type="tns:queryAppearDevResponse" />
+      <xs:element name="queryAuthOrMac" type="tns:queryAuthOrMac" />
+      <xs:element name="queryAuthOrMacResponse" type="tns:queryAuthOrMacResponse" />
+      <xs:element name="queryDisappearDev" type="tns:queryDisappearDev" />
+      <xs:element name="queryDisappearDevResponse" type="tns:queryDisappearDevResponse" />
+      <xs:element name="queryListCollision" type="tns:queryListCollision" />
+      <xs:element name="queryListCollisionResponse" type="tns:queryListCollisionResponse" />
+      <xs:element name="queryListFollow" type="tns:queryListFollow" />
+      <xs:element name="queryListFollowResponse" type="tns:queryListFollowResponse" />
+      <xs:element name="queryMainpageInfoCountDetail" type="tns:queryMainpageInfoCountDetail" />
+      <xs:element name="queryMainpageInfoCountDetailResponse" type="tns:queryMainpageInfoCountDetailResponse" />
+      <xs:element name="queryTerminaAccessList" type="tns:queryTerminaAccessList" />
+      <xs:element name="queryTerminaAccessListResponse" type="tns:queryTerminaAccessListResponse" />
+      <xs:element name="queryTerminalInfoDetail" type="tns:queryTerminalInfoDetail" />
+      <xs:element name="queryTerminalInfoDetailResponse" type="tns:queryTerminalInfoDetailResponse" />
+      <xs:element name="queryTerminalInfoMac" type="tns:queryTerminalInfoMac" />
+      <xs:element name="queryTerminalInfoMacResponse" type="tns:queryTerminalInfoMacResponse" />
+      <xs:element name="queryTerminalManageList" type="tns:queryTerminalManageList" />
+      <xs:element name="queryTerminalManageListResponse" type="tns:queryTerminalManageListResponse" />
+      <xs:element name="queryVirtualIdent" type="tns:queryVirtualIdent" />
+      <xs:element name="queryVirtualIdentDetail" type="tns:queryVirtualIdentDetail" />
+      <xs:element name="queryVirtualIdentDetailResponse" type="tns:queryVirtualIdentDetailResponse" />
+      <xs:element name="queryVirtualIdentResponse" type="tns:queryVirtualIdentResponse" />
+      <xs:element name="updateTerminalManageList" type="tns:updateTerminalManageList" />
+      <xs:element name="updateTerminalManageListResponse" type="tns:updateTerminalManageListResponse" />
+      <xs:complexType name="addTerminalManageList">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="xs:string" />
+          <xs:element minOccurs="0" name="arg1" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="addTerminalManageListResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="queryTerminalManageList">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="queryTerminalManageListResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="queryListFollow">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="queryListFollowResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="findCaptureTime">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="findCaptureTimeResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="queryDisappearDev">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="queryDisappearDevResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="queryTerminaAccessList">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="queryTerminaAccessListResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="queryAppearDev">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="queryAppearDevResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="queryListCollision">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="queryListCollisionResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="queryMainpageInfoCountDetail">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="queryMainpageInfoCountDetailResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="queryAccessLogAuth">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="queryAccessLogAuthResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="queryAuthOrMac">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="queryAuthOrMacResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="queryVirtualIdent">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="queryVirtualIdentResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="queryTerminalInfoDetail">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="queryTerminalInfoDetailResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="updateTerminalManageList">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="xs:string" />
+          <xs:element minOccurs="0" name="arg1" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="updateTerminalManageListResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="queryVirtualIdentDetail">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="queryVirtualIdentDetailResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="queryTerminalInfoMac">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="arg0" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="queryTerminalInfoMacResponse">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="return" type="xs:string" />
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="SolrServerException" type="tns:SolrServerException" />
+      <xs:complexType name="SolrServerException">
+        <xs:sequence />
+      </xs:complexType>
+      <xs:element name="IOException" type="tns:IOException" />
+      <xs:complexType name="IOException">
+        <xs:sequence />
+      </xs:complexType>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="queryTerminalManageList">
+    <wsdl:part name="parameters" element="tns:queryTerminalManageList" />
+  </wsdl:message>
+  <wsdl:message name="queryDisappearDevResponse">
+    <wsdl:part name="parameters" element="tns:queryDisappearDevResponse" />
+  </wsdl:message>
+  <wsdl:message name="queryMainpageInfoCountDetailResponse">
+    <wsdl:part name="parameters" element="tns:queryMainpageInfoCountDetailResponse" />
+  </wsdl:message>
+  <wsdl:message name="queryListFollow">
+    <wsdl:part name="parameters" element="tns:queryListFollow" />
+  </wsdl:message>
+  <wsdl:message name="queryDisappearDev">
+    <wsdl:part name="parameters" element="tns:queryDisappearDev" />
+  </wsdl:message>
+  <wsdl:message name="IOException">
+    <wsdl:part name="IOException" element="tns:IOException" />
+  </wsdl:message>
+  <wsdl:message name="queryTerminalManageListResponse">
+    <wsdl:part name="parameters" element="tns:queryTerminalManageListResponse" />
+  </wsdl:message>
+  <wsdl:message name="queryAccessLogAuthResponse">
+    <wsdl:part name="parameters" element="tns:queryAccessLogAuthResponse" />
+  </wsdl:message>
+  <wsdl:message name="queryAppearDev">
+    <wsdl:part name="parameters" element="tns:queryAppearDev" />
+  </wsdl:message>
+  <wsdl:message name="queryMainpageInfoCountDetail">
+    <wsdl:part name="parameters" element="tns:queryMainpageInfoCountDetail" />
+  </wsdl:message>
+  <wsdl:message name="queryAuthOrMac">
+    <wsdl:part name="parameters" element="tns:queryAuthOrMac" />
+  </wsdl:message>
+  <wsdl:message name="queryVirtualIdent">
+    <wsdl:part name="parameters" element="tns:queryVirtualIdent" />
+  </wsdl:message>
+  <wsdl:message name="queryVirtualIdentResponse">
+    <wsdl:part name="parameters" element="tns:queryVirtualIdentResponse" />
+  </wsdl:message>
+  <wsdl:message name="queryVirtualIdentDetailResponse">
+    <wsdl:part name="parameters" element="tns:queryVirtualIdentDetailResponse" />
+  </wsdl:message>
+  <wsdl:message name="queryTerminalInfoDetailResponse">
+    <wsdl:part name="parameters" element="tns:queryTerminalInfoDetailResponse" />
+  </wsdl:message>
+  <wsdl:message name="queryVirtualIdentDetail">
+    <wsdl:part name="parameters" element="tns:queryVirtualIdentDetail" />
+  </wsdl:message>
+  <wsdl:message name="queryListCollisionResponse">
+    <wsdl:part name="parameters" element="tns:queryListCollisionResponse" />
+  </wsdl:message>
+  <wsdl:message name="addTerminalManageList">
+    <wsdl:part name="parameters" element="tns:addTerminalManageList" />
+  </wsdl:message>
+  <wsdl:message name="SolrServerException">
+    <wsdl:part name="SolrServerException" element="tns:SolrServerException" />
+  </wsdl:message>
+  <wsdl:message name="queryListFollowResponse">
+    <wsdl:part name="parameters" element="tns:queryListFollowResponse" />
+  </wsdl:message>
+  <wsdl:message name="addTerminalManageListResponse">
+    <wsdl:part name="parameters" element="tns:addTerminalManageListResponse" />
+  </wsdl:message>
+  <wsdl:message name="queryAuthOrMacResponse">
+    <wsdl:part name="parameters" element="tns:queryAuthOrMacResponse" />
+  </wsdl:message>
+  <wsdl:message name="findCaptureTime">
+    <wsdl:part name="parameters" element="tns:findCaptureTime" />
+  </wsdl:message>
+  <wsdl:message name="queryTerminaAccessListResponse">
+    <wsdl:part name="parameters" element="tns:queryTerminaAccessListResponse" />
+  </wsdl:message>
+  <wsdl:message name="queryTerminalInfoMacResponse">
+    <wsdl:part name="parameters" element="tns:queryTerminalInfoMacResponse" />
+  </wsdl:message>
+  <wsdl:message name="queryTerminaAccessList">
+    <wsdl:part name="parameters" element="tns:queryTerminaAccessList" />
+  </wsdl:message>
+  <wsdl:message name="queryListCollision">
+    <wsdl:part name="parameters" element="tns:queryListCollision" />
+  </wsdl:message>
+  <wsdl:message name="updateTerminalManageListResponse">
+    <wsdl:part name="parameters" element="tns:updateTerminalManageListResponse" />
+  </wsdl:message>
+  <wsdl:message name="queryAccessLogAuth">
+    <wsdl:part name="parameters" element="tns:queryAccessLogAuth" />
+  </wsdl:message>
+  <wsdl:message name="queryTerminalInfoDetail">
+    <wsdl:part name="parameters" element="tns:queryTerminalInfoDetail" />
+  </wsdl:message>
+  <wsdl:message name="queryAppearDevResponse">
+    <wsdl:part name="parameters" element="tns:queryAppearDevResponse" />
+  </wsdl:message>
+  <wsdl:message name="updateTerminalManageList">
+    <wsdl:part name="parameters" element="tns:updateTerminalManageList" />
+  </wsdl:message>
+  <wsdl:message name="findCaptureTimeResponse">
+    <wsdl:part name="parameters" element="tns:findCaptureTimeResponse" />
+  </wsdl:message>
+  <wsdl:message name="queryTerminalInfoMac">
+    <wsdl:part name="parameters" element="tns:queryTerminalInfoMac" />
+  </wsdl:message>
+  <wsdl:portType name="SCPInquireService">
+    <wsdl:operation name="addTerminalManageList">
+      <wsdl:input name="addTerminalManageList" message="tns:addTerminalManageList" />
+      <wsdl:output name="addTerminalManageListResponse" message="tns:addTerminalManageListResponse" />
+      <wsdl:fault name="SolrServerException" message="tns:SolrServerException" />
+      <wsdl:fault name="IOException" message="tns:IOException" />
+    </wsdl:operation>
+    <wsdl:operation name="queryTerminalManageList">
+      <wsdl:input name="queryTerminalManageList" message="tns:queryTerminalManageList" />
+      <wsdl:output name="queryTerminalManageListResponse" message="tns:queryTerminalManageListResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="queryListFollow">
+      <wsdl:input name="queryListFollow" message="tns:queryListFollow" />
+      <wsdl:output name="queryListFollowResponse" message="tns:queryListFollowResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="findCaptureTime">
+      <wsdl:input name="findCaptureTime" message="tns:findCaptureTime" />
+      <wsdl:output name="findCaptureTimeResponse" message="tns:findCaptureTimeResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="queryDisappearDev">
+      <wsdl:input name="queryDisappearDev" message="tns:queryDisappearDev" />
+      <wsdl:output name="queryDisappearDevResponse" message="tns:queryDisappearDevResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="queryTerminaAccessList">
+      <wsdl:input name="queryTerminaAccessList" message="tns:queryTerminaAccessList" />
+      <wsdl:output name="queryTerminaAccessListResponse" message="tns:queryTerminaAccessListResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="queryAppearDev">
+      <wsdl:input name="queryAppearDev" message="tns:queryAppearDev" />
+      <wsdl:output name="queryAppearDevResponse" message="tns:queryAppearDevResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="queryListCollision">
+      <wsdl:input name="queryListCollision" message="tns:queryListCollision" />
+      <wsdl:output name="queryListCollisionResponse" message="tns:queryListCollisionResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="queryMainpageInfoCountDetail">
+      <wsdl:input name="queryMainpageInfoCountDetail" message="tns:queryMainpageInfoCountDetail" />
+      <wsdl:output name="queryMainpageInfoCountDetailResponse" message="tns:queryMainpageInfoCountDetailResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="queryAccessLogAuth">
+      <wsdl:input name="queryAccessLogAuth" message="tns:queryAccessLogAuth" />
+      <wsdl:output name="queryAccessLogAuthResponse" message="tns:queryAccessLogAuthResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="queryAuthOrMac">
+      <wsdl:input name="queryAuthOrMac" message="tns:queryAuthOrMac" />
+      <wsdl:output name="queryAuthOrMacResponse" message="tns:queryAuthOrMacResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="queryVirtualIdent">
+      <wsdl:input name="queryVirtualIdent" message="tns:queryVirtualIdent" />
+      <wsdl:output name="queryVirtualIdentResponse" message="tns:queryVirtualIdentResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="queryTerminalInfoDetail">
+      <wsdl:input name="queryTerminalInfoDetail" message="tns:queryTerminalInfoDetail" />
+      <wsdl:output name="queryTerminalInfoDetailResponse" message="tns:queryTerminalInfoDetailResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="updateTerminalManageList">
+      <wsdl:input name="updateTerminalManageList" message="tns:updateTerminalManageList" />
+      <wsdl:output name="updateTerminalManageListResponse" message="tns:updateTerminalManageListResponse" />
+      <wsdl:fault name="SolrServerException" message="tns:SolrServerException" />
+      <wsdl:fault name="IOException" message="tns:IOException" />
+    </wsdl:operation>
+    <wsdl:operation name="queryVirtualIdentDetail">
+      <wsdl:input name="queryVirtualIdentDetail" message="tns:queryVirtualIdentDetail" />
+      <wsdl:output name="queryVirtualIdentDetailResponse" message="tns:queryVirtualIdentDetailResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="queryTerminalInfoMac">
+      <wsdl:input name="queryTerminalInfoMac" message="tns:queryTerminalInfoMac" />
+      <wsdl:output name="queryTerminalInfoMacResponse" message="tns:queryTerminalInfoMacResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="sCPInquireServiceSoapBinding" type="tns:SCPInquireService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="addTerminalManageList">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="addTerminalManageList">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="addTerminalManageListResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="SolrServerException">
+        <soap:fault use="literal" name="SolrServerException" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="IOException">
+        <soap:fault use="literal" name="IOException" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="queryTerminalManageList">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="queryTerminalManageList">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="queryTerminalManageListResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="queryListFollow">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="queryListFollow">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="queryListFollowResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="findCaptureTime">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="findCaptureTime">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="findCaptureTimeResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="queryDisappearDev">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="queryDisappearDev">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="queryDisappearDevResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="queryTerminaAccessList">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="queryTerminaAccessList">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="queryTerminaAccessListResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="queryAppearDev">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="queryAppearDev">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="queryAppearDevResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="queryListCollision">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="queryListCollision">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="queryListCollisionResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="queryMainpageInfoCountDetail">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="queryMainpageInfoCountDetail">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="queryMainpageInfoCountDetailResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="queryAccessLogAuth">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="queryAccessLogAuth">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="queryAccessLogAuthResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="queryAuthOrMac">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="queryAuthOrMac">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="queryAuthOrMacResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="queryVirtualIdent">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="queryVirtualIdent">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="queryVirtualIdentResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="queryTerminalInfoDetail">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="queryTerminalInfoDetail">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="queryTerminalInfoDetailResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateTerminalManageList">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="updateTerminalManageList">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="updateTerminalManageListResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="SolrServerException">
+        <soap:fault use="literal" name="SolrServerException" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="IOException">
+        <soap:fault use="literal" name="IOException" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="queryVirtualIdentDetail">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="queryVirtualIdentDetail">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="queryVirtualIdentDetailResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="queryTerminalInfoMac">
+      <soap:operation soapAction="" style="document" />
+      <wsdl:input name="queryTerminalInfoMac">
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="queryTerminalInfoMacResponse">
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="sCPInquireService">
+    <wsdl:port name="SCPInquireServiceImplPort" binding="tns:sCPInquireServiceSoapBinding">
+      <soap:address location="http://192.168.0.92:8989/justTest/sCPInquireService" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

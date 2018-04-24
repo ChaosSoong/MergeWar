@@ -1,20 +1,83 @@
 ﻿@{
-    Layout = null;
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @using Common;
 @using HCZZ.ModeDB;
 @using System.Data;
-
-<head>
-    <title>编辑系统参数配置</title>
-    <link href="@Url.Content("~/Content/css/index.css")" rel="stylesheet" type="text/css" />
-    <script src="@Url.Content("~/Content/js/jquery-1.7.1.min.js")" type="text/javascript"></script>
-</head>
-        @using (Html.BeginForm("EditConfigInfo", "System", FormMethod.Post))
-        {
-            DataTable dt = (DataTable)ViewBag.dt;
-            List<int> list = (List<int>)ViewBag.list;
-            <div class="aq_title">
+<link href="~/Content/css/XTGL_XTPZCSGL_XGPZXX.css" rel="stylesheet" />
+@using (Html.BeginForm("EditConfigInfo", "System", FormMethod.Post))
+{
+    DataTable dt = (DataTable)ViewBag.dt;
+    List<int> list = (List<int>)ViewBag.list;
+<div class="contentbody" id="contentbody">
+    <div class="contentInfo">
+            <ul style="height: 480px;">
+                <li>
+                    <span>配置信息</span>
+                </li>
+                <li class="liText liOdd">
+                    <span class="spanTitle">心跳包间隔时间:</span>
+                    <span class="spanText"><input type="text" id="txtConfigValue1" name="txtConfigValue1" value="@(dt != null && dt.Rows.Count > 0 ? dt.Rows[0]["ConfigValue"].ToString() : "5")" /></span>
+                    <i class="i1" id="spConfigValue1">时间范围在5-30分钟之间</i>
+                    <span class="spanTitle">配置信息查询间隔时间:</span>
+                    <span class="spanText"><input type="text" id="txtConfigValue2" name="txtConfigValue2" value="@(dt != null && dt.Rows.Count > 0 ? dt.Rows[1]["ConfigValue"].ToString() : "10")"  maxlength="9" /></span>
+                    <i class="i2" id="spConfigValue2">时间范围在10-480分钟之间</i>
+                    <span class="spanTitle">电子围栏信息发送时间:</span>
+                    <span class="spanText"><input type="text" id="txtConfigValue3" name="txtConfigValue3" value="@(dt != null && dt.Rows.Count > 0 ? dt.Rows[2]["ConfigValue"].ToString() : "1")"  maxlength="9"/></span>
+                    <i class="i3" id="spConfigValue3">时间范围在1-300秒之间</i>
+                </li>
+                <li class="liText liEven">
+                    <span class="spanTitle">电子围栏离线时间:</span>
+                    <span class="spanText"><input type="text" id="txtConfigValue4" name="txtConfigValue4" value="@(dt != null && dt.Rows.Count > 0 ? dt.Rows[3]["ConfigValue"].ToString() : "1")"  maxlength="9" /></span>
+                    <i class="i4" id="spConfigValue4">时间范围在1-600秒之间</i>
+                    <span class="spanTitle">上网设备离线时间:</span>
+                    <span class="spanText"><input type="text" id="txtConfigValue5" name="txtConfigValue5" value="@(dt != null && dt.Rows.Count > 0 ? dt.Rows[4]["ConfigValue"].ToString() : "3")" maxlength="9"/></span>
+                    <i class="i5" id="spConfigValue5">时间范围在3-120分钟之间</i>
+                    <span class="spanTitle">电子围栏采集范围:</span>
+                    @{var range = (dt != null && dt.Rows.Count > 0 ? dt.Rows[6]["ConfigValue"].ToString() : "200");}
+                    <span class="spanText"><input type="text" style="width: 125px;" name="txtConfigValue7" id="txtConfigValue7" value="@range" /></span><b>米</b>
+                    <i class="i6" id="spConfigValue6"></i>
+                </li>
+                <li class="liText liOdd">
+                    <span class="spanTitle">信息采集速度:</span>
+                    @{var speed = (dt != null && dt.Rows.Count > 0 ? dt.Rows[7]["ConfigValue"].ToString() : "2000");}
+                    <span class="spanText"><input type="text" style="width: 125px;" name="txtConfigValue8" id="txtConfigValue8" value="@speed" /></span><b>个</b>
+                    <i class="i7" id="spConfigValue7">至少选择一项</i>
+                    <span class="spanTitle" style="width: 185px;">信息采集粒度:</span>
+                    <span class="spanCheckbox">
+                        <input type="checkbox" @((list != null && list.Contains(1)) ? "checked=checked" : "")  name="ckConfigValue6" value="1" /><label for="checkbox1">HTTP日志</label>
+                        <input type="checkbox" @((list != null && list.Contains(2)) ? "checked=checked" : "") name="ckConfigValue6" value="2" /><label for="checkbox2">电子围栏</label>
+                        <input type="checkbox" @((list != null && list.Contains(4)) ? "checked=checked" : "") name="ckConfigValue6" value="4" /><label for="checkbox3">虚拟账户</label>
+                    </span>
+                    <i class="i8" id="spCheckbox">至少选择一项</i>
+                </li>
+                <li class="liText liEven">
+                    <span class="spanTitle">GPS位置上报时间:</span>
+                    <span class="spanText"><input type="text" id="txtConfigValue9" name="txtConfigValue9" class="_text"  value="@(dt != null && dt.Rows.Count > 0 ? dt.Rows[8]["ConfigValue"].ToString() : "5")" maxlength="9"/></span>
+                    <i class="i9" id="spConfigValue9">时间范围在5-300秒之间</i>
+                    <span class="spanTitle">系统日志存储时间:</span>
+                    <span class="spanText"><input type="text" id="txtConfigValue10" name="txtConfigValue10" class="_text" value="@(dt != null && dt.Rows.Count > 0 ? dt.Rows[9]["ConfigValue"].ToString() : "720")" maxlength="9"/></span>
+                    <i class="i10" id="spConfigValue10">时间范围在1-1000小时之间</i>
+                    <span class="spanTitle">时间窗口内采集数据去重:</span>
+                    <span class="spanText"><input type="text" id="txtConfigValue11" name="txtConfigValue11" class="_text" maxlength="3" value="@(dt != null && dt.Rows.Count > 9 ? dt.Rows[10]["ConfigValue"].ToString() : "60")" /></span>
+                    <i class="i11" id="spConfigValue11">单位:秒，最大600秒</i>
+                </li>
+                <li class="liText liOdd">
+                    <span class="spanTitle">密匙:</span>
+                    <span class="spanText"><input type="text" id="txtConfigValue12" name="txtConfigValue12" maxlength="8" class="_text" value="@(dt != null && dt.Rows.Count > 10 ? dt.Rows[11]["ConfigValue"].ToString() : "")"/></span>
+                    <i class="i12" id="spConfigValue12">长度为8位</i>
+                    <span class="spanTitle">初始向量:</span>
+                    <span class="spanText"><input type="text" id="txtConfigValue13" name="txtConfigValue13" maxlength="8" class="_text" value="@(dt != null && dt.Rows.Count > 11 ? dt.Rows[12]["ConfigValue"].ToString() : "")"/></span>
+                    <i class="i13" id="spConfigValue13">长度为8位</i>
+                </li>
+                <li class="liBtn">
+                    <input class="selectbg" type="submit" id="" value="保存" />
+                    <input class="resetbg" type="reset" value="重置" />
+                </li>
+            </ul>
+        </div>
+</div>
+        @*<div class="aq_title">
                 <div class="TT_left">
                 </div>
                 <div class="TT_right">
@@ -22,7 +85,7 @@
                 <div class="img_close" onclick="javascript:parent.closeDiv()">
                 </div>
                 编辑系统配置
-            </div>   
+            </div>
             <div class="aq_tab aq_overflow2" style=" height:380px;">
                 <table cellpadding="0" cellspacing="1" width="100%" class="aq_XxTab">
                     <tr>
@@ -114,7 +177,7 @@
                                 <option value="1000" @(speed == "1000" ? "selected=\"selected\"" : "")>1000</option>
                                 <option value="2000" @(speed == "2000" ? "selected=\"selected\"" : "")>2000</option>
                                 <option value="3000" @(speed == "3000" ? "selected=\"selected\"" : "")>3000</option>
-                            </select>    个                      
+                            </select>    个
                         </td>
                     </tr>
                     <tr>
@@ -163,212 +226,211 @@
                         </td>
                     </tr>
                 </table>
-            </div> 
+            </div>
             <div style="text-align:center">
                 <input type="submit"  name="button" value="保存" />
-            </div>
-            }
-            <script type="text/javascript">
-                $(function () {
+            </div>*@
+        }
+        <script type="text/javascript">
+            $(function () {
 
-                    $("form").submit(function () {
-                        if (subVal()) {
-                            return true;
-                        } else {
-                            return false;
-                        }
-                    });
+                $("form").submit(function () {
+                    if (subVal()) {
+                        return true;
+                    } else {
+                        return false;
+                    }
                 });
+            });
 
-                function subVal() {
-                    var result = true;
-                    var reg = new RegExp(/^[1-9]*[1-9][0-9]*$/g);
+            function subVal() {
+                var result = true;
+                var reg = new RegExp(/^[1-9]*[1-9][0-9]*$/g);
 
-                    if ($("#txtConfigValue1").val() == "") {
-                        result = false;
-                        $("#spConfigValue1").html("请输入配置值");
-                    } else if (isNaN($("#txtConfigValue1").val())) {
-                        result = false;
-                        $("#spConfigValue1").html("配置值只能为大于0的数字");
-                    } else if (!reg.test($("#txtConfigValue1").val())) {
-                        result = false;
-                        $("#spChannel").html("配置值为5—30之间的整数");
-                    } else if ($("#txtConfigValue1").val() < 5 || $("#txtConfigValue1").val() > 30) {
-                        result = false;
-                        $("#spConfigValue1").html("时间范围在5—30分钟之间");
-                    } else {
-                        $("#spConfigValue1").html("");
-                    }
-
-                    reg = new RegExp(/^[1-9]*[1-9][0-9]*$/g);
-                    if ($("#txtConfigValue2").val() == "") {
-                        result = false;
-                        $("#spConfigValue2").html("请输入配置值");
-                    } else if (isNaN($("#txtConfigValue2").val())) {
-                        result = false;
-                        $("#spConfigValue2").html("配置值只能为大于0的数字");
-                    } else if (!reg.test($("#txtConfigValue2").val())) {
-                        result = false;
-                        $("#spConfigValue2").html("配置值为10—480之间的整数");
-                    } else if ($("#txtConfigValue2").val() < 10 || $("#txtConfigValue2").val() > 480) {
-                        result = false;
-                        $("#spConfigValue2").html("时间范围在10—480分钟之间");
-                    } else {
-                        $("#spConfigValue2").html("");
-                    }
-
-                    reg = new RegExp(/^[1-9]*[1-9][0-9]*$/g);
-                    if ($("#txtConfigValue3").val() == "") {
-                        result = false;
-                        $("#spConfigValue3").html("请输入配置值");
-                    } else if (isNaN($("#txtConfigValue3").val())) {
-                        result = false;
-                        $("#spConfigValue3").html("配置值只能为大于0的数字");
-                    } else if (!reg.test($("#txtConfigValue3").val())) {
-                        result = false;
-                        $("#spConfigValue3").html("配置值为1—300之间的整数");
-                    } else if ($("#txtConfigValue3").val() < 1 || $("#txtConfigValue3").val() > 300) {
-                        result = false;
-                        $("#spConfigValue3").html("时间范围在1—300秒之间");
-                    } else {
-                        $("#spConfigValue3").html("");
-                    }
-
-                    reg = new RegExp(/^[1-9]*[1-9][0-9]*$/g);
-                    if ($("#txtConfigValue4").val() == "") {
-                        result = false;
-                        $("#spConfigValue4").html("请输入配置值");
-                    } else if (isNaN($("#txtConfigValue4").val())) {
-                        result = false;
-                        $("#spConfigValue4").html("配置值只能为大于0的数字");
-                    } else if (!reg.test($("#txtConfigValue4").val())) {
-                        result = false;
-                        $("#spConfigValue4").html("配置值为1—600之间的整数");
-                    } else if ($("#txtConfigValue4").val() < 1 || $("#txtConfigValue4").val() > 600) {
-                        result = false;
-                        $("#spConfigValue4").html("时间范围在1—600秒之间");
-                    } else {
-                        $("#spConfigValue4").html("");
-                    }
-
-                    reg = new RegExp(/^[1-9]*[1-9][0-9]*$/g);
-                    if ($("#txtConfigValue5").val() == "") {
-                        result = false;
-                        $("#spConfigValue5").html("请输入配置值");
-                    } else if (isNaN($("#txtConfigValue5").val())) {
-                        result = false;
-                        $("#spConfigValue5").html("配置值只能为大于0的数字");
-                    } else if (!reg.test($("#txtConfigValue5").val())) {
-                        result = false;
-                        $("#spConfigValue5").html("配置值为3—120之间的整数");
-                    } else if ($("#txtConfigValue5").val() < 3 || $("#txtConfigValue5").val() > 120) {
-                        result = false;
-                        $("#spConfigValue5").html("时间范围在3—120分钟之间");
-                    } else {
-                        $("#spConfigValue5").html("");
-                    }
-
-                    if ($("input[name='ckConfigValue6']:checked").length == 0) {
-                        result = false;
-                        $("#spConfigValue6").html("请选择采集粒度值");
-                    } else {
-                        $("#spConfigValue6").html("");
-                    }
-
-                    reg = new RegExp(/^[1-9]*[1-9][0-9]*$/g);
-                    if ($("#txtConfigValue7").val() == "") {
-                        result = false;
-                        $("#spConfigValue7").html("请输入配置值");
-                    } else if (isNaN($("#txtConfigValue7").val())) {
-                        result = false;
-                        $("#spConfigValue7").html("配置值只能为大于0的数字");
-                    } else if (!reg.test($("#txtConfigValue7").val())) {
-                        result = false;
-                        $("#spConfigValue7").html("配置值为10—1000之间的整数");
-                    } else if ($("#txtConfigValue7").val() < 10 || $("#txtConfigValue7").val() > 1000) {
-                        result = false;
-                        $("#spConfigValue7").html("时间范围在10—1000米之间");
-                    } else {
-                        $("#spConfigValue7").html("");
-                    }
-
-                    reg = new RegExp(/^[1-9]*[1-9][0-9]*$/g);
-                    if ($("#txtConfigValue9").val() == "") {
-                        result = false;
-                        $("#spConfigValue9").html("请输入配置值");
-                    } else if (isNaN($("#txtConfigValue9").val())) {
-                        result = false;
-                        $("#spConfigValue9").html("配置值只能为大于0的数字");
-                    } else if (!reg.test($("#txtConfigValue9").val())) {
-                        result = false;
-                        $("#spConfigValue9").html("配置值为5—300之间的整数");
-                    } else if ($("#txtConfigValue9").val() < 5 || $("#txtConfigValue9").val() > 300) {
-                        result = false;
-                        $("#spConfigValue9").html("时间范围在5—300秒之间");
-                    } else {
-                        $("#spConfigValue9").html("");
-                    }
-
-
-                    reg = new RegExp(/^[1-9]*[1-9][0-9]*$/g);
-                    if ($("#txtConfigValue10").val() == "") {
-                        result = false;
-                        $("#spConfigValue10").html("请输入配置值");
-                    } else if (isNaN($("#txtConfigValue10").val())) {
-                        result = false;
-                        $("#spConfigValue10").html("配置值只能为大于0的数字");
-                    } else if (!reg.test($("#txtConfigValue10").val())) {
-                        result = false;
-                        $("#spConfigValue10").html("配置值为1—1000之间的整数");
-                    } else if ($("#txtConfigValue10").val() < 1 || $("#txtConfigValue10").val() > 1000) {
-                        result = false;
-                        $("#spConfigValue10").html("时间范围在1—1000小时之间");
-                    } else {
-                        $("#spConfigValue10").html("");
-                    }
-
-
-                    reg = new RegExp(/^[1-9]*[1-9][0-9]*$/g);
-                    if ($("#txtConfigValue11").val() == "") {
-                        result = false;
-                        $("#spConfigValue11").html("请输入配置值");
-                    } else if (isNaN($("#txtConfigValue11").val())) {
-                        result = false;
-                        $("#spConfigValue11").html("配置值只能为大于0的数字");
-                    } else if (!reg.test($("#txtConfigValue11").val())) {
-                        result = false;
-                        $("#spConfigValue11").html("配置值为1—600之间的整数");
-                    } else if ($("#txtConfigValue11").val() < 1 || $("#txtConfigValue11").val() > 600) {
-                        result = false;
-                        $("#spConfigValue11").html("时间窗口内采集数据去重范围在1—600秒之间");
-                    } else if ($("#txtConfigValue4").val() != "" && parseInt($("#txtConfigValue4").val()) <= parseInt($("#txtConfigValue11").val())) {
-                        result = false;
-                        $("#spConfigValue11").html("电子围栏离线时间必须大于时间窗口内采集数据");
-                    } else {
-                        $("#spConfigValue11").html("");
-                    }
-
-                    if ($("#txtConfigValue12").val() == "") {
-                        result = false;
-                        $("#spConfigValue12").html("请输入配置值");
-                    } else if ($.trim($("#txtConfigValue12").val()).length != 8) {
-                        result = false;
-                        $("#spConfigValue12").html("密钥长度必须为8位");
-                    } else {
-                        $("#spConfigValue12").html("");
-                    }
-
-                    if ($("#txtConfigValue13").val() == "") {
-                        result = false;
-                        $("#spConfigValue13").html("请输入配置值");
-                    } else if ($.trim($("#txtConfigValue13").val()).length != 8) {
-                        result = false;
-                        $("#spConfigValue13").html("初始向量长度必须为8位");
-                    } else {
-                        $("#spConfigValue13").html("");
-                    }
-                    return result;
+                if ($("#txtConfigValue1").val() == "") {
+                    result = false;
+                    $("#spConfigValue1").html("请输入配置值");
+                } else if (isNaN($("#txtConfigValue1").val())) {
+                    result = false;
+                    $("#spConfigValue1").html("配置值只能为大于0的数字");
+                } else if (!reg.test($("#txtConfigValue1").val())) {
+                    result = false;
+                    $("#spChannel").html("配置值为5—30之间的整数");
+                } else if ($("#txtConfigValue1").val() < 5 || $("#txtConfigValue1").val() > 30) {
+                    result = false;
+                    $("#spConfigValue1").html("时间范围在5—30分钟之间");
+                } else {
+                    $("#spConfigValue1").html("");
                 }
-            </script>
-        
- 
+
+                reg = new RegExp(/^[1-9]*[1-9][0-9]*$/g);
+                if ($("#txtConfigValue2").val() == "") {
+                    result = false;
+                    $("#spConfigValue2").html("请输入配置值");
+                } else if (isNaN($("#txtConfigValue2").val())) {
+                    result = false;
+                    $("#spConfigValue2").html("配置值只能为大于0的数字");
+                } else if (!reg.test($("#txtConfigValue2").val())) {
+                    result = false;
+                    $("#spConfigValue2").html("配置值为10—480之间的整数");
+                } else if ($("#txtConfigValue2").val() < 10 || $("#txtConfigValue2").val() > 480) {
+                    result = false;
+                    $("#spConfigValue2").html("时间范围在10—480分钟之间");
+                } else {
+                    $("#spConfigValue2").html("");
+                }
+
+                reg = new RegExp(/^[1-9]*[1-9][0-9]*$/g);
+                if ($("#txtConfigValue3").val() == "") {
+                    result = false;
+                    $("#spConfigValue3").html("请输入配置值");
+                } else if (isNaN($("#txtConfigValue3").val())) {
+                    result = false;
+                    $("#spConfigValue3").html("配置值只能为大于0的数字");
+                } else if (!reg.test($("#txtConfigValue3").val())) {
+                    result = false;
+                    $("#spConfigValue3").html("配置值为1—300之间的整数");
+                } else if ($("#txtConfigValue3").val() < 1 || $("#txtConfigValue3").val() > 300) {
+                    result = false;
+                    $("#spConfigValue3").html("时间范围在1—300秒之间");
+                } else {
+                    $("#spConfigValue3").html("");
+                }
+
+                reg = new RegExp(/^[1-9]*[1-9][0-9]*$/g);
+                if ($("#txtConfigValue4").val() == "") {
+                    result = false;
+                    $("#spConfigValue4").html("请输入配置值");
+                } else if (isNaN($("#txtConfigValue4").val())) {
+                    result = false;
+                    $("#spConfigValue4").html("配置值只能为大于0的数字");
+                } else if (!reg.test($("#txtConfigValue4").val())) {
+                    result = false;
+                    $("#spConfigValue4").html("配置值为1—600之间的整数");
+                } else if ($("#txtConfigValue4").val() < 1 || $("#txtConfigValue4").val() > 600) {
+                    result = false;
+                    $("#spConfigValue4").html("时间范围在1—600秒之间");
+                } else {
+                    $("#spConfigValue4").html("");
+                }
+
+                reg = new RegExp(/^[1-9]*[1-9][0-9]*$/g);
+                if ($("#txtConfigValue5").val() == "") {
+                    result = false;
+                    $("#spConfigValue5").html("请输入配置值");
+                } else if (isNaN($("#txtConfigValue5").val())) {
+                    result = false;
+                    $("#spConfigValue5").html("配置值只能为大于0的数字");
+                } else if (!reg.test($("#txtConfigValue5").val())) {
+                    result = false;
+                    $("#spConfigValue5").html("配置值为3—120之间的整数");
+                } else if ($("#txtConfigValue5").val() < 3 || $("#txtConfigValue5").val() > 120) {
+                    result = false;
+                    $("#spConfigValue5").html("时间范围在3—120分钟之间");
+                } else {
+                    $("#spConfigValue5").html("");
+                }
+
+                if ($("input[name='ckConfigValue6']:checked").length == 0) {
+                    result = false;
+                    $("#spConfigValue6").html("请选择采集粒度值");
+                } else {
+                    $("#spConfigValue6").html("");
+                }
+
+                reg = new RegExp(/^[1-9]*[1-9][0-9]*$/g);
+                if ($("#txtConfigValue7").val() == "") {
+                    result = false;
+                    $("#spConfigValue7").html("请输入配置值");
+                } else if (isNaN($("#txtConfigValue7").val())) {
+                    result = false;
+                    $("#spConfigValue7").html("配置值只能为大于0的数字");
+                } else if (!reg.test($("#txtConfigValue7").val())) {
+                    result = false;
+                    $("#spConfigValue7").html("配置值为10—1000之间的整数");
+                } else if ($("#txtConfigValue7").val() < 10 || $("#txtConfigValue7").val() > 1000) {
+                    result = false;
+                    $("#spConfigValue7").html("时间范围在10—1000米之间");
+                } else {
+                    $("#spConfigValue7").html("");
+                }
+
+                reg = new RegExp(/^[1-9]*[1-9][0-9]*$/g);
+                if ($("#txtConfigValue9").val() == "") {
+                    result = false;
+                    $("#spConfigValue9").html("请输入配置值");
+                } else if (isNaN($("#txtConfigValue9").val())) {
+                    result = false;
+                    $("#spConfigValue9").html("配置值只能为大于0的数字");
+                } else if (!reg.test($("#txtConfigValue9").val())) {
+                    result = false;
+                    $("#spConfigValue9").html("配置值为5—300之间的整数");
+                } else if ($("#txtConfigValue9").val() < 5 || $("#txtConfigValue9").val() > 300) {
+                    result = false;
+                    $("#spConfigValue9").html("时间范围在5—300秒之间");
+                } else {
+                    $("#spConfigValue9").html("");
+                }
+
+
+                reg = new RegExp(/^[1-9]*[1-9][0-9]*$/g);
+                if ($("#txtConfigValue10").val() == "") {
+                    result = false;
+                    $("#spConfigValue10").html("请输入配置值");
+                } else if (isNaN($("#txtConfigValue10").val())) {
+                    result = false;
+                    $("#spConfigValue10").html("配置值只能为大于0的数字");
+                } else if (!reg.test($("#txtConfigValue10").val())) {
+                    result = false;
+                    $("#spConfigValue10").html("配置值为1—1000之间的整数");
+                } else if ($("#txtConfigValue10").val() < 1 || $("#txtConfigValue10").val() > 1000) {
+                    result = false;
+                    $("#spConfigValue10").html("时间范围在1—1000小时之间");
+                } else {
+                    $("#spConfigValue10").html("");
+                }
+
+
+                reg = new RegExp(/^[1-9]*[1-9][0-9]*$/g);
+                if ($("#txtConfigValue11").val() == "") {
+                    result = false;
+                    $("#spConfigValue11").html("请输入配置值");
+                } else if (isNaN($("#txtConfigValue11").val())) {
+                    result = false;
+                    $("#spConfigValue11").html("配置值只能为大于0的数字");
+                } else if (!reg.test($("#txtConfigValue11").val())) {
+                    result = false;
+                    $("#spConfigValue11").html("配置值为1—600之间的整数");
+                } else if ($("#txtConfigValue11").val() < 1 || $("#txtConfigValue11").val() > 600) {
+                    result = false;
+                    $("#spConfigValue11").html("时间窗口内采集数据去重范围在1—600秒之间");
+                } else if ($("#txtConfigValue4").val() != "" && parseInt($("#txtConfigValue4").val()) <= parseInt($("#txtConfigValue11").val())) {
+                    result = false;
+                    $("#spConfigValue11").html("电子围栏离线时间必须大于时间窗口内采集数据");
+                } else {
+                    $("#spConfigValue11").html("");
+                }
+
+                if ($("#txtConfigValue12").val() == "") {
+                    result = false;
+                    $("#spConfigValue12").html("请输入配置值");
+                } else if ($.trim($("#txtConfigValue12").val()).length != 8) {
+                    result = false;
+                    $("#spConfigValue12").html("密钥长度必须为8位");
+                } else {
+                    $("#spConfigValue12").html("");
+                }
+
+                if ($("#txtConfigValue13").val() == "") {
+                    result = false;
+                    $("#spConfigValue13").html("请输入配置值");
+                } else if ($.trim($("#txtConfigValue13").val()).length != 8) {
+                    result = false;
+                    $("#spConfigValue13").html("初始向量长度必须为8位");
+                } else {
+                    $("#spConfigValue13").html("");
+                }
+                return result;
+            }
+        </script>
+

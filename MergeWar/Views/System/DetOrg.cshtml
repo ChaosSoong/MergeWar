@@ -3,45 +3,95 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @using HCZZ.ModeDB;
-<table>
-    <tr>
-        <th colspan="4"><h1>安全厂商</h1></th>
-    </tr>
-</table>
-<div>
-    <table>
-        @{
-            SecurityOrg log = (SecurityOrg)ViewBag.sec;
-            if (log != null)
-            {
-                <tr>
-                    <td width="15%" align="right">厂商名称：</td>
-                    <td>@log.SECURITY_SOFTWARE_ORGNAME</td>
-                    <td width="15%" align="right">机构代码：</td>
-                    <td>@log.SECURITY_SOFTWARE_ORGCODE</td>
-                </tr>
-
-                <tr>
-                    <td width="15%" align="right">联系人：</td>
-                    <td>@log.CONTACTOR</td>
-                    <td width="15%" align="right">联系电话：</td>
-                    <td>@log.CONTACTOR_TEL</td>
-                </tr>
-                <tr>
-                    <td width="15%" align="right">邮箱：</td>
-                    <td>@log.CONTACTOR_MAIL</td>
-                    <td width="15%" align="right">厂商地址：</td>
-                    <td>@log.SECURITY_SOFTWARE_ORG_ADDRESS</td>
-                </tr>
-                <tr>
-                    <td width="15%" align="right">创建时间：</td>
-                    <td>@log.CreateTime.ToString("yyyy-MM-dd HH:mm:ss")</td>
-
-                </tr>
-
-            }
+<link href="~/Content/css/XTGL_AQCSGL_JBXX.css" rel="stylesheet" type="text/css" />
+<div class="contentbody" id="contentbody">
+@{
+    SecurityOrg log = (SecurityOrg)ViewBag.sec;
+    if (log != null)
+    {
+    <div class="contentInfo">
+        <ul>
+            <li>
+                <span>基本信息</span>
+                <span onclick="javascript: window.location.href = '/System/EditOrg?id=@log.ID'">修改信息</span>
+            </li>
+            <li class="liText">
+                <span class="spanTitle">厂商名称:</span>
+                <span class="spanText">@log.SECURITY_SOFTWARE_ORGNAME</span>
+                <span class="spanTitle">机构代码:</span>
+                <span class="spanText">@log.SECURITY_SOFTWARE_ORGCODE</span>
+                <span class="spanTitle">联系人:</span>
+                <span class="spanText">@log.CONTACTOR</span>
+                <span class="spanTitle" style="width: 70px;">联系电话:</span>
+                <span class="spanText">@log.CONTACTOR_TEL</span>
+            </li>
+            <li class="liText">
+                <span class="spanTitle">邮箱:</span>
+                <span class="spanText">@log.CONTACTOR_MAIL</span>
+                <span class="spanTitle">厂商地址:</span>
+                <span class="spanText" style="width: 393px;">@log.SECURITY_SOFTWARE_ORG_ADDRESS</span>
+                <span class="spanTitle">创建时间:</span>
+                <span class="spanText">@log.CreateTime.ToString("yyyy-MM-dd HH:mm:ss")</span>
+            </li>
+        </ul>
+        <ul>
+            <li>
+                <span>数据</span>
+            </li>
+            <li class="liText">
+                <span class="spanTitle">IMSI:</span>
+                <span class="spanText">共<label>@log.IMSINum</label>条记录</span>
+                <span class="spanTitle">IMEI:</span>
+                <span class="spanText">共<label>@log.IMEINum</label>条记录</span>
+                <span class="spanTitle">虚拟身份:</span>
+                <span class="spanText">共<label>@log.virtualNum</label>条记录</span>
+                <span class="spanTitle">MAC:</span>
+                <span class="spanText">共<label>@log.MACNum</label>条记录</span>
+            </li>
+        </ul>
+    </div>
         }
-    </table>
+}
 </div>
+    @*<table>
+            <tr>
+                <th colspan="4"><h1>安全厂商</h1></th>
+            </tr>
+        </table>
+        <div>
+            <table>
+                @{
+                    SecurityOrg log = (SecurityOrg)ViewBag.sec;
+                    if (log != null)
+                    {
+                        <tr>
+                            <td width="15%" align="right">厂商名称：</td>
+                            <td>@log.SECURITY_SOFTWARE_ORGNAME</td>
+                            <td width="15%" align="right">机构代码：</td>
+                            <td>@log.SECURITY_SOFTWARE_ORGCODE</td>
+                        </tr>
+
+                        <tr>
+                            <td width="15%" align="right">联系人：</td>
+                            <td>@log.CONTACTOR</td>
+                            <td width="15%" align="right">联系电话：</td>
+                            <td>@log.CONTACTOR_TEL</td>
+                        </tr>
+                        <tr>
+                            <td width="15%" align="right">邮箱：</td>
+                            <td>@log.CONTACTOR_MAIL</td>
+                            <td width="15%" align="right">厂商地址：</td>
+                            <td>@log.SECURITY_SOFTWARE_ORG_ADDRESS</td>
+                        </tr>
+                        <tr>
+                            <td width="15%" align="right">创建时间：</td>
+                            <td>@log.CreateTime.ToString("yyyy-MM-dd HH:mm:ss")</td>
+
+                        </tr>
+
+                    }
+                }
+            </table>
+        </div>*@
 
 

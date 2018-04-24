@@ -4,7 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
-using Common;
+using HCZZ.Common;
 using HCZZ.ModeDB;
 using Webdiyer.WebControls.Mvc;
 
@@ -89,12 +89,13 @@ namespace HCZZ.DAL
         /// <param name="Jid"></param>
         /// <param name="Name"></param>
         /// <returns></returns>
-        public int ChangeRoleNameById(int Jid, string Name)
+        public int ChangeRoleNameById(int Jid, string Name,string UserType)
          {
-             string sql = "UPDATE Sys_RoleInfo SET Name=@name WHERE Id=@id";
+             string sql = "UPDATE Sys_RoleInfo SET Name=@name,UserType=@UserType WHERE Id=@id";
              SqlParameter[] param = new SqlParameter[]{
                 new SqlParameter("@name",Name),
-                new SqlParameter("@id",Jid)
+                new SqlParameter("@id",Jid),
+                new SqlParameter("@UserType",UserType)
             };
              return SqlHelper.ExecuteNonQuery(SqlHelper.DBConnStr, CommandType.Text, sql, param);
          }
@@ -104,10 +105,10 @@ namespace HCZZ.DAL
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        public int InsertRole(string name)
+        public int InsertRole(string name,string UserType)
         {
-            string sql = "INSERT INTO Sys_RoleInfo (Name,CreateTime) VALUES (@name,getdate())";
-            return SqlHelper.ExecuteNonQuery(SqlHelper.DBConnStr, CommandType.Text, sql, new SqlParameter[] { new SqlParameter("@name", name) });
+            string sql = "INSERT INTO Sys_RoleInfo (Name,CreateTime,UserType) VALUES (@name,getdate(),@UserType)";
+            return SqlHelper.ExecuteNonQuery(SqlHelper.DBConnStr, CommandType.Text, sql, new SqlParameter[] { new SqlParameter("@name", name),new SqlParameter("@UserType", UserType) });
         }
         /// <summary>
         /// 判断角色名称是否存在

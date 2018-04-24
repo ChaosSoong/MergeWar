@@ -6,90 +6,111 @@
 }
 @model List<Sys_UserPowerInfo>
 <!DOCTYPE html>
-
+<link href="@Url.Content("~/Content/css/XTGL.css")" rel="stylesheet" type="text/css" />
+<link href="~/Content/css/publicHeader.css" rel="stylesheet" />
+<link href="~/Content/css/page.css" rel="stylesheet" />
 <html>
 <head>
-    <title>EditPower</title>
+    <title></title>
+    <style type="text/css">
+        .contentTable .ulliText .sBox{display: inline-block;padding: 0px 0px;margin-left: 10px;margin-top: 10px;color: #8E8E91;font: 14px "微软雅黑";background-color: #242533;}
+		.contentTable .ulliText .sBox p{padding: 10px 15px 10px 15px;margin-left: -12px;}
+		.contentTable .ulliText .sBox p span{}
+		.contentTable .ulliText .sBox p span.allInput{float: right;}
+		.contentTable .ulliText .sBox input{vertical-align: middle;margin-bottom: 3px;}
+		.contentTable .ulliText .sBox label{vertical-align:middle;}
+		.contentTable .ulliText .sBox ul{float: left;padding-left: 10px;padding-right: 10px;padding-bottom: 10px;border-top: 1px solid #292A37;border-right: 1px solid #292A37;}
+		.contentTable .ulliText .sBox ul li{margin-top: 7px;}
+		.contentTable .ulliText .sBox ul li:first-child{margin-top: 10px;}
+		.contentTable .ulliText .sBox ul:last-child{border-right: 0px;}
+		.contentTable .ulliText .sBox ul li input{margin-right: 3px;}
+        .add {margin-right: 12px;width: 95px;height: 33px;border: 1px solid #25576D;background-color: transparent;color: #25576D;}
+    </style>
 </head>
 <body>
-    <div class="row" style="margin-left:200px">
-    <div  class="box">
-        @{
-            List<Sys_UserPowerInfo> list = Model;
-            IEnumerable<Sys_UserPowerInfo> IElist = list.Where(m => m.Pid == 0).OrderBy(m => m.Indexs);
-            if (IElist != null && IElist.ToList().Count > 0)
-            {
-                string JsVal = "";
-                List<Sys_UserPowerInfo> QXlist = (List<Sys_UserPowerInfo>)ViewBag.QXlist;
-                List<Sys_UserPowerInfo> Flist = IElist.ToList();
-                foreach (Sys_UserPowerInfo item in Flist)
+    <div class="contentTable" style="margin-left:68px">
+        <div class="ulliText">
+            @{
+                List<Sys_UserPowerInfo> list = Model;
+                IEnumerable<Sys_UserPowerInfo> IElist = list.Where(m => m.Pid == 0).OrderBy(m => m.Indexs);
+                if (IElist != null && IElist.ToList().Count > 0)
                 {
-                    List<Sys_UserPowerInfo> sulist = QXlist.Where(m => m.Qid == item.Id).ToList();
-                    string RoleName = (QXlist != null && QXlist.Count > 0 ? QXlist.First().RoleName : "");
-                    <div class="smallBox" id="div_@(item.Id)">
-        	            <p><label><input type="checkbox" onclick="FQXclick(this)" name="pwF" id="pwF_@(item.Id)" @(sulist.Count > 0 ? "checked=checked" : "") value="@item.Id"/>@item.Name</label></p>
-                        @{
-                                                                                                                                                                        IEnumerable<Sys_UserPowerInfo> slist = list.Where(m => m.Pid == item.Id).OrderBy(m => m.Indexs);
-                                                                                                                                                                        if (slist != null && slist.ToList().Count > 0)
-                                                                                                                                                                        {
-                                                                                                                                                                            foreach (Sys_UserPowerInfo sItem in slist.ToList())
-                                                                                                                                                                            {
-                                                                                                                                                                                List<Sys_UserPowerInfo> twolist = QXlist.Where(m => m.Qid == sItem.Id).ToList();
-                                                                                                                                                                                if ((sItem.Name == "系统用户管理" || sItem.Name == "公司管理" || sItem.Name == "角色管理") && RoleName != "管理员")
-                                                                                                                                                                                { }                                                                                                                                    else
-                                       {
-                                           if (sItem.Name == "角色管理")
-                                           {
-                                               JsVal = item.Id + "_" + sItem.Id + "_" + "1-2-3-";
-                                           }
-                                           else
-                                           {
-                                    <ul id="ul_@(sItem.Id)">
-            	                        <li style="font-size:14px;"><label><input type="checkbox" onclick="SQXclick(this)" @(twolist.Count > 0 ? "checked=checked" : "") id="pwF_@(item.Id)_@(sItem.Id)" name="pwFTwo" value="@sItem.Id"/>@sItem.Name</label></li>
-            	                        <li style="margin-left:5px;">
-                                            @if (sItem.IdValues.IndexOf('1') != -1)
+                    string JsVal = "";
+                    List<Sys_UserPowerInfo> QXlist = (List<Sys_UserPowerInfo>)ViewBag.QXlist;
+                    List<Sys_UserPowerInfo> Flist = IElist.ToList();
+                    foreach (Sys_UserPowerInfo item in Flist)
+                    {
+                        List<Sys_UserPowerInfo> sulist = QXlist.Where(m => m.Qid == item.Id).ToList();
+                        string RoleName = (QXlist != null && QXlist.Count > 0 ? QXlist.First().RoleName : "");
+                        <div class="sBox" id="div_@(item.Id)">
+                            <p><label><input type="checkbox" onclick="FQXclick(this)" name="pwF" id="pwF_@(item.Id)" @(sulist.Count > 0 ? "checked=checked" : "") value="@item.Id" />@item.Name</label></p>
+                            @{
+                                IEnumerable<Sys_UserPowerInfo> slist = list.Where(m => m.Pid == item.Id).OrderBy(m => m.Indexs);
+                                if (slist != null && slist.ToList().Count > 0)
+                                {
+                                    foreach (Sys_UserPowerInfo sItem in slist.ToList())
+                                    {
+                                        List<Sys_UserPowerInfo> twolist = QXlist.Where(m => m.Qid == sItem.Id).ToList();
+                                        if ((sItem.Name == "用户管理列表"||sItem.Name == "公司管理" || sItem.Name == "角色管理列表") && RoleName != "管理员")
+                                        { }
+                                        else
+                                        {
+                                            if (sItem.Name == "角色管理列表")
                                             {
-                                            <label><input type="checkbox" onclick="QXOnclick(this)" @(twolist.Count > 0 && twolist.First().SelValues.Contains("1") ? "checked=checked" : "") id="pwF_@(item.Id)_@(sItem.Id)_1" name="pwFThree_@(sItem.Id)" value="1"/>读</label>
+                                                JsVal = item.Id + "_" + sItem.Id + "_" + "1-2-3-";
                                             }
-                                            @if (sItem.IdValues.IndexOf('2') != -1)
+                                            else
                                             {
-                                            <label><input type="checkbox" onclick="QXOnclick(this)" @(twolist.Count > 0 && twolist.First().SelValues.Contains("2") ? "checked=checked" : "") id="pwF_@(item.Id)_@(sItem.Id)_2" name="pwFThree_@(sItem.Id)" value="2"/>写</label>
+                                                <ul id="ul_@(sItem.Id)">
+                                                    <li style="font-size:14px;"><label><input type="checkbox" onclick="SQXclick(this)" @(twolist.Count > 0 ? "checked=checked" : "") id="pwF_@(item.Id)_@(sItem.Id)" name="pwFTwo" value="@sItem.Id" />@sItem.Name</label></li>
+                                                    <li style="margin-left:5px;">
+                                                        @if (sItem.IdValues.IndexOf('1') != -1)
+                                                        {
+                                                            <label><input type="checkbox" onclick="QXOnclick(this)" @(twolist.Count > 0 && twolist.First().SelValues.Contains("1") ? "checked=checked" : "") id="pwF_@(item.Id)_@(sItem.Id)_1" name="pwFThree_@(sItem.Id)" value="1" />读</label>
+                                                        }
+                                                        @if (sItem.IdValues.IndexOf('2') != -1)
+                                                        {
+                                                            <label><input type="checkbox" onclick="QXOnclick(this)" @(twolist.Count > 0 && twolist.First().SelValues.Contains("2") ? "checked=checked" : "") id="pwF_@(item.Id)_@(sItem.Id)_2" name="pwFThree_@(sItem.Id)" value="2" />写</label>
+                                                        }
+                                                        @if (sItem.IdValues.IndexOf('3') != -1)
+                                                        {
+                                                            <label><input type="checkbox" onclick="QXOnclick(this)" @(twolist.Count > 0 && twolist.First().SelValues.Contains("3") ? "checked=checked" : "") id="pwF_@(item.Id)_@(sItem.Id)_3" name="pwFThree_@(sItem.Id)" value="3" />删除</label>
+                                                        }
+                                                        @if (sItem.IdValues.IndexOf('4') != -1)
+                                                        {
+                                                            <label><input type="checkbox" onclick="QXOnclick(this)" @(twolist.Count > 0 && twolist.First().SelValues.Contains("4") ? "checked=checked" : "") id="pwF_@(item.Id)_@(sItem.Id)_4" name="pwFThree_@(sItem.Id)" value="4" />审核</label>
+                                                        }
+                                                        @if (sItem.IdValues.IndexOf('5') != -1)
+                                                        {
+                                                            <label><input type="checkbox" onclick="QXOnclick(this)" @(twolist.Count > 0 && twolist.First().SelValues.Contains("5") ? "checked=checked" : "") id="pwF_@(item.Id)_@(sItem.Id)_5" name="pwFThree_@(sItem.Id)" value="5" />下载</label>
+                                                        }
+                                                        @if (sItem.IdValues.IndexOf('6') != -1)
+                                                        {
+                                                            <label><input type="checkbox" onclick="QXOnclick(this)" @(twolist.Count > 0 && twolist.First().SelValues.Contains("6") ? "checked=checked" : "") id="pwF_@(item.Id)_@(sItem.Id)_6" name="pwFThree_@(sItem.Id)" value="6" />数据查询</label>
+                                                        }
+                                                        @if (sItem.IdValues.IndexOf('7') != -1)
+                                                        {
+                                                            <label><input type="checkbox" onclick="QXOnclick(this)" @(twolist.Count > 0 && twolist.First().SelValues.Contains("7") ? "checked=checked" : "") id="pwF_@(item.Id)_@(sItem.Id)_7" name="pwFThree_@(sItem.Id)" value="7" />高级功能</label>
+                                                        }
+
+                                                    </li>
+                                                </ul>
                                             }
-                                            @if (sItem.IdValues.IndexOf('3') != -1)
-                                            {
-                                            <label><input type="checkbox" onclick="QXOnclick(this)" @(twolist.Count > 0 && twolist.First().SelValues.Contains("3") ? "checked=checked" : "") id="pwF_@(item.Id)_@(sItem.Id)_3" name="pwFThree_@(sItem.Id)" value="3"/>删除</label>
-                                            }
-                                            @if (sItem.IdValues.IndexOf('4') != -1)
-                                            {
-                                            <label><input type="checkbox" onclick="QXOnclick(this)" @(twolist.Count > 0 && twolist.First().SelValues.Contains("4") ? "checked=checked" : "") id="pwF_@(item.Id)_@(sItem.Id)_4" name="pwFThree_@(sItem.Id)" value="4"/>审核</label>
-                                            }
-                                            @if (sItem.IdValues.IndexOf('5') != -1)
-                                            {
-                                            <label><input type="checkbox" onclick="QXOnclick(this)" @(twolist.Count > 0 && twolist.First().SelValues.Contains("5") ? "checked=checked" : "") id="pwF_@(item.Id)_@(sItem.Id)_5" name="pwFThree_@(sItem.Id)" value="5"/>下载</label>
-                                            }
-                                             @if (sItem.IdValues.IndexOf('6') != -1)
-                                            {
-                                                 <label><input type="checkbox" onclick="QXOnclick(this)" @(twolist.Count > 0 && twolist.First().SelValues.Contains("6") ? "checked=checked" : "")id="pwF_@(item.Id)_@(sItem.Id)_6" name="pwFThree_@(sItem.Id)" value="6"/>数据查询</label>
-                                            }
-                                            
-                                        </li>
-                                    </ul>
-                                                                                                                                                                                    }
-                                                                                                                                                                                }
-                                                                                                                                                                            }
-                                                                                                                                                                        }
-                        }
-                    </div>
-                    <hr/>
-                }
-        	    <input type="hidden" value="@JsVal" name="HidJsVal" id="HidJsVal" />
+                                        }
+                                    }
+                                }
+                            }
+                        </div>
+                       
+                                }
+                                <input type="hidden" value="@JsVal" name="HidJsVal" id="HidJsVal" />
+                                }
             }
-         }
-        <div style="width:100%;text-align:center;margin:15px auto;">
-        	<input class="button radius secondary " name="button" value="确定" onclick="EdState()"  type="button">
+            <div style="width:100%;text-align:center;margin:15px auto;">
+                <input class="add" name="button" value="确定" onclick="EdState()" type="button">
+            </div>
         </div>
     </div>
-</div>
 
     <script type="text/javascript">
         function QXOnclick(obj) {

@@ -1,0 +1,80 @@
+﻿@{
+    ViewBag.Title = "出现设备";
+}
+<link href="~/Content/css/MACFX.css" rel="stylesheet" />
+<link href="~/Content/css/PZFX.css" rel="stylesheet" />
+@using HCZZ.ModeDB;
+@using Common;
+@using HCZZ.AppCode;
+@using System.Collections.Generic
+@using Webdiyer.WebControls.Mvc;
+<div class="contentbody" id="contentbody">
+    <div class="contentTitle">
+        <span>出现设备-分析结果</span>
+        <input class="add" type="button" id="" value="导出表格"  onclick="report()" />
+    </div>
+    <div class="contentTable">
+        @{PagedList<MergeWar.Models.Collision> cllist = (PagedList<MergeWar.Models.Collision>)ViewBag.pl;
+            <table border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <th style="width: 20%;">场所名称</th>
+                    <th style="width: 20%;">设备名称</th>
+                    <th style="width: 30%;">最小采集时间</th>
+                    <th style="width: 30%;">Mac地址</th>
+                </tr>
+                @if (cllist != null)
+                {
+                    foreach (var cl in cllist)
+                    {
+                        //Loc_DevInfo mac =WebCommon.GetMacInfoByDevAP_ID(0, cl.AP_MAC);
+                        //Loc_NetBarInfo loca =WebCommon.GetLocaInfoByNetBar_ID(Convert.ToInt32(cl.NETBAR_ID));
+                        //string PLACE_NAME = (loca == null ? "" : loca.PLACE_NAME);
+                        //string APName = (mac != null ? mac.APName : "");
+                        <tr>
+                            <td style="width: 20%;" title="@cl.PLACE_NAME">@(ChangeValue.ByteSubString(cl.PLACE_NAME, 12))</td>
+                            <td style="width: 20%;" title="@cl.APName">@(ChangeValue.ByteSubString(cl.APName, 16))</td>
+                            <td style="width: 30%;">@cl.CAPTURE_TIME</td>
+                            <td style="width: 30%;">@cl.MAC</td>
+                        </tr>
+                    }
+                }
+            </table>
+            @Html.Partial("~/Views/Shared/_PartialPage.cshtml", new RouteValueDictionary { { "pageIndex", "PageIndex" }, { "model", cllist } })
+        }
+    </div>
+</div>
+<script type="text/javascript">
+    function closeDown() {
+        document.getElementById('divDown').style.display = 'none';
+        $("#Bk").hide();
+    }
+    function report() {
+        var maxCount = @Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["ExprotCout"]);
+        var TotalCount =parseInt($("#spTotalItem").html());
+        if(TotalCount>maxCount){
+            alert("为保证导出数据的速度，数据源不能大于"+ maxCount +"条");
+            closeDown();
+        }
+            $.ajax
+             ({
+                 type: "Get",
+                 url: '@Url.Content("~/Public/AnalyzeExport?dataType=3")'+ '&data=' + (new Date()).getTime(),
+                 dataType: "json",
+                 cache: false,
+                 success: function (data, status) {
+                     if (typeof (data.err) != 'undefined' && data.err != "") {
+                         alert(data.err);
+                     } else {
+                         window.location.href = '@Url.Content("~/Public/Download?name=")' + encodeURIComponent('出现设备列表报表_') + '&path=' + encodeURIComponent(data.result);
+                     }
+                     closeDown();
+                 },
+                 error: function (data, status, e) {
+                     alert(e);
+                     closeDown();
+                 }
+             });
+        }
+</script>
+
+

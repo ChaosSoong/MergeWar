@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Web;
 
-namespace Common
+namespace HCZZ.Common
 {
         public class Logger
         {

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://server.bigdata.com/" targetNamespace="http://server.bigdata.com/" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="accompanyAnalysisDetailMAC" type="tns:accompanyAnalysisDetailMAC" />
+  <xs:element name="accompanyAnalysisDetailMACResponse" type="tns:accompanyAnalysisDetailMACResponse" />
+  <xs:element name="accompanyAnalysisMAC" type="tns:accompanyAnalysisMAC" />
+  <xs:element name="accompanyAnalysisMACResponse" type="tns:accompanyAnalysisMACResponse" />
+  <xs:element name="appearDevMAC" type="tns:appearDevMAC" />
+  <xs:element name="appearDevMACResponse" type="tns:appearDevMACResponse" />
+  <xs:element name="collisionAnalysisDetailMAC" type="tns:collisionAnalysisDetailMAC" />
+  <xs:element name="collisionAnalysisDetailMACResponse" type="tns:collisionAnalysisDetailMACResponse" />
+  <xs:element name="collisionAnalysisMAC" type="tns:collisionAnalysisMAC" />
+  <xs:element name="collisionAnalysisMACResponse" type="tns:collisionAnalysisMACResponse" />
+  <xs:element name="disappearDevMAC" type="tns:disappearDevMAC" />
+  <xs:element name="disappearDevMACResponse" type="tns:disappearDevMACResponse" />
+  <xs:element name="queryFenchTerminalInfo" type="tns:queryFenchTerminalInfo" />
+  <xs:element name="queryFenchTerminalInfoResponse" type="tns:queryFenchTerminalInfoResponse" />
+  <xs:element name="queryTermianlAccessLog" type="tns:queryTermianlAccessLog" />
+  <xs:element name="queryTermianlAccessLogResponse" type="tns:queryTermianlAccessLogResponse" />
+  <xs:element name="queryTermianlNetworkLog" type="tns:queryTermianlNetworkLog" />
+  <xs:element name="queryTermianlNetworkLogResponse" type="tns:queryTermianlNetworkLogResponse" />
+  <xs:complexType name="queryTermianlAccessLog">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="json" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="queryTermianlAccessLogResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="disappearDevMAC">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="json" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="disappearDevMACResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="accompanyAnalysisDetailMAC">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="json" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="accompanyAnalysisDetailMACResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="appearDevMAC">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="json" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="appearDevMACResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="collisionAnalysisMAC">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="json" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="collisionAnalysisMACResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="queryTermianlNetworkLog">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="json" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="queryTermianlNetworkLogResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="queryFenchTerminalInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="json" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="queryFenchTerminalInfoResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="collisionAnalysisDetailMAC">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="json" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="collisionAnalysisDetailMACResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="accompanyAnalysisMAC">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="json" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="accompanyAnalysisMACResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

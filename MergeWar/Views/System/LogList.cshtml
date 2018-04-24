@@ -1,5 +1,5 @@
 ﻿@using System.Collections.Generic
-@using Common
+@using HCZZ.Common
 @using HCZZ.DAL
 @using HCZZ.ModeDB
 @using Webdiyer.WebControls.Mvc
@@ -11,16 +11,52 @@
     string relaVal = ChangeValue.RefPageRelaByPath("System/UserList");
     Dictionary<string, string> dic = (Dictionary<string, string>)ViewBag.dic;
 }
+<style>
+    .content .contentbody .contentTable{}
+		.content .contentbody .contentTable table{width: 100%;}
+		.content .contentbody .contentTable table tr{border-bottom: 1px solid #181926;height: 40px;}
+		.content .contentbody .contentTable table tr:nth-child(odd){background-color: #20212e;}
+		.content .contentbody .contentTable table tr:nth-child(even){background-color: #21222f;}
+		.content .contentbody .contentTable table tr:first-child{background-color: #1E1F2D;}
+		.content .contentbody .contentTable table tr th{text-align: left;padding-left: 30px;color: #85858A;font-family: "微软雅黑";font-size: 13px;border-right: 2px solid #181926;}
+		.content .contentbody .contentTable table tr td{text-align: left;padding-left: 30px;color: #85858A;font-family: "微软雅黑";font-size: 12px;border-right: 2px solid #181926;}
+		.content .contentbody .contentTable table tr td img{cursor: pointer;display: inline-block;margin-left: 8px;margin-right: 8px;}
+		.content .contentbody .contentTable table tr td img:first-child{margin-left: 0px;}
+		.content .contentbody .contentTable table tr td.addAuthority{text-decoration: underline;color: #984117;cursor: pointer;}
+		.content .contentbody .contentTable table tr td.editAuthority{text-decoration: underline;color: #115293;cursor: pointer;}
+        .content .contentbody .contentTable table tr:hover{background-color: #222a36;}
+        .content .contentbody .contentTable table tr:first-child:hover {background-color: #1E1F2D; }
+</style>
 <script src="@Url.Content("~/Content/DatePicker/WdatePicker.js")" type="text/javascript"></script>
 <link href="@Url.Content("~/Content/css/XTGL.css")" rel="stylesheet" type="text/css" />
-@using (Html.BeginForm("LogList", "System", new {@Id = 1}, FormMethod.Get))
+@using (Html.BeginForm("LogList", "System", new { @Id = 1 }, FormMethod.Get))
 {
     <div class="contentbody" id="contentbody">
         <div class="contentTitle">
             <span>查询条件和按钮区</span>
-            <input class="search" type="button" id="BtnSelect" onclick="myFunction(this, 'contentConditions')" value="隐藏"/>
+            <input class="search" type="button" id="BtnSelect" onclick="myFunction(this, 'contentConditions')" value="隐藏" />
         </div>
         <div class="contentConditions">
+            @*<ul>
+               
+                <li class="Conditions Conditions2">
+                    <span>IP地址：</span>
+                    <select name="selAdderss" id="selAdderss">
+                        <option value="1">模糊</option>
+                        <option value="2">精确</option>
+                    </select>
+                    <input type="text" id="txtAdderss" name="txtAdderss" value="@dic["txtAdderss"]" />
+                </li>
+                <li class="Conditions Conditions5">
+                    <span>记录时间范围：</span>
+                    <input type="text" name="CreateTime" id="CreateTime" value="@dic["CreateTime"]" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',readonly:true,maxDate:'#F{$dp.$D(\'EndTime\')}'})" /> ---
+                    <input type="text" name="EndTime" id="EndTime" value="@dic["EndTime"]" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',readonly:true,minDate:'#F{$dp.$D(\'CreateTime\')}'})" />
+                </li>
+                <li class="Conditions Conditions6">
+                    <input class="selectbg" type="submit" id="but_Seek" value="搜索" />
+                    <input class="resetbg" type="reset" value="重置" onclick="Reset()" />
+                </li>
+            </ul>*@
             <ul>
                 <li class="Conditions Conditions1">
                     <span>用户名：</span>
@@ -28,59 +64,60 @@
                         <option value="1">模糊</option>
                         <option value="2">精确</option>
                     </select>
-                    <input type="text" id="txtName" name="txtName" value="@dic["txtName"]"/>
-                </li>
-                <li class="Conditions Conditions4">
-                    <span>操作描述：</span>
-                    <input type="text" id="txtWhat" name="txtWhat" value="@dic["txtWhat"]"/>
+                    <input type="text" id="txtName" name="txtName" value="@dic["txtName"]" />
                 </li>
                 <li class="Conditions Conditions2">
+                    <span>操作描述：</span>
+                    <input type="text" id="txtWhat" name="txtWhat" value="@dic["txtWhat"]"  style="width:316px;margin-left: 0px;" />
+                </li>
+                <br>
+                <li class="Conditions Conditions4">
                     <span>IP地址：</span>
                     <select name="selAdderss" id="selAdderss">
                         <option value="1">模糊</option>
                         <option value="2">精确</option>
                     </select>
-                    <input type="text" id="txtAdderss" name="txtAdderss" value="@dic["txtAdderss"]"/>
+                    <input type="text" id="txtAdderss" name="txtAdderss" value="@dic["txtAdderss"]" />
                 </li>
-
-               <li class="Conditions Conditions5">
-						<span>备案时间范围：</span>
-                   <input type="text" name="CreateTime" id="CreateTime" value="@dic["CreateTime"]" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',readonly:true,maxDate:'#F{$dp.$D(\'EndTime\')}'})" /> --- 
-        <input type="text" name="EndTime" id="EndTime" value="@dic["EndTime"]" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',readonly:true,minDate:'#F{$dp.$D(\'CreateTime\')}'})" />
-					</li>
+                <li class="Conditions Conditions5">
+                    <span>创建时间：</span>
+                    <input type="text" name="CreateTime" id="CreateTime" value="@dic["CreateTime"]" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',readonly:true,maxDate:'#F{$dp.$D(\'EndTime\')}'})" style="width: 148px;margin-left: 0px;" class="Wdate"/>
+                    <b style="color: #b1b1b1;">—</b>
+                    <input type="text" name="EndTime" id="EndTime" value="@dic["EndTime"]" onfocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',readonly:true,minDate:'#F{$dp.$D(\'CreateTime\')}'})"  style="width: 148px;margin-left: 0px;" class="Wdate"/>
+                </li>
                 <li class="Conditions Conditions6">
-                    <input class="selectbg" type="submit" id="but_Seek"value="搜索"/>
-                    <input class="resetbg" type="reset" value="重置" onclick="Reset()"/>
+                    <input class="selectbg" type="submit" id="but_Seek" value="搜索" />
+                    <input class="resetbg" type="reset" value="重置" onclick="Reset()" />
                 </li>
             </ul>
         </div>
         <div class="contentTable" id="taskManagementId">
             <table border="0" cellspacing="0" cellpadding="0">
                 <tr>
-                    <th style="width: 5%;">序号</th>
+                    <th style="width: 3%;">序号</th>
                     <th style="width: 10%;">用户名</th>
                     <th style="width: 15%;">操作模块</th>
                     <th style="width: 35%;">操作描述</th>
                     <th style="width: 15%;">操作IP</th>
-                    <th style="width: 15%;">操作时间</th>
-                    <th style="width: 5%;">操作</th>
+                    <th style="width: 12%;">操作时间</th>
+                    <th style="width: 7%;">操作</th>
                 </tr>
                 @if (userlist != null && userlist.Count > 0)
                 {
                     foreach (OPLog item in userlist)
                     {
                         <tr>
-                            <td style="width: 5%;">@item.PageNum</td>
+                            <td style="width: 3%;">@item.PageNum</td>
                             <td style="width: 10%;">@item.UserName</td>
                             <td style="width: 15%;">@item.Module</td>
-                            <td style="width: 35%;">@(StringFilter.Base64Str(2,item.What))</td>
-                            <td style="width: 15%;">@(item.IpAddress=="::1"?"127.0.0.1":item.IpAddress)</td>
-                            <td style="width: 15%;">@item.CreateTime.ToString("yyyy年MM月dd日HH点mm分")</td>
-                            <td style="width: 5%;">
+                            <td style="width: 35%;"title="@item.What">@(ChangeValue.ByteSubString(ChangeValue.Base64Str(99,item.What), 60))</td>
+                            <td style="width: 15%;">@(item.IpAddress== "::1"?"127.0.0.1":item.IpAddress)</td>
+                            <td style="width: 12%;">@item.CreateTime.ToString("yyyy-MM-dd  HH:mm:ss")</td>
+                            <td style="width: 10%;">
                                 @if (relaVal.Contains("1"))
                                 {
                                     <a href="@Url.Content("~/System/DetailLog?Id=" + item.ID)">
-                                        <img title="详情" src="@Url.Content("~/Content/images/view1_icon.png")" alt="查看"/>
+                                        <img title="详情" src="@Url.Content("~/Content/images/view1_icon.png")" alt="查看" />
                                     </a>
                                 }
                             </td>
@@ -89,10 +126,10 @@
                 }
                 else
                 {
-                            @*<tr><td>暂无可显示数据</td></tr>*@
+                    @*<tr><td>暂无可显示数据</td></tr>*@
                 }
             </table>
-            <div class="page">
+            @*<div class="page">
                 <ul class="ulPage">
                     @Ajax.Pager(userlist, new PagerOptions
                {
@@ -104,16 +141,26 @@
                    NavigationPagerItemTemplate = "<li class=\"liPage\" style=\"width: 42px; \">{0}</li>",
                    NumericPagerItemTemplate = "<li class=\"liPage\" style=\"width: 42px; \">{0}</li>",
                    ShowMorePagerItems = false,
-                    }).AjaxOptions(a => a.SetUpdateTargetId("taskManagementId"))
+               }).AjaxOptions(a => a.SetUpdateTargetId("taskManagementId"))
                     <li class="contPage">共<span>@userlist.TotalPageCount</span>页/共<span>@userlist.TotalItemCount</span>条</li>
                 </ul>
-            </div>
+            </div>*@
+            @Html.Partial("~/Views/Shared/_PartialPage.cshtml", new RouteValueDictionary { { "model", userlist }, { "pageindex", "PageIndex" } })
         </div>
     </div>
 }
 <script>
     function InputVerify() {
-        return true;
+        ret = false;
+        $(".contentConditions").find("input[type='text']").each(function () {
+            if ($.trim($(this).val()) != "") {
+                ret=true;
+            }
+        });
+        if (ret == false) {
+            alert("请输入查询条件")
+        }
+        return ret;
     }
     $("form").submit(function () {
         return InputVerify();
